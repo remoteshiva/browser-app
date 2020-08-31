@@ -1,13 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import { Provider } from "react-redux";
+import './assets/styles/styles.css';
+import App from './components/App';
+import GlobalStyle from './components/GlobalStyle'
 import * as serviceWorker from './serviceWorker';
+import store from './store'
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <Provider store={store}>
+    <React.StrictMode>
+      <GlobalStyle/>
+      <App authenticated={true} user={null}/>
+    </React.StrictMode>
+  </Provider>,
   document.getElementById('root')
 );
 
