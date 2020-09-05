@@ -2,9 +2,11 @@ import { Mourner, Shiva, ShivaActionTypes, ShivaState} from './types'
 import { User } from '../auth/types'
 import { ActionCreator, Action, Dispatch } from "redux";
 import { ThunkAction } from "redux-thunk";
-import { ApplicationState } from "../index";
+// import { ApplicationState } from "../index";
 
 import { shivas } from '../../mock-data'
+
+/*
 
 export type AppThunk = ActionCreator<
   ThunkAction<void, ApplicationState, null, Action<string>>
@@ -26,3 +28,4 @@ export const fetchUserShivas: AppThunk = () => {
     }
 }
 
+*/

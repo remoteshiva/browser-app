@@ -1,23 +1,23 @@
 import { Reducer } from 'redux'
-import {AuthActionTypes, AuthState} from './types'
+import {AuthActions, ActionTypes, AuthState } from './types'
 
 export const initialState: AuthState = {
     loading: false,
     user: null
 }
 
-const reducer: Reducer<AuthState> = (state=initialState, action) => {
+const reducer: Reducer<AuthState> = (state=initialState, action: ActionTypes): AuthState => {
     switch(action.type){
-        case AuthActionTypes.LOGIN_REQUEST: {
+        case AuthActions.LOGIN_REQUEST: {
             return { ...state, loading: true}
         }
-        case AuthActionTypes.LOGIN_SUCCESS: {
+        case AuthActions.LOGIN_SUCCESS: {
             return { ...state, loading: false, user: action.payload }
         }
-        case AuthActionTypes.LOGIN_ERROR: {
+        case AuthActions.LOGIN_ERROR: {
             return { ...state, loading: false, error: action.payload }
         }
-        case AuthActionTypes.LOGOUT: {
+        case AuthActions.LOGOUT: {
             return state
         }
         default: {

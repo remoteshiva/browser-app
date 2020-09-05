@@ -5,17 +5,18 @@ import './assets/styles/styles.css';
 import App from './components/App';
 import GlobalStyle from './components/GlobalStyle'
 import * as serviceWorker from './serviceWorker';
-import store from './store'
+import configureStore from './store'
 
-ReactDOM.render(
+const store = configureStore()
+
+const Root = () => (
   <Provider store={store}>
-    <React.StrictMode>
       <GlobalStyle/>
-      <App authenticated={true} user={null}/>
-    </React.StrictMode>
-  </Provider>,
-  document.getElementById('root')
-);
+      <App/>
+  </Provider>
+)
+
+ReactDOM.render(<Root />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

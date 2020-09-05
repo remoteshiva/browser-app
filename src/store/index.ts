@@ -1,26 +1,20 @@
-import { applyMiddleware, combineReducers, createStore, Store } from 'redux'
-import { History, createBrowserHistory } from "history";
+import { applyMiddleware, combineReducers, createStore } from 'redux'
 import thunk from 'redux-thunk';
+import { composeWithDevTools } from "redux-devtools-extension";
 import { AuthReducer } from './auth/reducer'
-import { AuthState } from './auth/types'
-import { checkAuthentication } from './auth/actions'
 import { ShivaReducer } from './shiva/reducer'
-import { ShivaState } from './shiva/types'
 
-export interface ApplicationState {
-    auth: AuthState
-    shiva: ShivaState
-}
-
-const history = createBrowserHistory();
-
-const rootReducer = (history: History) => combineReducers<ApplicationState>({
+const rootReducer = combineReducers({
     auth: AuthReducer,
     shiva: ShivaReducer
 })
 
-const store:Store = createStore(rootReducer(history), applyMiddleware(thunk) )
-// initialize global data
+export type AppState = ReturnType<typeof rootReducer>
 
-export default store
+export default function configureStore() {
+    const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)) )
+    // initialize global data
+
+    return store
+}
 

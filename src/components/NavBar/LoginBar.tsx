@@ -9,16 +9,16 @@ const LoginButtonWrapper = styled.button`
 `
 
 interface LoginButtonProps {
-  onClick?: () => void
+  onClick?: any
   children: ReactNode
 }
 
 const LoginButton = ({onClick, children}: LoginButtonProps) => (
-  <LoginButtonWrapper type="button" onClick={onClick}>{children}</LoginButtonWrapper>
+  <LoginButtonWrapper type="button" onClick={() => onClick('ronb', 'password')}>{children}</LoginButtonWrapper>
 )
 
 interface Props {
-  clickHandler: () => void
+  clickHandler: any
 }
 
 const LoginBar = ({clickHandler}: Props) => (
