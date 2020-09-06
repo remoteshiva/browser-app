@@ -1,23 +1,36 @@
 import React, { ReactNode } from "react";
-import { ThemeProvider, DefaultTheme } from "styled-components"
+import { ThemeProvider } from "styled-components"
 
-const theme: DefaultTheme = {
-    navbar:{
-        backgroundColor: 'rgba(245, 239, 232, 0.96)',
-        menuItem: {
-          color: '#41413a'
-        }
-    },
-  colors: {
-    heavyMetal: '#41413a'
-  },
-  fonts: ["Lato", "Lora", "sans-serif"],
-  fontSizes: {
-    small: "1em",
-    medium: "2em",
-    large: "3em"
+
+const colors = {
+  heavyMetal: '#41413a',
+  sauvignon: '#fdfaf9',
+  romance: '#F5EFE8',
+  doveGray: '#7B776C',
+  cardinal: '#c82323',
+}
+
+const fonts = ['Lato', 'Lora', 'sans-serif']
+
+const components = {
+  shivaCard: {
+    width: '327px',
+    height: '258px',
+    borderRadius: '10px'
   }
-};
+
+}
+
+interface RemoteShivaTheme {
+  colors: { [key in keyof typeof colors]: string };
+  fonts: string[]
+}
+
+const theme = {
+  colors,
+  fonts,
+  components,
+}
 
 interface Props {
     children?: ReactNode

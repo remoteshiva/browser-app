@@ -1,8 +1,8 @@
 import { createGlobalStyle } from 'styled-components';
- 
+
 const GlobalStyle = createGlobalStyle`
-    /* for debug
-    * {
+    /* for debug */
+    /* * {
         outline: 1px solid red !important;
     } */
     html {
@@ -12,9 +12,10 @@ const GlobalStyle = createGlobalStyle`
     body {
         margin: 0;
         padding: 0;
-        background: white;
         font-family: Lato, Sans-Serif;
-        min-height: 100%;
+        display: flex;
+        min-height: 100vh;
+        flex-direction: column;
     }
 `;
 
