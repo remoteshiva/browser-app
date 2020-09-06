@@ -1,20 +1,21 @@
 import { Reducer } from 'redux'
-import { ShivaActionTypes, ShivaState } from './types'
+import {ShivaActions, ActionTypes, ShivaState } from './types'
 
 export const initialState: ShivaState = {
     loading: false,
-    shivas: []
+    shivas: [],
 }
 
-const reducer: Reducer<ShivaState> = (state=initialState, action) => {
+const reducer: Reducer<ShivaState> = (state=initialState, action: ActionTypes): ShivaState => {
     switch(action.type){
-        case ShivaActionTypes.FETCH_SHIVAS_REQUEST: {
+        case ShivaActions.FETCH_SHIVAS_REQUEST: {
             return { ...state, loading: true}
         }
-        case ShivaActionTypes.FETCH_SHIVAS_SUCCESS: {
+        case ShivaActions.FETCH_SHIVAS_SUCCESS: {
+            console.log('shiva reducer', action.payload)
             return { ...state, loading: false, shivas: action.payload }
         }
-        case ShivaActionTypes.FETCH_SHIVAS_ERROR: {
+        case ShivaActions.FETCH_SHIVAS_ERROR: {
             return { ...state, loading: false, error: action.payload }
         }
         default: {

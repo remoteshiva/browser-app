@@ -1,31 +1,15 @@
-import { Mourner, Shiva, ShivaActionTypes, ShivaState} from './types'
-import { User } from '../auth/types'
-import { ActionCreator, Action, Dispatch } from "redux";
+import { Action } from "redux";
 import { ThunkAction } from "redux-thunk";
-// import { ApplicationState } from "../index";
-
+import { ShivaActions } from './types'
+import { typedAction } from '../helpers'
 import { shivas } from '../../mock-data'
+import { AppState } from "../";
 
-/*
 
-export type AppThunk = ActionCreator<
-  ThunkAction<void, ApplicationState, null, Action<string>>
->
-
-export const fetchUserShivas: AppThunk = () => {
-    return (dispatch: Dispatch): Action => {
-        try{
-            return dispatch({
-                type: ShivaActionTypes.FETCH_SHIVAS_SUCCESS,
-                payload: shivas
-            })
-
-        }catch (err) {
-            return dispatch({
-                type: ShivaActionTypes.FETCH_SHIVAS_ERROR
-            })
-        }
-    }
+export const fetchShivas = (
+) : ThunkAction<void, AppState, null, Action<string>> => async dispatch => {
+    dispatch(typedAction(ShivaActions.FETCH_SHIVAS_REQUEST))
+    setTimeout(() => {
+        dispatch(typedAction(ShivaActions.FETCH_SHIVAS_SUCCESS, shivas))
+    }, 1000)
 }
-
-*/

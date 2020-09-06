@@ -1,9 +1,10 @@
-import { Action } from "redux";
-import { ThunkAction } from "redux-thunk";
+import { Action } from "redux"
+import { ThunkAction } from "redux-thunk"
+import { push } from 'connected-react-router'
 import { AuthActions } from './types'
 import { typedAction } from '../helpers'
 import { test_user } from '../../mock-data'
-import { AppState } from "../";
+import { AppState } from '../'
 
 export const loginUser = (
     username: string, password: string
@@ -11,6 +12,7 @@ export const loginUser = (
     dispatch(typedAction(AuthActions.LOGIN_REQUEST))
     setTimeout(() => {
         dispatch(typedAction(AuthActions.LOGIN_SUCCESS, test_user))
+        dispatch(push('/dashboard'))
     }, 1000)
 }
 
