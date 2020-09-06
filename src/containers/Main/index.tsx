@@ -8,6 +8,7 @@ import { MainWrapper } from './styles'
 import Home from '../../pages/Home'
 import Login from '../../pages/login'
 import Dashboard from '../../pages/Dashboard'
+import NewShiva from '../../pages/NewShiva'
 
 interface privateRouteProps extends RouteProps{
     component: any
@@ -29,17 +30,22 @@ interface Props {
 }
 
 const Main = ({user}: Props) => {
-    return(
-        <MainWrapper> 
-            <Switch>
-                <Route path="/" exact component={ Home }/>
-                <Route path="/login" exact component={ Login }/>
-                <Route 
-                    user={user}
-                    path="/dashboard"
-                    exact component={ Dashboard }
-                />
-            </Switch>
+  return(
+    <MainWrapper> 
+      <Switch>
+        <Route path="/" exact component={ Home }/>
+        <Route path="/login" exact component={ Login }/>
+        <PrivateRoute 
+          user={user}
+          path="/dashboard"
+          exact component={ Dashboard }
+        />
+        <PrivateRoute 
+          user={user}
+          path='/newshiva'
+           exact component={ NewShiva }
+        />
+        </Switch>
         </MainWrapper>
     )
 }
