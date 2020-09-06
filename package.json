@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@tailwindcss/ui": "^0.5.0",
+    "connected-react-router": "^6.8.0",
     "cuid": "^2.1.8",
     "moment": "^2.27.0",
     "react": "^16.13.1",
@@ -33,9 +34,9 @@
     "autoprefixer": "^9.8.6",
     "babel-plugin-macros": "^2.8.0",
     "postcss-cli": "^7.1.1",
+    "redux-devtools-extension": "^2.13.8",
     "twin.macro": "^1.7.0",
-    "typescript": "^3.7.5",
-    "redux-devtools-extension": "^2.13.8"
+    "typescript": "^3.7.5"
   },
   "scripts": {
     "build:css": "postcss src/assets/styles/tailwind.css -o src/assets/styles/styles.css",
