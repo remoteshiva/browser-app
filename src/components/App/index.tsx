@@ -1,6 +1,5 @@
 import React from 'react'
 import { History } from 'history'
-import { BrowserRouter as Router } from 'react-router-dom'
 import { ConnectedRouter } from 'connected-react-router'
 import Theme from '../Theme'
 import GlobalStyle from '../GlobalStyle'
@@ -16,13 +15,11 @@ const App = ({history}:Props) => (
   <Theme>
       <GlobalStyle/>
       <ConnectedRouter history={history}>
-        <Router>
-          <div className='min-h-screen flex flex-col'>
-            <NavBar/>
-            <Main/>
-            <Footer/>
-          </div>
-        </Router>
+        <div className='min-h-screen flex flex-col'>
+          <NavBar/>
+          <Main/>
+          <Footer/>
+        </div>
       </ConnectedRouter>
   </Theme>
 )
