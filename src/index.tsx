@@ -3,16 +3,14 @@ import ReactDOM from 'react-dom';
 import { Provider } from "react-redux";
 import './assets/styles/styles.css';
 import App from './components/App';
-import GlobalStyle from './components/GlobalStyle'
 import * as serviceWorker from './serviceWorker';
-import configureStore from './store'
+import configureStore, { history } from './store'
 
 const store = configureStore()
 
 const Root = () => (
   <Provider store={store}>
-      <GlobalStyle/>
-      <App/>
+      <App history={history}/>
   </Provider>
 )
 
