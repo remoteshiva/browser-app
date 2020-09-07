@@ -7,14 +7,15 @@ import ShivaItem from './item'
 import NewShivaItem from './newItem'
 
 interface Props {
-    shivas: ShivaModel[]
+  entities: {[key:string]: ShivaModel}
+  shivas: string[]
 }
 
-const ShivaList = ({shivas}:Props) => {
+const ShivaList = ({entities, shivas}:Props) => {
   const dispatch = useDispatch()
   return(
     <ShivaListWrapper>
-        {shivas.map((item) => (<ShivaItem key={item.id} {...item}/>))}
+        {shivas.map((shivaId) => (<ShivaItem key={shivaId} {...entities[shivaId]}/>))}
         <NewShivaItem onClick={() => dispatch(push('/newshiva'))}/>
     </ShivaListWrapper>
   )

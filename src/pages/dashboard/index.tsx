@@ -33,7 +33,7 @@ const Dashboard = (props:DashboardProps) => {
     return props.shivaState.loading ? (<div>loading ...</div>) : (
         <Wrapper>
             <h1>My Shivas</h1>
-            <ShivaList shivas={props.shivaState.shivas}/>
+            <ShivaList entities={props.shivaState.entities} shivas={props.shivaState.shivas}/>
         </Wrapper>
     )
 }
