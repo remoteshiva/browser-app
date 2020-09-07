@@ -1,13 +1,17 @@
-import React, { useEffect } from 'react'
+import React, { useState } from 'react'
 import { connect, useDispatch } from 'react-redux'
-import { withRouter } from "react-router";
 import { push } from 'connected-react-router'
 import styled from 'styled-components'
-import BackArrowIcon from '../../assets/img/back-arrow.svg'
 import { AppState } from '../../store'
+import BackArrowIcon from '../../assets/img/back-arrow.svg'
+import BasicDetails from './BasicDetails'
+import VideoChatLink from './VideoChatLink'
+import Mourners from './Mourners'
+import VisitingHours from './VisitingHours'
+
 
 const Wrapper = styled.div`
-  padding-top: 30px;
+  padding-top: 24px;
   padding-left: 30px;
 `
 
@@ -23,16 +27,43 @@ const Back = () => {
   const dispatch = useDispatch()
   return(
     <div onClick={() => dispatch(push('/dashboard'))}>
-      <BackArrow src={BackArrowIcon}/>
-      Back to my shivas
+      <div>
+        <BackArrow src={BackArrowIcon}/>
+        Back to my shivas
+      </div>
     </div>
   )
 }
 
 const NewShiva = () => {
+  const [step, setStep] = useState(0);
+  const numOfSteps = 4
+
+  const nextStep = () => {
+    if(step < numOfSteps){
+      setStep(step+1)
+    }
+  }
+
+  const createShiva = () => {
+    setStep(0)
+  }
+  const renderStep = () => {
+    switch(step){
+      case 0:
+        return (<BasicDetails next={nextStep}/>)
+      case 1:
+        return (<VideoChatLink next={nextStep}/>)
+      case 2:
+        return (<Mourners next={nextStep}/>)
+      case 3:
+        return (<VisitingHours next={createShiva}/>)
+    }
+  }
   return(
     <Wrapper>
       <Back/>
+       {renderStep()}
     </Wrapper>
   )
 }
@@ -41,4 +72,4 @@ const mapStateToProps = (state: AppState) => ({
   shivaState: state.shiva,
 })
 
-export default withRouter(connect(mapStateToProps, {})(NewShiva))
+export default connect(mapStateToProps, {})(NewShiva)
