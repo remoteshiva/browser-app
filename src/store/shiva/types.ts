@@ -6,20 +6,23 @@ export interface Mourner {
 }
 
 export interface Shiva {
-    id: string
+    _id: string
     nameOfDeceased: string
     startDate: Moment
     endDate: Moment
     message?: string
     videoLink?: string
-    mourners: Mourner[]    
+    mourners: Mourner[]
+    mournerKey: string
+    visitorKey: string   
 }
 
 
 export interface ShivaState {
-    readonly loading: boolean
-    readonly shivas: Shiva[]
-    readonly error?: string 
+    loading: boolean
+    entities: {[key: string]: Shiva}   
+    shivas: string[]
+    error?: string 
 }
 
 export enum ShivaActions {
