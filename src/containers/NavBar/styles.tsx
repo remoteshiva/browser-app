@@ -21,3 +21,14 @@ export const MenuItem = styled.li`
     line-height: 37px;
   }
 `
+
+export const UserBarWrapper = styled.ul`
+  ${tw`flex flex-row`}
+  color: ${props => props.theme.colors.richGold};
+  font-size: 16px;
+  img {
+    width: 24px;
+    height: 24px;
+    margin-right:8px;
+  }
+`

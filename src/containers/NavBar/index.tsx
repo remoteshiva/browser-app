@@ -1,10 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Logo from '../../assets/img/logo.svg'
+import Avatar from '../../assets/img/avatar.svg'
 import { AppState } from '../../store'
 import { User } from '../../store/auth/types'
 import { loginUser } from '../../store/auth/actions'
-import  { Wrapper, NavWrapper } from './styles'
+import  { Wrapper, NavWrapper, UserBarWrapper } from './styles'
 import LoginBar from './LoginBar'
 
 
@@ -12,9 +13,10 @@ interface UserBarProps {
   user: User
 }
 const UserBar = ({user}: UserBarProps) => (
-  <ul className="flex flex-row">
-    <p>{user.firstName}</p>
-  </ul>
+  <UserBarWrapper>
+    <img src={Avatar} alt="Avatar"/>
+    <span>Hi, {user.firstName}</span>
+  </UserBarWrapper>
 )
 
 interface NavBarProps {

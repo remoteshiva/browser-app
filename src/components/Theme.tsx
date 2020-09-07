@@ -8,6 +8,7 @@ const colors = {
   romance: '#F5EFE8',
   doveGray: '#7B776C',
   cardinal: '#c82323',
+  richGold: '#924623'
 }
 
 const fonts = ['Lato', 'Lora', 'sans-serif']
