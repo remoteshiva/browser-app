@@ -11,7 +11,7 @@ export const test_user: User = {
 
 export const shivas: Shiva[] = [
     {
-        id: cuid(),
+        _id: 'etXi0EzISAbRF8SH',
         nameOfDeceased: 'Brick Tamland',
         startDate: moment(),
         endDate: moment(),
@@ -21,9 +21,11 @@ export const shivas: Shiva[] = [
                 name: 'Ron Burgundy',
                 relationship: 'Best Friend'
             }
-        ]
+        ],
+        mournerKey: 'HgyQFcacW7',
+        visitorKey: 'YpNVU8ZkOz' 
     },{
-        id: cuid(),
+        _id: 'nYHti5evgaCynqKc',
         nameOfDeceased: 'Champ Kind',
         startDate: moment(),
         endDate: moment(),
@@ -33,9 +35,11 @@ export const shivas: Shiva[] = [
                 name: 'Ron Burgundy',
                 relationship: 'Best Friend'
             }
-        ]
+        ],
+        mournerKey: 'Kw9sFWi6JX',
+        visitorKey: 'Y8cxY0KKGl' 
     },{
-        id: cuid(),
+        _id: 'fUzzVqRoRde0ihGM',
         nameOfDeceased: 'Brian Fantana',
         startDate: moment(),
         endDate: moment(),
@@ -45,6 +49,8 @@ export const shivas: Shiva[] = [
                 name: 'Ron Burgundy',
                 relationship: 'Best Friend'
             }
-        ]
+        ],
+        mournerKey: '0PaCMhDDrD',
+        visitorKey: 'jPIFUxMDIx' 
     }
 ]

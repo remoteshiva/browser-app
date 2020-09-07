@@ -21,10 +21,7 @@ const reducer: Reducer<ShivaState> = (state=initialState, action: ActionTypes): 
           ...state.entities,
           ...newEntities
         },
-        shivas: [
-          ...state.shivas,
-          ...action.payload.map(shiva => shiva._id)
-        ],
+        shivas: Array.from(new Set([...state.shivas, ...action.payload.map(shiva => shiva._id)])),
         loading: false
       }
     }
