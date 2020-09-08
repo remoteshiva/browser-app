@@ -3,7 +3,7 @@ import { Route, Switch, Redirect, RouteProps } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { fetchShivas } from '../../store/shiva/actions'
 import { AppState } from '../../store'
-import { User } from '../../store/auth/types'
+import { Session } from '../../store/auth/types'
 import { MainWrapper } from './styles'
 import Home from '../../pages/Home'
 import Login from '../../pages/login'
@@ -12,12 +12,12 @@ import NewShiva from '../../pages/NewShiva'
 
 interface privateRouteProps extends RouteProps{
     component: any
-    user: User | null
+    session: Session | null
 }
 
 export const PrivateRoute = (props: privateRouteProps) => {
   
-    if (!props.user) {
+    if (!props.session) {
         const renderComponent = () => <Redirect to={{ pathname: '/login' }} />;
         return <Route {...props} component={renderComponent} render={undefined} />;
     } else {
@@ -26,22 +26,22 @@ export const PrivateRoute = (props: privateRouteProps) => {
 }
 
 interface Props {
-    user: User | null
+    session: Session | null
 }
 
-const Main = ({user}: Props) => {
+const Main = ({session}: Props) => {
   return(
     <MainWrapper> 
       <Switch>
         <Route path="/" exact component={ Home }/>
         <Route path="/login" exact component={ Login }/>
         <PrivateRoute 
-          user={user}
+          session={session}
           path="/dashboard"
           exact component={ Dashboard }
         />
         <PrivateRoute 
-          user={user}
+          session={session}
           path='/newshiva'
            exact component={ NewShiva }
         />
@@ -51,7 +51,7 @@ const Main = ({user}: Props) => {
 }
 
 const mapStateToProps = (state: AppState) => ({
-    user: state.auth.user,
+    session: state.auth.session,
   })
   
 export default connect(mapStateToProps, {fetchShivas})(Main)

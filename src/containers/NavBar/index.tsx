@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import Logo from '../../assets/img/logo.svg'
 import Avatar from '../../assets/img/avatar.svg'
 import { AppState } from '../../store'
-import { User } from '../../store/auth/types'
+import { Session, User } from '../../store/auth/types'
 import { loginUser } from '../../store/auth/actions'
 import  { Wrapper, NavWrapper, UserBarWrapper } from './styles'
 import LoginBar from './LoginBar'
@@ -20,11 +20,11 @@ const UserBar = ({user}: UserBarProps) => (
 )
 
 interface NavBarProps {
-  user: User | null
+  session: Session | null
   loginUser: any
 }
 
-const NavBar = ({user, loginUser}: NavBarProps) => (
+const NavBar = ({session, loginUser}: NavBarProps) => (
   <Wrapper>
     <NavWrapper>
         <div>
@@ -32,13 +32,13 @@ const NavBar = ({user, loginUser}: NavBarProps) => (
               <img className="hidden lg:block h-8 w-auto" src={Logo} alt="RemoteShiva logo"/>
             </a>
         </div>
-        { user ? <UserBar user={user}/> : <LoginBar clickHandler={loginUser}/> }
+        { session ? <UserBar user={session.user}/> : <LoginBar clickHandler={loginUser}/> }
     </NavWrapper>
   </Wrapper>
 )
 
 const mapStateToProps = (state: AppState) => ({
-  user: state.auth.user,
+  session: state.auth.session,
 })
 
 export default connect(mapStateToProps, {loginUser})(NavBar)

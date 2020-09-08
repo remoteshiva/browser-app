@@ -1,14 +1,17 @@
-// import { cuid } from 'cuid' 
 
 export interface User {
-    // id: cuid
     readonly firstName: string
     readonly lastName: string
 }
 
+export interface Session {
+    token: string
+    user: User
+}
+
 export interface AuthState {
     readonly loading: boolean
-    readonly user: User | null
+    readonly session: Session | null
     readonly error?: string 
 }
 
@@ -26,7 +29,7 @@ interface LoginRequest {
 
 interface LoginSuccess {
     type: typeof AuthActions.LOGIN_SUCCESS
-    payload: User
+    payload: Session
 }
 
 interface LoginError {

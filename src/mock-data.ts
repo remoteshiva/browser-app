@@ -1,11 +1,14 @@
 import cuid from 'cuid';
 import moment from 'moment'
-import { User } from './store/auth/types'
+import { Session } from './store/auth/types'
 import { Shiva, Mourner } from './store/shiva/types'
 
-export const test_user: User = {
-    firstName: 'Ron',
-    lastName: 'Burgundy'
+export const test_session: Session = {
+    token: 'aU3BuL62emYeFyGpkYpZ',
+    user: {
+        firstName: 'Ron',
+        lastName: 'Burgundy'
+    }
 }
 
 
