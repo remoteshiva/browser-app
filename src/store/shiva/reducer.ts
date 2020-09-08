@@ -6,6 +6,8 @@ export const initialState: ShivaState = {
     loading: false,
     entities: {},
     shivas: [],
+    visitorKeys: {},
+    mournerKeys: {}
 }
 
 const reducer: Reducer<ShivaState> = (state=initialState, action: ActionTypes): ShivaState => {
@@ -15,6 +17,8 @@ const reducer: Reducer<ShivaState> = (state=initialState, action: ActionTypes): 
     }
     case ShivaActions.FETCH_SHIVAS_SUCCESS: {
       const newEntities = arrayToObject<Shiva>(action.payload)
+      const newVisitorKeys = Object.assign({}, ...action.payload.map(shiva => ({[shiva.visitorKey]: shiva._id})))
+      const newMournerKeys = Object.assign({}, ...action.payload.map(shiva => ({[shiva.mournerKey]: shiva._id})))
       return {
         ...state,
         entities: {
@@ -22,6 +26,14 @@ const reducer: Reducer<ShivaState> = (state=initialState, action: ActionTypes): 
           ...newEntities
         },
         shivas: Array.from(new Set([...state.shivas, ...action.payload.map(shiva => shiva._id)])),
+        visitorKeys : {
+          ...state.visitorKeys,
+          ...newVisitorKeys
+        },
+        mournerKeys : {
+          ...state.mournerKeys,
+          ...newMournerKeys
+        },
         loading: false
       }
     }
