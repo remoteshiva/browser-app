@@ -1,15 +1,25 @@
 import { Action } from "redux";
 import { ThunkAction } from "redux-thunk";
-import { ShivaActions } from './types'
-import { typedAction } from '../helpers'
+import { 
+    fetchShivaListRequest,
+    fetchShivaListSuccess,
+    deleteShivaRequest,
+    deleteShivaSuccess,
+} from './types'
 import { shivas } from '../../mock-data'
 import { AppState } from "../";
 
 
-export const fetchShivas = (
-) : ThunkAction<void, AppState, null, Action<string>> => async dispatch => {
-    dispatch(typedAction(ShivaActions.FETCH_SHIVAS_REQUEST))
+export const fetchShivas = () : ThunkAction<void, AppState, null, Action<string>> => async dispatch => {
+    dispatch(fetchShivaListRequest())
     setTimeout(() => {
-        dispatch(typedAction(ShivaActions.FETCH_SHIVAS_SUCCESS, shivas))
+        dispatch(fetchShivaListSuccess(shivas))
+    }, 1000)
+}
+
+export const deleteShiva = (shivaId: string) : ThunkAction<void, AppState, null, Action<string>> => async dispatch => {
+    dispatch(deleteShivaRequest())
+    setTimeout(() => {
+        dispatch(deleteShivaSuccess(shivaId))
     }, 1000)
 }

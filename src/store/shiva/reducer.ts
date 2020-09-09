@@ -1,5 +1,6 @@
 import { Reducer } from 'redux'
-import {ShivaActions, ActionTypes, ShivaState, Shiva } from './types'
+import * as ShivaActions from './constants'
+import { ActionTypes, ShivaState, Shiva } from './types'
 import { arrayToObject } from '../helpers'
 
 export const initialState: ShivaState = {
@@ -7,15 +8,16 @@ export const initialState: ShivaState = {
     entities: {},
     shivas: [],
     visitorKeys: {},
-    mournerKeys: {}
+    mournerKeys: {},
+    selectedShiva: null
 }
 
 const reducer: Reducer<ShivaState> = (state=initialState, action: ActionTypes): ShivaState => {
   switch(action.type){
-    case ShivaActions.FETCH_SHIVAS_REQUEST: {
+    case ShivaActions.FetchShivaListRequest: {
       return { ...state, loading: true}
     }
-    case ShivaActions.FETCH_SHIVAS_SUCCESS: {
+    case ShivaActions.FetchShivaListSuccess: {
       const newEntities = arrayToObject<Shiva>(action.payload)
       const newVisitorKeys = Object.assign({}, ...action.payload.map(shiva => ({[shiva.visitorKey]: shiva._id})))
       const newMournerKeys = Object.assign({}, ...action.payload.map(shiva => ({[shiva.mournerKey]: shiva._id})))
@@ -37,8 +39,17 @@ const reducer: Reducer<ShivaState> = (state=initialState, action: ActionTypes): 
         loading: false
       }
     }
-    case ShivaActions.FETCH_SHIVAS_ERROR: {
+    case ShivaActions.FetchShivaListError: {
       return { ...state, loading: false, error: action.payload }
+    }
+    case ShivaActions.DeleteShivaRequest: {
+      return state
+    }
+    case ShivaActions.DeleteShivaSuccess: {
+      return state
+    }
+    case ShivaActions.DeleteShivaError: {
+      return state
     }
     default: {
       return state
