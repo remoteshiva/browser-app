@@ -2,7 +2,8 @@ import { applyMiddleware, combineReducers, createStore } from 'redux'
 import { createBrowserHistory } from 'history'
 import thunk from 'redux-thunk'
 import { routerMiddleware, connectRouter } from 'connected-react-router'
-import { composeWithDevTools } from "redux-devtools-extension"
+import { composeWithDevTools } from 'redux-devtools-extension'
+import { loginUser } from './auth/actions'
 import { AuthReducer } from './auth/reducer'
 import { ShivaReducer } from './shiva/reducer'
 
@@ -22,7 +23,7 @@ export default function configureStore() {
 
     /****************************** */
     /*  This should only be used to skip authentication during development */
-    // store.dispatch(() => {loginUser('ronb', 'password')})
+    // store.dispatch(loginUser('ronb', 'password'))
     return store
 }
 

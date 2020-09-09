@@ -3,7 +3,7 @@ import { connect, useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import { AppState } from '../../store'
 import { ShivaState } from '../../store/shiva/types'
-import { fetchShivas } from '../../store/shiva/actions'
+import { fetchShivas, deleteShiva } from '../../store/shiva/actions'
 import ShivaList from '../../components/ShivaCard/list'
 
 
@@ -33,7 +33,10 @@ const Dashboard = (props:DashboardProps) => {
     return props.shivaState.loading ? (<div>loading ...</div>) : (
         <Wrapper>
             <h1>My Shivas</h1>
-            <ShivaList entities={props.shivaState.entities} shivas={props.shivaState.shivas}/>
+            <ShivaList 
+                entities={props.shivaState.entities} 
+                shivas={props.shivaState.shivas}
+            />
         </Wrapper>
     )
 }
@@ -42,4 +45,4 @@ const mapStateToProps = (state: AppState) => ({
     shivaState: state.shiva,
 })
 
-export default connect(mapStateToProps, {fetchShivas})(Dashboard)
+export default connect(mapStateToProps, {fetchShivas, deleteShiva})(Dashboard)

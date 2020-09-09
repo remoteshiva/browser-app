@@ -9,6 +9,7 @@ import Home from '../../pages/Home'
 import Login from '../../pages/login'
 import Dashboard from '../../pages/Dashboard'
 import NewShiva from '../../pages/NewShiva'
+import EditShiva from '../../pages/Shiva'
 
 interface privateRouteProps extends RouteProps{
     component: any
@@ -33,7 +34,7 @@ const Main = ({session}: Props) => {
   return(
     <MainWrapper> 
       <Switch>
-        <Route path="/" exact component={ Home }/>
+        <Route path="/" exact component={ EditShiva }/>
         <Route path="/login" exact component={ Login }/>
         <PrivateRoute 
           session={session}
@@ -44,6 +45,11 @@ const Main = ({session}: Props) => {
           session={session}
           path='/newshiva'
            exact component={ NewShiva }
+        />
+        <Route 
+          session={session}
+          path='/shiva/:id'
+           exact component={ EditShiva }
         />
         </Switch>
         </MainWrapper>

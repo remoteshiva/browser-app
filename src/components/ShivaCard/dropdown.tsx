@@ -2,23 +2,27 @@ import React, { useState } from "react";
 import {DropdownContainer, DropdownItem, DropdownWrapper, DropdownButton} from './styles'
 import MenuHandle from '../../assets/img/shiva-menu.svg'
 
-const Dropdown = () => {
+export interface MenuItem {
+  id: number,
+  text: string,
+  props?: {
+    color: string
+  }
+}
+
+interface Props {
+  menu: MenuItem[]
+  menuClickHandler: (menu: MenuItem) => void
+}
+const Dropdown = ({menu, menuClickHandler}: Props) => {
   const [isActive, setActive] = useState(false);
 
   const handleDropdownClick = () => setActive(!isActive);
 
   const handleMenuClick = (index: number) => {
-    console.log(menu[index])
     setActive(false)
+    menuClickHandler(menu[index])
   }
-
-  const menu = [
-    {id:1, caption:'Copy link for mourners'},
-    {id:2, caption:'Copy link for visitors'},
-    {id:3, caption:'Edit'},
-    {id:4, caption:'Duplicate'},
-    {id:5, caption:'Delete', props: {color: '#c82323'}},
-  ]
 
   return(
     <DropdownWrapper 
@@ -36,7 +40,7 @@ const Dropdown = () => {
               key={item.id}
               onClick={()=> handleMenuClick(index)}
               {...item.props}>
-                {item.caption}
+                {item.text}
               </DropdownItem>)
             )
           }

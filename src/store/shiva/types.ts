@@ -14,7 +14,8 @@ export interface Shiva {
     videoLink?: string
     mourners: Mourner[]
     mournerKey: string
-    visitorKey: string   
+    visitorKey: string
+    titleImage: URL | null   
 }
 export interface ShivaState {
     loading: boolean
@@ -67,6 +68,11 @@ export type DeleteShivaSuccess = ActionType<typeof deleteShivaSuccess>
 export const deleteShivaError = createAction(ShivaActionTypes.DeleteShivaError)<string>()
 export type DeleteShivaError = ActionType<typeof deleteShivaError>
 
+
+//
+export const selectShiva = createAction(ShivaActionTypes.SelectShiva)<string>()
+export type SelectShiva = ActionType<typeof selectShiva>
+
 export type ActionTypes = 
     FetchShivaListRequest  | 
     FetchShivaListSuccess  | 
@@ -79,7 +85,8 @@ export type ActionTypes =
     CreateShivaError    |
     DeleteShivaRequest  |
     DeleteShivaSuccess  |
-    DeleteShivaError    
+    DeleteShivaError    |
+    SelectShiva
 
 
 

@@ -3,8 +3,12 @@ import { ThunkAction } from "redux-thunk";
 import { 
     fetchShivaListRequest,
     fetchShivaListSuccess,
+    fetchShivaByIdRequest,
+    fetchShivaByIdSuccess,
+    fetchShivaByIdError,
     deleteShivaRequest,
     deleteShivaSuccess,
+    selectShiva
 } from './types'
 import { shivas } from '../../mock-data'
 import { AppState } from "../";
@@ -16,6 +20,21 @@ export const fetchShivas = () : ThunkAction<void, AppState, null, Action<string>
         dispatch(fetchShivaListSuccess(shivas))
     }, 1000)
 }
+
+export const fetchShivaById = (shivaId: string) : ThunkAction<void, AppState, null, Action<string>> => async dispatch => {
+    dispatch(fetchShivaByIdRequest())
+    setTimeout(()=>{
+        const shiva = shivas.find(shiva => shiva._id === shivaId)
+        if (shiva){
+            console.log('i got the shiva', shiva)
+            dispatch(fetchShivaByIdSuccess(shiva))
+            dispatch(selectShiva(shiva._id))
+
+        } else {
+            dispatch(fetchShivaByIdError('cannot find it'))
+        }
+    },1000)
+} 
 
 export const deleteShiva = (shivaId: string) : ThunkAction<void, AppState, null, Action<string>> => async dispatch => {
     dispatch(deleteShivaRequest())

@@ -1,7 +1,8 @@
 import { Reducer } from 'redux'
 import * as ShivaActions from './constants'
-import { ActionTypes, ShivaState, Shiva } from './types'
+import { ActionTypes, ShivaState, Shiva, selectShiva } from './types'
 import { arrayToObject } from '../helpers'
+import { action } from 'typesafe-actions'
 
 export const initialState: ShivaState = {
     loading: false,
@@ -50,6 +51,25 @@ const reducer: Reducer<ShivaState> = (state=initialState, action: ActionTypes): 
     }
     case ShivaActions.DeleteShivaError: {
       return state
+    }
+    case ShivaActions.FetchShivaByIdRequest: {
+      return {...state, loading: true}
+    }
+    case ShivaActions.FetchShivaByIdSuccess: {
+      const shiva = action.payload
+      return {
+        ...state,
+        loading: false,
+        entities: {
+          ...state.entities, ...{[shiva._id]: shiva }
+        }
+      }
+    }
+    case ShivaActions.SelectShiva: {
+      return {
+        ...state,
+        selectedShiva: action.payload
+      }
     }
     default: {
       return state

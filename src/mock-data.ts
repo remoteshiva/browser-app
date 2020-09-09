@@ -26,7 +26,8 @@ export const shivas: Shiva[] = [
             }
         ],
         mournerKey: 'HgyQFcacW7',
-        visitorKey: 'YpNVU8ZkOz' 
+        visitorKey: 'YpNVU8ZkOz',
+        titleImage: new URL('https://images.app.goo.gl/zQK4nwSP3PAiAgzt9')
     },{
         _id: 'nYHti5evgaCynqKc',
         nameOfDeceased: 'Champ Kind',
@@ -40,7 +41,8 @@ export const shivas: Shiva[] = [
             }
         ],
         mournerKey: 'Kw9sFWi6JX',
-        visitorKey: 'Y8cxY0KKGl' 
+        visitorKey: 'Y8cxY0KKGl',
+        titleImage: new URL('https://images.app.goo.gl/MtQd4cBumMw8v1ndA')
     },{
         _id: 'fUzzVqRoRde0ihGM',
         nameOfDeceased: 'Brian Fantana',
@@ -54,6 +56,7 @@ export const shivas: Shiva[] = [
             }
         ],
         mournerKey: '0PaCMhDDrD',
-        visitorKey: 'jPIFUxMDIx' 
+        visitorKey: 'jPIFUxMDIx',
+        titleImage: new URL('https://images.app.goo.gl/BNKXcsuw5krraMiy7')
     }
 ]
