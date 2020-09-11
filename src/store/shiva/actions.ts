@@ -1,5 +1,6 @@
-import { Action } from "redux";
-import { ThunkAction } from "redux-thunk";
+import { Action } from 'redux'
+import { ThunkAction } from 'redux-thunk'
+import { push } from 'connected-react-router'
 import { 
     fetchShivaListRequest,
     fetchShivaListSuccess,
@@ -31,7 +32,8 @@ export const fetchShivaById = (shivaId: string) : ThunkAction<void, AppState, nu
             dispatch(selectShiva(shiva._id))
 
         } else {
-            dispatch(fetchShivaByIdError('cannot find it'))
+            dispatch(fetchShivaByIdError({code: 404, error: 'cannot find it'}))
+            dispatch(push('/404'))
         }
     },1000)
 } 

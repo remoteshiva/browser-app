@@ -1,22 +1,42 @@
-import { Moment } from 'moment'
+import moment from 'moment'
 import { ActionType, createAction } from 'typesafe-actions'
 import * as ShivaActionTypes from './constants'
+import { BackendError } from '../types'
 export interface Mourner {
     name: string
     relationship: string
 }
+
+export interface Visit {
+    date: moment.Moment,
+    length: number
+    visitors: string[]
+}
 export interface Shiva {
     _id: string
     nameOfDeceased: string
-    startDate: Moment
-    endDate: Moment
+    startDate: moment.Moment
+    endDate: moment.Moment
     message?: string
     videoLink?: string
     mourners: Mourner[]
     mournerKey: string
     visitorKey: string
     titleImage: URL | null   
+    visits: Visit[]
 }
+
+export const emptyShiva: Shiva = {
+    _id: '',
+    nameOfDeceased: '',
+    startDate: moment(),
+    endDate: moment(),
+    mourners: [],
+    mournerKey: '',
+    visitorKey: '',
+    visits: [],
+    titleImage: null,
+  }
 export interface ShivaState {
     loading: boolean
     entities: {[key: string]: Shiva}        // all shiva objects, arranged by id
@@ -24,7 +44,7 @@ export interface ShivaState {
     visitorKeys: {[key:string]: string}     // map visitor keys to shiva ids
     mournerKeys: {[key:string]: string}     // map mourner keys to shiva ids
     selectedShiva: string | null            // id of selected shiva
-    error?: string 
+    error?: BackendError 
 }
 
 //
@@ -34,7 +54,7 @@ export type FetchShivaListRequest = ActionType<typeof fetchShivaListRequest>
 export const fetchShivaListSuccess = createAction(ShivaActionTypes.FetchShivaListSuccess)<Shiva[]>()
 export type FetchShivaListSuccess = ActionType<typeof fetchShivaListSuccess>
 
-export const fetchShivaListError = createAction(ShivaActionTypes.FetchShivaListError)<string>()
+export const fetchShivaListError = createAction(ShivaActionTypes.FetchShivaListError)<BackendError>()
 export type FetchShivaListError = ActionType<typeof fetchShivaListError>
 
 //
@@ -44,7 +64,7 @@ export type FetchShivaByIdRequest = ActionType<typeof fetchShivaByIdRequest>
 export const fetchShivaByIdSuccess = createAction(ShivaActionTypes.FetchShivaByIdSuccess)<Shiva>()
 export type FetchShivaByIdSuccess = ActionType<typeof fetchShivaByIdSuccess>
 
-export const fetchShivaByIdError = createAction(ShivaActionTypes.FetchShivaByIdError)<string>()
+export const fetchShivaByIdError = createAction(ShivaActionTypes.FetchShivaByIdError)<BackendError>()
 export type FetchShivaByIdError = ActionType<typeof fetchShivaByIdError>
 
 
@@ -55,7 +75,7 @@ export type CreateShivaRequest = ActionType<typeof createShivaRequest>
 export const createShivaSuccess = createAction(ShivaActionTypes.CreateShivaSuccess)<Shiva>()
 export type CreateShivaSuccess = ActionType<typeof createShivaSuccess>
 
-export const createShivaError = createAction(ShivaActionTypes.CreateShivaError)<string>()
+export const createShivaError = createAction(ShivaActionTypes.CreateShivaError)<BackendError>()
 export type CreateShivaError = ActionType<typeof createShivaError>
 
 //
@@ -65,7 +85,7 @@ export type DeleteShivaRequest = ActionType<typeof deleteShivaRequest>
 export const deleteShivaSuccess = createAction(ShivaActionTypes.DeleteShivaSuccess)<string>()
 export type DeleteShivaSuccess = ActionType<typeof deleteShivaSuccess>
 
-export const deleteShivaError = createAction(ShivaActionTypes.DeleteShivaError)<string>()
+export const deleteShivaError = createAction(ShivaActionTypes.DeleteShivaError)<BackendError>()
 export type DeleteShivaError = ActionType<typeof deleteShivaError>
 
 
