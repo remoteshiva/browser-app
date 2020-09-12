@@ -11,6 +11,9 @@
 # firebase
 .firebase
 
+#storybook
+/src/stories
+
 # production
 /build
 
@@ -24,3 +27,5 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+

@@ -8,6 +8,7 @@
     "cuid": "^2.1.8",
     "firebase": "^7.19.1",
     "moment": "^2.27.0",
+    "moment-range": "^4.0.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.1",
@@ -20,6 +21,14 @@
     "typesafe-actions": "^5.1.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.11.6",
+    "@storybook/addon-actions": "^6.0.21",
+    "@storybook/addon-controls": "^6.0.21",
+    "@storybook/addon-essentials": "^6.0.21",
+    "@storybook/addon-links": "^6.0.21",
+    "@storybook/node-logger": "^6.0.21",
+    "@storybook/preset-create-react-app": "^3.1.4",
+    "@storybook/react": "^6.0.21",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
@@ -32,10 +41,13 @@
     "@types/react-router-dom": "^5.1.5",
     "@types/redux": "^3.6.0",
     "@types/redux-thunk": "^2.1.0",
+    "@types/storybook__react": "^5.2.1",
     "@types/styled-components": "^5.1.2",
     "autoprefixer": "^9.8.6",
+    "babel-loader": "^8.1.0",
     "babel-plugin-macros": "^2.8.0",
     "postcss-cli": "^7.1.1",
+    "react-is": "^16.13.1",
     "redux-devtools-extension": "^2.13.8",
     "twin.macro": "^1.7.0",
     "typescript": "^3.7.5"
@@ -47,7 +59,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "clean-install": "rm -rf node_modules && rm -f package-lock.json && npm install"
+    "clean-install": "rm -rf node_modules && rm -f package-lock.json && npm install",
+    "storybook": "start-storybook -p 6006 -s public",
+    "build-storybook": "build-storybook -s public"
   },
   "eslintConfig": {
     "extends": "react-app"
