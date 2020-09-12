@@ -32,8 +32,11 @@ const StepLayout = ({title, step, submit, submitText, children, withGraphics}:Pr
     <Wrapper>
       <div style={{width: '200px'}}>
         <Stepper
-        steps={['one','two','three','four']}
-        currentStep={step}
+          numOfSteps={4}
+          selectedStep={step}
+          diameter={36}
+          gap={100}
+          width={100}
         />
       </div>
       <div id='the-step' style={{width: '327px'}}>

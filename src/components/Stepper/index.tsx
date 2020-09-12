@@ -6,21 +6,25 @@ import {
  } from './styles'
 
 interface StepperProps {
-  currentStep: number
-  steps: string[]
+  width: number
+  numOfSteps: 4
+  diameter: number
+  gap?: number
+  selectedStep: number
 }
 
 
-const Stepper = ({currentStep, steps}: StepperProps) => {
+const Stepper = ({selectedStep, numOfSteps, diameter, gap, width=100}: StepperProps) => {
+  const steps = Array.from({length:numOfSteps}, (_,i) => i)   
   return(
-    <StepperWrapper width={100}>
-      { steps.map( (step, index)=>{
+    <StepperWrapper width={width}>
+      { steps.map( (_, index)=>{
         return(
           <StepNumber
             key={index}
-            selected={index+1 === currentStep ? true: false}
-            radius={36}
-            gap={100}
+            selected={index+1 === selectedStep ? true: false}
+            diameter={diameter}
+            gap={gap}
           >
             {index+1}
           </StepNumber>

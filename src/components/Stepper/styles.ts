@@ -7,6 +7,8 @@ interface StepperWrapperProps {
 
 export const StepperWrapper = styled.ul<StepperWrapperProps>`
   width: ${props => `${props.width}px`};
+  list-style-type:none;
+  padding-inline-start: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -17,7 +19,7 @@ export const StepperWrapper = styled.ul<StepperWrapperProps>`
 
 
 interface StepNumberProps {
-  readonly radius: number
+  readonly diameter: number
   readonly gap?: number
   readonly selected?: boolean
 }
@@ -27,12 +29,16 @@ export const StepNumber = styled.li<StepNumberProps>`
   border: 1px solid ${props=> props.selected ? props.theme.colors.richGold : props.theme.colors.hintOfRed};
   background-color: ${props=> props.selected ? props.theme.colors.richGold : props.theme.colors.hintOfRed};
   color: ${props=> props.selected ? '#fff' : props.theme.colors.richGold};
-  width: ${props => `${props.radius}px`};
-  height: ${props => `${props.radius}px`};
+  width: ${props => `${props.diameter}px`};
+  height: ${props => `${props.diameter}px`};
+  line-height: ${props => `${props.diameter}px`};
+  font-family: 'Lato';
+  font-weight: bold;
+  font-size: 16px;
   padding: 3px;
   text-align: center;
   z-index:10;
-  margin-bottom: ${props => props.gap ? `${props.gap}px` : `${props.radius}px`};
+  margin-bottom: ${props => props.gap ? `${props.gap}px` : `${props.diameter}px`};
   &:last-of-type {
     margin-bottom:0;
   }
