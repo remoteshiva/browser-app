@@ -3,21 +3,28 @@ import * as Moment from 'moment';
 import { extendMoment } from 'moment-range';
 import { 
   CalendarWrapper,
-  Column,
+  ColumnWrapper,
   GridWrapper,
   VRulerWrapper,
   HRulerWrapper,
   Day,
   Hour,
-  Timezone
+  Timezone,
+  EventWrapper
 } from './styles'
+import { Shiva, Visit } from '../../store/shiva/types'
+import { shivas } from '../../mock-data';
 
 const moment = extendMoment(Moment);
 
 interface CalendarProps {
+  shiva: Shiva
+}
+
+interface RulerProps {
   startDate: moment.Moment
 }
-const HorizontalRuler = ({startDate}: CalendarProps) => {
+const HorizontalRuler = ({startDate}: RulerProps) => {
   const toDate = startDate.clone().add('days', 6);
   const range = moment().range(startDate, toDate);
   const days = Array.from(range.by('day'));
@@ -41,27 +48,49 @@ const VerticalRuler = () => {
   )
 }
 
-const Grid = () => (
-  <GridWrapper>
-    <Column/>
-    <Column/>
-    <Column/>
-    <Column/>
-    <Column/>
-    <Column/>
-    <Column/>
-  </GridWrapper>
+interface EventProps {
+  visit: Visit
+}
+const EventBlock = ({visit}: EventProps) =>(
+  <EventWrapper style={{top: '100px'}}>
+
+  </EventWrapper>
+)
+interface ColumnProps {
+  visits: Visit[]
+}
+const Column = ({visits}: ColumnProps) => (
+  <ColumnWrapper>
+    {visits.map((visit, i) => <EventBlock key={i} visit={visit}/>)}
+  </ColumnWrapper>
 )
 
-const Calendar = ({startDate}: CalendarProps) => (
+const Grid = ({shiva}: CalendarProps) => {
+  if(shiva.visits.length>0){
+    console.log('dates', shiva.visits[0].date)
+    console.log('other date',shiva.startDate.clone().add('days', 2)  )
+  }
+  return(
+  <GridWrapper>
+    <Column visits={shiva.visits.filter(visit => visit.date === shiva.startDate )}/>
+    <Column visits={shiva.visits.filter(visit => visit.date.date() === shiva.startDate.clone().add('days', 1).date() )}/>
+    <Column visits={shiva.visits.filter(visit => visit.date.date() === shiva.startDate.clone().add('days', 2).date() )}/>
+    <Column visits={shiva.visits.filter(visit => visit.date.date() === shiva.startDate.clone().add('days', 3).date() )}/>
+    <Column visits={shiva.visits.filter(visit => visit.date.date() === shiva.startDate.clone().add('days', 4).date() )}/>
+    <Column visits={shiva.visits.filter(visit => visit.date.date() === shiva.startDate.clone().add('days', 5).date() )}/>
+    <Column visits={shiva.visits.filter(visit => visit.date.date() === shiva.startDate.clone().add('days', 6).date() )}/>
+  </GridWrapper>
+)}
+
+const Calendar = ({shiva}: CalendarProps) => (
   <CalendarWrapper>
     <div>
       <Timezone>EST</Timezone>
       <VerticalRuler/>
     </div>
     <div style={{  flex: 1, width: '100%'}}>
-      <HorizontalRuler startDate={startDate}/>
-      <Grid/>
+      <HorizontalRuler startDate={shiva.startDate}/>
+      <Grid shiva={shiva}/>
     </div>
   </CalendarWrapper>
    

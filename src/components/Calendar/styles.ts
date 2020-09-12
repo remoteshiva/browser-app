@@ -53,8 +53,16 @@ export const GridWrapper = styled.div`
   background-color: white;
 `
 
-export const Column = styled.div`
+export const ColumnWrapper = styled.div`
    background-image: repeating-linear-gradient(0deg, #f1edf6, #f1edf6 1px, white 1px, white 42px);
    background-position: 100px;
    height: 600px;
+   position: relative;
+`
+
+export const EventWrapper = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100px;
+  background-color: rgba(146, 70, 35, 0.12);
 `
