@@ -18,7 +18,11 @@ const menu: MenuItem[] = [
 ]
 
 
-const ShivaItem = (props:ShivaProps) => {
+const ShivaItem = ({
+  nameOfDeceased,
+  startDate,
+  endDate=startDate.clone().add('days', 6)
+}:ShivaProps) => {
   const dispatch = useDispatch()
 
   const handleMenuClick = (menu: MenuItem) => {
@@ -42,8 +46,8 @@ const ShivaItem = (props:ShivaProps) => {
         <Dropdown menu={menu} menuClickHandler={handleMenuClick}/>
       </div>
       <div className="flex content-end flex-wrap h-48">
-        <p>{props.nameOfDeceased}</p>
-        <ShivaDates>{props.startDate.format('L')} - {props.endDate.format('L')}</ShivaDates>
+        <p>{nameOfDeceased}</p>
+        <ShivaDates>{startDate.format('L')} - {endDate.format('L')}</ShivaDates>
       </div>
     </ShivaItemWrapper>
     )

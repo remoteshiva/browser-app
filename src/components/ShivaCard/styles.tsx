@@ -6,6 +6,7 @@ import { ClickOutside } from '../ClickOutside'
 export const ShivaListWrapper = styled.ul`
     display: flex;
     flex-flow: row wrap;
+    list-style-type:none;
 `
 
 const BaseItemWrapper = styled.li`
