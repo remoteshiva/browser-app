@@ -8,35 +8,36 @@ export interface Mourner {
 }
 
 export interface Visit {
-    date: moment.Moment,
-    length: number
-    visitors: string[]
+  date: moment.Moment,
+  length: number
+  mourners: number[]
+  visitors: string[]
 }
 export interface Shiva {
-    _id: string
-    nameOfDeceased: string
-    startDate: moment.Moment
-    endDate: moment.Moment
-    message?: string
-    videoLink?: string
-    mourners: Mourner[]
-    mournerKey: string
-    visitorKey: string
-    titleImage: URL | null   
-    visits: Visit[]
+  _id: string
+  nameOfDeceased: string
+  startDate: moment.Moment
+  endDate?: moment.Moment
+  message?: string
+  videoLink?: string
+  mourners: Mourner[]
+  mournerKey: string
+  visitorKey: string
+  titleImage: URL | null   
+  visits: Visit[]
 }
 
-export const emptyShiva: Shiva = {
-    _id: '',
-    nameOfDeceased: '',
-    startDate: moment(),
-    endDate: moment(),
-    mourners: [],
-    mournerKey: '',
-    visitorKey: '',
-    visits: [],
-    titleImage: null,
-  }
+export const createEmptyShiva = (): Shiva => ({
+  _id: '',
+  nameOfDeceased: '',
+  startDate: moment().startOf('day'),
+  mourners: [],
+  mournerKey: '',
+  visitorKey: '',
+  visits: [],
+  titleImage: null,
+})
+
 export interface ShivaState {
     loading: boolean
     entities: {[key: string]: Shiva}        // all shiva objects, arranged by id
