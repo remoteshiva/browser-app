@@ -6,11 +6,22 @@ import { SubmitButton } from './styles'
 
 const Wrapper = styled.div`
   display: flex;
+  justify-content: space-between;
   color: ${props=> props.theme.colors.heavyMetal};
   margin-top: 76px;
   h2{
     font-family: 'Lora';
     font-size: 34px;
+  }
+`
+
+const ImageWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  justify-content: flex-end;
+  img{
+    margin-right: 113px;
   }
 `
 
@@ -21,10 +32,6 @@ interface Props {
   submitText: string
   children: ReactNode
   withGraphics?: boolean
-}
-
-export interface StepProps {
-  next: () => void
 }
 
 const StepLayout = ({title, step, submit, submitText, children, withGraphics}:Props) => {
@@ -40,13 +47,13 @@ const StepLayout = ({title, step, submit, submitText, children, withGraphics}:Pr
         />
       </div>
       <div id='the-step' style={{width: '327px'}}>
-          <h2>{step}. {title}</h2>
-          {children}
-          <SubmitButton onClick={submit}>{submitText}</SubmitButton>
+        <h2>{step}. {title}</h2>
+        {children}
+        <SubmitButton onClick={submit}>{submitText}</SubmitButton>
       </div>
-      <div id='the-image' style={{flexGrow: 1, alignItems: 'right', justifyContent: 'right'}}>
-          {withGraphics ? <img src={BasicDetailsArt} alt='basic details'/> : null}
-      </div>
+      <ImageWrapper>
+        {withGraphics ? <img src={BasicDetailsArt} alt='basic details'/> : null}
+      </ImageWrapper>
     </Wrapper>
     )
 }

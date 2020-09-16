@@ -9,3 +9,24 @@ export const SubmitButton = styled.button`
   font-size: 18px;
   width: 100%;
 `
+
+export const StyledForm = styled.form`
+  width: 327px;
+  margin-top: 30px;
+  label{
+    color: ${props=> props.theme.colors.doveGray};
+    font-size: 16px;
+  }
+  input{
+    border-radius: 2px;
+    border: solid 1px ${props=> props.theme.colors.sauvignonLight};
+  }
+  textarea{
+    height: 132px;
+    resize: none;
+    border: solid 1px ${props=> props.theme.colors.sauvignonLight};
+    &::placeholder{
+      color: ${props=> props.theme.colors.dawn};
+    }
+  }
+`

@@ -5,11 +5,13 @@ import { ThemeProvider } from "styled-components"
 const colors = {
   heavyMetal: '#41413a',
   sauvignon: '#fdfaf9',
+  sauvignonLight: '#f9f4f0',
   romance: '#F5EFE8',
   doveGray: '#7B776C',
   cardinal: '#c82323',
   richGold: '#924623',
   hintOfRed: '#F4ECE9',
+  dawn: '#a09b8f',
   white: '#fff',
 }
 
@@ -29,7 +31,7 @@ interface RemoteShivaTheme {
   fonts: string[]
 }
 
-const theme = {
+export const theme = {
   colors,
   fonts,
   components,

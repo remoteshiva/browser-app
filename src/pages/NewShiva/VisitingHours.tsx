@@ -1,16 +1,20 @@
-import React from 'react'
-import StepLayout, { StepProps } from './Layout'
+import React, { useState } from 'react'
+import { StepProps, VisitingProps } from './types'
+import StepLayout from './Layout'
+import Calendar from '../../components/Calendar'
 
-const VisitingHours = (props: StepProps) => {
+const VisitingHours = ({submit}: StepProps<VisitingProps>) => {
+  const [values, setValues] = useState({visits: []})
   return(
     <StepLayout
       title={'Set visiting hours'}
       step={4}
       withGraphics={false}
-      submit={props.next}
+      submit={() => submit({...values})}
       submitText='Done'
     >
-      <div>Visiting Hours</div>
+    <Calendar editMode={true}/> 
+
     </StepLayout>
     )
 }
