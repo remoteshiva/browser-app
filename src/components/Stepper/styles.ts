@@ -41,6 +41,7 @@ export const StepNumber = styled.li<StepNumberProps>`
   &:last-of-type {
     margin-bottom:0;
   }
+  cursor: pointer !important;
 `
 
 export const StepConnector = styled.div`

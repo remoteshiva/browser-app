@@ -5,16 +5,19 @@ import {
   StepConnector
  } from './styles'
 
+
+const noop = (step:number) => {}
+
 interface StepperProps {
   width: number
-  numOfSteps: 4
+  numOfSteps: number
   diameter: number
   gap?: number
   selectedStep: number
+  onSelectStep?: (step:number) => void
 }
 
-
-const Stepper = ({selectedStep, numOfSteps, diameter, gap, width=100}: StepperProps) => {
+const Stepper = ({selectedStep, numOfSteps, diameter, gap, width=100, onSelectStep}: StepperProps) => {
   const steps = Array.from({length:numOfSteps}, (_,i) => i)   
   return(
     <StepperWrapper width={width}>
@@ -25,6 +28,7 @@ const Stepper = ({selectedStep, numOfSteps, diameter, gap, width=100}: StepperPr
             selected={index+1 === selectedStep ? true: false}
             diameter={diameter}
             gap={gap}
+            onClick={() => (onSelectStep ? onSelectStep(index+1) : noop)}
           >
             {index+1}
           </StepNumber>
