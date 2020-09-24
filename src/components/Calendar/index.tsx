@@ -36,14 +36,14 @@ const Calendar = ({
             </FlexColumn>
           </Row>
           <div style={{overflowY: 'auto'}}>
-          <Row>
-            <FixedColumn width={sideBarWidth}>
-              <VerticalRuler />
-            </FixedColumn>
-            <FlexColumn>
-              <Grid editMode={editMode} startDate={startDate} numOfDays={numOfDays} visits={visits}/>
-            </FlexColumn>
-          </Row>
+            <Row>
+              <FixedColumn width={sideBarWidth}>
+                <VerticalRuler />
+              </FixedColumn>
+              <FlexColumn>
+                <Grid editMode={editMode} startDate={startDate} numOfDays={numOfDays} visits={visits}/>
+              </FlexColumn>
+            </Row>
           </div>
         </ColumnContainer>
       </CalendarWrapper>

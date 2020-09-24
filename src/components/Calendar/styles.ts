@@ -14,7 +14,6 @@ export const CalendarWrapper = styled.div<CalendarWrapperProps>`
   background-color: white;
   padding: 38px 40px;
   height: ${props => props.height? props.height : 'auto'};
-  border: 1px solid purple;
 `
 
 export const Timezone = styled.div`
@@ -62,17 +61,36 @@ export const Day = styled.div`
   font-size: 16px;
 `
 
-interface GridWrapperProps {
+interface GridProps {
   numOfColumns: number
 }
-export const GridWrapper = styled.div<GridWrapperProps>`
-  flex: 1;
+export const GridContainer = styled.div<GridProps>`
   width: 100%;
   margin-top: 10px;
   display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  /* overflow-y:hidden; */
+`
+
+export const GridBackground = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  grid-column-start: 1;
+  grid-row-start: 1;
+  z-index: 1;
+  color: ${props=> props.theme.colors.doveGray};
+  font-size: 26px;
+  opacity: 0.62;
+`
+
+export const GridColumns = styled.div<GridProps>`
+  display: grid;
+  grid-column-start: 1;
+  grid-row-start: 1;
   grid-template-columns: repeat(${props => props.numOfColumns}, minmax(0, 1fr));
-  cursor: crosshair !important;
-  overflow-y:hidden;
+  z-index: 2;
 `
 
 interface ColumnWrapper {
@@ -80,12 +98,13 @@ interface ColumnWrapper {
 }
 export const ColumnWrapper = styled.div<ColumnWrapper>`
   box-sizing: border-box;
-  background-color: white;
+  background-color: transparent;
   background-image: repeating-linear-gradient(180deg, #f1edf6 , #f1edf6 1px, transparent 1px, transparent ${PIXELS_PER_HOUR}px);
   background-position: 100px;
   position: relative;
   height: ${props => props.height? props.height: 'auto'};
   overflow: hidden;
+  cursor: crosshair !important;
 `
 
 interface EventWrapperProps {

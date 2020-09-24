@@ -3,7 +3,7 @@ import * as Moment from 'moment'
 import { extendMoment } from 'moment-range'
 import { Visit } from '../../store/shiva/types'
 import Column from './Column'
-import { GridWrapper } from './styles'
+import { GridContainer, GridBackground, GridColumns } from './styles'
 
 const moment = extendMoment(Moment);
 
@@ -24,18 +24,21 @@ export const Grid = ({editMode, startDate, numOfDays, visits}: GridProps) => {
 
   const columnDays = Array.from({length: numOfDays}, (_, i) => startDate.clone().add(i, 'days'))
   return(
-    <GridWrapper numOfColumns={numOfDays}>
-      { columnDays.map((day, i) => (
-        <Column
-          key={i} 
-          editMode={editMode} 
-          day={day}
-          visits={visits}
-          scrollYOffset={offset}
-        />
-       )) 
-      }
-    </GridWrapper>
+    <GridContainer numOfColumns={numOfDays}>
+      <GridBackground>Click and drag to add visiting hours</GridBackground>
+      <GridColumns numOfColumns={numOfDays}>
+        { columnDays.map((day, i) => (
+          <Column
+            key={i} 
+            editMode={editMode} 
+            day={day}
+            visits={visits}
+            scrollYOffset={offset}
+          />
+        )) 
+        }
+      </GridColumns>
+    </GridContainer>
   )
 }
 
