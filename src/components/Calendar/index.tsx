@@ -1,34 +1,51 @@
 import React from 'react'
-import { Shiva, Visit } from '../../store/shiva/types'
+import { Visit } from '../../store/shiva/types'
+import { Row, ColumnContainer, FixedColumn, FlexColumn } from '../flexLayout'
 import { CalendarProvider } from './context'
 import { Grid } from './grid'
 import { VerticalRuler, HorizontalRuler } from './rulers'
-import { 
-  CalendarWrapper,
-  Timezone,
-} from './styles'
+import { CalendarWrapper, Timezone } from './styles'
 
 interface Props {
-  shiva: Shiva
+  startDate: moment.Moment
+  endDate?: moment.Moment
+  visits: Visit[]
   editMode: boolean
+  height?: string
 }
 const Calendar = ({
-  shiva,
-  editMode=false
+  startDate,
+  endDate,
+  visits,
+  editMode=false,
+  height
 }: Props) => {
 
-  const numOfDays = shiva.endDate ? shiva.endDate.diff(shiva.startDate, 'days') : 7
+  const sideBarWidth = 60
+  const numOfDays = endDate ? endDate.diff(startDate, 'days') : 7
   return(
     <CalendarProvider startHour={9} endHour={22}>
-      <CalendarWrapper>
-        <div>
-          <Timezone>EST</Timezone>
-          <VerticalRuler />
-        </div>
-        <div style={{  flex: 1, width: '100%'}}>
-          <HorizontalRuler startDate={shiva.startDate} numOfDays={numOfDays}/>
-          <Grid editMode={editMode} startDate={shiva.startDate} numOfDays={numOfDays} visits={shiva.visits}/>
-        </div>
+      <CalendarWrapper height={height}>
+        <ColumnContainer width={'100%'}>
+          <Row>
+            <FixedColumn width={sideBarWidth}>
+              <Timezone>EST</Timezone>
+            </FixedColumn>
+            <FlexColumn>
+              <HorizontalRuler startDate={startDate} numOfDays={numOfDays}/>
+            </FlexColumn>
+          </Row>
+          <div style={{overflowY: 'auto'}}>
+          <Row>
+            <FixedColumn width={sideBarWidth}>
+              <VerticalRuler />
+            </FixedColumn>
+            <FlexColumn>
+              <Grid editMode={editMode} startDate={startDate} numOfDays={numOfDays} visits={visits}/>
+            </FlexColumn>
+          </Row>
+          </div>
+        </ColumnContainer>
       </CalendarWrapper>
     </CalendarProvider>
   )

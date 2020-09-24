@@ -1,5 +1,4 @@
-import React, {FunctionComponent, createContext, ReactNode } from "react";
-
+import React, {FunctionComponent, createContext } from "react";
 
 export interface CalendarContextProps {
   startHour: number

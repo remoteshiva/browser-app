@@ -6,8 +6,15 @@ export const PIXELS_PER_MINUTE = PIXELS_PER_HOUR / 60
 export const SNAP = 15
 export type Pixels = number
 
-export const CalendarWrapper = styled.div`
+interface CalendarWrapperProps {
+  height?: string
+}
+export const CalendarWrapper = styled.div<CalendarWrapperProps>`
   display: flex;
+  background-color: white;
+  padding: 38px 40px;
+  height: ${props => props.height? props.height : 'auto'};
+  border: 1px solid purple;
 `
 
 export const Timezone = styled.div`
@@ -21,10 +28,7 @@ export const Timezone = styled.div`
   text-align: center;
 `
 export const VRulerWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
   width: 70px;
-  /* height: 600px; */
 `
 
 interface HRulerWrapper {
@@ -64,18 +68,24 @@ interface GridWrapperProps {
 export const GridWrapper = styled.div<GridWrapperProps>`
   flex: 1;
   width: 100%;
+  margin-top: 10px;
   display: grid;
   grid-template-columns: repeat(${props => props.numOfColumns}, minmax(0, 1fr));
-  background-color: white;
   cursor: crosshair !important;
+  overflow-y:hidden;
 `
 
-export const ColumnWrapper = styled.div`
-  background-image: repeating-linear-gradient(180deg, #f1edf6 , #f1edf6 1px, white 1px, white ${PIXELS_PER_HOUR}px);
+interface ColumnWrapper {
+  height?: string
+}
+export const ColumnWrapper = styled.div<ColumnWrapper>`
+  box-sizing: border-box;
+  background-color: white;
+  background-image: repeating-linear-gradient(180deg, #f1edf6 , #f1edf6 1px, transparent 1px, transparent ${PIXELS_PER_HOUR}px);
   background-position: 100px;
-  height: 600px;
   position: relative;
-  padding: 0 10px;
+  height: ${props => props.height? props.height: 'auto'};
+  overflow: hidden;
 `
 
 interface EventWrapperProps {
@@ -85,7 +95,9 @@ interface EventWrapperProps {
 
 export const EventWrapper = styled.div<EventWrapperProps>`
   position: absolute;
-  width: 100%;
+  box-sizing: border-box;
+  width: 90%;
+  margin: 0 5% 0 5%;
   height: ${ props => `${props.height}px`};
   top: ${ props => `${props.top}px`};
   background-color: rgba(146, 70, 35, 0.12);
