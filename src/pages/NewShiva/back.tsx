@@ -12,15 +12,20 @@ const BackArrow = styled.img`
   display: inline-block;
 `
 
+const BackWrapper = styled.div`
+  margin-bottom: 40px;
+  cursor: pointer !important;
+`
+
 const Back = () => {
   const dispatch = useDispatch()
   return(
-    <div onClick={() => dispatch(push('/dashboard'))}>
+    <BackWrapper onClick={() => dispatch(push('/dashboard'))}>
       <div>
         <BackArrow src={BackArrowIcon}/>
         Back to my shivas
       </div>
-    </div>
+    </BackWrapper>
   )
 }
 

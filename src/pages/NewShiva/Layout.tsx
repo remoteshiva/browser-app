@@ -1,61 +1,68 @@
 import React, { ReactNode } from 'react'
 import styled from 'styled-components'
-import BasicDetailsArt from '../../assets/img/add-basic-details.svg'
 import Stepper from '../../components/Stepper'
+import { Row, FixedColumn, FlexColumn } from '../../components/flexLayout'
 import { SubmitButton } from './styles'
 
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
+const noop = () => {}
+
+const H2 = styled.h2`
+  font-family: 'Lora';
+  font-size: 34px;
+  font-weight: 500;
   color: ${props=> props.theme.colors.heavyMetal};
-  margin-top: 76px;
-  h2{
-    font-family: 'Lora';
-    font-size: 34px;
-  }
+  margin-bottom: 25px;
 `
-
-const ImageWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-grow: 1;
-  justify-content: flex-end;
-  img{
-    margin-right: 113px;
-  }
-`
-
 interface Props {
   title: string
   step: number
   submit: ()=> void
   submitText: string
   children: ReactNode
-  withGraphics?: boolean
+  stepperClickHandler? : (step:number) => void
 }
 
-const StepLayout = ({title, step, submit, submitText, children, withGraphics}:Props) => {
-  return(
-    <Wrapper>
-      <div style={{width: '200px'}}>
-        <Stepper
-          numOfSteps={4}
-          selectedStep={step}
-          diameter={36}
-          gap={100}
-          width={100}
-        />
+const Wrapper = styled.div`
+  p {
+    color: ${props => props.theme.colors.heavyMetal}; 
+    font-size: 16px;
+    line-height: 24px;
+    white-space: pre-line;
+  }
+  a {
+    color: ${props => props.theme.colors.blueChill};
+  }
+`
+
+const StepLayout = ({title, step, submit, submitText, children, stepperClickHandler}:Props) => (
+  <Wrapper>
+    <Row>
+    <FixedColumn width={254}>
+      <Stepper
+        numOfSteps={4}
+        selectedStep={step}
+        diameter={36}
+        gap={90}
+        width={162}
+        onSelectStep={(step: number) => (stepperClickHandler ? stepperClickHandler(step) : noop)}
+      />
+    </FixedColumn>
+    <FlexColumn>
+      <Row>
+        <FixedColumn width={360}><H2>{step}. {title}</H2></FixedColumn>
+      </Row>
+      <div style={{minHeight: '400px'}}>
+        <Row>
+          <FlexColumn>{children}</FlexColumn>
+        </Row>
       </div>
-      <div id='the-step' style={{width: '327px'}}>
-        <h2>{step}. {title}</h2>
-        {children}
-        <SubmitButton onClick={submit}>{submitText}</SubmitButton>
-      </div>
-      <ImageWrapper>
-        {withGraphics ? <img src={BasicDetailsArt} alt='basic details'/> : null}
-      </ImageWrapper>
-    </Wrapper>
-    )
-}
+      <Row height={100}>
+        <FixedColumn width={350}><SubmitButton onClick={submit}>{submitText}</SubmitButton></FixedColumn>
+      </Row>
+      <Row height={242}></Row>
+    </FlexColumn>
+  </Row>
+  </Wrapper>
+)
 
 export default StepLayout

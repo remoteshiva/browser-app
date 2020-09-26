@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
+import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import { RouteComponentProps } from 'react-router';
-import moment from 'moment';
+import { push } from 'connected-react-router'
 import styled from 'styled-components'
 import { AppState } from '../../store'
 import * as T from './types'
@@ -14,29 +15,22 @@ import VisitingHours from './VisitingHours'
 
 
 const Wrapper = styled.div`
-  padding-top: 24px;
-  padding-left: 30px;
+  padding: 24px 30px;
 `
-
-enum Steps{
-  BASIC_DETAILS = 0,
-  VIDEO_CHAT_LINK,
-  MOURNERS,
-  VISITS
-}
 interface MatchParams {
   step: string| undefined
 }
 
 interface NewShivaProps extends RouteComponentProps<MatchParams> {
+  push: (path:string)=> void
 }
 
 interface NewShivaState extends Shiva {
-  step: Steps
+  step: T.Steps
 }
 
 class NewShiva extends Component<NewShivaProps, NewShivaState> {
-  private numOfSteps: number = Object.keys(Steps).length;
+  private numOfSteps: number = Object.keys(T.Steps).length;
   constructor(props:NewShivaProps) {
     super(props)
     const step = Number(props.match.params.step)
@@ -46,16 +40,25 @@ class NewShiva extends Component<NewShivaProps, NewShivaState> {
     }
   }
 
+  submitStepData = <T extends {}>(data: T, nextStep: T.Steps) => {
+    this.setState({...this.state, ...data, step: nextStep})
+  }
+
+  /*
   submitBasicDetails = ({nameOfDeceased, startDate, message}:T.BasicDetailsProps) => {
-    this.setState({nameOfDeceased, startDate: moment(startDate), message, step: Steps.VIDEO_CHAT_LINK})
+    this.setState({nameOfDeceased, startDate: moment(startDate), message}) //, step: Steps.VIDEO_CHAT_LINK})
   }
 
   submitVideoChatLink = ({videoChatLink}:T.ChatProps) => {
     this.setState({step: Steps.MOURNERS})
   }
 
-  submitMourners = ({mourners}:T.MournersProps) => {
-    this.setState({step: Steps.VISITS})
+  submitMourners = ({mourners, mournerKey}:T.MournersProps) => {
+    this.setState({mourners, mournerKey, step: Steps.VISITS})
+  }
+
+  submitVisits = ({visits}:T.VisitingProps) => {
+    this.setState({visits})
   }
 
   submitShiva = () =>{
@@ -69,17 +72,49 @@ class NewShiva extends Component<NewShivaProps, NewShivaState> {
   }
   createShiva = () => {
     this.setState({step:0, ...createEmptyShiva()})
+  }*/
+
+  selectStep = (step: number) => {
+    this.setState({step: step-1})
+    this.props.push(`/newshiva/${step}`)
   }
+
   renderStep = () => {
     switch(this.state.step){
-      case Steps.BASIC_DETAILS:
-        return (<BasicDetails submit={this.submitBasicDetails}/>)
-      case Steps.VIDEO_CHAT_LINK:
-        return (<VideoChatLink submit={this.submitVideoChatLink}/>)
-      case Steps.MOURNERS:
-        return (<Mourners submit={this.submitMourners}/>)
-      case Steps.VISITS:
-        return (<VisitingHours submit={this.submitShiva}/>)
+      case T.Steps.BASIC_DETAILS:
+        return (
+          <BasicDetails
+            newShiva={this.state}
+            submit={(data:T.BasicDetailsProps, nextStep:T.Steps) => (this.submitStepData<T.BasicDetailsProps>(data, nextStep))}
+            selectStep={this.selectStep}
+          />
+        )
+      case T.Steps.VIDEO_CHAT_LINK:
+        return (
+          <VideoChatLink
+            newShiva={this.state}
+            submit={(data:T.ChatProps, nextStep:T.Steps) => (this.submitStepData<T.ChatProps>(data, nextStep))}
+            selectStep={this.selectStep}
+          />
+        )
+      case T.Steps.MOURNERS:
+        return (
+          <Mourners
+            newShiva={this.state}
+            submit={(data:T.MournersProps, nextStep:T.Steps) => (this.submitStepData<T.MournersProps>(data, nextStep))}
+            selectStep={this.selectStep}
+          />
+        )
+      case T.Steps.VISITS:
+        return (
+          <VisitingHours 
+            newShiva={this.state}
+            startDate={this.state.startDate}
+            endDate={this.state.endDate}
+            submit={(data:T.VisitingProps, nextStep:T.Steps) => (this.submitStepData<T.VisitingProps>(data, nextStep))}
+            selectStep={this.selectStep}
+          />
+        )
     }
   }
   render (){
@@ -96,4 +131,8 @@ const mapStateToProps = (state: AppState) => ({
   shivaState: state.shiva,
 })
 
-export default connect(mapStateToProps, {})(NewShiva)
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  push: (path: string) => dispatch(push(path)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewShiva)

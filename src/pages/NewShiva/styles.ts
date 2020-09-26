@@ -11,7 +11,6 @@ export const SubmitButton = styled.button`
 `
 
 export const StyledForm = styled.form`
-  width: 327px;
   margin-top: 30px;
   label{
     color: ${props=> props.theme.colors.doveGray};
@@ -28,5 +27,15 @@ export const StyledForm = styled.form`
     &::placeholder{
       color: ${props=> props.theme.colors.dawn};
     }
+  }
+`
+
+export const ImageWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  justify-content: flex-end;
+  img{
+    margin-right: 113px;
   }
 `

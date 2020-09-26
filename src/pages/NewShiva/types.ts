@@ -1,13 +1,22 @@
-import { Mourner, Visit } from '../../store/shiva/types'
+import moment from 'moment'
+import { Mourner, Visit, Shiva } from '../../store/shiva/types'
 
+export enum Steps{
+  BASIC_DETAILS = 0,
+  VIDEO_CHAT_LINK,
+  MOURNERS,
+  VISITS,
+  DONE
+}
 export interface BasicDetailsProps {
   nameOfDeceased: string
-  startDate: string
+  startDate: moment.Moment
   message?: string
 }
 
 export interface MournersProps {
   mourners: Mourner[]
+  mournerKey: string
 }
 
 export interface ChatProps {
@@ -19,11 +28,15 @@ export interface VisitingProps {
 }
 
 export interface StepProps<T> {
-  submit: (props:T) => void
+  newShiva: Shiva
+  submit: (data:T, nextStep: Steps) => void
+  selectStep: (step: number) => void
+
 }
 
-// export interface StepProps {
-//   next: () => void
-// }
+export interface VisitingStepProps<T> extends StepProps<T> {
+  startDate: moment.Moment
+  endDate?: moment.Moment
+}
 
   

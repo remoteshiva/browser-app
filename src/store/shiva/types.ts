@@ -19,7 +19,7 @@ export interface Shiva {
   startDate: moment.Moment
   endDate?: moment.Moment
   message?: string
-  videoLink?: string
+  videoLink: URL | null
   mourners: Mourner[]
   mournerKey: string
   visitorKey: string
@@ -32,6 +32,7 @@ export const createEmptyShiva = (): Shiva => ({
   nameOfDeceased: '',
   startDate: moment().startOf('day'),
   mourners: [],
+  videoLink: null,
   mournerKey: '',
   visitorKey: '',
   visits: [],
@@ -46,6 +47,7 @@ export interface ShivaState {
     mournerKeys: {[key:string]: string}     // map mourner keys to shiva ids
     selectedShiva: string | null            // id of selected shiva
     error?: BackendError 
+    newShiva: Shiva
 }
 
 //

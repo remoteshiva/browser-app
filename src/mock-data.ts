@@ -18,6 +18,7 @@ export const shivas: Shiva[] = [
         nameOfDeceased: 'Brick Tamland',
         startDate: moment('2020-07-20'),
         endDate: moment('2020-07-27'),
+        videoLink: null,
         message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nibh tellus molestie nunc non blandit. Morbi tristique senectus et netus et. Ipsum faucibus vitae aliquet nec ullamcorper. Faucibus purus in massa tempor nec feugiat nisl. Amet massa vitae tortor condimentum lacinia. Egestas tellus rutrum tellus pellentesque eu tincidunt tortor aliquam nulla. Diam sit amet nisl suscipit adipiscing bibendum est ultricies. Ac tortor vitae purus faucibus ornare suspendisse sed nisi. Sit amet tellus cras adipiscing enim eu turpis egestas. Sollicitudin aliquam ultrices sagittis orci. Volutpat diam ut venenatis tellus in metus. Consectetur purus ut faucibus pulvinar elementum. Amet aliquam id diam maecenas ultricies. Ultrices dui sapien eget mi proin sed libero enim.',
         mourners: [
             {
@@ -34,6 +35,7 @@ export const shivas: Shiva[] = [
         nameOfDeceased: 'Champ Kind',
         startDate: moment('2018-03-05'),
         endDate: moment('2018-03-12'),
+        videoLink: null,
         message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
         mourners: [
             {
@@ -50,6 +52,7 @@ export const shivas: Shiva[] = [
         nameOfDeceased: 'Brian Fantana',
         startDate: moment('2020-04-13'),
         endDate: moment('2020-04-20'),
+        videoLink: null,
         message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean in velit vitae sapien consectetur sollicitudin. Nam non finibus elit, non sodales libero. Morbi tempus eget leo vitae lacinia. Morbi vitae eleifend nisi, quis dictum lacus. Ut ut blandit massa. Nullam vitae dapibus arcu. Fusce ullamcorper odio a tellus facilisis viverra. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Morbi ut sem tempor, vulputate arcu a, mattis urna.',
         mourners: [
             {
