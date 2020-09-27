@@ -31,7 +31,7 @@ export const ShivaItemWrapper = styled(BaseItemWrapper)`
 `
 
 export const NewShivaItemWrapper = styled(BaseItemWrapper)` 
-${tw`flex items-center justify-center`}
+    ${tw`flex items-center justify-center`}
     border-color:${props => props.theme.colors.doveGray}; 
     color:${props => props.theme.colors.doveGray}; 
     border-width: 1px;

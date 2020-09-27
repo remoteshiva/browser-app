@@ -1,11 +1,24 @@
 import React, { useEffect } from 'react'
 import { connect, useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { Shiva } from '../../store/shiva/types'
+import moment from 'moment'
+import { Shiva, Mourner, createEmptyShiva } from '../../store/shiva/types'
 import { fetchShivaById } from '../../store/shiva/actions'
 import { AppState } from '../../store'
+import Calendar from '../../components/Calendar'
 import { BlankCard } from './cards'
-import { EditShivaWrapper, Content, SideBar, Button, DeceasedImage } from './styles'
+import { 
+  EditShivaWrapper,
+  CardWrapper,
+  Direction,
+  FlexContent,
+  SideBar,
+  Button,
+  TitleImage,
+  ShivaTitle,
+  MournerName,
+  Relationship
+} from './styles'
 
 interface RoutingProps {
   id: string
@@ -24,33 +37,41 @@ const EditShiva = ({loading, shiva}: Props) => {
   useEffect(() => {
       dispatch(fetchShivaById(id))
   }, [])
-  return loading ? (<div>loading ...</div>) : (
+  return loading && !shiva ? (<div>loading ...</div>) : (
     <EditShivaWrapper>
-      <Content>
-        <BlankCard>
-          <DeceasedImage>
-            <img src='' alt='deceased image'/>
-          </DeceasedImage>
-            <Content>Shiva for {shiva?.nameOfDeceased} Z"L</Content>
-        </BlankCard>
-        <BlankCard>
+      <FlexContent minWidth={700}>
+        <CardWrapper>
+          <TitleImage style={{backgroundImage: `url(${shiva?.titleImage?.toString()})`}}/>
+          <FlexContent>
+            <ShivaTitle>Shiva for {shiva?.nameOfDeceased} Z"L</ShivaTitle>
+              <p>{shiva?.message}</p>
+          </FlexContent>
+        </CardWrapper>
+        <CardWrapper direction={Direction.column}>
           <h2>Attend the Shiva</h2>
-        </BlankCard>
+          <h4>Click on a slot to see who is planning to attend and to indicate when you plan to stop by.</h4>
+          {/* <Calendar editMode={false} shiva={shiva ? shiva : createEmptyShiva()}/> */}
+        </CardWrapper>
         <BlankCard>
           <h2>About</h2>
         </BlankCard>
-      </Content>
+      </FlexContent>
       <SideBar>
         <Button>Invite visitors</Button>
         <BlankCard>
           <h2>Video link</h2>
         </BlankCard>
-        <BlankCard>
+        <CardWrapper direction={Direction.column}>
           <h2>Mourners</h2>
-        </BlankCard>
-        <BlankCard>
+          <ul>
+            {shiva?.mourners.map((m, i) => (
+              <li style={{display: 'flex', flexDirection: 'row'}} key={i}><MournerName>{m.name}</MournerName><Relationship>{m.relationship}</Relationship></li>
+            ))}
+          </ul>
+          </CardWrapper>
+        <CardWrapper direction={Direction.column}>
           <h2>Minian times</h2>
-        </BlankCard>
+        </CardWrapper>
         <BlankCard>
           <h2>Meal signups</h2>
         </BlankCard>
