@@ -13,7 +13,8 @@ const colors = {
   hintOfRed: '#F4ECE9',
   dawn: '#a09b8f',
   white: '#fff',
-  blueChill: '#398e8f'
+  blueChill: '#398e8f',
+  woodBark: '#2C221E'
 }
 
 const fonts = ['Lato', 'Lora', 'sans-serif']
