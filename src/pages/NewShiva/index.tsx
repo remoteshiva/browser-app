@@ -7,11 +7,13 @@ import styled from 'styled-components'
 import { AppState } from '../../store'
 import * as T from './types'
 import { Shiva, createEmptyShiva } from '../../store/shiva/types'
+import Toast, { ToastModel, Position, getRandomId } from '../../components/Toast'
 import BackButton from './back'
 import BasicDetails from './BasicDetails'
 import VideoChatLink from './VideoChatLink'
 import Mourners from './Mourners'
 import VisitingHours from './VisitingHours'
+import CheckIcon from '../../assets/img/checkbox.svg'
 
 
 const Wrapper = styled.div`
@@ -27,6 +29,7 @@ interface NewShivaProps extends RouteComponentProps<MatchParams> {
 
 interface NewShivaState extends Shiva {
   step: T.Steps
+  toasts: ToastModel[]
 }
 
 class NewShiva extends Component<NewShivaProps, NewShivaState> {
@@ -36,7 +39,8 @@ class NewShiva extends Component<NewShivaProps, NewShivaState> {
     const step = Number(props.match.params.step)
     this.state = {
       ...createEmptyShiva(),
-      step: !isNaN(step) ? step -1 : 0
+      step: !isNaN(step) ? step -1 : 0,
+      toasts: []
     }
   }
 
@@ -44,35 +48,9 @@ class NewShiva extends Component<NewShivaProps, NewShivaState> {
     this.setState({...this.state, ...data, step: nextStep})
   }
 
-  /*
-  submitBasicDetails = ({nameOfDeceased, startDate, message}:T.BasicDetailsProps) => {
-    this.setState({nameOfDeceased, startDate: moment(startDate), message}) //, step: Steps.VIDEO_CHAT_LINK})
+  addNotification = (toast: ToastModel) => {
+    this.setState({toasts: [...this.state.toasts, toast]})
   }
-
-  submitVideoChatLink = ({videoChatLink}:T.ChatProps) => {
-    this.setState({step: Steps.MOURNERS})
-  }
-
-  submitMourners = ({mourners, mournerKey}:T.MournersProps) => {
-    this.setState({mourners, mournerKey, step: Steps.VISITS})
-  }
-
-  submitVisits = ({visits}:T.VisitingProps) => {
-    this.setState({visits})
-  }
-
-  submitShiva = () =>{
-    this.setState({step: Steps.BASIC_DETAILS})
-  }
-
-  nextStep = () => {
-    if(this.state.step < this.numOfSteps){
-      this.setState({step: this.state.step + 1})
-    }
-  }
-  createShiva = () => {
-    this.setState({step:0, ...createEmptyShiva()})
-  }*/
 
   selectStep = (step: number) => {
     this.setState({step: step-1})
@@ -103,6 +81,7 @@ class NewShiva extends Component<NewShivaProps, NewShivaState> {
             newShiva={this.state}
             submit={(data:T.MournersProps, nextStep:T.Steps) => (this.submitStepData<T.MournersProps>(data, nextStep))}
             selectStep={this.selectStep}
+            addNotification={this.addNotification}
           />
         )
       case T.Steps.VISITS:
@@ -122,6 +101,7 @@ class NewShiva extends Component<NewShivaProps, NewShivaState> {
       <Wrapper>
         <BackButton/>
         {this.renderStep()}
+        <Toast toasts={this.state.toasts} autoDelete={true} position={Position.br}  />
       </Wrapper>
     )
   }
