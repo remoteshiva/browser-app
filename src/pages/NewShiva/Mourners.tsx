@@ -4,8 +4,10 @@ import { Mourner } from '../../store/shiva/types'
 import AddIcon from '../../assets/img/add.svg'
 import ClearIcon from '../../assets/img/clear.svg'
 import CopyIcon from '../../assets/img/copy.svg'
+import CheckIcon from '../../assets/img/checkbox.svg'
 import BasicDetailsArt from '../../assets/img/add-basic-details.svg'
 import { Row, FixedColumn, FlexColumn } from '../../components/flexLayout'
+import { getRandomId, ToastModel } from '../../components/Toast'
 import { StepProps, MournersProps, Steps } from './types'
 import { ImageWrapper } from './styles'
 import StepLayout from './Layout'
@@ -57,7 +59,7 @@ const MournerBox = ({id, name, relationship, onUpdate, onRemove}:MournerBoxProps
 const emptyMourner = {name: '', relationship: ''}
 const mournerPathPrefix = 'app.remoteshiva.org/m/'
 
-const Mourners = ({newShiva, submit, selectStep}: StepProps<MournersProps>) => {
+const Mourners = ({newShiva, submit, selectStep, addNotification}: StepProps<MournersProps>) => {
   const inputRef = useRef<HTMLButtonElement>(null);
   const [mourners, setMourners] = useState(newShiva.mourners.length ? newShiva.mourners : [emptyMourner])
   const [mournerKey] = useState(newShiva.mournerKey)
@@ -74,8 +76,15 @@ const Mourners = ({newShiva, submit, selectStep}: StepProps<MournersProps>) => {
     if(inputRef.current){
       if (navigator.clipboard) {
         navigator.clipboard.writeText(`${mournerPathPrefix}${mournerKey}`).then(
-          () => {
-            console.log("copy success"); // we should show a message 
+          () => {  
+            if (addNotification){
+               addNotification({
+                id: getRandomId(),
+                title: 'Link copied',
+                description: 'The link for mourners to edit the shiva has been added to your clipboard.',
+                icon: CheckIcon
+              })
+            }
           },
           error => {
             console.log(error); // we should show a message 
