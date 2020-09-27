@@ -17,7 +17,6 @@ const BasicDetails = ({newShiva, submit, selectStep}: StepProps<BasicDetailsProp
   const handleInputChange = (event: ChangeEvent) => {
     const {name, value} = event.target
     setValues({...values, [name]: value})
-    // submit({...values, [name]: value})
   } 
 
   return(

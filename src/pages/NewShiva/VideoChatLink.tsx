@@ -23,7 +23,7 @@ const VideoChatLink = ({newShiva, submit, selectStep}: StepProps<ChatProps>) => 
     >
       <Row>
         <FixedColumn width={360}>
-          <p>Add a link to a videochatting room using a tool such as Zoom. 
+          <p>Add a link to a videochatting room using a tool such as Zoom.&nbsp;
             <a href={instructionsLink} target="_blank" rel="noopener noreferrer">
               See here for instructions on how to create a Zoom link.
             </a>
@@ -40,8 +40,8 @@ const VideoChatLink = ({newShiva, submit, selectStep}: StepProps<ChatProps>) => 
           </StyledForm>
         </FixedColumn>
         <FlexColumn>
-            <ImageWrapper><img src={BasicDetailsArt} alt='Basic details'/></ImageWrapper>
-          </FlexColumn>
+          <ImageWrapper><img src={BasicDetailsArt} alt='Basic details'/></ImageWrapper>
+        </FlexColumn>
       </Row>
     </StepLayout>
   )

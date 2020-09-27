@@ -42,9 +42,9 @@ const Main = ({session}: Props) => {
           path="/dashboard"
           exact component={ Dashboard }
         />
-        <PrivateRoute 
+        <Route 
           session={session}
-          path='/newshiva'
+          path='/newshiva/:step?'
            exact component={ NewShiva }
         />
         <Route 

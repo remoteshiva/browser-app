@@ -14,7 +14,7 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
   *:focus {
-    outline: 0;
+    outline: none !important;
   }
   html, body, #root {
     height: 100%;
@@ -27,6 +27,8 @@ const GlobalStyle = createGlobalStyle`
   }
   button {
     cursor: pointer;
+  }img{
+    display: inline;
   }
 `;
 

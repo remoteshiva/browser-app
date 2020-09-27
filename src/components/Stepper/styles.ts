@@ -33,7 +33,7 @@ export const StepNumber = styled.li<StepNumberProps>`
   height: ${props => `${props.diameter}px`};
   line-height: ${props => `${props.diameter-2}px`};
   font-family: 'Lato';
-  font-weight: bold;
+  font-weight: 600;
   font-size: 16px;
   text-align: center;
   z-index:10;

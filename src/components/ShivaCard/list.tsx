@@ -16,7 +16,7 @@ const ShivaList = ({entities, shivas}:Props) => {
   return(
     <ShivaListWrapper>
         {shivas.map((shivaId) => (<ShivaItem key={shivaId} {...entities[shivaId]}/>))}
-        <NewShivaItem onClick={() => dispatch(push('/newshiva'))}/>
+        <NewShivaItem onClick={() => dispatch(push('/newshiva/1'))}/>
     </ShivaListWrapper>
   )
 }

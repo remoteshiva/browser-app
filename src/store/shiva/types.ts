@@ -2,6 +2,11 @@ import moment from 'moment'
 import { ActionType, createAction } from 'typesafe-actions'
 import * as ShivaActionTypes from './constants'
 import { BackendError } from '../types'
+
+const generateRandomKey = ():string => {
+  return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
+}
+
 export interface Mourner {
     name: string
     relationship: string
@@ -33,8 +38,8 @@ export const createEmptyShiva = (): Shiva => ({
   startDate: moment().startOf('day'),
   mourners: [],
   videoLink: null,
-  mournerKey: '',
-  visitorKey: '',
+  mournerKey: generateRandomKey(),
+  visitorKey: generateRandomKey(),
   visits: [],
   titleImage: null,
 })
@@ -47,7 +52,6 @@ export interface ShivaState {
     mournerKeys: {[key:string]: string}     // map mourner keys to shiva ids
     selectedShiva: string | null            // id of selected shiva
     error?: BackendError 
-    newShiva: Shiva
 }
 
 //

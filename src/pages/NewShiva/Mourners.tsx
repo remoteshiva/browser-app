@@ -1,14 +1,20 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useRef } from 'react'
 import styled from 'styled-components'
 import { Mourner } from '../../store/shiva/types'
 import AddIcon from '../../assets/img/add.svg'
 import ClearIcon from '../../assets/img/clear.svg'
+import CopyIcon from '../../assets/img/copy.svg'
 import BasicDetailsArt from '../../assets/img/add-basic-details.svg'
 import { Row, FixedColumn, FlexColumn } from '../../components/flexLayout'
 import { StepProps, MournersProps, Steps } from './types'
 import { ImageWrapper } from './styles'
 import StepLayout from './Layout'
 
+const AddMournerButton = styled.button`
+  font-family: 'Lato';
+  font-size: 16px;
+  color: ${props=> props.theme.colors.richGold};
+`
 
 const MournerBoxWrapper = styled.div`
   position: relative;
@@ -31,7 +37,6 @@ interface MournerBoxProps extends Mourner {
   onUpdate?: () => void
   onRemove: (id:number) => void
 }
-
 const MournerBox = ({id, name, relationship, onUpdate, onRemove}:MournerBoxProps) => {
   const [values, setValues] = useState({id, name, relationship})
   const handleInputChange = (event:React.ChangeEvent<HTMLInputElement>) => {
@@ -39,6 +44,7 @@ const MournerBox = ({id, name, relationship, onUpdate, onRemove}:MournerBoxProps
     console.log(name, value)
     setValues({...values, [name]: value})
   } 
+
   return(
     <MournerBoxWrapper>
       <MournerBoxClear onClick={ ()=> onRemove(values.id)} src={ClearIcon}/>
@@ -47,16 +53,14 @@ const MournerBox = ({id, name, relationship, onUpdate, onRemove}:MournerBoxProps
     </MournerBoxWrapper>
   )
 }
-const generateRandomKey = ():string => {return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)}
+
 const emptyMourner = {name: '', relationship: ''}
+const mournerPathPrefix = 'app.remoteshiva.org/m/'
 
 const Mourners = ({newShiva, submit, selectStep}: StepProps<MournersProps>) => {
+  const inputRef = useRef<HTMLButtonElement>(null);
   const [mourners, setMourners] = useState(newShiva.mourners.length ? newShiva.mourners : [emptyMourner])
-  const [mournerKey, setMournerKey] = useState(newShiva.mournerKey)
-  
-  useEffect(() => {
-    setMournerKey(generateRandomKey())
-  }, [])
+  const [mournerKey] = useState(newShiva.mournerKey)
   
   const handleAddMourner = () => {
     setMourners([...mourners, {name: '', relationship: ''}])    
@@ -65,6 +69,22 @@ const Mourners = ({newShiva, submit, selectStep}: StepProps<MournersProps>) => {
     const l = [...mourners]
     l.splice(index, 1)
     setMourners(l)
+  }
+  const copyToClipboard = () => {
+    if(inputRef.current){
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(`${mournerPathPrefix}${mournerKey}`).then(
+          () => {
+            console.log("copy success"); // we should show a message 
+          },
+          error => {
+            console.log(error); // we should show a message 
+          }
+        );
+      } else { // this is a polyfill
+        document.execCommand("copy");
+      }
+    }
   }
 
   return(
@@ -76,20 +96,21 @@ const Mourners = ({newShiva, submit, selectStep}: StepProps<MournersProps>) => {
       stepperClickHandler={selectStep}
     >
       <Row>
-        <FixedColumn width={360}>
+        <FixedColumn width={400}>
           <p>Add the names of the people sitting shiva and their relationship to the deceased.</p>
           <br/>
           <p>You can share editing privileges with the mourners or other organizers through the following link: 
           </p>
           <a href={`/m/${mournerKey}`} target="_blank" rel="noopener noreferrer">
-            remoteshiva.org/m/{mournerKey}
+            {mournerPathPrefix}{mournerKey}
           </a>
+          <button ref={inputRef} onClick={copyToClipboard}><img style={{marginLeft: '6px'}} src={CopyIcon} alt='copy'/></button>
           <br/>
           <br/>
           <div>
             {mourners.map((m, i) => (<MournerBox key={i} id={i} name={m.name} relationship={m.relationship} onRemove={handleRemoveMourner}/>))}
           </div>
-          <div onClick={handleAddMourner}><img src={AddIcon} alt='remove'/>Add another mourner</div>
+          <AddMournerButton onClick={handleAddMourner}><img src={AddIcon} alt='remove'/>&nbsp;&nbsp;Add another mourner</AddMournerButton>
       </FixedColumn>
         <FlexColumn>
             <ImageWrapper><img src={BasicDetailsArt} alt='Basic details'/></ImageWrapper>

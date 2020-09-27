@@ -13,32 +13,32 @@ interface DashboardProps {
 }
 
 const Wrapper = styled.div`
-    padding-top: 75px;
-    padding-left: 100px;
-    padding-right: 100px;
-    color: ${props => props.theme.colors.heavyMetal};
-    h1 {
-        font-family: Lora;
-        font-weight: 200;
-        font-size: 56px;
-    }
+  padding-top: 75px;
+  padding-left: 100px;
+  padding-right: 100px;
+  color: ${props => props.theme.colors.heavyMetal};
+  h1 {
+    font-family: Lora;
+    font-weight: 200;
+    font-size: 56px;
+  }
 `
 
 const Dashboard = (props:DashboardProps) => {
-    const dispatch = useDispatch()
+  const dispatch = useDispatch()
 
-    useEffect(() => {
-        dispatch(fetchShivas())
-    },[])
-    return props.shivaState.loading ? (<div>loading ...</div>) : (
-        <Wrapper>
-            <h1>My Shivas</h1>
-            <ShivaList 
-                entities={props.shivaState.entities} 
-                shivas={props.shivaState.shivas}
-            />
-        </Wrapper>
-    )
+  useEffect(() => {
+    dispatch(fetchShivas())
+  },[dispatch, props.shivaState.entities])
+  return props.shivaState.loading ? (<div>loading ...</div>) : (
+    <Wrapper>
+        <h1>My Shivas</h1>
+        <ShivaList 
+            entities={props.shivaState.entities} 
+            shivas={props.shivaState.shivas}
+        />
+    </Wrapper>
+  )
 }
 
 const mapStateToProps = (state: AppState) => ({
