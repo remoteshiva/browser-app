@@ -1,17 +1,11 @@
 import React, { useEffect } from 'react'
-import { connect, useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { AppState } from '../../store'
-import { ShivaState } from '../../store/shiva/types'
 import { fetchShivas, deleteShiva } from '../../store/shiva/actions'
 import ShivaList from '../../components/ShivaCard/list'
-import Spinner from '../../components/Spinner'
+import Loading from '../../components/Loading'
 
-
-interface DashboardProps {
-    shivaState: ShivaState
-    fetchShivas: any 
-}
 
 const Wrapper = styled.div`
   padding-top: 75px;
@@ -25,45 +19,25 @@ const Wrapper = styled.div`
   }
 `
 
-const Loading = styled.div`
-  width: 100%;
-  text-align: center;
-  margin-top: 50px;
-  p {
-    color: ${props => props.theme.colors.doveGray};
-    margin-top: 20px;
-    font-family: 'Lora';
-    font-size: 34px;
-  }
-`
-
-const Dashboard = (props:DashboardProps) => {
+const Dashboard = () => {
   const dispatch = useDispatch()
+  const { loading, entities, shivas } = useSelector((state: AppState) => state.shiva);
 
   useEffect(() => {
-    dispatch(fetchShivas())
-  },[])
-
-  const renderLoading = () => (
-    <Loading>
-      <Spinner size={20} thickness={1.4}/>
-      <p>Loading, Please wait</p>
-    </Loading>
-  )
+    if(!shivas.length){
+      dispatch(fetchShivas())
+    }
+  },[dispatch, shivas.length])
   
-  return props.shivaState.loading ? renderLoading() : (
+  return loading ? <Loading/> : (
     <Wrapper>
-        <h1>My Shivas</h1>
-        <ShivaList 
-            entities={props.shivaState.entities} 
-            shivas={props.shivaState.shivas}
-        />
+      <h1>My Shivas</h1>
+      <ShivaList 
+        entities={entities} 
+        shivas={shivas}
+      />
     </Wrapper>
   )
 }
 
-const mapStateToProps = (state: AppState) => ({
-    shivaState: state.shiva,
-})
-
-export default connect(mapStateToProps, {fetchShivas, deleteShiva})(Dashboard)
+export default Dashboard
