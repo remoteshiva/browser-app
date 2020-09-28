@@ -6,7 +6,7 @@ import { AppState } from '../../store'
 import { Session } from '../../store/auth/types'
 import { MainWrapper } from './styles'
 import Home from '../../pages/Home'
-import Login from '../../pages/login'
+import LoginSignup, { Pages } from '../../pages/LoginSignup'
 import Dashboard from '../../pages/Dashboard'
 import NewShiva from '../../pages/NewShiva'
 import EditShiva from '../../pages/Shiva'
@@ -35,11 +35,11 @@ const Main = ({session}: Props) => {
   return(
     <MainWrapper> 
       <Switch>
-        <Route path="/" exact component={ Home }/>
-        <Route path="/login" exact component={ Login }/>
+        <Route path='/login' exact render={() => (<LoginSignup page={Pages.login}/>) }/>
+        <Route path='/signup' exact render={() => (<LoginSignup page={Pages.signUp}/>) }/>
         <PrivateRoute 
           session={session}
-          path="/dashboard"
+          path='/'
           exact component={ Dashboard }
         />
         <Route 

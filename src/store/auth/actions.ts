@@ -12,7 +12,7 @@ export const loginUser = (
     dispatch(typedAction(AuthActions.LOGIN_REQUEST))
     setTimeout(() => {
         dispatch(typedAction(AuthActions.LOGIN_SUCCESS, test_session))
-        dispatch(push('/dashboard'))
+        dispatch(push('/'))
     }, 1000)
 }
 

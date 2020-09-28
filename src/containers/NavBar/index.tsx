@@ -28,11 +28,11 @@ const NavBar = ({session, loginUser}: NavBarProps) => (
   <Wrapper>
     <NavWrapper>
         <div>
-            <a href="#">
-              <img className="hidden lg:block h-8 w-auto" src={Logo} alt="RemoteShiva logo"/>
-            </a>
+          <a href='http://remoteshiva.org'>
+            <img className="hidden lg:block h-8 w-auto" src={Logo} alt="RemoteShiva logo"/>
+          </a>
         </div>
-        { session ? <UserBar user={session.user}/> : <LoginBar clickHandler={loginUser}/> }
+        { session ? <UserBar user={session.user}/> : <LoginBar/> }
     </NavWrapper>
   </Wrapper>
 )
