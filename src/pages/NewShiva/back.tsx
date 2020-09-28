@@ -20,7 +20,7 @@ const BackWrapper = styled.div`
 const Back = () => {
   const dispatch = useDispatch()
   return(
-    <BackWrapper onClick={() => dispatch(push('/dashboard'))}>
+    <BackWrapper onClick={() => dispatch(push('/'))}>
       <div>
         <BackArrow src={BackArrowIcon}/>
         Back to my shivas

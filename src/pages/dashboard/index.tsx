@@ -29,7 +29,7 @@ const Dashboard = (props:DashboardProps) => {
 
   useEffect(() => {
     dispatch(fetchShivas())
-  },[dispatch, props.shivaState.entities])
+  },[])
   return props.shivaState.loading ? (<div>loading ...</div>) : (
     <Wrapper>
         <h1>My Shivas</h1>
