@@ -42,11 +42,44 @@ const reducer: Reducer<ShivaState> = (state=initialState, action: ActionTypes): 
     case ShivaActions.FetchShivaListError: {
       return { ...state, loading: false, error: action.payload }
     }
+    case ShivaActions.CreateShivaRequest: {
+      return state
+    }
+    case ShivaActions.CreateShivaSuccess: {
+      return {
+        ...state,
+        entities : {
+          ...state.entities,
+          ...{[action.payload._id]: action.payload}
+        },
+        shivas: Array.from(new Set([...state.shivas, action.payload._id])),
+        visitorKeys : {
+          ...state.visitorKeys,
+          ...{[action.payload.visitorKey]:action.payload._id}
+        },
+        mournerKeys : {
+          ...state.mournerKeys,
+          ...{[action.payload.mournerKey]:action.payload._id}
+        },
+        loading: false
+      }
+    }
+    case ShivaActions.CreateShivaError: {
+      // TODO: handle this
+      return state
+    }
     case ShivaActions.DeleteShivaRequest: {
       return state
     }
     case ShivaActions.DeleteShivaSuccess: {
-      return state
+      const {[action.payload]:omit, ...entities } = state.entities;
+      return {
+        ...state,
+        entities,
+        shivas: [...state.shivas.filter(shivaId => shivaId !== action.payload)],
+        mournerKeys: {...Object.fromEntries(Object.entries(state.mournerKeys).filter(([k,v]) => v!==action.payload))},
+        visitorKeys: {...Object.fromEntries(Object.entries(state.visitorKeys).filter(([k,v]) => v!==action.payload))}
+      }
     }
     case ShivaActions.DeleteShivaError: {
       return state

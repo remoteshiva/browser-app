@@ -35,7 +35,6 @@ export const ShivaItemWrapper = styled(BaseItemWrapper)`
   }
   section {
     margin: 85px 10px 5px 10px;
-    border: 1px solid purple;
     >p{
       font-family: 'Lora';
       font-size:34px;

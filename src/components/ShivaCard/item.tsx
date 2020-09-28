@@ -2,7 +2,8 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { push } from 'connected-react-router'
 import { Shiva as ShivaModel } from '../../store/shiva/types'
-import  { ShivaItemWrapper, ShivaDates } from './styles'
+import { createShiva, deleteShiva } from '../../store/shiva/actions'
+import  { ShivaItemWrapper } from './styles'
 import Dropdown, { MenuItem } from './dropdown'
 
 
@@ -17,12 +18,8 @@ const menu: MenuItem[] = [
 ]
 
 
-const ShivaItem = ({
-  _id,
-  nameOfDeceased,
-  startDate,
-  endDate=startDate.clone().add('days', 6)
-}:ShivaProps) => {
+const ShivaItem = (props:ShivaProps) => {
+  const { _id, nameOfDeceased, startDate, endDate} = props
   const dispatch = useDispatch()
 
   const handleMenuClick = (menu: MenuItem) => {
@@ -35,20 +32,22 @@ const ShivaItem = ({
         dispatch(push(`/shiva/${_id}`))
         break;
       case 4: // duplicate shiva
+        dispatch(createShiva(props))
         break;
       case 5: // delete shiva
+        dispatch(deleteShiva(_id))
         break;
     }
   }  
   return (
     <ShivaItemWrapper onClick={() => {dispatch(push(`/shiva/${_id}`))} }>
-      <div className='w-full' style={{height: '33px', overflow: 'visible'}}>
+      <header onClick={(ev: React.MouseEvent) => {ev.stopPropagation()}}>
         <Dropdown menu={menu} menuClickHandler={handleMenuClick}/>
-      </div>
-      <div className="flex content-end flex-wrap h-48">
+      </header>
+      <section>
         <p>{nameOfDeceased}</p>
-        <ShivaDates>{startDate.format('L')} - {endDate.format('L')}</ShivaDates>
-      </div>
+        <div>{startDate.format('L')} - {endDate?.format('L')}</div>
+      </section>
     </ShivaItemWrapper>
   )
 }
