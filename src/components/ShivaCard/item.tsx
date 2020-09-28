@@ -6,8 +6,7 @@ import  { ShivaItemWrapper, ShivaDates } from './styles'
 import Dropdown, { MenuItem } from './dropdown'
 
 
-interface ShivaProps extends ShivaModel {
-}
+interface ShivaProps extends ShivaModel {}
 
 const menu: MenuItem[] = [
   {id:1, text:'Copy link for mourners'},
@@ -19,6 +18,7 @@ const menu: MenuItem[] = [
 
 
 const ShivaItem = ({
+  _id,
   nameOfDeceased,
   startDate,
   endDate=startDate.clone().add('days', 6)
@@ -32,7 +32,7 @@ const ShivaItem = ({
       case 2: // handle copy link for visitors
         break;
       case 3: // navigate to shiva edit page
-        dispatch(push(`/shiva/${menu.id}`))
+        dispatch(push(`/shiva/${_id}`))
         break;
       case 4: // duplicate shiva
         break;
@@ -41,7 +41,7 @@ const ShivaItem = ({
     }
   }  
   return (
-    <ShivaItemWrapper>
+    <ShivaItemWrapper onClick={() => {dispatch(push(`/shiva/${_id}`))} }>
       <div className='w-full' style={{height: '33px', overflow: 'visible'}}>
         <Dropdown menu={menu} menuClickHandler={handleMenuClick}/>
       </div>
@@ -50,6 +50,6 @@ const ShivaItem = ({
         <ShivaDates>{startDate.format('L')} - {endDate.format('L')}</ShivaDates>
       </div>
     </ShivaItemWrapper>
-    )
+  )
 }
 export default ShivaItem
