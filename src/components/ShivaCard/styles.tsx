@@ -29,6 +29,10 @@ export const ShivaItemWrapper = styled(BaseItemWrapper)`
     border: 1px solid ${rgba('#924623', 0.15)};
     box-shadow: 0 2px 20px 0 rgba(0, 0, 0, 0.18);
   }
+  &:active{
+    border: 0;
+    box-shadow: 0 2px 20px 0 rgba(0, 0, 0, 0.04);
+  }
   p{
       font-size:34px;
       font-weight: 400;
