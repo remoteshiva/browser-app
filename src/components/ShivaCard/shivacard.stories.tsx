@@ -10,4 +10,8 @@ export default {
 
 const shiva = createEmptyShiva()
 shiva.nameOfDeceased = 'Brian Fantana'
-export const Item = () => (<ShivaItem {...shiva}/>)
+export const Item = () => (
+  <ul>
+    <ShivaItem {...shiva}/>
+  </ul>
+)

@@ -19,12 +19,9 @@ const BaseItemWrapper = styled.li`
 `
 
 export const ShivaItemWrapper = styled(BaseItemWrapper)`
-  padding-left: 21px;
-  padding-bottom: 36px;
   box-shadow: 0 2px 20px 0 rgba(0, 0, 0, 0.04);
   background-color: ${props => props.theme.colors.white};
   font-family: 'Lora';
-  border-radius: 10px;
   &:hover{
     border: 1px solid ${rgba('#924623', 0.15)};
     box-shadow: 0 2px 20px 0 rgba(0, 0, 0, 0.18);
@@ -33,9 +30,21 @@ export const ShivaItemWrapper = styled(BaseItemWrapper)`
     border: 0;
     box-shadow: 0 2px 20px 0 rgba(0, 0, 0, 0.04);
   }
-  p{
+  header {
+    margin: 5px 10px 5px 10px;
+  }
+  section {
+    margin: 85px 10px 5px 10px;
+    border: 1px solid purple;
+    >p{
+      font-family: 'Lora';
       font-size:34px;
       font-weight: 400;
+    }
+    >div {
+      font-family: 'Lato';
+      font-size: 16px;      
+    }
   }
 `
 
@@ -47,11 +56,6 @@ export const NewShivaItemWrapper = styled(BaseItemWrapper)`
   border-style: dashed;
   font-size: 18px;
   cursor: pointer;
-`
-
-export const ShivaDates = styled.div`
-  font-family: 'Lato';
-  font-size: 16px;
 `
 
 /********* menu *********/
