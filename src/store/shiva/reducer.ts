@@ -4,7 +4,7 @@ import { ActionTypes, ShivaState, Shiva } from './types'
 import { arrayToObject } from '../helpers'
 
 export const initialState: ShivaState = {
-    loading: false,
+    loading: true,
     entities: {},
     shivas: [],
     visitorKeys: {},

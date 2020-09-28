@@ -5,6 +5,7 @@ import { AppState } from '../../store'
 import { ShivaState } from '../../store/shiva/types'
 import { fetchShivas, deleteShiva } from '../../store/shiva/actions'
 import ShivaList from '../../components/ShivaCard/list'
+import Spinner from '../../components/Spinner'
 
 
 interface DashboardProps {
@@ -24,13 +25,33 @@ const Wrapper = styled.div`
   }
 `
 
+const Loading = styled.div`
+  width: 100%;
+  text-align: center;
+  margin-top: 50px;
+  p {
+    color: ${props => props.theme.colors.doveGray};
+    margin-top: 20px;
+    font-family: 'Lora';
+    font-size: 34px;
+  }
+`
+
 const Dashboard = (props:DashboardProps) => {
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(fetchShivas())
   },[])
-  return props.shivaState.loading ? (<div>loading ...</div>) : (
+
+  const renderLoading = () => (
+    <Loading>
+      <Spinner size={20} thickness={1.4}/>
+      <p>Loading, Please wait</p>
+    </Loading>
+  )
+  
+  return props.shivaState.loading ? renderLoading() : (
     <Wrapper>
         <h1>My Shivas</h1>
         <ShivaList 
