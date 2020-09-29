@@ -5,6 +5,7 @@ import { AppState } from '../../store'
 import { fetchShivas, deleteShiva } from '../../store/shiva/actions'
 import ShivaList from '../../components/ShivaCard/list'
 import Loading from '../../components/Loading'
+import { selectShiva } from '../../store/shiva/types'
 
 
 const Wrapper = styled.div`
@@ -24,6 +25,7 @@ const Dashboard = () => {
   const { loading, entities, shivas } = useSelector((state: AppState) => state.shiva);
 
   useEffect(() => {
+    dispatch(selectShiva(null))
     if(!shivas.length){
       dispatch(fetchShivas())
     }

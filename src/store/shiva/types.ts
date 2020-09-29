@@ -97,7 +97,7 @@ export type DeleteShivaError = ActionType<typeof deleteShivaError>
 
 
 //
-export const selectShiva = createAction(ShivaActionTypes.SelectShiva)<string>()
+export const selectShiva = createAction(ShivaActionTypes.SelectShiva)<string | null>()
 export type SelectShiva = ActionType<typeof selectShiva>
 
 export type ActionTypes = 

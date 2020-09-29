@@ -25,7 +25,7 @@ const ShivaPage = () => {
     }
   }, [])
 
-  return loading || !selectedShiva ? <Loading/> : (
+  return loading || !selectedShiva || !(selectedShiva in entities) ? <Loading/> : (
     <ShivaLayout
       role='Editor'
       shiva={entities[selectedShiva]}
