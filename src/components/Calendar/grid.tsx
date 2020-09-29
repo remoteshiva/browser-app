@@ -16,11 +16,11 @@ interface GridProps {
 export const Grid = ({editMode, startDate, numOfDays, visits}: GridProps) => {
   const [offset, setOffset] = useState(0);
 
-  useEffect(() => {
-    window.onscroll = () => {
-      setOffset(window.pageYOffset)
-    }
-  }, []);
+  // useEffect(() => {
+  //   window.onscroll = () => {
+  //     setOffset(window.pageYOffset)
+  //   }
+  // }, []);
 
   const columnDays = Array.from({length: numOfDays}, (_, i) => startDate.clone().add(i, 'days'))
   return(

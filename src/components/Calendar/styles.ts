@@ -12,7 +12,7 @@ interface CalendarWrapperProps {
 export const CalendarWrapper = styled.div<CalendarWrapperProps>`
   display: flex;
   background-color: white;
-  padding: 38px 40px;
+  padding: 10px;
   height: ${props => props.height? props.height : 'auto'};
 `
 
