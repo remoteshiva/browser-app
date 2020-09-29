@@ -5,6 +5,7 @@ import { push } from 'connected-react-router'
 import styled from 'styled-components'
 import { AppState } from '../../store'
 import { Shiva, createEmptyShiva } from '../../store/shiva/types';
+import { createShiva } from '../../store/shiva/actions';
 import Toast, { ToastModel, Position } from '../../components/Toast'
 import BackButton from './back'
 import BasicDetails from './BasicDetails'
@@ -13,6 +14,7 @@ import Mourners from './Mourners'
 import VisitingHours from './VisitingHours'
 
 import * as T from './types'
+
 
 const Wrapper = styled.div`
   padding: 24px 30px;
@@ -30,9 +32,9 @@ const NewShiva = () => {
 
   const submitStepData = <T extends {}>(data: T, nextStep: T.Steps) => {
     setShiva({...shiva, ...data})
-    console.log('going to step: ', nextStep)
     setCurrentStep(nextStep) 
     if(nextStep===T.Steps.DONE){
+      dispatch(createShiva(shiva))
       dispatch(push('/'))
     }else{
       dispatch(push(`/newshiva/${nextStep}`))
