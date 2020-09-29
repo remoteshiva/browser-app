@@ -43,7 +43,6 @@ export const createShiva = (shiva: Shiva) : ThunkAction<void, AppState, null, Ac
   await sleep(1000)  
   const newShiva = {...shiva, _id: Math.random().toString(36).substring(3)} 
   dispatch(createShivaSuccess(newShiva))
-  return newShiva
 }
 
 export const deleteShiva = (shivaId: string) : ThunkAction<void, AppState, null, Action<string>> => async dispatch => {

@@ -13,17 +13,17 @@ interface ColumnContainerProps {
     width: string
 }
 export const ColumnContainer = styled.div<ColumnContainerProps>`
-    display: flex;
-    flex-direction: column;
-    width: ${props => props.width}
+  display: flex;
+  flex-direction: column;
+  width: ${props => props.width};
 `
   
 interface FixedProps {
-width: number;
+  width: number;
 }
 export const FixedColumn = styled.div<FixedProps>`
-width: ${props => `${props.width}px`};
+  width: ${props => `${props.width}px`};
 `
 export const FlexColumn = styled.div`
-flex: 1;
+  flex: 1;
 `
