@@ -3,7 +3,7 @@ import { Mourner, Visit, Shiva } from '../../store/shiva/types'
 import { ToastModel } from '../../components/Toast'
 
 export enum Steps{
-  BASIC_DETAILS = 0,
+  BASIC_DETAILS = 1,
   VIDEO_CHAT_LINK,
   MOURNERS,
   VISITS,
