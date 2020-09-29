@@ -5,9 +5,9 @@ import {
   Shiva,
   fetchShivaListRequest,
   fetchShivaListSuccess,
-  fetchShivaByIdRequest,
-  fetchShivaByIdSuccess,
-  fetchShivaByIdError,
+  fetchShivaRequest,
+  fetchShivaSuccess,
+  fetchShivaError,
   createShivaRequest,
   createShivaSuccess,
   deleteShivaRequest,
@@ -26,14 +26,14 @@ export const fetchShivas = () : ThunkAction<void, AppState, null, Action<string>
 }
 
 export const fetchShivaById = (shivaId: string) : ThunkAction<void, AppState, null, Action<string>> => async dispatch => {
-  dispatch(fetchShivaByIdRequest())
+  dispatch(fetchShivaRequest())
   await sleep(1000)
   const shiva = shivas.find(shiva => shiva._id === shivaId)
   if (shiva){
-    dispatch(fetchShivaByIdSuccess(shiva))
+    dispatch(fetchShivaSuccess(shiva))
     dispatch(selectShiva(shiva._id))
   } else {
-      dispatch(fetchShivaByIdError({code: 404, error: 'cannot find it'}))
+      dispatch(fetchShivaError({code: 404, error: 'cannot find it'}))
       dispatch(push('/404'))
   }
 } 

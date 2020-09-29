@@ -84,10 +84,10 @@ const reducer: Reducer<ShivaState> = (state=initialState, action: ActionTypes): 
     case ShivaActions.DeleteShivaError: {
       return state
     }
-    case ShivaActions.FetchShivaByIdRequest: {
+    case ShivaActions.FetchShivaRequest: {
       return {...state, loading: true}
     }
-    case ShivaActions.FetchShivaByIdSuccess: {
+    case ShivaActions.FetchShivaSuccess: {
       const shiva = action.payload
       return {
         ...state,

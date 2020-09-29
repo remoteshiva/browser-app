@@ -65,14 +65,14 @@ export const fetchShivaListError = createAction(ShivaActionTypes.FetchShivaListE
 export type FetchShivaListError = ActionType<typeof fetchShivaListError>
 
 //
-export const fetchShivaByIdRequest = createAction(ShivaActionTypes.FetchShivaByIdRequest)()
-export type FetchShivaByIdRequest = ActionType<typeof fetchShivaByIdRequest>
+export const fetchShivaRequest = createAction(ShivaActionTypes.FetchShivaRequest)()
+export type FetchShivaRequest = ActionType<typeof fetchShivaRequest>
 
-export const fetchShivaByIdSuccess = createAction(ShivaActionTypes.FetchShivaByIdSuccess)<Shiva>()
-export type FetchShivaByIdSuccess = ActionType<typeof fetchShivaByIdSuccess>
+export const fetchShivaSuccess = createAction(ShivaActionTypes.FetchShivaSuccess)<Shiva>()
+export type FetchShivaSuccess = ActionType<typeof fetchShivaSuccess>
 
-export const fetchShivaByIdError = createAction(ShivaActionTypes.FetchShivaByIdError)<BackendError>()
-export type FetchShivaByIdError = ActionType<typeof fetchShivaByIdError>
+export const fetchShivaError = createAction(ShivaActionTypes.FetchShivaError)<BackendError>()
+export type FetchShivaError = ActionType<typeof fetchShivaError>
 
 
 //
@@ -104,9 +104,9 @@ export type ActionTypes =
     FetchShivaListRequest  | 
     FetchShivaListSuccess  | 
     FetchShivaListError    |
-    FetchShivaByIdRequest  | 
-    FetchShivaByIdSuccess  | 
-    FetchShivaByIdError    |
+    FetchShivaRequest  | 
+    FetchShivaSuccess  | 
+    FetchShivaError    |
     CreateShivaRequest  |
     CreateShivaSuccess  |
     CreateShivaError    |
