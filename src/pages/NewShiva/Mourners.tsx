@@ -57,7 +57,7 @@ const MournerBox = ({id, name, relationship, onUpdate, onRemove}:MournerBoxProps
 }
 
 const emptyMourner = {name: '', relationship: ''}
-const mournerPathPrefix = 'app.remoteshiva.org/m/'
+const mournerPathPrefix = `${process.env.REACT_APP_BASE_URL}/m/`
 
 const Mourners = ({newShiva, submit, selectStep, addNotification}: StepProps<MournersProps>) => {
   const inputRef = useRef<HTMLButtonElement>(null);
