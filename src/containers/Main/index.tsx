@@ -9,7 +9,10 @@ import LoginSignup, { Pages } from '../../pages/LoginSignup'
 import Dashboard from '../../pages/Dashboard'
 import NewShiva from '../../pages/NewShiva'
 import EditShiva from '../../pages/Shiva'
+import VisitorPage from '../../pages/Visitor'
+import MournerPage from '../../pages/Mourner'
 import NotFoundPage from '../../pages/NotFound'
+
 
 interface privateRouteProps extends RouteProps{
     component: any
@@ -41,16 +44,18 @@ const Main = ({session}: Props) => {
           path='/'
           exact component={ Dashboard }
         />
-        <Route 
+        <PrivateRoute 
           session={session}
           path='/newshiva/:step?'
            exact component={ NewShiva }
         />
-        <Route 
+        <PrivateRoute 
           session={session}
           path='/shiva/:id'
            exact component={ EditShiva }
         />
+        <Route path='/v/:key' component={VisitorPage}/>
+        <Route path='/m/:key' component={MournerPage}/>
         <Route path="/404" component={NotFoundPage} />
         <Route  component={NotFoundPage} />
       </Switch>
