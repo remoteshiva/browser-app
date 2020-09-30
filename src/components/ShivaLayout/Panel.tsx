@@ -22,7 +22,6 @@ export const withPanel = <P extends object>(
     const onModeChange = () => {
       setEditing(!editing)
     }
-    console.log('what is the role', role)
     return(
       <Card
         direction={direction}

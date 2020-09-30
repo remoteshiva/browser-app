@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Shiva, ROLE } from '../../store/shiva/types'
 import { Row, FlexColumn, FixedColumn} from '../flexLayout'
 import Subject from './Subject'
@@ -9,6 +9,7 @@ import VideoLink from './VideoLink'
 import MinianTimes from './MinianTimes'
 import Meals from './Meals'
 import Donations from './Donations'
+import InviteVisitors from './InviteVisitors'
 import {
   LayoutWrapper,
   Direction,
@@ -22,6 +23,7 @@ interface Props {
 }
 
 const ShivaLayout = ({shiva, role}: Props) => {
+  const [showDialog, setShowDialog] = useState(false)
   return (
     <LayoutWrapper>
       <Row>
@@ -32,10 +34,9 @@ const ShivaLayout = ({shiva, role}: Props) => {
             <About shiva={shiva} role={role} direction={Direction.column}/>
           </FlexColumn>
         </main>
-        <FixedColumn width={20}></FixedColumn> 
-        <aside>
+        <aside style={{marginLeft: '20px'}}>
           <FixedColumn width={320}>
-            { role !== 'Visitor' ? <Button>Invite visitors</Button> : null }
+            { role !== 'Visitor' ? <Button onClick={() => setShowDialog(true)}>Invite visitors</Button> : null }
             <VideoLink shiva={shiva} role={role} direction={Direction.column}/>
             <Mourners shiva={shiva} role={role} direction={Direction.column}/>
             <MinianTimes shiva={shiva} role={role} direction={Direction.column}/>
@@ -44,6 +45,7 @@ const ShivaLayout = ({shiva, role}: Props) => {
           </FixedColumn>
         </aside>
       </Row>
+      { showDialog ? <InviteVisitors shiva={shiva} onClose={()=>setShowDialog(false)}/> : null }
     </LayoutWrapper>
   )
 }

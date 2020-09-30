@@ -14,7 +14,8 @@ const colors = {
   dawn: '#a09b8f',
   white: '#fff',
   blueChill: '#398e8f',
-  woodBark: '#2C221E'
+  woodBark: '#2C221E',
+  clamShell: '#d8bbae'
 }
 
 const fonts = ['Lato', 'Lora', 'sans-serif']

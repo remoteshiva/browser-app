@@ -50,23 +50,6 @@ export const CardWrapper = styled.div<CardWrapperProps>`
     margin-bottom: 20px;
   }
 `
-export const TitleImage = styled.div`
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  border: 6px solid ${props=> props.theme.colors.romance};
-  overflow: hidden;
-  background-position: 50% 50%;
-  background-repeat: no-repeat;
-  background-size: cover;
-`
-export const ShivaTitle = styled.div`
-  /* flex-shrink:0 !important; */
-  min-width: 40%;
-  font-size: 48px;
-  font-family: 'Lora';
-  color: ${props=> props.theme.colors.heavyMetal};
-`
 // TODO: get rid of this
 export const Button = styled.button`
   background-color: ${props=> props.theme.colors.richGold};

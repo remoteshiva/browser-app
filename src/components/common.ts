@@ -24,3 +24,9 @@ export const DarkButton = styled(Button)`
   background-color: ${props => props.theme.colors.richGold};
   color: ${props => props.theme.colors.white};
 `
+
+export const ApproveButton = styled(Button)`
+  background-color: ${props => props.theme.colors.blueChill};
+  color: ${props => props.theme.colors.white};
+  box-shadow: 0 4px 23px 0 rgba(36, 67, 67, 0.27);
+`

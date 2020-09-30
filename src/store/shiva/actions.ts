@@ -1,4 +1,4 @@
-import { Action } from 'redux'
+import { Action, Dispatch } from 'redux'
 import { ThunkAction } from 'redux-thunk'
 import { push } from 'connected-react-router'
 import { 
@@ -22,13 +22,39 @@ const sleep = (ms:number) => new Promise(r => setTimeout(r, ms))
 export const fetchShivas = () : ThunkAction<void, AppState, null, Action<string>> => async dispatch => {
   dispatch(fetchShivaListRequest())
   await sleep(1000)
-  dispatch(fetchShivaListSuccess(shivas))
+  return dispatch(fetchShivaListSuccess(shivas))
 }
 
 export const fetchShivaById = (shivaId: string) : ThunkAction<void, AppState, null, Action<string>> => async dispatch => {
   dispatch(fetchShivaRequest())
   await sleep(1000)
   const shiva = shivas.find(shiva => shiva._id === shivaId)
+  if (shiva){
+    dispatch(selectShiva(shiva._id))
+    dispatch(fetchShivaSuccess(shiva))
+  } else {
+      dispatch(fetchShivaError({code: 404, error: 'cannot find it'}))
+      dispatch(push('/404'))
+  }
+} 
+
+export const fetchShivaByMournerKey = (mournerKey: string) : ThunkAction<void, AppState, null, Action<string>> => async dispatch => {
+  dispatch(fetchShivaRequest())
+  await sleep(1000)
+  const shiva = shivas.find(shiva => shiva.mournerKey === mournerKey)
+  if (shiva){
+    dispatch(fetchShivaSuccess(shiva))
+    dispatch(selectShiva(shiva._id))
+  } else {
+      dispatch(fetchShivaError({code: 404, error: 'cannot find it'}))
+      dispatch(push('/404'))
+  }
+} 
+
+export const fetchShivaByVisitorKey = (visitorKey: string) : ThunkAction<void, AppState, null, Action<string>> => async dispatch => {
+  dispatch(fetchShivaRequest())
+  await sleep(1000)
+  const shiva = shivas.find(shiva => shiva.visitorKey === visitorKey)
   if (shiva){
     dispatch(fetchShivaSuccess(shiva))
     dispatch(selectShiva(shiva._id))
