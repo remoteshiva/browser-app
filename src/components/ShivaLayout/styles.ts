@@ -22,11 +22,12 @@ export enum Direction{
   row = 'row',
   column = 'column'
 }
-interface CardProps {
+interface CardWrapperProps {
   direction?: Direction
 }
-export const Card = styled.div<CardProps>`
+export const CardWrapper = styled.div<CardWrapperProps>`
   display: flex;
+  position: relative;
   flex-direction: ${props=>props.direction ? props.direction : 'row'};
   overflow: hidden;
   word-break: break-all;
