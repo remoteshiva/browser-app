@@ -29,7 +29,12 @@ export const shivas: Shiva[] = [
         mournerKey: 'HgyQFcacW7',
         visitorKey: 'YpNVU8ZkOz',
         titleImage: new URL('https://www.villagevoice.com/wp-content/uploads/2013/12/9415887.0.jpg'),
-        visits: []
+        visits: [],
+        about: '',
+        images: [],
+        mealSignups: '',
+        minianTimes: '',
+        donations: ''
     },{
         _id: 'nYHti5evgaCynqKc',
         nameOfDeceased: 'Champ Kind',
@@ -46,7 +51,12 @@ export const shivas: Shiva[] = [
         mournerKey: 'Kw9sFWi6JX',
         visitorKey: 'Y8cxY0KKGl',
         titleImage: new URL('https://bloximages.chicago2.vip.townnews.com/pottsmerc.com/content/tncms/assets/v3/editorial/1/61/161a5c45-0437-503c-a943-ab7fa7f8dfcc/5b7c785d5c9f4.image.jpg'),
-        visits: []
+        visits: [],
+        about: '',
+        images: [],
+        mealSignups: '',
+        minianTimes: '',
+        donations: ''
     },{
         _id: 'fUzzVqRoRde0ihGM',
         nameOfDeceased: 'Brian Fantana',
@@ -73,6 +83,11 @@ export const shivas: Shiva[] = [
                 visitors:[],
                 mourners: []
             }
-        ]
+        ],
+        about: '',
+        images: [],
+        mealSignups: '',
+        minianTimes: '',
+        donations: ''
     }
 ]

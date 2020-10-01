@@ -31,6 +31,11 @@ export interface Shiva {
   visitorKey: string
   titleImage: URL | null   
   visits: Visit[]
+  about: string
+  images: URL[]
+  mealSignups: string
+  minianTimes: string
+  donations: string
 }
 
 export const createEmptyShiva = (): Shiva => ({
@@ -43,6 +48,11 @@ export const createEmptyShiva = (): Shiva => ({
   visitorKey: generateRandomKey(),
   visits: [],
   titleImage: null,
+  about: '',
+  images: [],
+  mealSignups: '',
+  minianTimes: '',
+  donations: '',
 })
 
 export interface ShivaState {
