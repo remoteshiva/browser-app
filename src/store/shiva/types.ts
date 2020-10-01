@@ -3,18 +3,18 @@ import { ActionType, createAction } from 'typesafe-actions'
 import * as ShivaActionTypes from './constants'
 import { BackendError } from '../types'
 
-const generateRandomKey = ():string => {
+const generateRandomKey = (): string => {
   return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
 }
 
 export type ROLE = 'Editor' | 'Mourner' | 'Visitor'
 export interface Mourner {
-    name: string
-    relationship: string
+  name: string
+  relationship: string
 }
 
 export interface Visit {
-  date: moment.Moment,
+  date: moment.Moment
   length: number
   mourners: number[]
   visitors: string[]
@@ -29,16 +29,18 @@ export interface Shiva {
   mourners: Mourner[]
   mournerKey: string
   visitorKey: string
-  titleImage: URL | null   
+  titleImage: URL | null
   visits: Visit[]
-  about: string
-  images: URL[]
-  mealSignups: string
-  minianTimes: string
-  donations: string
+  about?: string
+  images?: URL[]
+  mealSignups?: string
+  minianTimes?: string
+  donations?: string
+  inviteMessage?: string
 }
 
-export const createEmptyShiva = (): Shiva => ({
+export const initializeShiva = (shiva?: Shiva): Shiva => ({
+  ...shiva,
   _id: '',
   nameOfDeceased: '',
   startDate: moment().startOf('day'),
@@ -53,16 +55,17 @@ export const createEmptyShiva = (): Shiva => ({
   mealSignups: '',
   minianTimes: '',
   donations: '',
+  inviteMessage: '',
 })
 
 export interface ShivaState {
-    loading: boolean
-    entities: {[key: string]: Shiva}        // all shiva objects, arranged by id
-    shivas: string[]                        // list of shiva ids
-    visitorKeys: {[key:string]: string}     // map visitor keys to shiva ids
-    mournerKeys: {[key:string]: string}     // map mourner keys to shiva ids
-    selectedShiva: string | null            // id of selected shiva
-    error?: BackendError 
+  loading: boolean
+  entities: { [key: string]: Shiva } // all shiva objects, arranged by id
+  shivas: string[] // list of shiva ids
+  visitorKeys: { [key: string]: string } // map visitor keys to shiva ids
+  mournerKeys: { [key: string]: string } // map mourner keys to shiva ids
+  selectedShiva: string | null // id of selected shiva
+  error?: BackendError
 }
 
 //
@@ -85,7 +88,6 @@ export type FetchShivaSuccess = ActionType<typeof fetchShivaSuccess>
 export const fetchShivaError = createAction(ShivaActionTypes.FetchShivaError)<BackendError>()
 export type FetchShivaError = ActionType<typeof fetchShivaError>
 
-
 //
 export const createShivaRequest = createAction(ShivaActionTypes.CreateShivaRequest)()
 export type CreateShivaRequest = ActionType<typeof createShivaRequest>
@@ -106,25 +108,21 @@ export type DeleteShivaSuccess = ActionType<typeof deleteShivaSuccess>
 export const deleteShivaError = createAction(ShivaActionTypes.DeleteShivaError)<BackendError>()
 export type DeleteShivaError = ActionType<typeof deleteShivaError>
 
-
 //
 export const selectShiva = createAction(ShivaActionTypes.SelectShiva)<string | null>()
 export type SelectShiva = ActionType<typeof selectShiva>
 
-export type ActionTypes = 
-    FetchShivaListRequest  | 
-    FetchShivaListSuccess  | 
-    FetchShivaListError    |
-    FetchShivaRequest  | 
-    FetchShivaSuccess  | 
-    FetchShivaError    |
-    CreateShivaRequest  |
-    CreateShivaSuccess  |
-    CreateShivaError    |
-    DeleteShivaRequest  |
-    DeleteShivaSuccess  |
-    DeleteShivaError    |
-    SelectShiva
-
-
-
+export type ActionTypes =
+  | FetchShivaListRequest
+  | FetchShivaListSuccess
+  | FetchShivaListError
+  | FetchShivaRequest
+  | FetchShivaSuccess
+  | FetchShivaError
+  | CreateShivaRequest
+  | CreateShivaSuccess
+  | CreateShivaError
+  | DeleteShivaRequest
+  | DeleteShivaSuccess
+  | DeleteShivaError
+  | SelectShiva

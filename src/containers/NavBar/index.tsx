@@ -5,16 +5,15 @@ import Avatar from '../../assets/img/avatar.svg'
 import { AppState } from '../../store'
 import { Session, User } from '../../store/auth/types'
 import { loginUser } from '../../store/auth/actions'
-import  { Wrapper, NavWrapper, UserBarWrapper } from './styles'
+import { Wrapper, NavWrapper, UserBarWrapper } from './styles'
 import LoginBar from './LoginBar'
-
 
 interface UserBarProps {
   user: User
 }
-const UserBar = ({user}: UserBarProps) => (
+const UserBar = ({ user }: UserBarProps) => (
   <UserBarWrapper>
-    <img src={Avatar} alt="Avatar"/>
+    <img src={Avatar} alt="Avatar" />
     <span>Hi, {user.firstName}</span>
   </UserBarWrapper>
 )
@@ -24,15 +23,15 @@ interface NavBarProps {
   loginUser: any
 }
 
-const NavBar = ({session, loginUser}: NavBarProps) => (
+const NavBar = ({ session, loginUser }: NavBarProps) => (
   <Wrapper>
     <NavWrapper>
-        <div>
-          <a href='http://remoteshiva.org'>
-            <img className="hidden lg:block h-8 w-auto" src={Logo} alt="RemoteShiva logo"/>
-          </a>
-        </div>
-        { session ? <UserBar user={session.user}/> : <LoginBar/> }
+      <div>
+        <a href="http://remoteshiva.org">
+          <img className="hidden lg:block h-8 w-auto" src={Logo} alt="RemoteShiva logo" />
+        </a>
+      </div>
+      {session ? <UserBar user={session.user} /> : <LoginBar />}
     </NavWrapper>
   </Wrapper>
 )
@@ -41,7 +40,4 @@ const mapStateToProps = (state: AppState) => ({
   session: state.auth.session,
 })
 
-export default connect(mapStateToProps, {loginUser})(NavBar)
-
-
-
+export default connect(mapStateToProps, { loginUser })(NavBar)

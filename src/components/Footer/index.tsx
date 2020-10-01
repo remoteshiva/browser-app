@@ -9,12 +9,6 @@ const Wrapper = styled.footer`
   color: #fff;
 `
 
-const Footer = () => (
-    <Wrapper>
-        ©RemoteShiva 2020
-    </Wrapper>
-)
+const Footer = () => <Wrapper>©RemoteShiva 2020</Wrapper>
 
 export default Footer
-
-

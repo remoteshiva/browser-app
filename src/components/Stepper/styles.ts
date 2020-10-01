@@ -1,13 +1,12 @@
 import styled from 'styled-components'
 
-
 interface StepperWrapperProps {
   width: number
 }
 
 export const StepperWrapper = styled.ul<StepperWrapperProps>`
   width: ${props => `${props.width}px`};
-  list-style-type:none;
+  list-style-type: none;
   padding-inline-start: 0;
   display: flex;
   flex-direction: column;
@@ -17,7 +16,6 @@ export const StepperWrapper = styled.ul<StepperWrapperProps>`
   margin: 10px;
 `
 
-
 interface StepNumberProps {
   readonly diameter: number
   readonly gap?: number
@@ -26,20 +24,20 @@ interface StepNumberProps {
 
 export const StepNumber = styled.li<StepNumberProps>`
   border-radius: 50%;
-  border: 1px solid ${props=> props.selected ? props.theme.colors.richGold : props.theme.colors.hintOfRed};
-  background-color: ${props=> props.selected ? props.theme.colors.richGold : props.theme.colors.hintOfRed};
-  color: ${props=> props.selected ? '#fff' : props.theme.colors.richGold};
+  border: 1px solid ${props => (props.selected ? props.theme.colors.richGold : props.theme.colors.hintOfRed)};
+  background-color: ${props => (props.selected ? props.theme.colors.richGold : props.theme.colors.hintOfRed)};
+  color: ${props => (props.selected ? '#fff' : props.theme.colors.richGold)};
   width: ${props => `${props.diameter}px`};
   height: ${props => `${props.diameter}px`};
-  line-height: ${props => `${props.diameter-2}px`};
+  line-height: ${props => `${props.diameter - 2}px`};
   font-family: 'Lato';
   font-weight: 600;
   font-size: 16px;
   text-align: center;
-  z-index:10;
-  margin-bottom: ${props => props.gap ? `${props.gap}px` : `${props.diameter}px`};
+  z-index: 10;
+  margin-bottom: ${props => (props.gap ? `${props.gap}px` : `${props.diameter}px`)};
   &:last-of-type {
-    margin-bottom:0;
+    margin-bottom: 0;
   }
   cursor: pointer !important;
 `
@@ -47,9 +45,9 @@ export const StepNumber = styled.li<StepNumberProps>`
 export const StepConnector = styled.div`
   height: 100%;
   width: 2px;
-  background-color: ${props=> props.theme.colors.hintOfRed};
+  background-color: ${props => props.theme.colors.hintOfRed};
   position: absolute;
   top: 0;
   left: 50%;
-  z-index:1;
+  z-index: 1;
 `

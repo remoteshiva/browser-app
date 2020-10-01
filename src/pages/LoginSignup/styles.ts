@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 
-
 export const UXWrapper = styled.div`
   flex: 1;
   display: flex;
@@ -37,9 +36,9 @@ export const Tab = styled.button<TabProps>`
   font-family: 'Lora';
   font-size: 43px;
   line-height: 58px;
-  color: ${props => props.theme.colors.heavyMetal };
-  opacity: ${props => props.active? 1 : 0.21};
-  border-bottom: ${props => props.active? 'solid 2px #41413a': 0};
+  color: ${props => props.theme.colors.heavyMetal};
+  opacity: ${props => (props.active ? 1 : 0.21)};
+  border-bottom: ${props => (props.active ? 'solid 2px #41413a' : 0)};
   cursor: default;
 `
 interface SpaceProps {
@@ -52,13 +51,13 @@ export const VerticalSpace = styled.div<SpaceProps>`
 
 export const StyledForm = styled.form`
   text-align: left;
-  label{
-    color: ${props=> props.theme.colors.doveGray};
+  label {
+    color: ${props => props.theme.colors.doveGray};
     font-size: 16px;
   }
-  input{
+  input {
     border-radius: 2px;
-    border: solid 1px ${props=> props.theme.colors.sauvignonLight};
+    border: solid 1px ${props => props.theme.colors.sauvignonLight};
   }
 `
 
@@ -67,16 +66,16 @@ export const TextWithLine = styled.div`
   flex-direction: row;
   &:before,
   &:after {
-    content: "";
+    content: '';
     flex: 1 1;
     border-bottom: 1px solid #000;
     margin: auto;
   }
   &:before {
-    margin-right: 10px
+    margin-right: 10px;
   }
   &:after {
-    margin-left: 10px
+    margin-left: 10px;
   }
 `
 
@@ -90,7 +89,7 @@ const Button = styled.button`
 export const LightButton = styled(Button)`
   border: solid 1px ${props => props.theme.colors.richGold};
   background-color: ${props => props.theme.colors.white};
-  color: ${ props => props.theme.colors.richGold };
+  color: ${props => props.theme.colors.richGold};
 `
 
 export const DarkButton = styled(Button)`

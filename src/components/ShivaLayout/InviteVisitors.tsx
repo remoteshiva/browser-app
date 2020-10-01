@@ -5,7 +5,6 @@ import CloseIcon from '../../assets/img/closex.svg'
 import { ClickOutside } from '../ClickOutside'
 import { VerticalSpace, ApproveButton } from '../common'
 
-
 const Fade = styled.div`
   position: fixed;
   top: 0;
@@ -44,7 +43,7 @@ const Modal = styled(ClickOutside)`
     font-weight: normal;
     font-size: 56px;
   }
-  p{
+  p {
     font-family: 'Lato';
     font-size: 16px;
   }
@@ -69,26 +68,26 @@ const Modal = styled(ClickOutside)`
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
   }
-  textarea{
+  textarea {
     height: 143px;
     padding: 15px;
     resize: none;
     width: 100%;
-    border: solid 1px ${props=> props.theme.colors.sauvignonLight};
+    border: solid 1px ${props => props.theme.colors.sauvignonLight};
     color: ${props => props.theme.colors.heavyMetal};
     border-radius: 1px;
     margin-bottom: 40px;
     font-size: 16px;
     line-height: 22px;
-    &::placeholder{
-      color: ${props=> props.theme.colors.dawn};
+    &::placeholder {
+      color: ${props => props.theme.colors.dawn};
     }
   }
   section {
-    width:360px;
+    width: 360px;
     margin: auto;
   }
-  .label{
+  .label {
     font-family: 'Lato';
     font-size: 16px;
     text-align: left !important;
@@ -102,24 +101,27 @@ interface Props {
   onClose: () => void
 }
 
-const InviteVisitorsModal = ({shiva, onClose}: Props) => {
+const InviteVisitorsModal = ({ shiva, onClose }: Props) => {
   const link = `${process.env.REACT_APP_BASE_URL}/v/${shiva.visitorKey}`
   return (
     <Fade>
       <Modal onClickOutside={onClose}>
-        <button className='close' onClick={onClose}></button>
+        <button className="close" onClick={onClose}></button>
         <h2>Invite Visitors</h2>
-        <VerticalSpace height={20}/>
-        <p>Send the link below (along with the password if you choose to add one) to people who might be interested in attending the shiva. If mourners belong to synagogues, consider sending a message with this link to their synagogue bulletins.</p>
-        <VerticalSpace height={20}/>
+        <VerticalSpace height={20} />
+        <p>
+          Send the link below (along with the password if you choose to add one) to people who might be interested in attending the shiva. If mourners belong to synagogues, consider sending a message
+          with this link to their synagogue bulletins.
+        </p>
+        <VerticalSpace height={20} />
         <section>
-          <div className='label'>Copy this URL to share:</div>
-            <div className='linktext'>{link}</div>
-          <button className='linkcopy'>copy</button>
+          <div className="label">Copy this URL to share:</div>
+          <div className="linktext">{link}</div>
+          <button className="linkcopy">copy</button>
         </section>
         <section>
-          <div className='label'>Message to copy (optional)</div>
-          <textarea/>
+          <div className="label">Message to copy (optional)</div>
+          <textarea />
           <div>
             <ApproveButton>Copy message</ApproveButton>
           </div>
@@ -129,4 +131,4 @@ const InviteVisitorsModal = ({shiva, onClose}: Props) => {
   )
 }
 
-export default InviteVisitorsModal;
+export default InviteVisitorsModal

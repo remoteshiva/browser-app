@@ -1,6 +1,5 @@
-import React, { ReactNode } from "react";
-import { ThemeProvider } from "styled-components"
-
+import React, { ReactNode } from 'react'
+import { ThemeProvider } from 'styled-components'
 
 const colors = {
   heavyMetal: '#41413a',
@@ -15,7 +14,7 @@ const colors = {
   white: '#fff',
   blueChill: '#398e8f',
   woodBark: '#2C221E',
-  clamShell: '#d8bbae'
+  clamShell: '#d8bbae',
 }
 
 const fonts = ['Lato', 'Lora', 'sans-serif']
@@ -24,13 +23,12 @@ const components = {
   shivaCard: {
     width: '327px',
     height: '258px',
-    borderRadius: '10px'
-  }
-
+    borderRadius: '10px',
+  },
 }
 
 interface RemoteShivaTheme {
-  colors: { [key in keyof typeof colors]: string };
+  colors: { [key in keyof typeof colors]: string }
   fonts: string[]
 }
 
@@ -41,11 +39,9 @@ export const theme = {
 }
 
 interface Props {
-    children?: ReactNode
-  }
+  children?: ReactNode
+}
 
-const Theme = ({ children }: Props) => (
-  <ThemeProvider theme={theme}>{children}</ThemeProvider>
-);
+const Theme = ({ children }: Props) => <ThemeProvider theme={theme}>{children}</ThemeProvider>
 
 export default Theme

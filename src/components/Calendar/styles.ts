@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 
-
 export const PIXELS_PER_HOUR = 40
 export const PIXELS_PER_MINUTE = PIXELS_PER_HOUR / 60
 export const SNAP = 15
@@ -13,7 +12,7 @@ export const CalendarWrapper = styled.div<CalendarWrapperProps>`
   display: flex;
   background-color: white;
   padding: 10px;
-  height: ${props => props.height? props.height : 'auto'};
+  height: ${props => (props.height ? props.height : 'auto')};
 `
 
 export const Timezone = styled.div`
@@ -23,7 +22,7 @@ export const Timezone = styled.div`
   height: 26px;
   font-family: 'Lato';
   font-size: 12px;
-  color: ${props=> props.theme.colors.heavyMetal};
+  color: ${props => props.theme.colors.heavyMetal};
   text-align: center;
 `
 export const VRulerWrapper = styled.div`
@@ -44,16 +43,16 @@ export const HRulerWrapper = styled.div<HRulerWrapper>`
 `
 
 export const Hour = styled.div`
-  color: ${props=> props.theme.colors.doveGray};
+  color: ${props => props.theme.colors.doveGray};
   text-align: right;
   font-family: 'Lato';
   font-size: 13px;
-  height:  ${PIXELS_PER_HOUR}px;
-  margin-right:18px;
+  height: ${PIXELS_PER_HOUR}px;
+  margin-right: 18px;
 `
 
 export const Day = styled.div`
-  color: ${props=> props.theme.colors.heavyMetal};
+  color: ${props => props.theme.colors.heavyMetal};
   text-align: center;
   white-space: nowrap;
   overflow: hidden;
@@ -80,7 +79,7 @@ export const GridBackground = styled.div`
   grid-column-start: 1;
   grid-row-start: 1;
   z-index: 1;
-  color: ${props=> props.theme.colors.doveGray};
+  color: ${props => props.theme.colors.doveGray};
   font-size: 26px;
   opacity: 0.62;
 `
@@ -99,10 +98,10 @@ interface ColumnWrapper {
 export const ColumnWrapper = styled.div<ColumnWrapper>`
   box-sizing: border-box;
   background-color: transparent;
-  background-image: repeating-linear-gradient(180deg, #f1edf6 , #f1edf6 1px, transparent 1px, transparent ${PIXELS_PER_HOUR}px);
+  background-image: repeating-linear-gradient(180deg, #f1edf6, #f1edf6 1px, transparent 1px, transparent ${PIXELS_PER_HOUR}px);
   background-position: 100px;
   position: relative;
-  height: ${props => props.height? props.height: 'auto'};
+  height: ${props => (props.height ? props.height : 'auto')};
   overflow: hidden;
   cursor: crosshair !important;
 `
@@ -117,14 +116,14 @@ export const EventWrapper = styled.div<EventWrapperProps>`
   box-sizing: border-box;
   width: 90%;
   margin: 0 5% 0 5%;
-  height: ${ props => `${props.height}px`};
-  top: ${ props => `${props.top}px`};
+  height: ${props => `${props.height}px`};
+  top: ${props => `${props.top}px`};
   background-color: rgba(146, 70, 35, 0.12);
   font-family: 'Lato';
   font-size: 13px;
   padding: 4px;
-  color:  ${props=> props.theme.colors.richGold};
-  >div {
+  color: ${props => props.theme.colors.richGold};
+  > div {
     font-family: 'Lato';
     font-size: 13px;
     line-height: 18px;

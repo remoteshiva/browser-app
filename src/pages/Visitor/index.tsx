@@ -11,28 +11,21 @@ interface RoutingProps {
   key: string
 }
 
-interface Props {
-  
-}
+interface Props {}
 const VisitorPage = () => {
   const { key } = useParams<RoutingProps>()
-  const { loading, entities, visitorKeys, selectedShiva } = useSelector((state: AppState) => state.shiva);
+  const { loading, entities, visitorKeys, selectedShiva } = useSelector((state: AppState) => state.shiva)
   const dispatch = useDispatch()
 
   useEffect(() => {
-    if (key in visitorKeys){
+    if (key in visitorKeys) {
       dispatch(selectShiva(visitorKeys[key]))
     } else {
       dispatch(fetchShivaByVisitorKey(key))
     }
   }, [])
 
-  return loading || !selectedShiva ? <Loading/> : (
-    <ShivaLayout
-      role='Visitor'
-      shiva={entities[selectedShiva]}
-    />
-  )
+  return loading || !selectedShiva ? <Loading /> : <ShivaLayout role="Visitor" shiva={entities[selectedShiva]} />
 }
 
 export default VisitorPage

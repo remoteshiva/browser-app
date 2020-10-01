@@ -3,7 +3,7 @@ import tw from 'twin.macro'
 
 export const Wrapper = styled.header`
   ${tw`p-5`}
-  background-color:${props => props.theme.colors.romance  };
+  background-color:${props => props.theme.colors.romance};
 `
 
 export const NavWrapper = styled.nav`
@@ -16,7 +16,7 @@ export const MenuItem = styled.li`
   font-size: 15px;
   font-weight: normal;
   color: ${props => props.theme.colors.heavyMetal};
-  >a{
+  > a {
     ${tw`align-middle`}
     line-height: 37px;
   }

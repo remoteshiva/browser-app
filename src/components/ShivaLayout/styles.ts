@@ -15,12 +15,12 @@ interface FlexContainerProps {
 export const FlexContainer = styled.div<FlexContainerProps>`
   flex: 1;
   padding: 10px;
-  min-width: ${props => (props.minWidth? `${props.minWidth}px`:'auto')};
+  min-width: ${props => (props.minWidth ? `${props.minWidth}px` : 'auto')};
 `
 
-export enum Direction{
+export enum Direction {
   row = 'row',
-  column = 'column'
+  column = 'column',
 }
 interface CardWrapperProps {
   direction?: Direction
@@ -28,7 +28,7 @@ interface CardWrapperProps {
 export const CardWrapper = styled.div<CardWrapperProps>`
   display: flex;
   position: relative;
-  flex-direction: ${props=>props.direction ? props.direction : 'row'};
+  flex-direction: ${props => (props.direction ? props.direction : 'row')};
   overflow: hidden;
   word-break: break-all;
   width: 100%;
@@ -45,7 +45,7 @@ export const CardWrapper = styled.div<CardWrapperProps>`
     font-family: 'Lora';
     font-size: 28px;
     width: 100%;
-    color: ${props=> props.theme.colors.heavyMetal};
+    color: ${props => props.theme.colors.heavyMetal};
     margin-bottom: 12px;
   }
   h4 {
@@ -56,11 +56,11 @@ export const CardWrapper = styled.div<CardWrapperProps>`
 `
 // TODO: get rid of this
 export const Button = styled.button`
-  background-color: ${props=> props.theme.colors.richGold};
+  background-color: ${props => props.theme.colors.richGold};
   border-radius: 15px;
   padding: 15px;
   margin-bottom: 20px;
-  color: ${props=> props.theme.colors.white};
+  color: ${props => props.theme.colors.white};
   font-size: 18px;
   width: 100%;
 `
@@ -75,7 +75,7 @@ export const Relationship = styled.div`
   flex: 1;
   font-weight: 100;
   font-style: italic;
-  color: ${props=> props.theme.colors.doveGray};
+  color: ${props => props.theme.colors.doveGray};
 `
 
 export const Note = styled.div`

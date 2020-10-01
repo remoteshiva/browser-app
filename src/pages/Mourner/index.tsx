@@ -11,28 +11,21 @@ interface RoutingProps {
   key: string
 }
 
-interface Props {
-  
-}
+interface Props {}
 const MournerPage = () => {
   const { key } = useParams<RoutingProps>()
-  const { loading, entities, mournerKeys, selectedShiva } = useSelector((state: AppState) => state.shiva);
+  const { loading, entities, mournerKeys, selectedShiva } = useSelector((state: AppState) => state.shiva)
   const dispatch = useDispatch()
 
   useEffect(() => {
-    if (key in mournerKeys){
+    if (key in mournerKeys) {
       dispatch(selectShiva(mournerKeys[key]))
     } else {
       dispatch(fetchShivaByMournerKey(key))
     }
   }, [])
 
-  return loading || !selectedShiva ? <Loading/> : (
-    <ShivaLayout
-      role='Mourner'
-      shiva={entities[selectedShiva]}
-    />
-  )
+  return loading || !selectedShiva ? <Loading /> : <ShivaLayout role="Mourner" shiva={entities[selectedShiva]} />
 }
 
 export default MournerPage

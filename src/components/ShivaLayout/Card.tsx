@@ -9,7 +9,7 @@ interface Props {
   darkMode: boolean
   role: ROLE
   editing?: boolean
-  onModeChange? : () => void
+  onModeChange?: () => void
   direction?: Direction
   children: ReactNode
 }
@@ -20,19 +20,13 @@ const EditButton = styled.img`
   top: 10px;
 `
 
-const Card = ({darkMode, editing, direction, role, children, onModeChange}: Props) => {
-  return(
-    <CardWrapper className={darkMode? 'darkMode' : ''} direction={direction}>
-      { 
-        role === 'Visitor' || darkMode ? null :  
-          <EditButton 
-            onClick={onModeChange} 
-            src={editing ? SaveIcon: EditIcon }
-          />
-      }
+const Card = ({ darkMode, editing, direction, role, children, onModeChange }: Props) => {
+  return (
+    <CardWrapper className={darkMode ? 'darkMode' : ''} direction={direction}>
+      {role === 'Visitor' || darkMode ? null : <EditButton onClick={onModeChange} src={editing ? SaveIcon : EditIcon} />}
       {children}
     </CardWrapper>
   )
 }
 
-export default Card;
+export default Card

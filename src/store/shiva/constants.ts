@@ -1,4 +1,3 @@
-
 // async requests
 export const FetchShivaListRequest = '@@shiva/FETCH_SHIVA_LIST_REQUEST'
 export const FetchShivaListSuccess = '@@shiva/FETCH_SHIVA_LIST_SUCCESS'

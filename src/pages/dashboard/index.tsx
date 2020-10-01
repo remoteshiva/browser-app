@@ -7,7 +7,6 @@ import ShivaList from '../../components/ShivaCard/list'
 import Loading from '../../components/Loading'
 import { selectShiva } from '../../store/shiva/types'
 
-
 const Wrapper = styled.div`
   padding-top: 75px;
   padding-left: 100px;
@@ -22,22 +21,21 @@ const Wrapper = styled.div`
 
 const Dashboard = () => {
   const dispatch = useDispatch()
-  const { loading, entities, shivas } = useSelector((state: AppState) => state.shiva);
+  const { loading, entities, shivas } = useSelector((state: AppState) => state.shiva)
 
   useEffect(() => {
     dispatch(selectShiva(null))
-    if(!shivas.length){
+    if (!shivas.length) {
       dispatch(fetchShivas())
     }
-  },[dispatch, shivas.length])
-  
-  return loading ? <Loading/> : (
+  }, [dispatch, shivas.length])
+
+  return loading ? (
+    <Loading />
+  ) : (
     <Wrapper>
       <h1>My Shivas</h1>
-      <ShivaList 
-        entities={entities} 
-        shivas={shivas}
-      />
+      <ShivaList entities={entities} shivas={shivas} />
     </Wrapper>
   )
 }
