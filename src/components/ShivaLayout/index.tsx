@@ -22,26 +22,28 @@ interface Props {
   role: ROLE
 }
 
+
 const ShivaLayout = ({shiva, role}: Props) => {
   const [showDialog, setShowDialog] = useState(false)
+  const DARK = true
   return (
     <LayoutWrapper>
       <Row>
         <main>
           <FlexColumn>
-            <Subject shiva={shiva} role={role} direction={Direction.row}/>
-            <Schedule shiva={shiva} role={role} direction={Direction.column}/>
-            <About shiva={shiva} role={role} direction={Direction.column}/>
+            <Subject shiva={shiva} darkMode={false} role={role} direction={Direction.row}/>
+            <Schedule shiva={shiva} darkMode={false} role={role} direction={Direction.column}/>
+            <About shiva={shiva} darkMode={DARK} role={role} direction={Direction.column}/>
           </FlexColumn>
         </main>
         <aside style={{marginLeft: '20px'}}>
           <FixedColumn width={320}>
             { role !== 'Visitor' ? <Button onClick={() => setShowDialog(true)}>Invite visitors</Button> : null }
-            <VideoLink shiva={shiva} role={role} direction={Direction.column}/>
-            <Mourners shiva={shiva} role={role} direction={Direction.column}/>
-            <MinianTimes shiva={shiva} role={role} direction={Direction.column}/>
-            <Meals shiva={shiva} role={role} direction={Direction.column}/>
-            <Donations shiva={shiva} role={role} direction={Direction.column}/>
+            <VideoLink shiva={shiva} darkMode={shiva.videoLink ? false: true} role={role} direction={Direction.column}/>
+            <Mourners shiva={shiva} darkMode={false} role={role} direction={Direction.column}/>
+            <MinianTimes shiva={shiva} darkMode={DARK} role={role} direction={Direction.column}/>
+            <Meals shiva={shiva} darkMode={DARK} role={role} direction={Direction.column}/>
+            <Donations shiva={shiva} darkMode={DARK} role={role} direction={Direction.column}/>
           </FixedColumn>
         </aside>
       </Row>

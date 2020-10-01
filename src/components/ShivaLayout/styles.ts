@@ -37,6 +37,10 @@ export const CardWrapper = styled.div<CardWrapperProps>`
   background-color: white;
   border-radius: 10px;
   box-shadow: 0 2px 20px 0 rgba(0, 0, 0, 0.04);
+  &.darkMode {
+    background-color: ${props => props.theme.colors.sauvignonLight};
+    border: 2px dashed ${props => props.theme.colors.clamShell};
+  }
   h2 {
     font-family: 'Lora';
     font-size: 28px;

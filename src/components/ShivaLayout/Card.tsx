@@ -6,6 +6,7 @@ import EditIcon from '../../assets/img/edit.svg'
 import SaveIcon from '../../assets/img/save.svg'
 
 interface Props {
+  darkMode: boolean
   role: ROLE
   editing?: boolean
   onModeChange? : () => void
@@ -19,16 +20,15 @@ const EditButton = styled.img`
   top: 10px;
 `
 
-const Card = ({editing, direction, role, children, onModeChange}: Props) => {
+const Card = ({darkMode, editing, direction, role, children, onModeChange}: Props) => {
   return(
-    <CardWrapper direction={direction}>
+    <CardWrapper className={darkMode? 'darkMode' : ''} direction={direction}>
       { 
-        role !== 'Visitor' ? 
+        role === 'Visitor' || darkMode ? null :  
           <EditButton 
             onClick={onModeChange} 
             src={editing ? SaveIcon: EditIcon }
           />
-          : null
       }
       {children}
     </CardWrapper>

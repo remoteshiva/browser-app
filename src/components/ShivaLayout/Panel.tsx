@@ -8,28 +8,31 @@ export enum Direction{
 }
 export interface ShivaPanel {
   shiva: Shiva
+  role: ROLE
   editing?: boolean
 }
   
 interface withPanelProps {
   role: ROLE
   direction?: Direction
+  darkMode: boolean
 }
 export const withPanel = <P extends object>(
   Component:React.ComponentType<P>
-  ): React.FC<P & withPanelProps> => ({role, direction, ...props}:withPanelProps) => {
+  ): React.FC<P & withPanelProps> => ({role, direction, darkMode, ...props}:withPanelProps) => {
     const [editing, setEditing] = useState<boolean>(false)
     const onModeChange = () => {
       setEditing(!editing)
     }
-    return(
+    return( role==='Visitor' && darkMode ? null : 
       <Card
+        darkMode={darkMode}
         direction={direction}
         role={role}
         onModeChange={onModeChange}
         editing={editing}
       >
-        <Component editing={editing} {...props as P}/>
+        <Component editing={editing} role={role} {...props as P}/>
       </Card>
     )
   }
