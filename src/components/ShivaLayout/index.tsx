@@ -19,7 +19,6 @@ interface Props {
 
 const ShivaLayout = ({ shiva, role }: Props) => {
   const [showDialog, setShowDialog] = useState(false)
-  const DARK = true
   return (
     <LayoutWrapper>
       <Row>
@@ -27,7 +26,7 @@ const ShivaLayout = ({ shiva, role }: Props) => {
           <FlexColumn>
             <Subject shiva={shiva} darkMode={false} role={role} direction={Direction.row} />
             <Schedule shiva={shiva} darkMode={false} role={role} direction={Direction.column} />
-            <About shiva={shiva} darkMode={DARK} role={role} direction={Direction.column} />
+            <About shiva={shiva} darkMode={shiva.about ? false : true} role={role} direction={Direction.column} />
           </FlexColumn>
         </main>
         <aside style={{ marginLeft: '20px' }}>

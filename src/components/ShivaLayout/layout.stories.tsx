@@ -7,10 +7,8 @@ export default {
   component: ShivaLayout,
 }
 
-const shiva = shivas[2]
+export const Editor = () => <ShivaLayout shiva={shivas[0]} role="Editor" />
 
-export const Editor = () => <ShivaLayout shiva={shiva} role="Editor" />
+export const Mourner = () => <ShivaLayout shiva={shivas[1]} role="Mourner" />
 
-export const Mourner = () => <ShivaLayout shiva={shiva} role="Mourner" />
-
-export const Visitor = () => <ShivaLayout shiva={shiva} role="Visitor" />
+export const Visitor = () => <ShivaLayout shiva={shivas[2]} role="Visitor" />
