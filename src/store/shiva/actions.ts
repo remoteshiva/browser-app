@@ -1,6 +1,7 @@
-import { Action, Dispatch } from 'redux'
+import { Action } from 'redux'
 import { ThunkAction } from 'redux-thunk'
 import { push } from 'connected-react-router'
+import { AppThunk } from '../types'
 import {
   Shiva,
   fetchShivaListRequest,
@@ -12,6 +13,8 @@ import {
   createShivaSuccess,
   deleteShivaRequest,
   deleteShivaSuccess,
+  updateShivaRequest,
+  updateShivaSuccess,
   selectShiva,
 } from './types'
 import { shivas } from '../../mock-data'
@@ -75,4 +78,11 @@ export const deleteShiva = (shivaId: string): ThunkAction<void, AppState, null, 
   dispatch(deleteShivaRequest())
   await sleep(1000)
   dispatch(deleteShivaSuccess(shivaId))
+}
+
+export const updateShiva = (shivaId: string, shiva: Partial<Shiva>): AppThunk => async dispatch => {
+  // export const updateShiva = ({shivaId: string, shiva: Partial<Shiva>}): ThunkAction<void, AppState, null, Action<string>> => async dispatch => {
+  dispatch(updateShivaRequest())
+  await sleep(1000)
+  dispatch(updateShivaSuccess({ shivaId, shiva }))
 }

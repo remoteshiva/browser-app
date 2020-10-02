@@ -39,8 +39,7 @@ export interface Shiva {
   inviteMessage?: string
 }
 
-export const initializeShiva = (shiva?: Shiva): Shiva => ({
-  ...shiva,
+export const initializeShiva = (shiva: Partial<Shiva>): Shiva => ({
   _id: '',
   nameOfDeceased: '',
   startDate: moment().startOf('day'),
@@ -56,6 +55,7 @@ export const initializeShiva = (shiva?: Shiva): Shiva => ({
   minianTimes: '',
   donations: '',
   inviteMessage: '',
+  ...shiva,
 })
 
 export interface ShivaState {
@@ -109,6 +109,16 @@ export const deleteShivaError = createAction(ShivaActionTypes.DeleteShivaError)<
 export type DeleteShivaError = ActionType<typeof deleteShivaError>
 
 //
+export const updateShivaRequest = createAction(ShivaActionTypes.UpdateShivaRequest)()
+export type UpdateShivaRequest = ActionType<typeof updateShivaRequest>
+
+export const updateShivaSuccess = createAction(ShivaActionTypes.UpdateShivaSuccess)<{ shivaId: string; shiva: Partial<Shiva> }>()
+export type UpdateShivaSuccess = ActionType<typeof updateShivaSuccess>
+
+export const updateShivaError = createAction(ShivaActionTypes.UpdateShivaError)<BackendError>()
+export type UpdateShivaError = ActionType<typeof updateShivaError>
+
+//
 export const selectShiva = createAction(ShivaActionTypes.SelectShiva)<string | null>()
 export type SelectShiva = ActionType<typeof selectShiva>
 
@@ -125,4 +135,7 @@ export type ActionTypes =
   | DeleteShivaRequest
   | DeleteShivaSuccess
   | DeleteShivaError
+  | UpdateShivaRequest
+  | UpdateShivaSuccess
+  | UpdateShivaError
   | SelectShiva

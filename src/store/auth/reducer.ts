@@ -4,6 +4,7 @@ import { AuthActions, ActionTypes, AuthState } from './types'
 export const initialState: AuthState = {
   loading: false,
   session: null,
+  error: null,
 }
 
 const reducer: Reducer<AuthState> = (state = initialState, action: ActionTypes): AuthState => {
@@ -12,13 +13,13 @@ const reducer: Reducer<AuthState> = (state = initialState, action: ActionTypes):
       return { ...state, loading: true }
     }
     case AuthActions.LOGIN_SUCCESS: {
-      return { ...state, loading: false, session: action.payload }
+      return { ...state, loading: false, error: null, session: action.payload }
     }
     case AuthActions.LOGIN_ERROR: {
       return { ...state, loading: false, error: action.payload }
     }
     case AuthActions.LOGOUT: {
-      return state
+      return { ...state, session: null, error: null }
     }
     default: {
       return state

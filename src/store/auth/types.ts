@@ -11,7 +11,7 @@ export interface Session {
 export interface AuthState {
   readonly loading: boolean
   readonly session: Session | null
-  readonly error?: string
+  readonly error: string | null
 }
 
 export enum AuthActions {

@@ -24,6 +24,10 @@ export const shivas: Shiva[] = [
         name: 'Ron Burgundy',
         relationship: 'Best Friend',
       },
+      {
+        name: 'Ed Harken',
+        relationship: 'Boss',
+      },
     ],
     mournerKey: 'HgyQFcacW7',
     visitorKey: 'YpNVU8ZkOz',
@@ -42,6 +46,10 @@ export const shivas: Shiva[] = [
       {
         name: 'Ron Burgundy',
         relationship: 'Best Friend',
+      },
+      {
+        name: 'Ed Harken',
+        relationship: 'Boss',
       },
     ],
     mournerKey: 'Kw9sFWi6JX',

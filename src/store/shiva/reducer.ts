@@ -2,9 +2,10 @@ import { Reducer } from 'redux'
 import * as ShivaActions from './constants'
 import { ActionTypes, ShivaState, Shiva } from './types'
 import { arrayToObject } from '../helpers'
+import { assert } from 'console'
 
 export const initialState: ShivaState = {
-  loading: true,
+  loading: false,
   entities: {},
   shivas: [],
   visitorKeys: {},
@@ -75,7 +76,7 @@ const reducer: Reducer<ShivaState> = (state = initialState, action: ActionTypes)
       const { [action.payload]: omit, ...entities } = state.entities
       return {
         ...state,
-        entities,
+        entities: { ...entities },
         shivas: [...state.shivas.filter(shivaId => shivaId !== action.payload)],
         mournerKeys: { ...Object.fromEntries(Object.entries(state.mournerKeys).filter(([k, v]) => v !== action.payload)) },
         visitorKeys: { ...Object.fromEntries(Object.entries(state.visitorKeys).filter(([k, v]) => v !== action.payload)) },
@@ -97,6 +98,30 @@ const reducer: Reducer<ShivaState> = (state = initialState, action: ActionTypes)
           ...{ [shiva._id]: shiva },
         },
       }
+    }
+    case ShivaActions.UpdateShivaRequest: {
+      return state
+    }
+    case ShivaActions.UpdateShivaSuccess: {
+      const { shivaId, shiva } = action.payload
+      if (shivaId in state.entities) {
+        // shiva exists, we can update
+        const entity = state.entities[shivaId]
+        const updatedEntity = { ...entity, ...shiva }
+        return {
+          ...state,
+          entities: {
+            ...state.entities,
+            ...{ [shivaId]: updatedEntity },
+          },
+        }
+      } else {
+        // TODO: raise the alarm
+        return state
+      }
+    }
+    case ShivaActions.UpdateShivaError: {
+      return state
     }
     case ShivaActions.SelectShiva: {
       return {

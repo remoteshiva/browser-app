@@ -2,10 +2,13 @@
   "name": "browser-app",
   "version": "0.1.0",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remoteshiva/browser-app.git"
+  },
   "dependencies": {
     "@tailwindcss/ui": "^0.5.0",
     "connected-react-router": "^6.8.0",
-    "cuid": "^2.1.8",
     "firebase": "^7.19.1",
     "moment": "^2.27.0",
     "moment-range": "^4.0.2",
@@ -59,6 +62,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:debug": "react-scripts --inspect-brk test --runInBand --no-cache",
     "eject": "react-scripts eject",
     "clean-install": "rm -rf node_modules && rm -f package-lock.json && npm install",
     "storybook": "start-storybook -p 6006 -s public",
