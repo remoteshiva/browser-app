@@ -1,5 +1,7 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
+import { updateShiva } from '../../store/shiva/actions'
 import { ShivaPanel, withPanel } from './Panel'
 import { VerticalSpace } from '../common'
 import Editable from '../Editable'
@@ -45,21 +47,45 @@ const AddMournerButton = styled.button`
   font-size: 16px;
   color: ${props => props.theme.colors.richGold};
 `
+type RE = React.ChangeEvent<HTMLInputElement>
 
-const Mourners = ({ role, shiva, editing }: ShivaPanel) => {
-  const handleInput = () => {}
-  const handleAddMourner = () => {}
+const Mourners = ({ role, shiva, editing, save }: ShivaPanel) => {
+  const dispatch = useDispatch()
+  const [mourners, setMourners] = useState(shiva.mourners)
+  useEffect(() => {
+    doSave()
+  }, [save])
+  const doSave = () => {
+    console.log('I saved the data')
+    const partialShiva = { mourners }
+    dispatch(updateShiva(shiva._id, partialShiva))
+  }
+  const handleInput = (index: number, key: string, value: string) => {
+    const newMourners = mourners.map((m, i) => {
+      if (i === index) {
+        return { ...m, [key]: value }
+      }
+      return m
+    })
+    setMourners([...newMourners])
+  }
+  const handleAddMourner = () => {
+    setMourners([...mourners, { name: '', relationship: '' }])
+  }
+  const handleDeleteMourner = (index: number) => {
+    setMourners([...mourners.filter((m, i) => i !== index)])
+  }
   return (
     <Wrapper>
       <h2>Mourners</h2>
       <ul>
-        {shiva.mourners.map((m, i) => (
+        {mourners.map((m, i) => (
           <li key={i} className={editing ? 'edit' : ''}>
             {editing ? (
               <>
-                <img src={DeleteIcon} alt="delete" />
-                <Editable className="base name" html={m.name} active={true} onInput={handleInput} />
-                <Editable className="base relationship" html={m.relationship} active={true} onInput={handleInput} />
+                <img src={DeleteIcon} alt="delete" onClick={() => handleDeleteMourner(i)} />
+                <Editable className="base name" html={m.name} active={true} onInput={(e: RE) => handleInput(i, 'name', e.target.value)} />
+                <Editable className="base relationship" html={m.relationship} active={true} onInput={(e: RE) => handleInput(i, 'relationship', e.target.value)} />
               </>
             ) : (
               <>

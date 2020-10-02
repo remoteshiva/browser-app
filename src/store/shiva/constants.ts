@@ -21,4 +21,4 @@ export const DeleteShivaError = '{RS}shiva/DELETE_SHIVA_ERROR'
 
 // others
 
-export const SelectShiva = '@@shiva/SELECT_SHIVA'
+export const SelectShiva = '{RS}shiva/SELECT_SHIVA'

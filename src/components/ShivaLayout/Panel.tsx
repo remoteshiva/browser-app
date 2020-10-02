@@ -10,6 +10,7 @@ export interface ShivaPanel {
   shiva: Shiva
   role: ROLE
   editing?: boolean
+  save?: number
 }
 
 interface withPanelProps {
@@ -19,12 +20,14 @@ interface withPanelProps {
 }
 export const withPanel = <P extends object>(Component: React.ComponentType<P>): React.FC<P & withPanelProps> => ({ role, direction, darkMode, ...props }: withPanelProps) => {
   const [editing, setEditing] = useState<boolean>(false)
+  const [save, doSave] = useState(0)
   const onModeChange = () => {
     setEditing(!editing)
+    if (editing) doSave(prev => prev + 1)
   }
   return role === 'Visitor' && darkMode ? null : (
     <Card darkMode={darkMode} direction={direction} role={role} onModeChange={onModeChange} editing={editing}>
-      <Component editing={editing} role={role} {...(props as P)} />
+      <Component editing={editing} role={role} save={save} {...(props as P)} />
     </Card>
   )
 }

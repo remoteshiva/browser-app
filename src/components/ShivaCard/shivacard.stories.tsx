@@ -7,8 +7,7 @@ export default {
   component: ShivaItem,
 }
 
-const shiva = initializeShiva()
-shiva.nameOfDeceased = 'Brian Fantana'
+const shiva = initializeShiva({ nameOfDeceased: 'Brian Fantana' })
 export const Item = () => (
   <ul>
     <ShivaItem {...shiva} />

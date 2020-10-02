@@ -39,7 +39,12 @@ export interface Shiva {
   inviteMessage?: string
 }
 
-export const initializeShiva = (shiva: Partial<Shiva>): Shiva => ({
+/**
+ * @description Initializes a new Shiva object with default params.
+ * @param shiva - Optional partial shiva model for overriding defaults
+ * @example - const shiva = initializeShiva({nameOfDeceased: 'John Doe'})
+ */
+export const initializeShiva = (shiva?: Partial<Shiva>): Shiva => ({
   _id: '',
   nameOfDeceased: '',
   startDate: moment().startOf('day'),

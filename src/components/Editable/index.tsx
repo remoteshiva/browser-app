@@ -1,6 +1,8 @@
 import React, { useRef, useEffect, ReactNode } from 'react'
 import styled from 'styled-components'
 
+export const noop = () => {}
+
 const Wrapper = styled.div`
   *:read-write:focus {
     outline: none;
@@ -8,14 +10,15 @@ const Wrapper = styled.div`
 `
 interface Props {
   html: string
-  tagName?: string
   active: boolean
+  name?: string
+  tagName?: string
   className?: string
   style?: object
   children?: ReactNode
   onInput: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
-const Editable = ({ html, tagName, active, style, className, onInput, children }: Props) => {
+const Editable = ({ html, name, tagName, active, style, className, onInput, children }: Props) => {
   const el = useRef<HTMLElement>()
   useEffect(() => {
     if (!el.current) return
@@ -24,11 +27,13 @@ const Editable = ({ html, tagName, active, style, className, onInput, children }
     }
   }, [html])
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.stopPropagation()
     if (!el.current) return
     const html = el.current.innerHTML
     const event = Object.assign(e, {
       target: {
         value: html,
+        name,
       },
     })
     onInput(event)
@@ -41,12 +46,13 @@ const Editable = ({ html, tagName, active, style, className, onInput, children }
           ref: el,
           className,
           style,
+          name,
           contentEditable: active,
           suppressContentEditableWarning: true,
           onInput: onChange,
-          onBlur: onChange,
-          onKeyUp: onChange,
-          onKeyDown: onChange,
+          onBlur: noop,
+          onKeyUp: noop,
+          onKeyDown: noop,
         },
         children
       )}
