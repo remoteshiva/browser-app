@@ -1,20 +1,27 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { updateShiva } from '../../store/shiva/actions'
 import { ShivaPanel, withPanel } from './Panel'
+import Editable from '../Editable'
 
-const MinianTimes = ({ shiva, editing }: ShivaPanel) => {
-  const renderView = () => (
+const MinianTimes = ({ shiva, editing, save }: ShivaPanel) => {
+  const instructions = `Add link here`
+  const [minianTimes, setMinianTimes] = useState(shiva.minianTimes)
+  const dispatch = useDispatch()
+  useEffect(() => {
+    const partialShiva = { minianTimes }
+    dispatch(updateShiva(shiva._id, partialShiva))
+  }, [save, dispatch, minianTimes, shiva._id])
+  const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setMinianTimes(event.target.value)
+  }
+  return (
     <>
-      <h2>Minian times</h2>
-      <p>The times will be the same for every day except none on Shabbat.</p>
-      <p>Shacharit: 8:30</p>
-      <p>Mincha: 5:00 pm</p>
-      <p>Maariv: 6:00 pm</p>
-      <p>You can attend the shiva minyan via Zoom at this link:</p>
-      <a href={shiva.videoLink?.toString()}>{shiva.videoLink?.toString()}</a>
+      <h2>Minian Times</h2>
+      <Editable className={editing ? 'active' : ''} html={minianTimes || editing ? '' : instructions} active={editing || false} onInput={handleInput} />
+      <p>{shiva.minianTimes}</p>
     </>
   )
-  const renderEdit = () => <>edit mode</>
-  return <>{editing ? renderEdit() : renderView()}</>
 }
 
 export default withPanel(MinianTimes)

@@ -23,7 +23,7 @@ const Wrapper = styled.div`
     margin-right: 11px;
   }
   .base {
-    border-bottom: 1px dashed green;
+    border-bottom: 1px dashed ${props => props.theme.colors.blueChill};
     font-family: 'Lato';
     font-size: 16px;
     color: ${props => props.theme.colors.heavyMetal};
@@ -53,13 +53,9 @@ const Mourners = ({ role, shiva, editing, save }: ShivaPanel) => {
   const dispatch = useDispatch()
   const [mourners, setMourners] = useState(shiva.mourners)
   useEffect(() => {
-    doSave()
-  }, [save])
-  const doSave = () => {
-    console.log('I saved the data')
     const partialShiva = { mourners }
     dispatch(updateShiva(shiva._id, partialShiva))
-  }
+  }, [save, dispatch, mourners, shiva._id])
   const handleInput = (index: number, key: string, value: string) => {
     const newMourners = mourners.map((m, i) => {
       if (i === index) {

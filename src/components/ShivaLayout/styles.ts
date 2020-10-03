@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import Camera from '../../assets/img/camera.svg'
 
 export const LayoutWrapper = styled.div`
   padding: 20px;
@@ -7,15 +8,6 @@ export const LayoutWrapper = styled.div`
     color: ${props => props.theme.colors.blueChill};
     font-size: 16px;
   }
-`
-
-interface FlexContainerProps {
-  minWidth?: number
-}
-export const FlexContainer = styled.div<FlexContainerProps>`
-  flex: 1;
-  padding: 10px;
-  min-width: ${props => (props.minWidth ? `${props.minWidth}px` : 'auto')};
 `
 
 export enum Direction {
@@ -37,9 +29,41 @@ export const CardWrapper = styled.div<CardWrapperProps>`
   background-color: white;
   border-radius: 10px;
   box-shadow: 0 2px 20px 0 rgba(0, 0, 0, 0.04);
+  .editable {
+    line-height: 1.5;
+    &.about {
+      min-height: 174px;
+      &.active {
+        border-radius: 8px;
+        border: 1px solid ${props => props.theme.colors.blackHaze};
+        padding: 12px;
+      }
+    }
+    &.video-link {
+      color: ${props => props.theme.colors.blueChill};
+      &.active {
+        border-bottom: 1px dashed ${props => props.theme.colors.blueChill};
+      }
+    }
+  }
   &.darkMode {
     background-color: ${props => props.theme.colors.sauvignonLight};
     border: 2px dashed ${props => props.theme.colors.clamShell};
+    h2 {
+      color: ${props => props.theme.colors.doveGray};
+    }
+    .editable {
+      color: ${props => props.theme.colors.dawn};
+      font-family: 'Lato';
+      font-size: 16px;
+      line-height: 1.5;
+      &.about {
+        height: 174px;
+        padding: 12px;
+        border: 2px dashed ${props => props.theme.colors.clamShell};
+        border-radius: 10px;
+      }
+    }
   }
   h2 {
     font-family: 'Lora';
@@ -52,6 +76,11 @@ export const CardWrapper = styled.div<CardWrapperProps>`
     font-family: 'Lato';
     font-size: 16px;
     margin-bottom: 20px;
+  }
+  p {
+    color: ${props => props.theme.colors.heavyMetal};
+    font-family: 'Lora';
+    font-size: 16px;
   }
 `
 // TODO: get rid of this
@@ -82,4 +111,16 @@ export const Note = styled.div`
   color: ${props => props.theme.colors.doveGray};
   font-size: 13px;
   font-family: 'Lato';
+`
+
+export const PhotoDropzoneWrapper = styled.div`
+  background-image: url(${Camera});
+  background-size: 66px 56px;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-color: ${props => props.theme.colors.sauvignonLight};
+  border: 2px dashed ${props => props.theme.colors.clamShell};
+  border-radius: 10px;
+  width: 292px;
+  height: 174px;
 `

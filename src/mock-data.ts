@@ -86,5 +86,10 @@ export const shivas: Shiva[] = [
         mourners: [],
       },
     ],
+    images: [
+      new URL('https://assets.capitalfm.com/2013/50/-brian-fantana-anchorman-1387281923-view-0.jpg'),
+      new URL('https://assets.mycast.io/characters/brian-fantana-9394-normal.jpg?1565808314'),
+      new URL('https://movie-fanatic-res.cloudinary.com/iu/s--hQpaWV_2--/t_full/cs_srgb,f_auto,fl_strip_profile.lossy,q_auto:420/v1393629323/paul-rudd-anchorman-2.jpg'),
+    ],
   }),
 ]

@@ -32,7 +32,7 @@ export interface Shiva {
   titleImage: URL | null
   visits: Visit[]
   about?: string
-  images?: URL[]
+  images: URL[]
   mealSignups?: string
   minianTimes?: string
   donations?: string

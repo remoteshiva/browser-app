@@ -15,6 +15,8 @@ const colors = {
   blueChill: '#398e8f',
   woodBark: '#2C221E',
   clamShell: '#d8bbae',
+  blackHaze: '#e0ddd6',
+  desertStorm: '#f4f1ee',
 }
 
 const fonts = ['Lato', 'Lora', 'sans-serif']

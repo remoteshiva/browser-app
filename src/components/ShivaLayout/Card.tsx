@@ -22,8 +22,8 @@ const EditButton = styled.img`
 
 const Card = ({ darkMode, editing, direction, role, children, onModeChange }: Props) => {
   return (
-    <CardWrapper className={darkMode ? 'darkMode' : ''} direction={direction}>
-      {role === 'Visitor' || darkMode ? null : <EditButton onClick={onModeChange} src={editing ? SaveIcon : EditIcon} />}
+    <CardWrapper className={darkMode && !editing ? 'darkMode' : ''} direction={direction}>
+      {role === 'Visitor' ? null : <EditButton onClick={onModeChange} src={editing ? SaveIcon : EditIcon} />}
       {children}
     </CardWrapper>
   )

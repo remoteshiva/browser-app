@@ -26,7 +26,7 @@ const ShivaLayout = ({ shiva, role }: Props) => {
           <FlexColumn>
             <Subject shiva={shiva} darkMode={false} role={role} direction={Direction.row} />
             <Schedule shiva={shiva} darkMode={false} role={role} direction={Direction.column} />
-            <About shiva={shiva} darkMode={shiva.about ? false : true} role={role} direction={Direction.column} />
+            <About shiva={shiva} darkMode={shiva.about || shiva.images.length > 0 ? false : true} role={role} direction={Direction.column} />
           </FlexColumn>
         </main>
         <aside style={{ marginLeft: '20px' }}>

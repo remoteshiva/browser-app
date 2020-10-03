@@ -4,30 +4,24 @@ import Camera from '../../assets/img/camera.svg'
 import { Row, FlexColumn, FixedColumn } from '../flexLayout'
 import { ShivaPanel, withPanel } from './Panel'
 
-export const EmptySubjectImage = styled.div`
-  background-image: url(${Camera});
-  background-size: 66px 56px;
+const SubjectImageContainer = styled.div`
   background-position: 50% 50%;
   background-repeat: no-repeat;
-  background-color: ${props => props.theme.colors.sauvignon};
-  margin-left: 20px;
-  margin-top: 20px;
-  margin-right: 30px;
+  border-radius: 50%;
+  overflow: hidden;
   width: 142px;
   height: 142px;
-  border-radius: 50%;
+  margin: 20px auto;
+`
+export const EmptySubjectImage = styled(SubjectImageContainer)`
+  background-image: url(${Camera});
+  background-size: 66px 56px;
+  background-color: ${props => props.theme.colors.sauvignon};
   border: 2px dashed ${props => props.theme.colors.clamShell};
-  overflow: hidden;
 `
 
-export const SubjectImage = styled.div`
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
+export const SubjectImage = styled(SubjectImageContainer)`
   border: 6px solid ${props => props.theme.colors.romance};
-  overflow: hidden;
-  background-position: 50% 50%;
-  background-repeat: no-repeat;
   background-size: cover;
 `
 export const Title = styled.div`
@@ -45,10 +39,7 @@ const Subject = ({ shiva, editing }: ShivaPanel) => {
   const renderView = () => (
     <>
       <Row>
-        <FixedColumn width={200}>
-          {/* <SubjectImage style={{backgroundImage: `url(${shiva.titleImage?.toString()})`}}/> */}
-          <EmptySubjectImage />
-        </FixedColumn>
+        <FixedColumn width={200}>{shiva.titleImage ? <SubjectImage style={{ backgroundImage: `url(${shiva.titleImage?.toString()})` }} /> : <EmptySubjectImage />}</FixedColumn>
         <FlexColumn>
           <Title>Shiva for {shiva?.nameOfDeceased} Z"L</Title>
           <p>{shiva.message}</p>

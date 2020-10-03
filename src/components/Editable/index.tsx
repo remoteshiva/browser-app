@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, ReactNode } from 'react'
 import styled from 'styled-components'
+import sanitizeHtml from 'sanitize-html'
 
 export const noop = () => {}
 
@@ -23,20 +24,23 @@ const Editable = ({ html, name, tagName, active, style, className, onInput, chil
   useEffect(() => {
     if (!el.current) return
     if (html !== el.current.innerHTML) {
-      el.current.innerHTML = html
+      el.current.innerHTML = sanitize(html)
     }
   }, [html])
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.stopPropagation()
     if (!el.current) return
-    const html = el.current.innerHTML
+    const html = (el.current.innerHTML = sanitize(el.current.innerHTML))
     const event = Object.assign(e, {
       target: {
-        value: html,
+        value: sanitize(html),
         name,
       },
     })
     onInput(event)
+  }
+  const sanitize = (dirtyHtml: string): string => {
+    return sanitizeHtml(dirtyHtml, {})
   }
   return (
     <Wrapper>
@@ -44,7 +48,7 @@ const Editable = ({ html, name, tagName, active, style, className, onInput, chil
         tagName || 'div',
         {
           ref: el,
-          className,
+          className: `editable ${className}`,
           style,
           name,
           contentEditable: active,

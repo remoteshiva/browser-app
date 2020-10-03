@@ -20,6 +20,7 @@
     "react-scripts": "3.4.3",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
+    "sanitize-html": "^2.0.0",
     "styled-components": "^5.1.1",
     "tailwindcss": "^1.7.2",
     "typesafe-actions": "^5.1.0"
@@ -45,6 +46,7 @@
     "@types/react-router-dom": "^5.1.5",
     "@types/redux": "^3.6.0",
     "@types/redux-thunk": "^2.1.0",
+    "@types/sanitize-html": "^1.27.0",
     "@types/storybook__react": "^5.2.1",
     "@types/styled-components": "^5.1.2",
     "autoprefixer": "^9.8.6",
