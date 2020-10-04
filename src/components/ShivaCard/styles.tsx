@@ -76,23 +76,19 @@ interface DropdownContainerProps {
 }
 
 export const DropdownContainer = styled.div<DropdownContainerProps>`
-    ${tw`origin-top-right absolute rounded-md right-0 shadow-lg`}
-    display: ${props => (props.visible ? 'flex' : 'none')};
-    width: 170px;
-    >div{
-        ${tw`rounded-md bg-white shadow-xs`}
-    }
+  ${tw`origin-top-right absolute rounded-md right-0 shadow-lg`}
+  display: ${props => (props.visible ? 'flex' : 'none')};
+  width: 170px;
+  >div{
+      ${tw`rounded-md bg-white shadow-xs`}
+  }
 `
 
-interface DropdownItemProps {
-  readonly text: string
-  readonly color: string
-}
 export const DropdownItem = styled.a`
-    ${tw`block px-4 py-2 text-sm leading-5 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900`}
-    color: ${props => (props.color ? props.color : props.theme.colors.heavyMetal)};
-    font-family: 'Lato';
-    font-size: 15px;
+  ${tw`block px-4 py-2 text-sm leading-5 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900`}
+  color: ${props => (props.color ? props.color : props.theme.colors.heavyMetal)};
+  font-family: 'Lato';
+  font-size: 15px;
 `
 
 export const DropdownSeparator = styled.div`

@@ -1,3 +1,5 @@
+import { ActionType, createAction } from 'typesafe-actions'
+
 export interface User {
   readonly firstName: string
   readonly lastName: string
@@ -15,29 +17,23 @@ export interface AuthState {
 }
 
 export enum AuthActions {
-  LOGIN_REQUEST = 'auth/LOGIN_REQUEST',
-  LOGIN_SUCCESS = 'auth/LOGIN_SUCCESS',
-  LOGIN_ERROR = 'auth/LOGIN_ERROR',
+  LoginRequest = '{RS}auth/LOGIN_REQUEST',
+  LoginSuccess = '{RS}auth/LOGIN_SUCCESS',
+  LoginError = '{RS}auth/LOGIN_ERROR',
 
-  LOGOUT = 'auth/LOGOUT',
+  Logout = '{RS}auth/LOGOUT',
 }
 
-interface LoginRequest {
-  type: typeof AuthActions.LOGIN_REQUEST
-}
+export const loginRequest = createAction(AuthActions.LoginRequest)()
+export type LoginRequest = ActionType<typeof loginRequest>
 
-interface LoginSuccess {
-  type: typeof AuthActions.LOGIN_SUCCESS
-  payload: Session
-}
+export const loginSuccess = createAction(AuthActions.LoginSuccess)<Session>()
+export type LoginSuccess = ActionType<typeof loginSuccess>
 
-interface LoginError {
-  type: typeof AuthActions.LOGIN_ERROR
-  payload: string
-}
+export const loginError = createAction(AuthActions.LoginError)<string>()
+export type LoginError = ActionType<typeof loginError>
 
-interface Logout {
-  type: typeof AuthActions.LOGOUT
-}
+export const logout = createAction(AuthActions.Logout)()
+export type Logout = ActionType<typeof logout>
 
 export type ActionTypes = LoginRequest | LoginSuccess | LoginError | Logout

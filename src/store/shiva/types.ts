@@ -127,6 +127,9 @@ export type UpdateShivaError = ActionType<typeof updateShivaError>
 export const selectShiva = createAction(ShivaActionTypes.SelectShiva)<string | null>()
 export type SelectShiva = ActionType<typeof selectShiva>
 
+export const resetShiva = createAction(ShivaActionTypes.ResetShiva)()
+export type ResetShiva = ActionType<typeof resetShiva>
+
 export type ActionTypes =
   | FetchShivaListRequest
   | FetchShivaListSuccess
@@ -144,3 +147,4 @@ export type ActionTypes =
   | UpdateShivaSuccess
   | UpdateShivaError
   | SelectShiva
+  | ResetShiva

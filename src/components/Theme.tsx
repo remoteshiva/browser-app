@@ -17,6 +17,7 @@ const colors = {
   clamShell: '#d8bbae',
   blackHaze: '#e0ddd6',
   desertStorm: '#f4f1ee',
+  venetianRed: '#DA0011',
 }
 
 const fonts = ['Lato', 'Lora', 'sans-serif']

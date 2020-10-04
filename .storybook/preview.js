@@ -1,9 +1,8 @@
-
 import { withTheme, withProvider } from './decorators'
-import '../src/assets/styles/styles.css';
+import '../src/assets/styles/styles.css'
 
 export const parameters = {
-  actions: { argTypesRegex: "^on[A-Z].*" },
+  actions: { argTypesRegex: '^on[A-Z].*' },
 }
 
-export const decorators = [withProvider, withTheme];
+export const decorators = [withProvider, withTheme]

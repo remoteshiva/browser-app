@@ -9,16 +9,16 @@ export const initialState: AuthState = {
 
 const reducer: Reducer<AuthState> = (state = initialState, action: ActionTypes): AuthState => {
   switch (action.type) {
-    case AuthActions.LOGIN_REQUEST: {
+    case AuthActions.LoginRequest: {
       return { ...state, loading: true }
     }
-    case AuthActions.LOGIN_SUCCESS: {
+    case AuthActions.LoginSuccess: {
       return { ...state, loading: false, error: null, session: action.payload }
     }
-    case AuthActions.LOGIN_ERROR: {
+    case AuthActions.LoginError: {
       return { ...state, loading: false, error: action.payload }
     }
-    case AuthActions.LOGOUT: {
+    case AuthActions.Logout: {
       return { ...state, session: null, error: null }
     }
     default: {

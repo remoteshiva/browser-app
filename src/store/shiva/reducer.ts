@@ -1,6 +1,6 @@
 import { Reducer } from 'redux'
 import * as ShivaActions from './constants'
-import { ActionTypes, ShivaState, Shiva } from './types'
+import { ActionTypes, ShivaState, Shiva, initializeShiva } from './types'
 import { arrayToObject } from '../helpers'
 import { assert } from 'console'
 
@@ -128,6 +128,9 @@ const reducer: Reducer<ShivaState> = (state = initialState, action: ActionTypes)
         ...state,
         selectedShiva: action.payload,
       }
+    }
+    case ShivaActions.ResetShiva: {
+      return initialState
     }
     default: {
       return state
