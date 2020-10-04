@@ -1,7 +1,6 @@
 import React from 'react'
 import { Route, Switch, Redirect, RouteProps } from 'react-router-dom'
-import { connect } from 'react-redux'
-import { fetchShivas } from '../../store/shiva/actions'
+import { useSelector } from 'react-redux'
 import { AppState } from '../../store'
 import { Session } from '../../store/auth/types'
 import { MainWrapper } from './styles'
@@ -27,11 +26,8 @@ export const PrivateRoute = (props: privateRouteProps) => {
   }
 }
 
-interface Props {
-  session: Session | null
-}
-
-const Main = ({ session }: Props) => {
+const Main = () => {
+  const { session } = useSelector((state: AppState) => state.auth)
   return (
     <MainWrapper>
       <Switch>
@@ -49,8 +45,4 @@ const Main = ({ session }: Props) => {
   )
 }
 
-const mapStateToProps = (state: AppState) => ({
-  session: state.auth.session,
-})
-
-export default connect(mapStateToProps, { fetchShivas })(Main)
+export default Main
