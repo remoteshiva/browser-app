@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import * as Routes from '../../routes'
 import NotFoundImage from '../../assets/img/page-not-found.svg'
 import { Row } from '../../components/flexLayout'
 import { VerticalSpace, DarkButton } from '../../components/common'
@@ -40,7 +41,7 @@ const NotFound = () => (
     </Row>
     <VerticalSpace height={40} />
     <Row>
-      <Link to="/">
+      <Link to={Routes.MY_SHIVAS}>
         <DarkButton>Go Home </DarkButton>
       </Link>
     </Row>

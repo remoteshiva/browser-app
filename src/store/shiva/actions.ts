@@ -1,6 +1,7 @@
 import { Action } from 'redux'
 import { ThunkAction } from 'redux-thunk'
 import { push } from 'connected-react-router'
+import * as Routes from '../../routes'
 import { AppThunk } from '../types'
 import {
   Shiva,
@@ -37,7 +38,7 @@ export const fetchShivaById = (shivaId: string): ThunkAction<void, AppState, nul
     dispatch(fetchShivaSuccess(shiva))
   } else {
     dispatch(fetchShivaError({ code: 404, message: 'cannot find it' }))
-    dispatch(push('/404'))
+    dispatch(push(Routes.NOT_FOUND))
   }
 }
 
@@ -50,7 +51,7 @@ export const fetchShivaByMournerKey = (mournerKey: string): AppThunk => async di
     dispatch(selectShiva(shiva._id))
   } else {
     dispatch(fetchShivaError({ code: 404, message: 'cannot find it' }))
-    dispatch(push('/404'))
+    dispatch(push(Routes.NOT_FOUND))
   }
 }
 
@@ -63,7 +64,7 @@ export const fetchShivaByVisitorKey = (visitorKey: string): AppThunk => async di
     dispatch(selectShiva(shiva._id))
   } else {
     dispatch(fetchShivaError({ code: 404, message: 'cannot find it' }))
-    dispatch(push('/404'))
+    dispatch(push(Routes.NOT_FOUND))
   }
 }
 

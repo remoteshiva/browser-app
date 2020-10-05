@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { push } from 'connected-react-router'
+import * as Routes from '../../routes'
 import Logo from '../../assets/img/logo.svg'
 import Avatar from '../../assets/img/avatar.svg'
 import { AppState } from '../../store'
@@ -23,7 +24,7 @@ const UserBar = ({ user }: UserBarProps) => {
   const dispatch = useDispatch()
   const handleMenuClick = (item: string) => {
     if (item === MY_SHIVAS) {
-      dispatch(push('/'))
+      dispatch(push(Routes.MY_SHIVAS))
     } else if (item === LOG_OUT) {
       dispatch(logoutUser())
     }

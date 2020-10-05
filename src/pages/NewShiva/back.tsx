@@ -2,6 +2,7 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { push } from 'connected-react-router'
 import styled from 'styled-components'
+import * as Routes from '../../routes'
 import BackArrowIcon from '../../assets/img/back-arrow.svg'
 
 const BackArrow = styled.img`
@@ -19,10 +20,10 @@ const BackWrapper = styled.div`
 
 const Back = () => {
   const dispatch = useDispatch()
-  return(
-    <BackWrapper onClick={() => dispatch(push('/'))}>
+  return (
+    <BackWrapper onClick={() => dispatch(push(Routes.MY_SHIVAS))}>
       <div>
-        <BackArrow src={BackArrowIcon}/>
+        <BackArrow src={BackArrowIcon} />
         Back to my shivas
       </div>
     </BackWrapper>

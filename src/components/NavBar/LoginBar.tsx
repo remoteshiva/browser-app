@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import { push } from 'connected-react-router'
 import styled from 'styled-components'
 import tw from 'twin.macro'
+import * as Routes from '../../routes'
 import { MenuItem } from './styles'
 
 const LoginButton = styled.button`
@@ -27,7 +28,7 @@ const LoginBar = () => {
         <a href="remoteshiva.org/how-it-works">Contact</a>
       </MenuItem>
       <MenuItem>
-        <LoginButton onClick={() => dispatch(push('/login'))}>Log in</LoginButton>
+        <LoginButton onClick={() => dispatch(push(Routes.LOGIN_PAGE))}>Log in</LoginButton>
       </MenuItem>
     </ul>
   )

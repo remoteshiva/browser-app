@@ -1,11 +1,19 @@
 import { push } from 'connected-react-router'
 import { auth, User as FBUser } from 'firebase'
+import * as Routes from '../../routes'
 import { firestore } from '../../firebase.config'
 import { AppThunk } from '../types'
 import { loginError, loginRequest, loginSuccess, logoutRequest, logout, signupRequest, signupSuccess, signupError } from './types'
 import { resetShiva } from '../shiva/types'
 import { test_session } from '../../mock-data'
 
+/**
+ * @description - Creates a new user with email and password as authentication method.
+ * This method dispatches the steps neccesary to created the new user and upon success navigates the app to the login screen
+ * @param name - user's display name (e.g: John Doe)
+ * @param email - user's email address
+ * @param password - user's password - must adhere to firebase password rules
+ */
 export const signupUser = (name: string, email: string, password: string): AppThunk => async dispatch => {
   dispatch(signupRequest())
   try {
@@ -14,7 +22,7 @@ export const signupUser = (name: string, email: string, password: string): AppTh
       try {
         await createUser(fbuser, name)
         dispatch(signupSuccess())
-        dispatch(push('/login'))
+        dispatch(push(Routes.LOGIN_PAGE))
       } catch (error) {
         dispatch(signupError(error))
       }
@@ -28,7 +36,7 @@ export const loginUser = (userid: string, password: string): AppThunk => async d
   dispatch(loginRequest())
   setTimeout(() => {
     dispatch(loginSuccess(test_session))
-    dispatch(push('/'))
+    dispatch(push(Routes.MY_SHIVAS))
   }, 1000)
 }
 
@@ -44,7 +52,7 @@ export const loginWithCredentials = (email: string, password: string): AppThunk 
             const data = await getUser(user.uid)
             const session = { token: user.uid, user: { displayName: data.displayName, photoURL: data.photoURL } }
             dispatch(loginSuccess(session))
-            dispatch(push('/'))
+            dispatch(push(Routes.MY_SHIVAS))
           }
         })
         .catch(error => {

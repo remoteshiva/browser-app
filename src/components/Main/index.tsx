@@ -1,6 +1,7 @@
 import React from 'react'
 import { Route, Switch, Redirect, RouteProps } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import * as Routes from '../../routes'
 import { AppState } from '../../store'
 import { Session } from '../../store/auth/types'
 import { MainWrapper } from './styles'
@@ -19,7 +20,7 @@ interface privateRouteProps extends RouteProps {
 
 export const PrivateRoute = (props: privateRouteProps) => {
   if (!props.session) {
-    const renderComponent = () => <Redirect to={{ pathname: '/login' }} />
+    const renderComponent = () => <Redirect to={{ pathname: Routes.LOGIN_PAGE }} />
     return <Route {...props} component={renderComponent} render={undefined} />
   } else {
     return <Route {...props} />
@@ -31,14 +32,14 @@ const Main = () => {
   return (
     <MainWrapper>
       <Switch>
-        <Route path="/login" exact render={() => <LoginSignup page={Pages.login} />} />
-        <Route path="/signup" exact render={() => <LoginSignup page={Pages.signUp} />} />
-        <PrivateRoute session={session} path="/" exact component={Dashboard} />
-        <PrivateRoute session={session} path="/newshiva/:step?" exact component={NewShiva} />
-        <PrivateRoute session={session} path="/shiva/:id" exact component={EditShiva} />
-        <Route path="/v/:key" component={VisitorPage} />
-        <Route path="/m/:key" component={MournerPage} />
-        <Route path="/404" component={NotFoundPage} />
+        <Route path={Routes.LOGIN_PAGE} exact render={() => <LoginSignup page={Pages.login} />} />
+        <Route path={Routes.SIGNUP_PAGE} exact render={() => <LoginSignup page={Pages.signUp} />} />
+        <PrivateRoute session={session} path={Routes.MY_SHIVAS} exact component={Dashboard} />
+        <PrivateRoute session={session} path={Routes.NEW_SHIVA(':step?')} exact component={NewShiva} />
+        <PrivateRoute session={session} path={Routes.SHIVA_PAGE} exact component={EditShiva} />
+        <Route path={Routes.VISITOR_PAGE} component={VisitorPage} />
+        <Route path={Routes.MOURNER_PAGE} component={MournerPage} />
+        <Route path={Routes.NOT_FOUND} component={NotFoundPage} />
         <Route component={NotFoundPage} />
       </Switch>
     </MainWrapper>
