@@ -47,7 +47,7 @@ const LoginSignup = ({ page }: Props) => {
                 </Tab>
               </TabsWrapper>
             </Row>
-            <Row>{page === Pages.signUp ? <Signup /> : <Login loginUser={handleLogin} />}</Row>
+            <Row>{page === Pages.signUp ? <Signup /> : <Login />}</Row>
           </UXWrapper>
         </FixedColumn>
       </Row>

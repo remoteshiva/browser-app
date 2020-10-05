@@ -36,12 +36,12 @@ export const fetchShivaById = (shivaId: string): ThunkAction<void, AppState, nul
     dispatch(selectShiva(shiva._id))
     dispatch(fetchShivaSuccess(shiva))
   } else {
-    dispatch(fetchShivaError({ code: 404, error: 'cannot find it' }))
+    dispatch(fetchShivaError({ code: 404, message: 'cannot find it' }))
     dispatch(push('/404'))
   }
 }
 
-export const fetchShivaByMournerKey = (mournerKey: string): ThunkAction<void, AppState, null, Action<string>> => async dispatch => {
+export const fetchShivaByMournerKey = (mournerKey: string): AppThunk => async dispatch => {
   dispatch(fetchShivaRequest())
   await sleep(1000)
   const shiva = shivas.find(shiva => shiva.mournerKey === mournerKey)
@@ -49,12 +49,12 @@ export const fetchShivaByMournerKey = (mournerKey: string): ThunkAction<void, Ap
     dispatch(fetchShivaSuccess(shiva))
     dispatch(selectShiva(shiva._id))
   } else {
-    dispatch(fetchShivaError({ code: 404, error: 'cannot find it' }))
+    dispatch(fetchShivaError({ code: 404, message: 'cannot find it' }))
     dispatch(push('/404'))
   }
 }
 
-export const fetchShivaByVisitorKey = (visitorKey: string): ThunkAction<void, AppState, null, Action<string>> => async dispatch => {
+export const fetchShivaByVisitorKey = (visitorKey: string): AppThunk => async dispatch => {
   dispatch(fetchShivaRequest())
   await sleep(1000)
   const shiva = shivas.find(shiva => shiva.visitorKey === visitorKey)
@@ -62,26 +62,25 @@ export const fetchShivaByVisitorKey = (visitorKey: string): ThunkAction<void, Ap
     dispatch(fetchShivaSuccess(shiva))
     dispatch(selectShiva(shiva._id))
   } else {
-    dispatch(fetchShivaError({ code: 404, error: 'cannot find it' }))
+    dispatch(fetchShivaError({ code: 404, message: 'cannot find it' }))
     dispatch(push('/404'))
   }
 }
 
-export const createShiva = (shiva: Shiva): ThunkAction<void, AppState, null, Action<string>> => async dispatch => {
+export const createShiva = (shiva: Shiva): AppThunk => async dispatch => {
   dispatch(createShivaRequest())
   await sleep(1000)
   const newShiva = { ...shiva, _id: Math.random().toString(36).substring(3) }
   dispatch(createShivaSuccess(newShiva))
 }
 
-export const deleteShiva = (shivaId: string): ThunkAction<void, AppState, null, Action<string>> => async dispatch => {
+export const deleteShiva = (shivaId: string): AppThunk => async dispatch => {
   dispatch(deleteShivaRequest())
   await sleep(1000)
   dispatch(deleteShivaSuccess(shivaId))
 }
 
 export const updateShiva = (shivaId: string, shiva: Partial<Shiva>): AppThunk => async dispatch => {
-  // export const updateShiva = ({shivaId: string, shiva: Partial<Shiva>}): ThunkAction<void, AppState, null, Action<string>> => async dispatch => {
   dispatch(updateShivaRequest())
   await sleep(1000)
   dispatch(updateShivaSuccess({ shivaId, shiva }))

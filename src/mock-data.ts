@@ -5,8 +5,8 @@ import { Shiva, initializeShiva } from './store/shiva/types'
 export const test_session: Session = {
   token: 'aU3BuL62emYeFyGpkYpZ',
   user: {
-    firstName: 'Ron',
-    lastName: 'Burgundy',
+    displayName: 'Ron Burgundy',
+    photoURL: new URL('https://vignette.wikia.nocookie.net/anchorman/images/1/10/Ron_burgundy.jpg/revision/latest?cb=20120329160125'),
   },
 }
 
@@ -91,5 +91,11 @@ export const shivas: Shiva[] = [
       new URL('https://assets.mycast.io/characters/brian-fantana-9394-normal.jpg?1565808314'),
       new URL('https://movie-fanatic-res.cloudinary.com/iu/s--hQpaWV_2--/t_full/cs_srgb,f_auto,fl_strip_profile.lossy,q_auto:420/v1393629323/paul-rudd-anchorman-2.jpg'),
     ],
+    minianTimes: `The times will be the same for every day except none on Shabbat. 
+    Shacharit: 8:30
+    Mincha: 5:00 pm
+    Maariv: 6:00 pm
+    You can attend the shiva minyan via Zoom at this link: 
+    <a href=zoom.'us.exampleshivalink'>zoom.us.exampleshivalink</a>`,
   }),
 ]

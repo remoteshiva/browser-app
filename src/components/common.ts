@@ -14,6 +14,9 @@ const Button = styled.button`
   padding: 23px 85px 23px 85px;
   text-align: center;
   font-size: 18px;
+  &:disabled {
+    background-color: ${props => props.theme.colors.doveGray};
+  }
 `
 export const LightButton = styled(Button)`
   border: solid 1px ${props => props.theme.colors.richGold};

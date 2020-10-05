@@ -33,7 +33,7 @@ const UserBar = ({ user }: UserBarProps) => {
     <UserBarWrapper onClickOutside={() => setActive(false)}>
       <button onClick={() => setActive(!isActive)}>
         <img src={Avatar} alt="Avatar" />
-        Hi, {user.firstName}
+        Hi, {user.displayName}
       </button>
       <ul className={`origin-top-right absolute right-2 mt-6 w-30 rounded-md shadow-lg ${isActive ? 'block' : 'hidden'}`}>
         {menu.map(item => (
