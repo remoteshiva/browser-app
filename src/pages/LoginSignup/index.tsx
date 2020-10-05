@@ -24,9 +24,6 @@ const LoginSignup = ({ page }: Props) => {
   const handleSelectTab = (p: Pages) => {
     dispatch(push(`/${p.toString()}`))
   }
-  const handleLogin = (username: string, password: string) => {
-    dispatch(loginUser(username, password))
-  }
   return (
     <div style={{ minHeight: '870px' }}>
       <Row>

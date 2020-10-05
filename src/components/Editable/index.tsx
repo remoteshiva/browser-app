@@ -30,7 +30,7 @@ const Editable = ({ html, name, tagName, active, style, className, onInput, chil
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.stopPropagation()
     if (!el.current) return
-    const html = (el.current.innerHTML = sanitize(el.current.innerHTML))
+    const html = el.current.innerHTML // = sanitize(el.current.innerHTML))
     const event = Object.assign(e, {
       target: {
         value: sanitize(html),
@@ -40,6 +40,7 @@ const Editable = ({ html, name, tagName, active, style, className, onInput, chil
     onInput(event)
   }
   const sanitize = (dirtyHtml: string): string => {
+    // return dirtyHtml
     return sanitizeHtml(dirtyHtml, {})
   }
   return (
@@ -52,6 +53,7 @@ const Editable = ({ html, name, tagName, active, style, className, onInput, chil
           style,
           name,
           contentEditable: active,
+          spellCheck: true,
           suppressContentEditableWarning: true,
           onInput: onChange,
           onBlur: noop,

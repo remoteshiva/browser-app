@@ -20,7 +20,7 @@ const App = ({ history }: Props) => {
   useEffect(() => {
     // upon startup , check authentication and navigate to provided url after
     dispatch(checkAuthentication(window.location.pathname))
-  }, [])
+  }, [dispatch])
   return loading ? null : (
     <Theme>
       <GlobalStyle />

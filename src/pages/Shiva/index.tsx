@@ -23,7 +23,7 @@ const ShivaPage = () => {
       dispatch(fetchShivaById(id))
       dispatch(selectShiva(id))
     }
-  }, [])
+  }, [dispatch, entities, id])
 
   return loading || !selectedShiva || !(selectedShiva in entities) ? <Loading/> : (
     <ShivaLayout

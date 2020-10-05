@@ -23,7 +23,7 @@ const VisitorPage = () => {
     } else {
       dispatch(fetchShivaByVisitorKey(key))
     }
-  }, [])
+  }, [dispatch, key, visitorKeys])
 
   return loading || !selectedShiva ? <Loading /> : <ShivaLayout role="Visitor" shiva={entities[selectedShiva]} />
 }

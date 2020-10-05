@@ -23,7 +23,7 @@ const MournerPage = () => {
     } else {
       dispatch(fetchShivaByMournerKey(key))
     }
-  }, [])
+  }, [dispatch, key, mournerKeys])
 
   return loading || !selectedShiva ? <Loading /> : <ShivaLayout role="Mourner" shiva={entities[selectedShiva]} />
 }
