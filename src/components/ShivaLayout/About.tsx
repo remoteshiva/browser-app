@@ -61,7 +61,7 @@ const About = ({ shiva, editing, save }: ShivaPanel) => {
         <FixedColumn width={20} />
         <FixedColumn width={290}>
           {images.map((img, index) => (
-            <ImageContainer>
+            <ImageContainer key={index}>
               <img src={img.toString()} alt="the deceased" />
               {editing ? (
                 <button

@@ -10,9 +10,8 @@ const Donations = ({ shiva, editing }: ShivaPanel) => {
   }
   return (
     <>
-      <h2>Minian Times</h2>
-      <Editable className={editing ? 'active' : ''} html={donations || editing ? '' : instructions} active={editing || false} onInput={handleInput} />
-      <p>{shiva.minianTimes}</p>
+      <h2>Memorial Donations</h2>
+      <Editable className={editing ? 'active' : ''} html={donations ? donations : editing ? '' : instructions} active={editing || false} onInput={handleInput} />
     </>
   )
 }

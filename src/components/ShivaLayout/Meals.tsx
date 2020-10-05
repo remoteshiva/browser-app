@@ -17,9 +17,8 @@ const Meals = ({ shiva, editing, save }: ShivaPanel) => {
   }
   return (
     <>
-      <h2>Minian Times</h2>
-      <Editable className={editing ? 'active' : ''} html={mealSignups || editing ? '' : instructions} active={editing || false} onInput={handleInput} />
-      <p>{shiva.minianTimes}</p>
+      <h2>Meal sign ups</h2>
+      <Editable className={editing ? 'active' : ''} html={mealSignups ? mealSignups : editing ? '' : instructions} active={editing || false} onInput={handleInput} />
     </>
   )
 }

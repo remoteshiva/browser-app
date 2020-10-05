@@ -18,8 +18,7 @@ const MinianTimes = ({ shiva, editing, save }: ShivaPanel) => {
   return (
     <>
       <h2>Minian Times</h2>
-      <Editable className={editing ? 'active' : ''} html={minianTimes || editing ? '' : instructions} active={editing || false} onInput={handleInput} />
-      <p>{shiva.minianTimes}</p>
+      <Editable className={editing ? 'active' : ''} html={minianTimes ? minianTimes : editing ? '' : instructions} active={editing || false} onInput={handleInput} />
     </>
   )
 }
