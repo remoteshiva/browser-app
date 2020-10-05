@@ -30,7 +30,7 @@ const BasicDetails = ({newShiva, submit, selectStep}: StepProps<BasicDetailsProp
       <div id='the-form'>
         <Row>
           <FixedColumn width={327}>
-            <StyledForm>
+            <StyledForm onSubmit={e => { e.preventDefault() }}  autoComplete='off'>
               <label>
                 Name of deceased
                 <input onChange={handleInputChange} name='nameOfDeceased' value={values.nameOfDeceased} type='text' required className='appearance-none block w-full bg-grey-lighter rounded py-3 px-4 mb-3'/>

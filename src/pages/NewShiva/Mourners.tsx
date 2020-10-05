@@ -34,24 +34,28 @@ const MournerBoxClear = styled.img`
   z-index: 10;
 `
 
-interface MournerBoxProps extends Mourner {
-  id: number
-  onUpdate?: () => void
+interface MournerProps extends Mourner {
+  index: number
+}
+
+interface MournerBoxProps extends MournerProps {
+  onUpdate: (data: MournerProps) => void
   onRemove: (id:number) => void
 }
-const MournerBox = ({id, name, relationship, onUpdate, onRemove}:MournerBoxProps) => {
-  const [values, setValues] = useState({id, name, relationship})
+
+const MournerBox = ({index, name, relationship, onUpdate, onRemove}:MournerBoxProps) => {
+  const [values, setValues] = useState({index, name, relationship})
   const handleInputChange = (event:React.ChangeEvent<HTMLInputElement>) => {
     const {name, value} = event.target
-    console.log(name, value)
     setValues({...values, [name]: value})
+    onUpdate({...values})
   } 
 
   return(
     <MournerBoxWrapper>
-      <MournerBoxClear onClick={ ()=> onRemove(values.id)} src={ClearIcon}/>
-      <input name='name' type='text' value={values.name}  onChange={handleInputChange} placeholder='Name' required/>
-      <input name='relationship' type='text' value={values.relationship} onChange={handleInputChange} placeholder='Relationship' required className='appearance-none block w-full bg-grey-lighter rounded py-3 px-4 mb-3'/>
+      <MournerBoxClear onClick={ ()=> onRemove(values.index)} src={ClearIcon}/>
+      <input name='name' type='text' value={values.name}  onChange={handleInputChange} placeholder='Name' required autoComplete='off'/>
+      <input name='relationship' type='text' value={values.relationship} onChange={handleInputChange} placeholder='Relationship' required autoComplete='off'/>
     </MournerBoxWrapper>
   )
 }
@@ -95,12 +99,21 @@ const Mourners = ({newShiva, submit, selectStep, addNotification}: StepProps<Mou
       }
     }
   }
+  const setMournerData = ({index, name, relationship}:MournerProps) => {
+    console.log('setting mourner data', index, name, relationship)
+    const m = [...mourners]
+    m[index] = {name, relationship}
+    setMourners([...m])
+  }
 
+  const submitMourners = () => {
+    submit({mourners, mournerKey},Steps.VISITS)
+  }
   return(
     <StepLayout
       title={'Add mourners'}
       step={3}
-      submit={() => submit({mourners, mournerKey},Steps.VISITS )}
+      submit={() => submitMourners()}
       submitText='Next: Set visiting hours'
       stepperClickHandler={selectStep}
     >
@@ -110,20 +123,29 @@ const Mourners = ({newShiva, submit, selectStep, addNotification}: StepProps<Mou
           <br/>
           <p>You can share editing privileges with the mourners or other organizers through the following link: 
           </p>
-          <a href={`/m/${mournerKey}`} target="_blank" rel="noopener noreferrer">
+          <a href={`${mournerPathPrefix}${mournerKey}`} target="_blank" rel="noopener noreferrer">
             {mournerPathPrefix}{mournerKey}
           </a>
           <button ref={inputRef} onClick={copyToClipboard}><img style={{marginLeft: '6px'}} src={CopyIcon} alt='copy'/></button>
           <br/>
           <br/>
           <div>
-            {mourners.map((m, i) => (<MournerBox key={i} id={i} name={m.name} relationship={m.relationship} onRemove={handleRemoveMourner}/>))}
+            {mourners.map((m, i) => (
+              <MournerBox
+                key={i}
+                index={i}
+                name={m.name}
+                relationship={m.relationship}
+                onRemove={handleRemoveMourner}
+                onUpdate={setMournerData}
+              />
+            ))}
           </div>
           <AddMournerButton onClick={handleAddMourner}><img src={AddIcon} alt='remove'/>&nbsp;&nbsp;Add another mourner</AddMournerButton>
-      </FixedColumn>
+        </FixedColumn>
         <FlexColumn>
-            <ImageWrapper><img src={BasicDetailsArt} alt='Basic details'/></ImageWrapper>
-          </FlexColumn>
+          <ImageWrapper><img src={BasicDetailsArt} alt='Basic details'/></ImageWrapper>
+        </FlexColumn>
       </Row>
     </StepLayout>
   )

@@ -35,7 +35,7 @@ const VideoChatLink = ({newShiva, submit, selectStep}: StepProps<ChatProps>) => 
           <StyledForm>
             <label>
               Link to your videochatting room
-              <input onChange={handleInputChange} name={'videoChatLink'} placeholder='Example: zoom.us/10283' type='url' className='appearance-none block w-full bg-grey-lighter rounded py-3 px-4 mb-3'/>
+              <input onChange={handleInputChange} name={'videoChatLink'} placeholder='Example: zoom.us/10283' type='url' autoComplete='off' className='appearance-none block w-full bg-grey-lighter rounded py-3 px-4 mb-3'/>
             </label>
           </StyledForm>
         </FixedColumn>
