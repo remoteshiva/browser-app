@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { updateShiva } from '../../store/shiva/actions'
 import DeleteIcon from '../../assets/img/delete.svg'
 import Editable from '../Editable'
+import PhotoDropzone from '../Dropzone'
 import { Row, FlexColumn, FixedColumn } from '../flexLayout'
 import { ShivaPanel, withPanel } from './Panel'
 import { PhotoDropzoneWrapper } from './styles'
@@ -32,24 +33,26 @@ const ImageContainer = styled.div`
   }
 `
 
-const PhotoDropzone = () => {
-  return <PhotoDropzoneWrapper />
-}
-
 const About = ({ shiva, editing, save }: ShivaPanel) => {
   const instructions = `You can use this space to include an obituary, eulogies, and stories you’d like to share about ${shiva.nameOfDeceased}. If you do not include any information, this component will not appear on the visitor page.`
   const dispatch = useDispatch()
   const [about, setAbout] = useState(shiva.about)
   const [images, setImages] = useState(shiva.images)
   useEffect(() => {
-    const partialShiva = { about }
-    dispatch(updateShiva(shiva._id, partialShiva))
-  }, [save, dispatch, about, shiva._id])
+    if (save && save > 0) {
+      const partialShiva = { about, images }
+      console.log('saving the shiva')
+      dispatch(updateShiva(shiva._id, partialShiva))
+    }
+  }, [save, dispatch, about, images, shiva._id])
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setAbout(event.target.value)
   }
   const handleDeleteImage = (index: number) => {
     setImages([...images.filter((m, i) => i !== index)])
+  }
+  const handImageUploaded = (url: string) => {
+    setImages([...images, new URL(url)])
   }
   return (
     <>
@@ -73,7 +76,9 @@ const About = ({ shiva, editing, save }: ShivaPanel) => {
               ) : null}
             </ImageContainer>
           ))}
-          <PhotoDropzone />
+          <PhotoDropzoneWrapper>
+            <PhotoDropzone onImageUploaded={handImageUploaded} active={editing ? editing : false} />
+          </PhotoDropzoneWrapper>
         </FixedColumn>
       </Row>
     </>

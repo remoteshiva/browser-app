@@ -9,8 +9,10 @@ const MinianTimes = ({ shiva, editing, save }: ShivaPanel) => {
   const [minianTimes, setMinianTimes] = useState(shiva.minianTimes)
   const dispatch = useDispatch()
   useEffect(() => {
-    const partialShiva = { minianTimes }
-    dispatch(updateShiva(shiva._id, partialShiva))
+    if (save && save > 0) {
+      const partialShiva = { minianTimes }
+      dispatch(updateShiva(shiva._id, partialShiva))
+    }
   }, [save, dispatch, minianTimes, shiva._id])
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setMinianTimes(event.target.value)

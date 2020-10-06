@@ -53,8 +53,10 @@ const Mourners = ({ role, shiva, editing, save }: ShivaPanel) => {
   const dispatch = useDispatch()
   const [mourners, setMourners] = useState(shiva.mourners)
   useEffect(() => {
-    const partialShiva = { mourners }
-    dispatch(updateShiva(shiva._id, partialShiva))
+    if (save && save > 0) {
+      const partialShiva = { mourners }
+      dispatch(updateShiva(shiva._id, partialShiva))
+    }
   }, [save, dispatch, mourners, shiva._id])
   const handleInput = (index: number, key: string, value: string) => {
     const newMourners = mourners.map((m, i) => {

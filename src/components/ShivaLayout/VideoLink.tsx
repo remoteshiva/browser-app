@@ -9,8 +9,10 @@ const VideoLink = ({ shiva, editing, save }: ShivaPanel) => {
   const [videoLink, setVideoLink] = useState(shiva.videoLink)
   const dispatch = useDispatch()
   useEffect(() => {
-    const partialShiva = { videoLink }
-    dispatch(updateShiva(shiva._id, partialShiva))
+    if (save && save > 0) {
+      const partialShiva = { videoLink }
+      dispatch(updateShiva(shiva._id, partialShiva))
+    }
   }, [save, dispatch, videoLink, shiva._id])
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     const url = new URL(event.target.value)

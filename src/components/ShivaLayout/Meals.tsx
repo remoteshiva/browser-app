@@ -9,8 +9,10 @@ const Meals = ({ shiva, editing, save }: ShivaPanel) => {
   const [mealSignups, setMealSignups] = useState(shiva.mealSignups)
   const dispatch = useDispatch()
   useEffect(() => {
-    const partialShiva = { mealSignups }
-    dispatch(updateShiva(shiva._id, partialShiva))
+    if (save && save > 0) {
+      const partialShiva = { mealSignups }
+      dispatch(updateShiva(shiva._id, partialShiva))
+    }
   }, [save, dispatch, mealSignups, shiva._id])
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setMealSignups(event.target.value)
