@@ -35,7 +35,10 @@ const NewShiva = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    if (selectedShiva) dispatch(push(Routes.SHIVA_PAGE(selectedShiva)))
+    if (selectedShiva) {
+      // once the shiva is created and selected, navigate to the shiva page
+      dispatch(push(Routes.SHIVA_PAGE(selectedShiva), { newShiva: true }))
+    }
   }, [selectedShiva, dispatch])
   const submitStepData = <T extends {}>(data: T, nextStep: T.Steps) => {
     setShiva(s => ({ ...s, ...data }))
@@ -77,7 +80,6 @@ const NewShiva = () => {
         )
     }
   }
-  console.log('before render here is the shiva', shiva)
   return (
     <Wrapper>
       <BackButton />
