@@ -1,5 +1,8 @@
 import React, { useState } from 'react'
-import { format, addDays } from 'date-fns'
+import { addDays } from 'date-fns'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
+import '../../assets/styles/datepicker.css'
 import BasicDetailsArt from '../../assets/img/add-basic-details.svg'
 import { Row, FixedColumn, FlexColumn } from '../../components/flexLayout'
 import { StepProps, BasicDetailsProps, Steps } from './types'
@@ -9,18 +12,12 @@ import StepLayout from './Layout'
 type ChangeEvent = React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>
 
 const BasicDetails = ({ newShiva, submit, selectStep }: StepProps<BasicDetailsProps>) => {
-  const dateFormat = 'yyyy-MM-dd'
   const { nameOfDeceased, startDate, endDate, message }: BasicDetailsProps = newShiva
   const [values, setValues] = useState({ nameOfDeceased, startDate, endDate, message })
 
   const handleInputChange = (event: ChangeEvent) => {
     const { name, value } = event.target
     setValues({ ...values, [name]: value })
-  }
-
-  const handleDateInputChange = (event: ChangeEvent) => {
-    const { name, value } = event.target
-    setValues({ ...values, [name]: new Date(value) })
   }
 
   return (
@@ -52,13 +49,10 @@ const BasicDetails = ({ newShiva, submit, selectStep }: StepProps<BasicDetailsPr
               </label>
               <label>
                 Start date of shiva
-                <input
-                  onChange={handleDateInputChange}
-                  type="date"
-                  name="startDate"
-                  value={format(values.startDate, dateFormat)}
-                  required
-                  className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
+                <DatePicker
+                  selected={values.startDate}
+                  onChange={(date: Date) => setValues({ ...values, startDate: date })}
+                  customInput={<input className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3" />}
                 />
               </label>
               <label>
