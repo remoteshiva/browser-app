@@ -36,7 +36,7 @@ const Main = () => {
         <Route path={Routes.SIGNUP_PAGE} exact render={() => <LoginSignup page={Pages.signUp} />} />
         <PrivateRoute session={session} path={Routes.MY_SHIVAS} exact component={Dashboard} />
         <PrivateRoute session={session} path={Routes.NEW_SHIVA(':step?')} exact component={NewShiva} />
-        <PrivateRoute session={session} path={Routes.SHIVA_PAGE} exact component={EditShiva} />
+        <PrivateRoute session={session} path={Routes.SHIVA_PAGE(':id')} exact component={EditShiva} />
         <Route path={Routes.VISITOR_PAGE} component={VisitorPage} />
         <Route path={Routes.MOURNER_PAGE} component={MournerPage} />
         <Route path={Routes.NOT_FOUND} component={NotFoundPage} />

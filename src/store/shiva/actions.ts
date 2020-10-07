@@ -71,8 +71,10 @@ export const fetchShivaByVisitorKey = (visitorKey: string): AppThunk => async di
 export const createShiva = (shiva: Shiva): AppThunk => async dispatch => {
   dispatch(createShivaRequest())
   await sleep(1000)
-  const newShiva = { ...shiva, _id: Math.random().toString(36).substring(3) }
+  const _id = Math.random().toString(36).substring(3)
+  const newShiva = { ...shiva, _id }
   dispatch(createShivaSuccess(newShiva))
+  dispatch(selectShiva(_id))
 }
 
 export const deleteShiva = (shivaId: string): AppThunk => async dispatch => {

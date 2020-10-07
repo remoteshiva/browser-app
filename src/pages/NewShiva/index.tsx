@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router'
 import { push } from 'connected-react-router'
 import styled from 'styled-components'
 import * as Routes from '../../routes'
+import { AppState } from '../../store'
 import { Shiva, initializeShiva } from '../../store/shiva/types'
 import { createShiva } from '../../store/shiva/actions'
 import Toast, { ToastModel, Position } from '../../components/Toast'
@@ -17,24 +18,30 @@ import * as T from './types'
 
 const Wrapper = styled.div`
   padding: 24px 30px;
+  .error {
+    color: ${props => props.theme.colors.cardinal};
+  }
 `
 interface MatchParams {
   step: string | undefined
 }
 
 const NewShiva = () => {
+  const { selectedShiva } = useSelector((state: AppState) => state.shiva)
   const { step } = useParams<MatchParams>()
   const [currentStep, setCurrentStep] = useState<T.Steps>(Number(step))
   const [shiva, setShiva] = useState<Shiva>(initializeShiva())
   const [toasts, setToasts] = useState<ToastModel[]>([])
   const dispatch = useDispatch()
 
+  useEffect(() => {
+    if (selectedShiva) dispatch(push(Routes.SHIVA_PAGE(selectedShiva)))
+  }, [selectedShiva, dispatch])
   const submitStepData = <T extends {}>(data: T, nextStep: T.Steps) => {
     setShiva(s => ({ ...s, ...data }))
     setCurrentStep(nextStep)
     if (nextStep === T.Steps.DONE) {
       dispatch(createShiva(shiva))
-      dispatch(push(Routes.MY_SHIVAS))
     } else {
       dispatch(push(Routes.NEW_SHIVA(`${nextStep}`)))
     }

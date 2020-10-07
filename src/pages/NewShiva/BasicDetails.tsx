@@ -14,20 +14,21 @@ type ChangeEvent = React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLT
 const BasicDetails = ({ newShiva, submit, selectStep }: StepProps<BasicDetailsProps>) => {
   const { nameOfDeceased, startDate, endDate, message }: BasicDetailsProps = newShiva
   const [values, setValues] = useState({ nameOfDeceased, startDate, endDate, message })
+  const [error, setError] = useState('')
 
   const handleInputChange = (event: ChangeEvent) => {
     const { name, value } = event.target
     setValues({ ...values, [name]: value })
+    setError('')
+  }
+  const handleSubmit = () => {
+    if (values.nameOfDeceased === '') {
+      setError('Name of deceased cannot  be empty')
+    } else submit({ ...values, endDate: addDays(values.startDate, 6) }, Steps.VIDEO_CHAT_LINK)
   }
 
   return (
-    <StepLayout
-      title={'Add basic details'}
-      step={1}
-      submit={() => submit({ ...values, endDate: addDays(values.startDate, 6) }, Steps.VIDEO_CHAT_LINK)}
-      submitText="Next: Add video link"
-      stepperClickHandler={selectStep}
-    >
+    <StepLayout title={'Add basic details'} step={1} submit={handleSubmit} submitText="Next: Add video link" stepperClickHandler={selectStep}>
       <div id="the-form">
         <Row>
           <FixedColumn width={327}>
@@ -65,6 +66,7 @@ const BasicDetails = ({ newShiva, submit, selectStep }: StepProps<BasicDetailsPr
                   className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
                 />
               </label>
+              <div className="error">{error}</div>
             </StyledForm>
           </FixedColumn>
           <FlexColumn>
