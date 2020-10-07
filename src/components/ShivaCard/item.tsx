@@ -53,7 +53,7 @@ const ShivaItem = (props: ShivaProps) => {
       <section>
         <p>{nameOfDeceased}</p>
         <div>
-          {startDate.format('L')} - {endDate?.format('L')}
+          {startDate.toLocaleDateString()} - {endDate?.toLocaleDateString()}
         </div>
       </section>
     </ShivaItemWrapper>

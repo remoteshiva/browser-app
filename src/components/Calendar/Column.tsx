@@ -1,19 +1,17 @@
 import React, { PureComponent } from 'react'
-import * as Moment from 'moment'
-import { extendMoment } from 'moment-range'
+import { addMinutes, getDate } from 'date-fns'
 import { Visit, Mourner } from '../../store/shiva/types'
 import { withCalendarContext, CalendarContextProps } from './context'
 import { CalendarEvent, NewEvent } from './event'
 import { ColumnWrapper, PIXELS_PER_MINUTE, PIXELS_PER_HOUR, SNAP, Pixels } from './styles'
 
-const moment = extendMoment(Moment)
 const noop = () => {}
 
 const pixelToMinutes = (offset: number) => (pixel: number) => offset + pixel / PIXELS_PER_MINUTE
 
 interface Props extends CalendarContextProps {
   editMode: boolean
-  day: moment.Moment
+  day: Date
   visits: Visit[]
   mourners?: Mourner[]
   scrollYOffset: Pixels
@@ -42,7 +40,7 @@ class Column extends PureComponent<Props, State> {
     console.log(this.props.scrollYOffset, rect.top, 'page', event.pageY, 'client', event.clientY)
     const minutes = pixelToMinutes(9 * 60)(event.clientY + rect.top - this.props.scrollYOffset)
     console.log('minutes', minutes)
-    const ts = this.props.day.clone().add(minutes, 'minutes')
+    const ts = addMinutes(this.props.day, minutes)
     const newVisit: Visit = {
       date: ts,
       length: 4,
@@ -80,7 +78,7 @@ class Column extends PureComponent<Props, State> {
     return (
       <ColumnWrapper height={`${height}px`} onMouseDown={editMode ? this.handleMouseDown : noop} onMouseMove={editMode ? this.handleMouseMove : noop}>
         {this.props.visits
-          .filter(visit => visit.date.calendar() === day.calendar())
+          .filter(visit => getDate(visit.date) === getDate(day))
           .map((visit, i) => (
             <CalendarEvent key={i} hourOffset={this.props.startHour} visit={visit} />
           ))}

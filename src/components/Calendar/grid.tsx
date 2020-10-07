@@ -1,19 +1,16 @@
 import React, { useState } from 'react'
-import * as Moment from 'moment'
-import { extendMoment } from 'moment-range'
+import { eachDayOfInterval } from 'date-fns'
 import { Visit } from '../../store/shiva/types'
 import Column from './Column'
 import { GridContainer, GridBackground, GridColumns } from './styles'
 
-const moment = extendMoment(Moment)
-
 interface GridProps {
   editMode: boolean
-  startDate: moment.Moment
-  numOfDays: number
+  startDate: Date
+  endDate: Date
   visits: Visit[]
 }
-export const Grid = ({ editMode, startDate, numOfDays, visits }: GridProps) => {
+export const Grid = ({ editMode, startDate, endDate, visits }: GridProps) => {
   const [offset, setOffset] = useState(0)
 
   // useEffect(() => {
@@ -22,12 +19,12 @@ export const Grid = ({ editMode, startDate, numOfDays, visits }: GridProps) => {
   //   }
   // }, []);
 
-  const columnDays = Array.from({ length: numOfDays }, (_, i) => startDate.clone().add(i, 'days'))
+  const days = eachDayOfInterval({ start: startDate, end: endDate })
   return (
-    <GridContainer numOfColumns={numOfDays}>
+    <GridContainer numOfColumns={days.length}>
       <GridBackground>Click and drag to add visiting hours</GridBackground>
-      <GridColumns numOfColumns={numOfDays}>
-        {columnDays.map((day, i) => (
+      <GridColumns numOfColumns={days.length}>
+        {days.map((day, i) => (
           <Column key={i} editMode={editMode} day={day} visits={visits} scrollYOffset={offset} />
         ))}
       </GridColumns>

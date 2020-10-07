@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react'
+import { getHours, getMinutes } from 'date-fns'
 import { Visit } from '../../store/shiva/types'
 import { EventWrapper, PIXELS_PER_HOUR, PIXELS_PER_MINUTE, Pixels } from './styles'
 
@@ -95,8 +96,8 @@ export class CalendarEvent extends PureComponent<Props, State> {
   }
   render() {
     const { visit, hourOffset } = this.props
-    const hour = visit.date.hour()
-    const minutes = visit.date.minutes()
+    const hour = getHours(visit.date)
+    const minutes = getMinutes(visit.date)
     const offset = (hour - hourOffset) * PIXELS_PER_HOUR + minutes * PIXELS_PER_MINUTE
     return (
       <EventWrapper top={offset} height={PIXELS_PER_HOUR * 4}>

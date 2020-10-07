@@ -1,4 +1,4 @@
-import moment from 'moment'
+import { startOfDay, addDays } from 'date-fns'
 import { ActionType, createAction } from 'typesafe-actions'
 import * as ShivaActionTypes from './constants'
 import { BackendError } from '../types'
@@ -14,7 +14,7 @@ export interface Mourner {
 }
 
 export interface Visit {
-  date: moment.Moment
+  date: Date
   length: number
   mourners: number[]
   visitors: string[]
@@ -22,8 +22,8 @@ export interface Visit {
 export interface Shiva {
   _id: string
   nameOfDeceased: string
-  startDate: moment.Moment
-  endDate?: moment.Moment
+  startDate: Date
+  endDate: Date
   message?: string
   videoLink: URL | null
   mourners: Mourner[]
@@ -47,7 +47,8 @@ export interface Shiva {
 export const initializeShiva = (shiva?: Partial<Shiva>): Shiva => ({
   _id: '',
   nameOfDeceased: '',
-  startDate: moment().startOf('day'),
+  startDate: startOfDay(new Date()),
+  endDate: startOfDay(addDays(new Date(), 7)),
   mourners: [],
   videoLink: null,
   mournerKey: generateRandomKey(),
