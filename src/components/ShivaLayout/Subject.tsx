@@ -1,8 +1,22 @@
-import React from 'react'
+import React, { useState, useEffect, useRef } from 'react'
+import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
+import { updateShiva } from '../../store/shiva/actions'
 import Camera from '../../assets/img/camera.svg'
+import EditIcon from '../../assets/img/editWhite.svg'
+import PhotoDropzone from '../Dropzone'
+import Editable from '../Editable'
 import { Row, FlexColumn, FixedColumn } from '../flexLayout'
 import { ShivaPanel, withPanel } from './Panel'
+
+const Container = styled.div`
+  padding-top: 20px;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
 
 const SubjectImageContainer = styled.div`
   background-position: 50% 50%;
@@ -11,21 +25,25 @@ const SubjectImageContainer = styled.div`
   overflow: hidden;
   width: 142px;
   height: 142px;
-  margin: 20px auto;
 `
-export const EmptySubjectImage = styled(SubjectImageContainer)`
+const EmptySubjectImage = styled(SubjectImageContainer)`
   background-image: url(${Camera});
   background-size: 66px 56px;
   background-color: ${props => props.theme.colors.sauvignon};
   border: 2px dashed ${props => props.theme.colors.clamShell};
 `
 
-export const SubjectImage = styled(SubjectImageContainer)`
+interface RoundClickerProps {
+  src: string
+  onClick: () => void
+}
+
+const SubjectImage = styled(SubjectImageContainer)`
+  position: relative;
   border: 6px solid ${props => props.theme.colors.romance};
   background-size: cover;
 `
-export const Title = styled.div`
-  /* flex-shrink:0 !important; */
+const Title = styled.div`
   min-width: 40%;
   font-size: 48px;
   font-family: 'Lora';
@@ -35,20 +53,85 @@ export const Title = styled.div`
   white-space: nowrap;
 `
 
-const Subject = ({ shiva, editing }: ShivaPanel) => {
-  const renderView = () => (
+const RoundEditClicker = styled.button<RoundClickerProps>`
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 17px;
+  box-shadow: 0 2px 20px 0 rgba(0, 0, 0, 0.09);
+  background-color: #fff;
+  background-image: ${props => `url(${props.src})`};
+  background-repeat: no-repeat;
+  background-position: center center;
+  z-index: 1;
+  &:focus {
+    outline: 0;
+  }
+  &:active {
+    box-shadow: none;
+  }
+`
+
+const Subject = ({ shiva, editing, save }: ShivaPanel) => {
+  const dispatch = useDispatch()
+  const [message, setMessage] = useState(shiva.message)
+  const [titleImage, setTitleImage] = useState(shiva.titleImage)
+
+  useEffect(() => {
+    if (save && save > 0) {
+      const partialShiva = { message, titleImage }
+      dispatch(updateShiva(shiva._id, partialShiva))
+    }
+  }, [save, dispatch, message, titleImage, shiva._id])
+  const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setMessage(event.target.value)
+  }
+  const handImageUploaded = (url: string) => {
+    setTitleImage(new URL(url))
+  }
+  const renderSelectImage = (editing: boolean) => (
+    <>
+      {editing ? (
+        <RoundEditClicker
+          src={EditIcon}
+          onClick={() => {
+            console.log('clicke!!')
+          }}
+        >
+          <PhotoDropzone onImageUploaded={handImageUploaded} active={editing ? editing : false} />
+        </RoundEditClicker>
+      ) : null}
+    </>
+  )
+  return (
     <>
       <Row>
-        <FixedColumn width={200}>{shiva.titleImage ? <SubjectImage style={{ backgroundImage: `url(${shiva.titleImage?.toString()})` }} /> : <EmptySubjectImage />}</FixedColumn>
+        <FixedColumn width={180}>
+          <Container>
+            {titleImage ? (
+              <div style={{ position: 'relative', display: 'inline-block' }}>
+                <SubjectImage style={{ backgroundImage: `url(${titleImage?.toString()})` }} />
+                {renderSelectImage(editing || false)}
+              </div>
+            ) : (
+              <>
+                <EmptySubjectImage />
+                {renderSelectImage(editing || false)}
+              </>
+            )}
+          </Container>
+        </FixedColumn>
         <FlexColumn>
-          <Title>Shiva for {shiva?.nameOfDeceased} Z"L</Title>
-          <p>{shiva.message}</p>
+          <Title>Shiva for {shiva.nameOfDeceased} Z"L</Title>
+          <Editable className={`${editing ? 'active' : ''} about`} html={message || ''} active={editing || false} onInput={handleInput}>
+            {shiva.message}
+          </Editable>
         </FlexColumn>
       </Row>
     </>
   )
-  const renderEdit = () => <>edit mode</>
-  return <>{editing ? renderEdit() : renderView()}</>
 }
 
 export default withPanel(Subject)

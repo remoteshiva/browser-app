@@ -42,9 +42,6 @@ const PhotoDropzone = ({ active, onImageUploaded }: Props) => {
   return (
     <div style={{ width: '100%', height: '100%' }} {...getRootProps()}>
       <input {...getInputProps()} disabled={!active} />
-      {uploading ? uploading : 'not uploading'}
-      {isDragActive ? 'active' : 'not active'}
-      {/* {isDragActive ? <p>Drop the files here ...</p> : <p>Drag 'n' drop some files here, or click to select files</p>} */}
     </div>
   )
 }

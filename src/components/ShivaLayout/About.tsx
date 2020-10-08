@@ -18,7 +18,7 @@ const ImageContainer = styled.div`
   .delete {
     position: absolute;
     right: 10px;
-    bottom: 10px;
+    bottom: 20px;
     width: 30px;
     height: 30px;
     border-radius: 8px;
@@ -41,7 +41,6 @@ const About = ({ shiva, editing, save }: ShivaPanel) => {
   useEffect(() => {
     if (save && save > 0) {
       const partialShiva = { about, images }
-      console.log('saving the shiva')
       dispatch(updateShiva(shiva._id, partialShiva))
     }
   }, [save, dispatch, about, images, shiva._id])
@@ -59,7 +58,7 @@ const About = ({ shiva, editing, save }: ShivaPanel) => {
       <h2>About {shiva.nameOfDeceased}</h2>
       <Row>
         <FlexColumn>
-          <Editable className={`${editing ? 'active' : ''} about`} html={about || editing ? '' : instructions} active={editing || false} onInput={handleInput} />
+          <Editable className={`${editing ? 'active' : ''} about`} html={about || (editing ? '' : instructions)} active={editing || false} onInput={handleInput} />
         </FlexColumn>
         <FixedColumn width={20} />
         <FixedColumn width={290}>
