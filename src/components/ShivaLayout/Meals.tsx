@@ -14,8 +14,8 @@ const Meals = ({ shiva, editing, save }: ShivaPanel) => {
       dispatch(updateShiva(shiva._id, partialShiva))
     }
   }, [save, dispatch, mealSignups, shiva._id])
-  const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setMealSignups(event.target.value)
+  const handleInput = (html: string) => {
+    setMealSignups(html)
   }
   return (
     <>

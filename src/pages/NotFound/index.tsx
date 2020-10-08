@@ -6,10 +6,10 @@ import NotFoundImage from '../../assets/img/page-not-found.svg'
 import { Row } from '../../components/flexLayout'
 import { VerticalSpace, DarkButton } from '../../components/common'
 
-const Wrapper = styled.div`
+const Center = styled.div`
   padding: 0;
   margin: 0;
-  list-style: none;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -28,25 +28,33 @@ const Wrapper = styled.div`
 `
 
 const NotFound = () => (
-  <Wrapper>
+  <>
     <VerticalSpace height={100} />
     <Row>
-      <img src={NotFoundImage} alt="Not Found" />
+      <Center>
+        <img src={NotFoundImage} alt="Not Found" />
+      </Center>
     </Row>
     <Row>
-      <h2>Page Not Found</h2>
+      <Center>
+        <h2>Page Not Found</h2>
+      </Center>
     </Row>
     <Row>
-      <p>Hmm, it seems that page does not exist.</p>
+      <Center>
+        <p>Hmm, it seems that page does not exist.</p>
+      </Center>
     </Row>
     <VerticalSpace height={40} />
     <Row>
-      <Link to={Routes.MY_SHIVAS}>
-        <DarkButton>Go Home </DarkButton>
-      </Link>
+      <Center>
+        <Link to={Routes.MY_SHIVAS}>
+          <DarkButton>Go Home </DarkButton>
+        </Link>
+      </Center>
     </Row>
     <VerticalSpace height={200} />
-  </Wrapper>
+  </>
 )
 
 export default NotFound

@@ -44,8 +44,8 @@ const About = ({ shiva, editing, save }: ShivaPanel) => {
       dispatch(updateShiva(shiva._id, partialShiva))
     }
   }, [save, dispatch, about, images, shiva._id])
-  const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setAbout(event.target.value)
+  const handleInput = (html: string) => {
+    setAbout(html)
   }
   const handleDeleteImage = (index: number) => {
     setImages([...images.filter((m, i) => i !== index)])

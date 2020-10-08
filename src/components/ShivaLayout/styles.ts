@@ -22,7 +22,6 @@ export const CardWrapper = styled.div<CardWrapperProps>`
   position: relative;
   flex-direction: ${props => (props.direction ? props.direction : 'row')};
   overflow: hidden;
-  word-break: break-all;
   width: 100%;
   margin-bottom: 20px;
   padding: 20px;
@@ -31,8 +30,10 @@ export const CardWrapper = styled.div<CardWrapperProps>`
   box-shadow: 0 2px 20px 0 rgba(0, 0, 0, 0.04);
   .editable {
     line-height: 1.5;
+    &.subject,
     &.about {
       min-height: 174px;
+      width: 100%;
       &.active {
         border-radius: 8px;
         border: 1px solid ${props => props.theme.colors.blackHaze};
@@ -71,6 +72,7 @@ export const CardWrapper = styled.div<CardWrapperProps>`
     width: 100%;
     color: ${props => props.theme.colors.heavyMetal};
     margin-bottom: 12px;
+    word-wrap: normal;
   }
   h4 {
     font-family: 'Lato';

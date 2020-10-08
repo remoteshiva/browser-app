@@ -5,6 +5,7 @@ interface RowProps {
 }
 export const Row = styled.div<RowProps>`
   display: flex;
+  width: 100%;
   height: ${props => `${props.height}px`};
   flex-direction: row;
 `

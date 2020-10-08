@@ -35,7 +35,6 @@ const EmptySubjectImage = styled(SubjectImageContainer)`
 
 interface RoundClickerProps {
   src: string
-  onClick: () => void
 }
 
 const SubjectImage = styled(SubjectImageContainer)`
@@ -82,11 +81,13 @@ const Subject = ({ shiva, editing, save }: ShivaPanel) => {
   useEffect(() => {
     if (save && save > 0) {
       const partialShiva = { message, titleImage }
+      console.log('saving partial shiva', partialShiva)
       dispatch(updateShiva(shiva._id, partialShiva))
     }
   }, [save, dispatch, message, titleImage, shiva._id])
-  const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setMessage(event.target.value)
+  const handleInput = (html: string) => {
+    console.log('incoing data', html)
+    setMessage(html)
   }
   const handImageUploaded = (url: string) => {
     setTitleImage(new URL(url))
@@ -94,12 +95,7 @@ const Subject = ({ shiva, editing, save }: ShivaPanel) => {
   const renderSelectImage = (editing: boolean) => (
     <>
       {editing ? (
-        <RoundEditClicker
-          src={EditIcon}
-          onClick={() => {
-            console.log('clicke!!')
-          }}
-        >
+        <RoundEditClicker src={EditIcon}>
           <PhotoDropzone onImageUploaded={handImageUploaded} active={editing ? editing : false} />
         </RoundEditClicker>
       ) : null}
@@ -116,18 +112,16 @@ const Subject = ({ shiva, editing, save }: ShivaPanel) => {
                 {renderSelectImage(editing || false)}
               </div>
             ) : (
-              <>
+              <div style={{ position: 'relative', display: 'inline-block' }}>
                 <EmptySubjectImage />
                 {renderSelectImage(editing || false)}
-              </>
+              </div>
             )}
           </Container>
         </FixedColumn>
         <FlexColumn>
           <Title>Shiva for {shiva.nameOfDeceased} Z"L</Title>
-          <Editable className={`${editing ? 'active' : ''} about`} html={message || ''} active={editing || false} onInput={handleInput}>
-            {shiva.message}
-          </Editable>
+          <Editable className={`${editing ? 'active' : ''} subject`} html={message || ''} active={editing || false} onInput={handleInput} />
         </FlexColumn>
       </Row>
     </>

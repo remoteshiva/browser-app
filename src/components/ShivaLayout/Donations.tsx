@@ -5,8 +5,8 @@ import Editable from '../Editable'
 const Donations = ({ shiva, editing }: ShivaPanel) => {
   const instructions = `Add link here`
   const [donations, setDonations] = useState(shiva.donations)
-  const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setDonations(event.target.value)
+  const handleInput = (html: string) => {
+    setDonations(html)
   }
   return (
     <>

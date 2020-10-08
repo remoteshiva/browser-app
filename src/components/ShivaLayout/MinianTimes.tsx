@@ -14,8 +14,8 @@ const MinianTimes = ({ shiva, editing, save }: ShivaPanel) => {
       dispatch(updateShiva(shiva._id, partialShiva))
     }
   }, [save, dispatch, minianTimes, shiva._id])
-  const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setMinianTimes(event.target.value)
+  const handleInput = (html: string) => {
+    setMinianTimes(html)
   }
   return (
     <>

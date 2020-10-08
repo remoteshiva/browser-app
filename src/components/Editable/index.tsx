@@ -17,31 +17,32 @@ interface Props {
   className?: string
   style?: object
   children?: ReactNode
-  onInput: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onInput: (html: string) => void
 }
 const Editable = ({ html, name, tagName, active, style, className, onInput, children }: Props) => {
   const el = useRef<HTMLElement>()
   useEffect(() => {
     if (!el.current) return
     if (html !== el.current.innerHTML) {
-      el.current.innerHTML = sanitize(html)
-      replaceCaret(el.current)
+      console.log('Set the html', html)
+      el.current.innerHTML = html
+      // // replaceCaret(el.current)
     }
   }, [html])
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.stopPropagation()
+    e.preventDefault()
     if (!el.current) return
-    const html = el.current.innerHTML // = sanitize(el.current.innerHTML))
-    const event = Object.assign(e, {
-      target: {
-        value: sanitize(html),
-        name,
-      },
-    })
-    onInput(event)
+    onInput(el.current.innerHTML)
+  }
+  const onPaste = (e: React.ClipboardEvent) => {
+    e.stopPropagation()
+    e.preventDefault()
+    if (!el.current) return
+    el.current.innerHTML = sanitize(e.clipboardData.getData('text/html'))
+    onInput(el.current.innerHTML)
   }
   const sanitize = (dirtyHtml: string): string => {
-    // const html = dirtyHtml && dirtyHtml.replace(/&nbsp;|\u202F|\u00A0/g, ' ')
     return sanitizeHtml(dirtyHtml, {})
   }
   const replaceCaret = (el: HTMLElement) => {
@@ -78,6 +79,7 @@ const Editable = ({ html, name, tagName, active, style, className, onInput, chil
           onBlur: noop,
           onKeyUp: noop,
           onKeyDown: noop,
+          onPaste,
         },
         children
       )}

@@ -18,9 +18,12 @@ const Wrapper = styled.div`
       margin-bottom: 15px;
     }
   }
+  button {
+    color: ${props => props.theme.colors.blueChill};
+  }
   img {
     display: inline-block;
-    margin-right: 11px;
+    margin-right: 7px;
   }
   .base {
     border-bottom: 1px dashed ${props => props.theme.colors.blueChill};
@@ -82,8 +85,8 @@ const Mourners = ({ role, shiva, editing, save }: ShivaPanel) => {
             {editing ? (
               <>
                 <img src={DeleteIcon} alt="delete" onClick={() => handleDeleteMourner(i)} />
-                <Editable className="base name" html={m.name} active={true} onInput={(e: RE) => handleInput(i, 'name', e.target.value)} />
-                <Editable className="base relationship" html={m.relationship} active={true} onInput={(e: RE) => handleInput(i, 'relationship', e.target.value)} />
+                <Editable className="base name" html={m.name} active={true} onInput={(html: string) => handleInput(i, 'name', html)} />
+                <Editable className="base relationship" html={m.relationship} active={true} onInput={(html: string) => handleInput(i, 'relationship', html)} />
               </>
             ) : (
               <>

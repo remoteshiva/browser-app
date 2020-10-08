@@ -14,9 +14,11 @@ const VideoLink = ({ shiva, editing, save }: ShivaPanel) => {
       dispatch(updateShiva(shiva._id, partialShiva))
     }
   }, [save, dispatch, videoLink, shiva._id])
-  const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const url = new URL(event.target.value)
-    setVideoLink(url)
+  const handleInput = (html: string) => {
+    try {
+      const url = new URL(html)
+      setVideoLink(url)
+    } catch (error) {}
   }
   const link = videoLink?.toString() || ''
   return (
