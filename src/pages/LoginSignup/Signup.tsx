@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { push } from 'connected-react-router'
 import styled from 'styled-components'
-import { AppState } from '../../store'
-import { signupUser } from '../../services/auth'
+import * as Routes from '../../routes'
+import { RootState } from '../../store'
+import { signupUser, signUpWithProvider } from '../../services/auth'
 import { DarkButton, LightButton } from '../../components/common'
 import { StyledForm, VerticalSpace, TextWithLine } from './styles'
 
@@ -19,7 +21,7 @@ const Signup = () => {
   const dispatch = useDispatch()
   const [displayError, setDisplayError] = useState(false)
   const [values, setValues] = useState({ name: '', email: '', password: '' })
-  const { loading, error } = useSelector((state: AppState) => state.auth)
+  const { loading, error } = useSelector((state: RootState) => state.auth)
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target
     setValues({ ...values, [name]: value })
@@ -30,11 +32,17 @@ const Signup = () => {
     setDisplayError(true)
     dispatch(signupUser(values.name, values.email, values.password))
   }
+  const handleSignupWithGoogle = async () => {
+    const session = await dispatch(signUpWithProvider())
+    if (session !== undefined) {
+      dispatch(push(Routes.MY_SHIVAS))
+    }
+  }
   return (
     <Wrapper>
       <p>Create an account in order to organize shivas. You do not need to create an account to attend a shiva.</p>
       <VerticalSpace height={30} />
-      <LightButton>Sign up with Google</LightButton>
+      <LightButton onClick={handleSignupWithGoogle}>Sign up with Google</LightButton>
       <VerticalSpace height={33} />
       <TextWithLine>Or sign up with email</TextWithLine>
       <VerticalSpace height={33} />

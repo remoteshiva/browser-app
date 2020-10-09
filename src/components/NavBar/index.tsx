@@ -4,7 +4,7 @@ import { push } from 'connected-react-router'
 import * as Routes from '../../routes'
 import Logo from '../../assets/img/logo.svg'
 import Avatar from '../../assets/img/avatar.svg'
-import { AppState } from '../../store'
+import { RootState } from '../../store'
 import { logoutUser } from '../../services/auth'
 import { User } from '../../store/auth/types'
 import { Wrapper, NavWrapper, UserBarWrapper } from './styles'
@@ -48,7 +48,7 @@ const UserBar = ({ user }: UserBarProps) => {
 }
 
 const NavBar = () => {
-  const { session } = useSelector((state: AppState) => state.auth)
+  const { session } = useSelector((state: RootState) => state.auth)
   return (
     <Wrapper>
       <NavWrapper>

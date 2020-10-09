@@ -4,7 +4,7 @@ import { useParams } from 'react-router'
 import { push } from 'connected-react-router'
 import styled from 'styled-components'
 import * as Routes from '../../routes'
-import { AppState } from '../../store'
+import { RootState } from '../../store'
 import { Shiva, initializeShiva } from '../../store/shiva/types'
 import { createShiva } from '../../services/shiva'
 import Toast, { ToastModel, Position } from '../../components/Toast'
@@ -27,7 +27,7 @@ interface MatchParams {
 }
 
 const NewShiva = () => {
-  const { selectedShiva } = useSelector((state: AppState) => state.shiva)
+  const { selectedShiva } = useSelector((state: RootState) => state.shiva)
   const { step } = useParams<MatchParams>()
   const [currentStep, setCurrentStep] = useState<T.Steps>(Number(step))
   const [shiva, setShiva] = useState<Shiva>(initializeShiva())

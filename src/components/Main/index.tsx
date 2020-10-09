@@ -2,7 +2,7 @@ import React from 'react'
 import { Route, Switch, Redirect, RouteProps } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import * as Routes from '../../routes'
-import { AppState } from '../../store'
+import { RootState } from '../../store'
 import { Session } from '../../store/auth/types'
 import { MainWrapper } from './styles'
 import LoginSignup, { Pages } from '../../pages/LoginSignup'
@@ -28,7 +28,7 @@ export const PrivateRoute = (props: privateRouteProps) => {
 }
 
 const Main = () => {
-  const { session } = useSelector((state: AppState) => state.auth)
+  const { session } = useSelector((state: RootState) => state.auth)
   return (
     <MainWrapper>
       <Switch>

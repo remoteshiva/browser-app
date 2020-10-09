@@ -1,10 +1,6 @@
 import { startOfDay, addDays } from 'date-fns'
 import { BackendError } from '../types'
 
-const generateRandomKey = (): string => {
-  return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
-}
-
 export type ROLE = 'Editor' | 'Mourner' | 'Visitor'
 export interface Mourner {
   name: string
@@ -35,6 +31,10 @@ export interface Shiva {
   minianTimes?: string
   donations?: string
   inviteMessage?: string
+}
+
+const generateRandomKey = (): string => {
+  return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
 }
 
 /**

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
-import { AppState } from '../../store'
+import { RootState } from '../../store'
 import { fetchShivas, deleteShiva } from '../../services/shiva'
 import ShivaList from '../../components/ShivaCard/list'
 import Loading from '../../components/Loading'
@@ -21,14 +21,13 @@ const Wrapper = styled.div`
 
 const Dashboard = () => {
   const dispatch = useDispatch()
-  const { loading, entities, shivas } = useSelector((state: AppState) => state.shiva)
-
+  const { loading, entities, shivas } = useSelector((state: RootState) => state.shiva)
   useEffect(() => {
     dispatch(selectShiva(null))
-    if (!shivas.length) {
+    if (!shivas.length && !loading) {
       dispatch(fetchShivas())
     }
-  }, [dispatch, shivas.length])
+  }, [dispatch, shivas.length, loading])
 
   return loading ? (
     <Loading />

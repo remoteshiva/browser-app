@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams, useHistory } from 'react-router-dom'
-import { AppState } from '../../store'
+import { RootState } from '../../store'
 import CloseIcon from '../../assets/img/closex.svg'
 import { ApproveButton, VerticalSpace } from '../../components/common'
 import { ClickOutside } from '../../components/ClickOutside'
@@ -63,7 +63,7 @@ const ShivaPage = () => {
   const history = useHistory<HistoryLocationState>()
   const [displayDialog, setDisplayDialog] = useState(history.location.state ? history.location.state.newShiva : false)
   const { id } = useParams<RoutingProps>()
-  const { loading, entities, selectedShiva } = useSelector((state: AppState) => state.shiva)
+  const { loading, entities, selectedShiva } = useSelector((state: RootState) => state.shiva)
   const dispatch = useDispatch()
 
   useEffect(() => {

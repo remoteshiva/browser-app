@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { History } from 'history'
-import { ConnectedRouter } from 'connected-react-router'
+import { ConnectedRouter, push } from 'connected-react-router'
 import styled from 'styled-components'
-import { AppState } from '../../store'
-import { checkAuthentication } from '../../services/auth'
+import { RootState } from '../../store'
+import { setInitialized } from '../../store/app/actions'
+import { getAuthState } from '../../services/auth'
+import { fetchShivas } from '../../services/shiva'
 import Theme from '../Theme'
 import GlobalStyle from '../GlobalStyle'
 import NavBar from '../../components/NavBar'
@@ -28,11 +30,22 @@ const PleaseWait = styled.div`
 `
 const App = ({ history }: Props) => {
   const dispatch = useDispatch()
-  const { initialized } = useSelector((state: AppState) => state.auth)
+  const { initialized } = useSelector((state: RootState) => state.app)
+
   useEffect(() => {
     // upon startup , check authentication and navigate to provided url after
-    if (!initialized) dispatch(checkAuthentication(window.location.pathname))
+    const initApp = async () => {
+      if (initialized) return
+      const session = await dispatch(getAuthState())
+      if (session !== undefined) {
+        dispatch(fetchShivas())
+      }
+      dispatch(setInitialized())
+      dispatch(push(window.location.pathname))
+    }
+    initApp()
   }, [initialized, dispatch])
+
   return !initialized ? (
     <Theme>
       <PleaseWait>Loading, Please Wait...</PleaseWait>

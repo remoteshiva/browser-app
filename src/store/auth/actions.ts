@@ -2,9 +2,6 @@ import { ActionType, createAction } from 'typesafe-actions'
 import { BackendError } from '../types'
 import { AuthActions, Session } from './types'
 
-export const setInitialized = createAction(AuthActions.SetInitialized)()
-export type SetInitialized = ActionType<typeof setInitialized>
-
 export const signupRequest = createAction(AuthActions.SignupRequest)()
 export type SignupRequest = ActionType<typeof signupRequest>
 
@@ -29,4 +26,4 @@ export type LogoutRequest = ActionType<typeof logoutRequest>
 export const logout = createAction(AuthActions.Logout)()
 export type Logout = ActionType<typeof logout>
 
-export type ActionTypes = SetInitialized | LoginRequest | LoginSuccess | LoginError | Logout | SignupRequest | SignupSuccess | SignupError | LogoutRequest
+export type ActionTypes = LoginRequest | LoginSuccess | LoginError | Logout | SignupRequest | SignupSuccess | SignupError | LogoutRequest

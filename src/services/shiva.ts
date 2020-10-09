@@ -19,17 +19,17 @@ import {
   selectShiva,
 } from '../store/shiva/actions'
 import { shivas } from '../mock-data'
-import { AppState } from '../store'
+import { RootState } from '../store'
 
 const sleep = (ms: number) => new Promise(r => setTimeout(r, ms))
 
-export const fetchShivas = (): ThunkAction<void, AppState, null, Action<string>> => async dispatch => {
+export const fetchShivas = (): ThunkAction<void, RootState, null, Action<string>> => async dispatch => {
   dispatch(fetchShivaListRequest())
   await sleep(1000)
   return dispatch(fetchShivaListSuccess(shivas))
 }
 
-export const fetchShivaById = (shivaId: string): ThunkAction<void, AppState, null, Action<string>> => async dispatch => {
+export const fetchShivaById = (shivaId: string): ThunkAction<void, RootState, null, Action<string>> => async dispatch => {
   dispatch(fetchShivaRequest())
   await sleep(1000)
   const shiva = shivas.find(shiva => shiva._id === shivaId)

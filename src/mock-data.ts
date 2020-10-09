@@ -4,6 +4,7 @@ import { Shiva, initializeShiva } from './store/shiva/types'
 export const test_session: Session = {
   token: 'aU3BuL62emYeFyGpkYpZ',
   user: {
+    email: 'ron@channel4.com',
     displayName: 'Ron Burgundy',
     photoURL: new URL('https://vignette.wikia.nocookie.net/anchorman/images/1/10/Ron_burgundy.jpg/revision/latest?cb=20120329160125'),
   },

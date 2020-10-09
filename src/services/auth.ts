@@ -3,7 +3,8 @@ import { auth, User as FBUser } from 'firebase'
 import * as Routes from '../routes'
 import { firestore } from '../firebase.config'
 import { AppThunk } from './common'
-import { setInitialized, loginError, loginRequest, loginSuccess, logoutRequest, logout, signupRequest, signupSuccess, signupError } from '../store/auth/actions'
+import { Session } from '../store/auth/types'
+import { loginError, loginRequest, loginSuccess, logoutRequest, logout, signupRequest, signupSuccess, signupError } from '../store/auth/actions'
 import { resetShiva } from '../store/shiva/actions'
 
 /**
@@ -31,57 +32,91 @@ export const signupUser = (name: string, email: string, password: string): AppTh
   }
 }
 
-export const loginWithCredentials = (email: string, password: string): AppThunk => async dispatch => {
-  dispatch(loginRequest())
-  auth()
-    .setPersistence(auth.Auth.Persistence.LOCAL)
-    .then(() => {
-      auth()
-        .signInWithEmailAndPassword(email, password)
-        .then(async ({ user }: auth.UserCredential) => {
-          if (user) {
-            const data = await getUser(user.uid)
-            const session = { token: user.uid, user: { displayName: data.displayName, photoURL: data.photoURL } }
-            dispatch(loginSuccess(session))
-            dispatch(push(Routes.MY_SHIVAS))
-          }
-        })
-        .catch(error => {
-          dispatch(loginError(error))
-        })
-    })
-}
-
-export const loginWithGoogle = (): AppThunk => async dispatch => {
-  dispatch(loginRequest())
-  const provider = new auth.GoogleAuthProvider()
-  auth()
-    .setPersistence(auth.Auth.Persistence.LOCAL)
-    .then(() => {
-      auth()
-        .signInWithPopup(provider)
-        .then(response => {
-          console.log(response)
-        })
-        .catch(error => {
-          dispatch(loginError(error))
-        })
-    })
-}
-
-export const checkAuthentication = (url: string): AppThunk => async dispatch => {
-  dispatch(loginRequest())
-  auth().onAuthStateChanged(async user => {
-    if (user) {
-      const data = await getUser(user.uid)
-      const session = { token: user.uid, user: { displayName: data.displayName, photoURL: data.photoURL } }
-      dispatch(loginSuccess(session))
-      dispatch(setInitialized())
-      dispatch(push(url))
-    } else {
-      dispatch(logoutUser())
-      dispatch(setInitialized())
+/**
+ * Description
+ */
+export const signUpWithProvider = (): AppThunk<Promise<Session>> => async (dispatch): Promise<Session> => {
+  return new Promise<Session>(async resolve => {
+    dispatch(signupRequest())
+    const provider = new auth.GoogleAuthProvider()
+    try {
+      await auth().setPersistence(auth.Auth.Persistence.LOCAL)
+      const { user: fbuser } = await auth().signInWithPopup(provider)
+      if (fbuser) {
+        const { uid, email, displayName, photoURL } = await createUser(fbuser, fbuser.displayName || '')
+        dispatch(signupSuccess())
+        //we we finished signing up, we can login
+        const session = { token: uid, user: { email, displayName, photoURL } }
+        dispatch(loginSuccess(session))
+        resolve(session)
+      }
+    } catch (error) {
+      dispatch(signupError(error))
+      resolve(undefined)
     }
+  })
+}
+
+export const loginWithCredentials = (email: string, password: string): AppThunk<Promise<Session>> => async (dispatch): Promise<Session> => {
+  return new Promise<Session>(resolve => {
+    dispatch(loginRequest())
+    auth()
+      .setPersistence(auth.Auth.Persistence.LOCAL)
+      .then(() => {
+        auth()
+          .signInWithEmailAndPassword(email, password)
+          .then(async ({ user }: auth.UserCredential) => {
+            if (user) {
+              const data = await getUser(user.uid)
+              const session = { token: user.uid, user: { email: data.email, displayName: data.displayName, photoURL: data.photoURL } }
+              dispatch(loginSuccess(session))
+              resolve(session)
+            }
+          })
+          .catch(error => {
+            dispatch(loginError(error))
+            resolve(undefined)
+          })
+      })
+  })
+}
+
+export const loginWithGoogle = (): AppThunk<Promise<Session>> => async (dispatch): Promise<Session> => {
+  return new Promise<Session>(async resolve => {
+    dispatch(loginRequest())
+    const provider = new auth.GoogleAuthProvider()
+    try {
+      await auth().setPersistence(auth.Auth.Persistence.LOCAL)
+      const { user: fbuser } = await auth().signInWithPopup(provider)
+      if (fbuser) {
+        await createUser(fbuser, fbuser.displayName || '')
+        dispatch(signupSuccess())
+        dispatch(push(Routes.MY_SHIVAS))
+      }
+    } catch (error) {
+      dispatch(signupError(error))
+    }
+  })
+}
+
+/**
+ * @description Used during application startup to determine if a user's session exists in the browser's local storage
+ */
+export const getAuthState = (): AppThunk<Promise<Session>> => async (dispatch): Promise<Session> => {
+  return new Promise<Session>(resolve => {
+    dispatch(loginRequest())
+    // check if a firebase auth session was persisted to localstorage
+    auth().onAuthStateChanged(async user => {
+      if (user) {
+        const data = await getUser(user.uid)
+        const session = { token: user.uid, user: { email: data.email, displayName: data.displayName, photoURL: data.photoURL } }
+        dispatch(loginSuccess(session))
+        resolve(session)
+      } else {
+        dispatch(logoutUser())
+        resolve(undefined)
+      }
+    })
   })
 }
 
@@ -110,6 +145,21 @@ const createUser = async (user: FBUser, name: string) => {
     }
   }
   return getUser(user.uid)
+}
+
+const createOAuthUser = async (email: string, displayName: string) => {
+  firestore
+    .collection('users')
+    .add({
+      email,
+      displayName,
+    })
+    .then(function (docRef) {
+      console.log('Document written with ID: ', docRef.id)
+    })
+    .catch(function (error) {
+      console.error('Error adding document: ', error)
+    })
 }
 
 const getUser = async (uid: string): Promise<any> => {
