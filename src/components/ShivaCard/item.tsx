@@ -2,7 +2,7 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { push } from 'connected-react-router'
 import { Shiva as ShivaModel } from '../../store/shiva/types'
-import { createShiva, deleteShiva } from '../../store/shiva/actions'
+import { createShiva, deleteShiva } from '../../services/shiva'
 import { ShivaItemWrapper } from './styles'
 import Dropdown, { MenuItem } from './dropdown'
 

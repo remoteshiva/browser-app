@@ -1,90 +1,80 @@
-import { Action } from 'redux'
-import { ThunkAction } from 'redux-thunk'
-import { push } from 'connected-react-router'
-import * as Routes from '../../routes'
-import { AppThunk } from '../types'
-import {
-  Shiva,
-  fetchShivaListRequest,
-  fetchShivaListSuccess,
-  fetchShivaRequest,
-  fetchShivaSuccess,
-  fetchShivaError,
-  createShivaRequest,
-  createShivaSuccess,
-  deleteShivaRequest,
-  deleteShivaSuccess,
-  updateShivaRequest,
-  updateShivaSuccess,
-  selectShiva,
-} from './types'
-import { shivas } from '../../mock-data'
-import { AppState } from '../'
+import { ActionType, createAction } from 'typesafe-actions'
+import { BackendError } from '../types'
+import { Shiva } from './types'
+import * as ShivaActionTypes from './constants'
 
-const sleep = (ms: number) => new Promise(r => setTimeout(r, ms))
+//
+export const fetchShivaListRequest = createAction(ShivaActionTypes.FetchShivaListRequest)()
+export type FetchShivaListRequest = ActionType<typeof fetchShivaListRequest>
 
-export const fetchShivas = (): ThunkAction<void, AppState, null, Action<string>> => async dispatch => {
-  dispatch(fetchShivaListRequest())
-  await sleep(1000)
-  return dispatch(fetchShivaListSuccess(shivas))
-}
+export const fetchShivaListSuccess = createAction(ShivaActionTypes.FetchShivaListSuccess)<Shiva[]>()
+export type FetchShivaListSuccess = ActionType<typeof fetchShivaListSuccess>
 
-export const fetchShivaById = (shivaId: string): ThunkAction<void, AppState, null, Action<string>> => async dispatch => {
-  dispatch(fetchShivaRequest())
-  await sleep(1000)
-  const shiva = shivas.find(shiva => shiva._id === shivaId)
-  if (shiva) {
-    dispatch(selectShiva(shiva._id))
-    dispatch(fetchShivaSuccess(shiva))
-  } else {
-    dispatch(fetchShivaError({ code: 404, message: 'cannot find it' }))
-    dispatch(push(Routes.NOT_FOUND))
-  }
-}
+export const fetchShivaListError = createAction(ShivaActionTypes.FetchShivaListError)<BackendError>()
+export type FetchShivaListError = ActionType<typeof fetchShivaListError>
 
-export const fetchShivaByMournerKey = (mournerKey: string): AppThunk => async dispatch => {
-  dispatch(fetchShivaRequest())
-  await sleep(1000)
-  const shiva = shivas.find(shiva => shiva.mournerKey === mournerKey)
-  if (shiva) {
-    dispatch(fetchShivaSuccess(shiva))
-    dispatch(selectShiva(shiva._id))
-  } else {
-    dispatch(fetchShivaError({ code: 404, message: 'cannot find it' }))
-    dispatch(push(Routes.NOT_FOUND))
-  }
-}
+//
+export const fetchShivaRequest = createAction(ShivaActionTypes.FetchShivaRequest)()
+export type FetchShivaRequest = ActionType<typeof fetchShivaRequest>
 
-export const fetchShivaByVisitorKey = (visitorKey: string): AppThunk => async dispatch => {
-  dispatch(fetchShivaRequest())
-  await sleep(1000)
-  const shiva = shivas.find(shiva => shiva.visitorKey === visitorKey)
-  if (shiva) {
-    dispatch(fetchShivaSuccess(shiva))
-    dispatch(selectShiva(shiva._id))
-  } else {
-    dispatch(fetchShivaError({ code: 404, message: 'cannot find it' }))
-    dispatch(push(Routes.NOT_FOUND))
-  }
-}
+export const fetchShivaSuccess = createAction(ShivaActionTypes.FetchShivaSuccess)<Shiva>()
+export type FetchShivaSuccess = ActionType<typeof fetchShivaSuccess>
 
-export const createShiva = (shiva: Shiva): AppThunk => async dispatch => {
-  dispatch(createShivaRequest())
-  await sleep(1000)
-  const _id = Math.random().toString(36).substring(3)
-  const newShiva = { ...shiva, _id }
-  dispatch(createShivaSuccess(newShiva))
-  dispatch(selectShiva(_id))
-}
+export const fetchShivaError = createAction(ShivaActionTypes.FetchShivaError)<BackendError>()
+export type FetchShivaError = ActionType<typeof fetchShivaError>
 
-export const deleteShiva = (shivaId: string): AppThunk => async dispatch => {
-  dispatch(deleteShivaRequest())
-  await sleep(1000)
-  dispatch(deleteShivaSuccess(shivaId))
-}
+//
+export const createShivaRequest = createAction(ShivaActionTypes.CreateShivaRequest)()
+export type CreateShivaRequest = ActionType<typeof createShivaRequest>
 
-export const updateShiva = (shivaId: string, shiva: Partial<Shiva>): AppThunk => async dispatch => {
-  dispatch(updateShivaRequest())
-  await sleep(1000)
-  dispatch(updateShivaSuccess({ shivaId, shiva }))
-}
+export const createShivaSuccess = createAction(ShivaActionTypes.CreateShivaSuccess)<Shiva>()
+export type CreateShivaSuccess = ActionType<typeof createShivaSuccess>
+
+export const createShivaError = createAction(ShivaActionTypes.CreateShivaError)<BackendError>()
+export type CreateShivaError = ActionType<typeof createShivaError>
+
+//
+export const deleteShivaRequest = createAction(ShivaActionTypes.DeleteShivaRequest)()
+export type DeleteShivaRequest = ActionType<typeof deleteShivaRequest>
+
+export const deleteShivaSuccess = createAction(ShivaActionTypes.DeleteShivaSuccess)<string>()
+export type DeleteShivaSuccess = ActionType<typeof deleteShivaSuccess>
+
+export const deleteShivaError = createAction(ShivaActionTypes.DeleteShivaError)<BackendError>()
+export type DeleteShivaError = ActionType<typeof deleteShivaError>
+
+//
+export const updateShivaRequest = createAction(ShivaActionTypes.UpdateShivaRequest)()
+export type UpdateShivaRequest = ActionType<typeof updateShivaRequest>
+
+export const updateShivaSuccess = createAction(ShivaActionTypes.UpdateShivaSuccess)<{ shivaId: string; shiva: Partial<Shiva> }>()
+export type UpdateShivaSuccess = ActionType<typeof updateShivaSuccess>
+
+export const updateShivaError = createAction(ShivaActionTypes.UpdateShivaError)<BackendError>()
+export type UpdateShivaError = ActionType<typeof updateShivaError>
+
+//
+export const selectShiva = createAction(ShivaActionTypes.SelectShiva)<string | null>()
+export type SelectShiva = ActionType<typeof selectShiva>
+
+export const resetShiva = createAction(ShivaActionTypes.ResetShiva)()
+export type ResetShiva = ActionType<typeof resetShiva>
+
+export type ActionTypes =
+  | FetchShivaListRequest
+  | FetchShivaListSuccess
+  | FetchShivaListError
+  | FetchShivaRequest
+  | FetchShivaSuccess
+  | FetchShivaError
+  | CreateShivaRequest
+  | CreateShivaSuccess
+  | CreateShivaError
+  | DeleteShivaRequest
+  | DeleteShivaSuccess
+  | DeleteShivaError
+  | UpdateShivaRequest
+  | UpdateShivaSuccess
+  | UpdateShivaError
+  | SelectShiva
+  | ResetShiva

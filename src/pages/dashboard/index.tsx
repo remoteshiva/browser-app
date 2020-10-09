@@ -2,10 +2,10 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { AppState } from '../../store'
-import { fetchShivas, deleteShiva } from '../../store/shiva/actions'
+import { fetchShivas, deleteShiva } from '../../services/shiva'
 import ShivaList from '../../components/ShivaCard/list'
 import Loading from '../../components/Loading'
-import { selectShiva } from '../../store/shiva/types'
+import { selectShiva } from '../../store/shiva/actions'
 
 const Wrapper = styled.div`
   padding-top: 75px;

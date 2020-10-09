@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
-import { updateShiva } from '../../store/shiva/actions'
+import { updateShiva } from '../../services/shiva'
 import DeleteIcon from '../../assets/img/delete.svg'
 import Editable from '../Editable'
 import PhotoDropzone from '../Dropzone'

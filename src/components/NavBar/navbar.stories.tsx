@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { loginSuccess } from '../../store/auth/types'
+import { loginSuccess } from '../../store/auth/actions'
 import { test_session } from '../../mock-data'
 import NavBar from './'
 

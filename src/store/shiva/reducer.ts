@@ -1,6 +1,7 @@
 import { Reducer } from 'redux'
 import * as ShivaActions from './constants'
-import { ActionTypes, ShivaState, Shiva } from './types'
+import { ShivaState, Shiva } from './types'
+import { ActionTypes } from './actions'
 import { arrayToObject } from '../helpers'
 
 export const initialState: ShivaState = {

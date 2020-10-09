@@ -1,14 +1,19 @@
 import { Reducer } from 'redux'
-import { AuthActions, ActionTypes, AuthState } from './types'
+import { AuthActions, AuthState } from './types'
+import { ActionTypes } from './actions'
 
 export const initialState: AuthState = {
-  loading: true,
+  initialized: false,
+  loading: false,
   session: null,
   error: null,
 }
 
 const reducer: Reducer<AuthState> = (state = initialState, action: ActionTypes): AuthState => {
   switch (action.type) {
+    case AuthActions.SetInitialized: {
+      return { ...state, initialized: true }
+    }
     case AuthActions.SignupRequest:
     case AuthActions.LoginRequest:
     case AuthActions.LogoutRequest: {

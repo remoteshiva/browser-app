@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { AppState } from '../../store'
-import { signupUser } from '../../store/auth/actions'
+import { signupUser } from '../../services/auth'
 import { DarkButton, LightButton } from '../../components/common'
 import { StyledForm, VerticalSpace, TextWithLine } from './styles'
 

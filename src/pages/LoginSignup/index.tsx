@@ -1,7 +1,6 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { push } from 'connected-react-router'
-import { loginUser } from '../../store/auth/actions'
 import Graphics from '../../assets/img/illustration-for-tips.svg'
 import { Row, FixedColumn, FlexColumn } from '../../components/flexLayout'
 import { UXWrapper, GraphicsWrapper, TabsWrapper, Tab } from './styles'

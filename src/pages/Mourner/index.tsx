@@ -4,8 +4,8 @@ import { useParams } from 'react-router-dom'
 import { AppState } from '../../store'
 import ShivaLayout from '../../components/ShivaLayout'
 import Loading from '../../components/Loading'
-import { selectShiva } from '../../store/shiva/types'
-import { fetchShivaByMournerKey } from '../../store/shiva/actions'
+import { selectShiva } from '../../store/shiva/actions'
+import { fetchShivaByMournerKey } from '../../services/shiva'
 
 interface RoutingProps {
   key: string

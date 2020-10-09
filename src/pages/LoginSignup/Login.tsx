@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { DarkButton, LightButton } from '../../components/common'
 import { StyledForm, VerticalSpace } from './styles'
 import { AppState } from '../../store'
-import { loginWithCredentials, loginWithGoogle } from '../../store/auth/actions'
+import { loginWithCredentials, loginWithGoogle } from '../../services/auth'
 
 const Wrapper = styled.div`
   margin-top: 30px;

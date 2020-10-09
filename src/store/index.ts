@@ -17,11 +17,5 @@ const rootReducer = combineReducers({
 export type AppState = ReturnType<typeof rootReducer>
 
 export default function configureStore() {
-  const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(routerMiddleware(history), thunk)))
-  // initialize global data
-
-  /****************************** */
-  /*  This should only be used to skip authentication during development */
-  // store.dispatch(loginUser('ronb', 'password'))
-  return store
+  return createStore(rootReducer, composeWithDevTools(applyMiddleware(routerMiddleware(history), thunk)))
 }
