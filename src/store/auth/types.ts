@@ -1,6 +1,7 @@
 import { BackendError } from '../types'
 
 export interface User {
+  email: string
   photoURL: URL | null
   displayName: string
 }
@@ -11,14 +12,12 @@ export interface Session {
 }
 
 export interface AuthState {
-  initialized: boolean
   loading: boolean
   session: Session | null
   error: BackendError | null
 }
 
 export enum AuthActions {
-  SetInitialized = '{RS}auth/SET_INITIALIZED',
   SignupRequest = '{RS}auth/SIGNUP_REQUEST',
   SignupSuccess = '{RS}auth/SIGNUP_SUCCESS',
   SignupError = '{RS}auth/SIGNUP_ERROR',

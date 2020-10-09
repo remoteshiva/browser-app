@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { AppState } from '../../store'
+import { RootState } from '../../store'
 import ShivaLayout from '../../components/ShivaLayout'
 import Loading from '../../components/Loading'
 import { selectShiva } from '../../store/shiva/actions'
@@ -14,7 +14,7 @@ interface RoutingProps {
 interface Props {}
 const VisitorPage = () => {
   const { key } = useParams<RoutingProps>()
-  const { loading, entities, visitorKeys, selectedShiva } = useSelector((state: AppState) => state.shiva)
+  const { loading, entities, visitorKeys, selectedShiva } = useSelector((state: RootState) => state.shiva)
   const dispatch = useDispatch()
 
   useEffect(() => {

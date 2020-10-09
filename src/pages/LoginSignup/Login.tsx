@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { push } from 'connected-react-router'
 import styled from 'styled-components'
+import * as Routes from '../../routes'
 import { DarkButton, LightButton } from '../../components/common'
 import { StyledForm, VerticalSpace } from './styles'
-import { AppState } from '../../store'
+import { RootState } from '../../store'
 import { loginWithCredentials, loginWithGoogle } from '../../services/auth'
 
 const Wrapper = styled.div`
@@ -24,16 +26,19 @@ const Login = () => {
   const dispatch = useDispatch()
   const [displayError, setDisplayError] = useState(false)
   const [values, setValues] = useState({ email: '', password: '' })
-  const { loading, error } = useSelector((state: AppState) => state.auth)
+  const { loading, error } = useSelector((state: RootState) => state.auth)
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target
     setValues({ ...values, [name]: value })
     setDisplayError(false)
   }
-  const onLoginWithCredentials = (event: React.FormEvent<HTMLFormElement>) => {
+  const onLoginWithCredentials = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     setDisplayError(true)
-    dispatch(loginWithCredentials(values.email, values.password))
+    const session = await dispatch(loginWithCredentials(values.email, values.password))
+    if (session !== undefined) {
+      dispatch(push(Routes.MY_SHIVAS))
+    }
   }
   return (
     <Wrapper>
