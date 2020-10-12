@@ -10,6 +10,9 @@ import AddIcon from '../../assets/img/add.svg'
 import DeleteIcon from '../../assets/img/delete.svg'
 import { MournerName, Note, Relationship } from './styles'
 
+const mournerPathPrefix = `${process.env.REACT_APP_BASE_URL}/m/`
+const visitorPathPrefix = `${process.env.REACT_APP_BASE_URL}/v/`
+
 const Wrapper = styled.div`
   li {
     display: flex;
@@ -76,6 +79,21 @@ const Mourners = ({ role, shiva, editing, save }: ShivaPanel) => {
   const handleDeleteMourner = (index: number) => {
     setMourners([...mourners.filter((m, i) => i !== index)])
   }
+  const copyToClipboard = async (text: string) => {
+    if (navigator.clipboard) {
+      try {
+        await navigator.clipboard.writeText(text)
+      } catch (error) {
+        console.log(error) // we should show a message
+      }
+    } else {
+      // this is a polyfill
+      document.execCommand('copy')
+    }
+  }
+  const handleCopyInviteLink = async () => {
+    await copyToClipboard(`${visitorPathPrefix}${shiva.visitorKey}`)
+  }
   return (
     <Wrapper>
       <h2>Mourners</h2>
@@ -106,7 +124,7 @@ const Mourners = ({ role, shiva, editing, save }: ShivaPanel) => {
       {role === 'Visitor' || editing ? null : (
         <>
           <VerticalSpace height={10} />
-          <button>
+          <button onClick={handleCopyInviteLink}>
             <img style={{ display: 'inline' }} src={CopyIcon} alt="copy" />
             Copy invite link
           </button>

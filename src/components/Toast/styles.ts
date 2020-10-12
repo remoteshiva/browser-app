@@ -2,7 +2,7 @@ import styled, { keyframes } from 'styled-components'
 
 const toastInRight = keyframes`
 	from {
-	  transform: translateX(100%);	  
+	  transform: translateX(100%);
 	}
 	to {
 	  transform: translateX(0);
@@ -22,6 +22,7 @@ export const Container = styled.div`
   font-size: 14px;
   box-sizing: border-box;
   position: fixed;
+  z-index: 1000;
   &.tr {
     top: 12px;
     right: 12px;
@@ -48,7 +49,7 @@ export const Container = styled.div`
   }
 `
 
-export const Notification = styled.div`
+export const NotificationWrapper = styled.div`
   background: ${props => props.theme.colors.woodBark};
   opacity: 0.9;
   transition: 0.3s ease;

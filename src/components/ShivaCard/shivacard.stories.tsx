@@ -1,13 +1,14 @@
 import React from 'react'
 import ShivaItem from './item'
-import { initializeShiva } from '../../store/shiva/types'
+import { initializeShiva, Shiva } from '../../store/shiva/types'
 
 export default {
   title: 'ShivaItem',
   component: ShivaItem,
 }
 
-const shiva = initializeShiva({ nameOfDeceased: 'Brian Fantana' })
+const newShiva = initializeShiva({ nameOfDeceased: 'Brian Fantana' })
+const shiva: Shiva = { ...newShiva, id: '__some_id__' }
 export const Item = () => (
   <ul>
     <ShivaItem {...shiva} />

@@ -9,9 +9,10 @@ import { getAuthState } from '../../services/auth'
 import { fetchMyShivas } from '../../services/shiva'
 import Theme from '../Theme'
 import GlobalStyle from '../GlobalStyle'
-import NavBar from '../../components/NavBar'
-import Main from '../../components/Main'
+import NavBar from '../NavBar'
+import Main from '../Main'
 import Footer from '../Footer'
+import ToastContainer from '../Toast'
 
 interface Props {
   history: History
@@ -58,6 +59,7 @@ const App = ({ history }: Props) => {
           <NavBar />
           <Main />
           <Footer />
+          <ToastContainer />
         </div>
       </ConnectedRouter>
     </Theme>

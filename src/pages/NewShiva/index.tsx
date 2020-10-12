@@ -8,7 +8,6 @@ import { AppDispatch } from '../../store'
 import { Shiva, initializeShiva } from '../../store/shiva/types'
 import { selectShiva } from '../../store/shiva/actions'
 import { createShiva } from '../../services/shiva'
-import Toast, { ToastModel, Position } from '../../components/Toast'
 import BackButton from './back'
 import BasicDetails from './BasicDetails'
 import VideoChatLink from './VideoChatLink'
@@ -31,8 +30,7 @@ const NewShiva = () => {
   const { step } = useParams<MatchParams>()
   const [currentStep, setCurrentStep] = useState<T.Steps>(Number(step))
   const [shiva, setShiva] = useState<Shiva>(initializeShiva())
-  const [toasts, setToasts] = useState<ToastModel[]>([])
-  const dispatch: AppDispatch = useDispatch()
+  const dispatch = useDispatch<AppDispatch>()
 
   const submitStepData = async <T extends {}>(data: T, nextStep: T.Steps) => {
     setShiva(s => ({ ...s, ...data }))
@@ -49,10 +47,6 @@ const NewShiva = () => {
       dispatch(push(Routes.NEW_SHIVA(`${nextStep}`)))
     }
   }
-  const addNotification = (toast: ToastModel) => {
-    setToasts([...toasts, toast])
-  }
-
   const selectStep = (step: number) => {
     setCurrentStep(step)
     dispatch(push(Routes.NEW_SHIVA(`${step}`)))
@@ -65,9 +59,7 @@ const NewShiva = () => {
       case T.Steps.VIDEO_CHAT_LINK:
         return <VideoChatLink newShiva={shiva} submit={(data: T.ChatProps, nextStep: T.Steps) => submitStepData<T.ChatProps>(data, nextStep)} selectStep={selectStep} />
       case T.Steps.MOURNERS:
-        return (
-          <Mourners newShiva={shiva} submit={(data: T.MournersProps, nextStep: T.Steps) => submitStepData<T.MournersProps>(data, nextStep)} selectStep={selectStep} addNotification={addNotification} />
-        )
+        return <Mourners newShiva={shiva} submit={(data: T.MournersProps, nextStep: T.Steps) => submitStepData<T.MournersProps>(data, nextStep)} selectStep={selectStep} />
       case T.Steps.VISITS:
         return (
           <VisitingHours
@@ -84,7 +76,6 @@ const NewShiva = () => {
     <Wrapper>
       <BackButton />
       {renderStep()}
-      <Toast toasts={toasts} autoDelete={true} position={Position.br} />
     </Wrapper>
   )
 }

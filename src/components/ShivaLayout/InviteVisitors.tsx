@@ -15,7 +15,7 @@ const Fade = styled.div`
   justify-content: center;
   align-items: center;
   background-color: rgba(65, 65, 58, 0.6);
-  z-index: 1000;
+  z-index: 10;
 `
 
 const Modal = styled(ClickOutside)`
@@ -24,7 +24,7 @@ const Modal = styled(ClickOutside)`
   flex-direction: column;
   background-color: ${props => props.theme.colors.sauvignonLight};
   border-radius: 10px;
-  z-index: 2010;
+  z-index: 20;
   width: 630px;
   height: 700px;
   padding: 48px 78px;
