@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams, useHistory } from 'react-router-dom'
-import { RootState } from '../../store'
+import { RootState, AppDispatch } from '../../store'
 import CloseIcon from '../../assets/img/closex.svg'
 import { ApproveButton, VerticalSpace } from '../../components/common'
 import { ClickOutside } from '../../components/ClickOutside'
@@ -64,14 +64,19 @@ const ShivaPage = () => {
   const [displayDialog, setDisplayDialog] = useState(history.location.state ? history.location.state.newShiva : false)
   const { id } = useParams<RoutingProps>()
   const { loading, entities, selectedShiva } = useSelector((state: RootState) => state.shiva)
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<AppDispatch>()
 
   useEffect(() => {
+    const fetch = async () => {
+      try {
+        const { id: shivaId } = await dispatch(fetchShivaById(id))
+        dispatch(selectShiva(shivaId))
+      } catch (error) {}
+    }
     if (id in entities) {
       dispatch(selectShiva(id))
     } else {
-      dispatch(fetchShivaById(id))
-      dispatch(selectShiva(id))
+      fetch()
     }
   }, [dispatch, entities, id])
 

@@ -82,9 +82,9 @@ const Subject = ({ shiva, editing, save }: ShivaPanel) => {
     if (save && save > 0) {
       const partialShiva = { message, titleImage }
       console.log('saving partial shiva', partialShiva)
-      dispatch(updateShiva(shiva._id, partialShiva))
+      dispatch(updateShiva(shiva.id, partialShiva))
     }
-  }, [save, dispatch, message, titleImage, shiva._id])
+  }, [save, dispatch, message, titleImage, shiva.id])
   const handleInput = (html: string) => {
     console.log('incoing data', html)
     setMessage(html)

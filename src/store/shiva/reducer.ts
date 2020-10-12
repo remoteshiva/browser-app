@@ -20,15 +20,15 @@ const reducer: Reducer<ShivaState> = (state = initialState, action: ActionTypes)
     }
     case ShivaActions.FetchShivaListSuccess: {
       const newEntities = arrayToObject<Shiva>(action.payload)
-      const newVisitorKeys = Object.assign({}, ...action.payload.map(shiva => ({ [shiva.visitorKey]: shiva._id })))
-      const newMournerKeys = Object.assign({}, ...action.payload.map(shiva => ({ [shiva.mournerKey]: shiva._id })))
+      const newVisitorKeys = Object.assign({}, ...action.payload.map(shiva => ({ [shiva.visitorKey]: shiva.id })))
+      const newMournerKeys = Object.assign({}, ...action.payload.map(shiva => ({ [shiva.mournerKey]: shiva.id })))
       return {
         ...state,
         entities: {
           ...state.entities,
           ...newEntities,
         },
-        shivas: Array.from(new Set([...state.shivas, ...action.payload.map(shiva => shiva._id)])),
+        shivas: Array.from(new Set([...state.shivas, ...action.payload.map(shiva => shiva.id)])),
         visitorKeys: {
           ...state.visitorKeys,
           ...newVisitorKeys,
@@ -40,6 +40,7 @@ const reducer: Reducer<ShivaState> = (state = initialState, action: ActionTypes)
         loading: false,
       }
     }
+    case ShivaActions.FetchShivaError:
     case ShivaActions.FetchShivaListError: {
       return { ...state, loading: false, error: action.payload }
     }
@@ -51,16 +52,16 @@ const reducer: Reducer<ShivaState> = (state = initialState, action: ActionTypes)
         ...state,
         entities: {
           ...state.entities,
-          ...{ [action.payload._id]: action.payload },
+          ...{ [action.payload.id]: action.payload },
         },
-        shivas: Array.from(new Set([...state.shivas, action.payload._id])),
+        shivas: Array.from(new Set([...state.shivas, action.payload.id])),
         visitorKeys: {
           ...state.visitorKeys,
-          ...{ [action.payload.visitorKey]: action.payload._id },
+          ...{ [action.payload.visitorKey]: action.payload.id },
         },
         mournerKeys: {
           ...state.mournerKeys,
-          ...{ [action.payload.mournerKey]: action.payload._id },
+          ...{ [action.payload.mournerKey]: action.payload.id },
         },
         loading: false,
       }
@@ -95,7 +96,7 @@ const reducer: Reducer<ShivaState> = (state = initialState, action: ActionTypes)
         loading: false,
         entities: {
           ...state.entities,
-          ...{ [shiva._id]: shiva },
+          ...{ [shiva.id]: shiva },
         },
       }
     }

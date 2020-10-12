@@ -41,9 +41,9 @@ const About = ({ shiva, editing, save }: ShivaPanel) => {
   useEffect(() => {
     if (save && save > 0) {
       const partialShiva = { about, images }
-      dispatch(updateShiva(shiva._id, partialShiva))
+      dispatch(updateShiva(shiva.id, partialShiva))
     }
-  }, [save, dispatch, about, images, shiva._id])
+  }, [save, dispatch, about, images, shiva.id])
   const handleInput = (html: string) => {
     setAbout(html)
   }
