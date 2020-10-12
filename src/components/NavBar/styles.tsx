@@ -27,10 +27,11 @@ export const UserBarWrapper = styled(ClickOutside)`
   ${tw`flex flex-row`}
   color: ${props => props.theme.colors.richGold};
   font-size: 16px;
+  z-index: 30;
   button{
     padding: 2px 10px;
     :active{
-      border-radius: 8px; 
+      border-radius: 8px;
       box-shadow: 0 1px 12px 0 rgba(0, 0, 0, 0.12);
       background-color: #f4eee8;
     }

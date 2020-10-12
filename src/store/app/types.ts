@@ -1,5 +1,3 @@
-import { BackendError } from '../types'
-
 export interface Notification {
   id: string
   title: string
@@ -7,6 +5,12 @@ export interface Notification {
   description?: string
   icon?: string
 }
+
+export const initializeNotification = (notification: Partial<Notification>): Notification => ({
+  id: Math.floor(Math.random() * 10001 + 1).toString(),
+  title: '',
+  ...notification,
+})
 
 export interface AppState {
   initialized: boolean

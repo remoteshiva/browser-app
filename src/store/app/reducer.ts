@@ -2,7 +2,6 @@ import { Reducer } from 'redux'
 import * as AppActions from './constants'
 import { AppState } from './types'
 import { ActionTypes } from './actions'
-import { Notification } from '../../components/Toast/styles'
 
 const initialState: AppState = {
   initialized: false,

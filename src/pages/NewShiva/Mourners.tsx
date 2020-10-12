@@ -1,13 +1,15 @@
 import React, { useState, useRef } from 'react'
+import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import { Mourner } from '../../store/shiva/types'
+import { addNotification } from '../../store/app/actions'
+import { initializeNotification } from '../../store/app/types'
 import AddIcon from '../../assets/img/add.svg'
 import ClearIcon from '../../assets/img/clear.svg'
 import CopyIcon from '../../assets/img/copy.svg'
 import CheckIcon from '../../assets/img/checkbox.svg'
 import BasicDetailsArt from '../../assets/img/add-basic-details.svg'
 import { Row, FixedColumn, FlexColumn } from '../../components/flexLayout'
-import { getRandomId } from '../../components/Toast'
 import { StepProps, MournersProps, Steps } from './types'
 import { ImageWrapper } from './styles'
 import StepLayout from './Layout'
@@ -64,7 +66,8 @@ const MournerBox = ({ index, name, relationship, onUpdate, onRemove }: MournerBo
 const emptyMourner = { name: '', relationship: '' }
 const mournerPathPrefix = `${process.env.REACT_APP_BASE_URL}/m/`
 
-const Mourners = ({ newShiva, submit, selectStep, addNotification }: StepProps<MournersProps>) => {
+const Mourners = ({ newShiva, submit, selectStep }: StepProps<MournersProps>) => {
+  const dispatch = useDispatch()
   const inputRef = useRef<HTMLButtonElement>(null)
   const [mourners, setMourners] = useState(newShiva.mourners.length ? newShiva.mourners : [emptyMourner])
   const [mournerKey] = useState(newShiva.mournerKey)
@@ -82,14 +85,15 @@ const Mourners = ({ newShiva, submit, selectStep, addNotification }: StepProps<M
       if (navigator.clipboard) {
         navigator.clipboard.writeText(`${mournerPathPrefix}${mournerKey}`).then(
           () => {
-            if (addNotification) {
-              addNotification({
-                id: getRandomId(),
-                title: 'Link copied',
-                description: 'The link for mourners to edit the shiva has been added to your clipboard.',
-                icon: CheckIcon,
-              })
-            }
+            dispatch(
+              addNotification(
+                initializeNotification({
+                  title: 'Link copied',
+                  description: 'The link for mourners to edit the shiva has been added to your clipboard.',
+                  icon: CheckIcon,
+                })
+              )
+            )
           },
           error => {
             console.log(error) // we should show a message
