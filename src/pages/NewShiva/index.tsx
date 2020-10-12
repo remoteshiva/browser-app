@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { useParams } from 'react-router'
 import { push } from 'connected-react-router'
 import styled from 'styled-components'
 import * as Routes from '../../routes'
-import { RootState } from '../../store'
+import { AppDispatch } from '../../store'
 import { Shiva, initializeShiva } from '../../store/shiva/types'
+import { selectShiva } from '../../store/shiva/actions'
 import { createShiva } from '../../services/shiva'
 import Toast, { ToastModel, Position } from '../../components/Toast'
 import BackButton from './back'
@@ -27,24 +28,23 @@ interface MatchParams {
 }
 
 const NewShiva = () => {
-  const { selectedShiva } = useSelector((state: RootState) => state.shiva)
   const { step } = useParams<MatchParams>()
   const [currentStep, setCurrentStep] = useState<T.Steps>(Number(step))
   const [shiva, setShiva] = useState<Shiva>(initializeShiva())
   const [toasts, setToasts] = useState<ToastModel[]>([])
-  const dispatch = useDispatch()
+  const dispatch: AppDispatch = useDispatch()
 
-  useEffect(() => {
-    if (selectedShiva) {
-      // once the shiva is created and selected, navigate to the shiva page
-      dispatch(push(Routes.SHIVA_PAGE(selectedShiva), { newShiva: true }))
-    }
-  }, [selectedShiva, dispatch])
-  const submitStepData = <T extends {}>(data: T, nextStep: T.Steps) => {
+  const submitStepData = async <T extends {}>(data: T, nextStep: T.Steps) => {
     setShiva(s => ({ ...s, ...data }))
     setCurrentStep(nextStep)
     if (nextStep === T.Steps.DONE) {
-      dispatch(createShiva(shiva))
+      try {
+        const { id } = await dispatch(createShiva(shiva))
+        await dispatch(selectShiva(id))
+        dispatch(push(Routes.SHIVA_PAGE(id)))
+      } catch (error) {
+        console.log('Failed to create new Shiva', error)
+      }
     } else {
       dispatch(push(Routes.NEW_SHIVA(`${nextStep}`)))
     }

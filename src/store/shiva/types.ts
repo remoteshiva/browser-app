@@ -14,11 +14,11 @@ export interface Visit {
   visitors: string[]
 }
 export interface Shiva {
-  _id: string
+  id: string
   nameOfDeceased: string
   startDate: Date
   endDate: Date
-  message?: string
+  message: string
   videoLink: URL | null
   mourners: Mourner[]
   mournerKey: string
@@ -42,11 +42,12 @@ const generateRandomKey = (): string => {
  * @param shiva - Optional partial shiva model for overriding defaults
  * @example - const shiva = initializeShiva({nameOfDeceased: 'John Doe'})
  */
-export const initializeShiva = (shiva?: Partial<Shiva>): Shiva => ({
-  _id: '',
+export const initializeShiva = (newShiva?: Partial<Shiva>): Shiva => ({
+  id: '',
   nameOfDeceased: '',
   startDate: startOfDay(new Date()),
   endDate: startOfDay(addDays(new Date(), 7)),
+  message: '',
   mourners: [],
   videoLink: null,
   mournerKey: generateRandomKey(),
@@ -59,7 +60,7 @@ export const initializeShiva = (shiva?: Partial<Shiva>): Shiva => ({
   minianTimes: '',
   donations: '',
   inviteMessage: '',
-  ...shiva,
+  ...newShiva,
 })
 
 export interface ShivaState {

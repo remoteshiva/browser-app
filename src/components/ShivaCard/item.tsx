@@ -17,7 +17,7 @@ const menu: MenuItem[] = [
 ]
 
 const ShivaItem = (props: ShivaProps) => {
-  const { _id, nameOfDeceased, startDate, endDate } = props
+  const { id, nameOfDeceased, startDate, endDate } = props
   const dispatch = useDispatch()
 
   const handleMenuClick = (menu: MenuItem) => {
@@ -27,20 +27,20 @@ const ShivaItem = (props: ShivaProps) => {
       case 2: // handle copy link for visitors
         break
       case 3: // navigate to shiva edit page
-        dispatch(push(`/shiva/${_id}`))
+        dispatch(push(`/shiva/${id}`))
         break
       case 4: // duplicate shiva
         dispatch(createShiva(props))
         break
       case 5: // delete shiva
-        dispatch(deleteShiva(_id))
+        dispatch(deleteShiva(id))
         break
     }
   }
   return (
     <ShivaItemWrapper
       onClick={() => {
-        dispatch(push(`/shiva/${_id}`))
+        dispatch(push(`/shiva/${id}`))
       }}
     >
       <header

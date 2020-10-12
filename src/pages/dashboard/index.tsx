@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { RootState } from '../../store'
-import { fetchShivas, deleteShiva } from '../../services/shiva'
+import { fetchMyShivas, deleteShiva } from '../../services/shiva'
 import ShivaList from '../../components/ShivaCard/list'
 import Loading from '../../components/Loading'
 import { selectShiva } from '../../store/shiva/actions'
@@ -20,15 +20,7 @@ const Wrapper = styled.div`
 `
 
 const Dashboard = () => {
-  const dispatch = useDispatch()
   const { loading, entities, shivas } = useSelector((state: RootState) => state.shiva)
-  useEffect(() => {
-    dispatch(selectShiva(null))
-    if (!shivas.length && !loading) {
-      dispatch(fetchShivas())
-    }
-  }, [dispatch, shivas.length, loading])
-
   return loading ? (
     <Loading />
   ) : (

@@ -1,29 +1,34 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { push } from 'connected-react-router'
 import { useParams } from 'react-router-dom'
-import { RootState } from '../../store'
+import * as Routes from '../../routes'
+import { RootState, AppDispatch } from '../../store'
 import ShivaLayout from '../../components/ShivaLayout'
 import Loading from '../../components/Loading'
 import { selectShiva } from '../../store/shiva/actions'
-import { fetchShivaByMournerKey } from '../../services/shiva'
+import { fetchShivaByKey } from '../../services/shiva'
 
 interface RoutingProps {
   key: string
 }
 
-interface Props {}
 const MournerPage = () => {
   const { key } = useParams<RoutingProps>()
-  const { loading, entities, mournerKeys, selectedShiva } = useSelector((state: RootState) => state.shiva)
-  const dispatch = useDispatch()
+  const { loading, entities, selectedShiva } = useSelector((state: RootState) => state.shiva)
+  const dispatch = useDispatch<AppDispatch>()
 
   useEffect(() => {
-    if (key in mournerKeys) {
-      dispatch(selectShiva(mournerKeys[key]))
-    } else {
-      dispatch(fetchShivaByMournerKey(key))
+    const fetch = async () => {
+      try {
+        const { id } = await dispatch(fetchShivaByKey(key, 'mourner'))
+        dispatch(selectShiva(id))
+      } catch (error) {
+        dispatch(push(Routes.NOT_FOUND))
+      }
     }
-  }, [dispatch, key, mournerKeys])
+    fetch()
+  }, [dispatch, key])
 
   return loading || !selectedShiva ? <Loading /> : <ShivaLayout role="Mourner" shiva={entities[selectedShiva]} />
 }

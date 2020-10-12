@@ -12,7 +12,7 @@ export const test_session: Session = {
 
 export const shivas: Shiva[] = [
   initializeShiva({
-    _id: 'etXi0EzISAbRF8SH',
+    id: 'etXi0EzISAbRF8SH',
     nameOfDeceased: 'Brick Tamland',
     startDate: new Date('2020-07-20'),
     endDate: new Date('2020-07-27'),
@@ -35,7 +35,7 @@ export const shivas: Shiva[] = [
     visits: [],
   }),
   initializeShiva({
-    _id: 'nYHti5evgaCynqKc',
+    id: 'nYHti5evgaCynqKc',
     nameOfDeceased: 'Champ Kind',
     startDate: new Date('2018-03-05'),
     endDate: new Date('2018-03-12'),
@@ -58,7 +58,7 @@ export const shivas: Shiva[] = [
     visits: [],
   }),
   initializeShiva({
-    _id: 'fUzzVqRoRde0ihGM',
+    id: 'fUzzVqRoRde0ihGM',
     nameOfDeceased: 'Brian Fantana',
     startDate: new Date('2020-04-13'),
     endDate: new Date('2020-04-20'),

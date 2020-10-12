@@ -1,6 +1,6 @@
-import { applyMiddleware, combineReducers, createStore } from 'redux'
+import { applyMiddleware, combineReducers, createStore, AnyAction } from 'redux'
 import { createBrowserHistory } from 'history'
-import thunk from 'redux-thunk'
+import thunk, { ThunkDispatch } from 'redux-thunk'
 import { routerMiddleware, connectRouter } from 'connected-react-router'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { AppReducer } from './app/reducer'
@@ -17,6 +17,7 @@ const rootReducer = combineReducers({
 })
 
 export type RootState = ReturnType<typeof rootReducer>
+export type AppDispatch = ThunkDispatch<RootState, any, AnyAction>
 
 export default function configureStore() {
   return createStore(rootReducer, composeWithDevTools(applyMiddleware(routerMiddleware(history), thunk)))

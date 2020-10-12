@@ -5,8 +5,9 @@ import styled from 'styled-components'
 import * as Routes from '../../routes'
 import { DarkButton, LightButton } from '../../components/common'
 import { StyledForm, VerticalSpace } from './styles'
-import { RootState } from '../../store'
+import { RootState, AppDispatch } from '../../store'
 import { loginWithCredentials, loginWithGoogle } from '../../services/auth'
+import { fetchMyShivas } from '../../services/shiva'
 
 const Wrapper = styled.div`
   margin-top: 30px;
@@ -23,7 +24,7 @@ const Wrapper = styled.div`
 `
 
 const Login = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<AppDispatch>()
   const [displayError, setDisplayError] = useState(false)
   const [values, setValues] = useState({ email: '', password: '' })
   const { loading, error } = useSelector((state: RootState) => state.auth)
@@ -37,6 +38,7 @@ const Login = () => {
     setDisplayError(true)
     const session = await dispatch(loginWithCredentials(values.email, values.password))
     if (session !== undefined) {
+      await dispatch(fetchMyShivas())
       dispatch(push(Routes.MY_SHIVAS))
     }
   }

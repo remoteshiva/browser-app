@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { push } from 'connected-react-router'
 import { useParams } from 'react-router-dom'
-import { RootState } from '../../store'
+import * as Routes from '../../routes'
+import { RootState, AppDispatch } from '../../store'
 import ShivaLayout from '../../components/ShivaLayout'
 import Loading from '../../components/Loading'
 import { selectShiva } from '../../store/shiva/actions'
-import { fetchShivaByVisitorKey } from '../../services/shiva'
+import { fetchShivaByKey } from '../../services/shiva'
 
 interface RoutingProps {
   key: string
@@ -14,16 +16,20 @@ interface RoutingProps {
 interface Props {}
 const VisitorPage = () => {
   const { key } = useParams<RoutingProps>()
-  const { loading, entities, visitorKeys, selectedShiva } = useSelector((state: RootState) => state.shiva)
-  const dispatch = useDispatch()
+  const { loading, entities, selectedShiva } = useSelector((state: RootState) => state.shiva)
+  const dispatch = useDispatch<AppDispatch>()
 
   useEffect(() => {
-    if (key in visitorKeys) {
-      dispatch(selectShiva(visitorKeys[key]))
-    } else {
-      dispatch(fetchShivaByVisitorKey(key))
+    const fetch = async () => {
+      try {
+        const { id } = await dispatch(fetchShivaByKey(key, 'visitor'))
+        dispatch(selectShiva(id))
+      } catch (error) {
+        dispatch(push(Routes.NOT_FOUND))
+      }
     }
-  }, [dispatch, key, visitorKeys])
+    fetch()
+  }, [dispatch, key])
 
   return loading || !selectedShiva ? <Loading /> : <ShivaLayout role="Visitor" shiva={entities[selectedShiva]} />
 }

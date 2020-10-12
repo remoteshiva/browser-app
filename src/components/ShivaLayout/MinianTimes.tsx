@@ -11,9 +11,9 @@ const MinianTimes = ({ shiva, editing, save }: ShivaPanel) => {
   useEffect(() => {
     if (save && save > 0) {
       const partialShiva = { minianTimes }
-      dispatch(updateShiva(shiva._id, partialShiva))
+      dispatch(updateShiva(shiva.id, partialShiva))
     }
-  }, [save, dispatch, minianTimes, shiva._id])
+  }, [save, dispatch, minianTimes, shiva.id])
   const handleInput = (html: string) => {
     setMinianTimes(html)
   }

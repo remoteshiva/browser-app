@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { History } from 'history'
 import { ConnectedRouter, push } from 'connected-react-router'
 import styled from 'styled-components'
-import { RootState } from '../../store'
+import { RootState, AppDispatch } from '../../store'
 import { setInitialized } from '../../store/app/actions'
 import { getAuthState } from '../../services/auth'
-import { fetchShivas } from '../../services/shiva'
+import { fetchMyShivas } from '../../services/shiva'
 import Theme from '../Theme'
 import GlobalStyle from '../GlobalStyle'
 import NavBar from '../../components/NavBar'
@@ -29,7 +29,7 @@ const PleaseWait = styled.div`
   color: ${props => props.theme.colors.doveGray};
 `
 const App = ({ history }: Props) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<AppDispatch>()
   const { initialized } = useSelector((state: RootState) => state.app)
 
   useEffect(() => {
@@ -38,7 +38,7 @@ const App = ({ history }: Props) => {
       if (initialized) return
       const session = await dispatch(getAuthState())
       if (session !== undefined) {
-        dispatch(fetchShivas())
+        await dispatch(fetchMyShivas())
       }
       dispatch(setInitialized())
       dispatch(push(window.location.pathname))
