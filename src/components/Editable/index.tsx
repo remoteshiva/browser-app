@@ -24,7 +24,6 @@ const Editable = ({ html, name, tagName, active, style, className, onInput, chil
   useEffect(() => {
     if (!el.current) return
     if (html !== el.current.innerHTML) {
-      console.log('Set the html', html)
       el.current.innerHTML = html
       // // replaceCaret(el.current)
     }

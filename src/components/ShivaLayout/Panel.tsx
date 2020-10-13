@@ -25,8 +25,11 @@ export const withPanel = <P extends object>(Component: React.ComponentType<P>): 
     setEditing(!editing)
     if (editing) doSave(prev => prev + 1)
   }
+  const onCancel = () => {
+    setEditing(false)
+  }
   return role === 'Visitor' && darkMode ? null : (
-    <Card darkMode={darkMode} direction={direction} role={role} onModeChange={onModeChange} editing={editing}>
+    <Card darkMode={darkMode} direction={direction} role={role} onModeChange={onModeChange} onCancel={onCancel} editing={editing}>
       <Component editing={editing} role={role} save={save} {...(props as P)} />
     </Card>
   )
