@@ -43,7 +43,7 @@ const About = ({ shiva, editing, save }: ShivaPanel) => {
       const partialShiva = { about, images }
       dispatch(updateShiva(shiva.id, partialShiva))
     }
-  }, [save, dispatch, about, images, shiva.id])
+  })
   const handleInput = (html: string) => {
     setAbout(html)
   }

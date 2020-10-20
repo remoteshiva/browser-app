@@ -25,6 +25,7 @@ export interface ChatProps {
 
 export interface VisitingProps {
   visits: Visit[]
+  minianTimes?: string
 }
 
 export interface StepProps<T> {

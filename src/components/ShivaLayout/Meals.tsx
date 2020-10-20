@@ -13,7 +13,7 @@ const Meals = ({ shiva, editing, save }: ShivaPanel) => {
       const partialShiva = { mealSignups }
       dispatch(updateShiva(shiva.id, partialShiva))
     }
-  }, [save, dispatch, mealSignups, shiva.id])
+  })
   const handleInput = (html: string) => {
     setMealSignups(html)
   }
