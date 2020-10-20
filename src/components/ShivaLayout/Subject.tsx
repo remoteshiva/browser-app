@@ -84,9 +84,8 @@ const Subject = ({ shiva, editing, save }: ShivaPanel) => {
       console.log('saving partial shiva', partialShiva)
       dispatch(updateShiva(shiva.id, partialShiva))
     }
-  }, [save, dispatch, message, titleImage, shiva.id])
+  })
   const handleInput = (html: string) => {
-    console.log('incoing data', html)
     setMessage(html)
   }
   const handImageUploaded = (url: string) => {

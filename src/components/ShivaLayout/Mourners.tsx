@@ -63,7 +63,7 @@ const Mourners = ({ role, shiva, editing, save }: ShivaPanel) => {
       const partialShiva = { mourners }
       dispatch(updateShiva(shiva.id, partialShiva))
     }
-  }, [save, dispatch, mourners, shiva.id])
+  })
   const handleInput = (index: number, key: string, value: string) => {
     const newMourners = mourners.map((m, i) => {
       if (i === index) {

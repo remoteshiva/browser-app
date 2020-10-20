@@ -6,14 +6,16 @@ import Editable from '../Editable'
 
 const MinianTimes = ({ shiva, editing, save }: ShivaPanel) => {
   const instructions = `Add link here`
-  const [minianTimes, setMinianTimes] = useState(shiva.minianTimes)
   const dispatch = useDispatch()
+  const [minianTimes, setMinianTimes] = useState(shiva.minianTimes)
+
   useEffect(() => {
     if (save && save > 0) {
       const partialShiva = { minianTimes }
+      console.log('im saving the shiva')
       dispatch(updateShiva(shiva.id, partialShiva))
     }
-  }, [save, dispatch, minianTimes, shiva.id])
+  })
   const handleInput = (html: string) => {
     setMinianTimes(html)
   }
