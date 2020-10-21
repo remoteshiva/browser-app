@@ -8,7 +8,7 @@ import { ApproveButton, VerticalSpace } from '../../components/common'
 import { ClickOutside } from '../../components/ClickOutside'
 import { fetchShivaById } from '../../services/shiva'
 import { selectShiva } from '../../store/shiva/actions'
-import ShivaLayout from '../../components/ShivaLayout'
+import ShivaTemplate from '../../templates/Shiva'
 import Loading from '../../components/Loading'
 
 const Fade = styled.div`
@@ -84,7 +84,7 @@ const ShivaPage = () => {
     <Loading />
   ) : (
     <>
-      <ShivaLayout role="Editor" shiva={entities[selectedShiva]} />
+      <ShivaTemplate role="Editor" shiva={entities[selectedShiva]} />
       {displayDialog ? (
         <Fade>
           <Modal onClickOutside={() => setDisplayDialog(false)}>

@@ -9,7 +9,7 @@ import { CalendarWrapper, Timezone } from './styles'
 interface Props {
   startDate: Date
   endDate: Date
-  visits: Visit[]
+  visits: { [key: string]: Visit }
   editMode: boolean
   height?: string
 }

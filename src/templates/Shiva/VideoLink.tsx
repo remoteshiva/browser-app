@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { updateShiva } from '../../services/shiva'
 import { ShivaPanel, withPanel } from './Panel'
-import Editable from '../Editable'
+import Editable from '../../components/Editable'
 
 const VideoLink = ({ shiva, editing, save }: ShivaPanel) => {
   const instructions = `Add link here`

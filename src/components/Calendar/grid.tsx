@@ -8,7 +8,7 @@ interface GridProps {
   editMode: boolean
   startDate: Date
   endDate: Date
-  visits: Visit[]
+  visits: { [key: string]: Visit }
 }
 export const Grid = ({ editMode, startDate, endDate, visits }: GridProps) => {
   const [offset, setOffset] = useState(0)

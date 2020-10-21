@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Shiva, ROLE } from '../../store/shiva/types'
-import { Row, FlexColumn, FixedColumn } from '../flexLayout'
+import { Row, FlexColumn, FixedColumn } from '../../components/flexLayout'
 import Subject from './Subject'
 import About from './About'
 import Schedule from './Schedule'

@@ -4,7 +4,7 @@ import { push } from 'connected-react-router'
 import { useParams } from 'react-router-dom'
 import * as Routes from '../../routes'
 import { RootState, AppDispatch } from '../../store'
-import ShivaLayout from '../../components/ShivaLayout'
+import ShivaTemplate from '../../templates/Shiva'
 import Loading from '../../components/Loading'
 import { selectShiva } from '../../store/shiva/actions'
 import { fetchShivaByKey } from '../../services/shiva'
@@ -30,7 +30,7 @@ const MournerPage = () => {
     fetch()
   }, [dispatch, key])
 
-  return loading || !selectedShiva ? <Loading /> : <ShivaLayout role="Mourner" shiva={entities[selectedShiva]} />
+  return loading || !selectedShiva ? <Loading /> : <ShivaTemplate role="Mourner" shiva={entities[selectedShiva]} />
 }
 
 export default MournerPage

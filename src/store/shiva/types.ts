@@ -41,5 +41,6 @@ export interface ShivaState {
   visitorKeys: { [key: string]: string } // map visitor keys to shiva ids
   mournerKeys: { [key: string]: string } // map mourner keys to shiva ids
   selectedShiva: string | null // id of selected shiva
+  newShiva: Shiva | null
   error?: BackendError
 }
