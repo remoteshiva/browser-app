@@ -57,6 +57,12 @@ export type UpdateShivaError = ActionType<typeof updateShivaError>
 export const initNewShiva = createAction(ShivaActionTypes.InitNewShiva)()
 export type InitNewShiva = ActionType<typeof initNewShiva>
 
+export const updateNewShiva = createAction(ShivaActionTypes.UpdateNewShiva)<Partial<Shiva>>()
+export type UpdateNewShiva = ActionType<typeof updateNewShiva>
+
+export const deleteNewShiva = createAction(ShivaActionTypes.DeleteNewShiva)()
+export type DeleteNewShiva = ActionType<typeof deleteNewShiva>
+
 //
 export const addShivaVisit = createAction(ShivaActionTypes.AddVisit)<{ shivaId: string; visit: Visit }>()
 export type AddShivaVisit = ActionType<typeof addShivaVisit>
@@ -91,6 +97,8 @@ export type ActionTypes =
   | UpdateShivaSuccess
   | UpdateShivaError
   | InitNewShiva
+  | UpdateNewShiva
+  | DeleteNewShiva
   | AddShivaVisit
   | UpdateShivaVisit
   | DeleteShivaVisit

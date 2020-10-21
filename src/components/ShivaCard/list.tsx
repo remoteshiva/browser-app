@@ -1,13 +1,14 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { push } from 'connected-react-router'
-import { Shiva as ShivaModel } from '../../store/shiva/types'
+import { Shiva } from '../../store/shiva/types'
+import * as Routes from '../../routes'
 import { ShivaListWrapper } from './styles'
 import ShivaItem from './item'
 import NewShivaItem from './newItem'
 
 interface Props {
-  entities: { [key: string]: ShivaModel }
+  entities: { [key: string]: Shiva }
   shivas: string[]
 }
 
@@ -18,7 +19,7 @@ const ShivaList = ({ entities, shivas }: Props) => {
       {shivas.map(shivaId => (
         <ShivaItem key={shivaId} {...entities[shivaId]} />
       ))}
-      <NewShivaItem onClick={() => dispatch(push('/newshiva/1'))} />
+      <NewShivaItem onClick={() =>dispatch(push(Routes.NEW_SHIVA('1')))}/>
     </ShivaListWrapper>
   )
 }

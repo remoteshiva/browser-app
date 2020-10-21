@@ -20,6 +20,16 @@ const reducer: Reducer<ShivaState> = (state = initialState, action: ActionTypes)
     case ShivaActions.InitNewShiva: {
       return { ...state, newShiva: initializeShiva() }
     }
+    case ShivaActions.UpdateNewShiva: {
+      if (state.newShiva === null) {
+        return { ...state, newShiva: { ...initializeShiva(), ...action.payload } }
+      } else {
+        return { ...state, newShiva: { ...state.newShiva, ...action.payload } }
+      }
+    }
+    case ShivaActions.DeleteNewShiva: {
+      return { ...state, newShiva: null }
+    }
     case ShivaActions.FetchShivaListRequest: {
       return { ...state, loading: true }
     }
