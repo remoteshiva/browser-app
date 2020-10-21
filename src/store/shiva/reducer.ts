@@ -124,6 +124,35 @@ const reducer: Reducer<ShivaState> = (state = initialState, action: ActionTypes)
     case ShivaActions.UpdateShivaError: {
       return state
     }
+    case ShivaActions.AddVisit: {
+      const shiva = { ...state.entities[action.payload.shivaId] }
+      shiva.visits = { ...shiva.visits, [action.payload.visit.id]: action.payload.visit }
+      return { ...state, entities: { ...state.entities, [action.payload.shivaId]: shiva } }
+    }
+    case ShivaActions.DeleteVisit: {
+      const { shivaId, visitId } = action.payload
+      const shiva = state.entities[shivaId]
+      const { [visitId]: omit, ...visits } = shiva.visits
+      const newShiva = { ...shiva, visits: { ...visits } }
+      const entities = { ...state.entities, [shivaId]: newShiva }
+      return { ...state, entities }
+    }
+    case ShivaActions.UpdateVisit: {
+      const { shivaId, visitId, updatedVisit } = action.payload
+      const shiva = state.entities[shivaId]
+      const visit = shiva.visits[visitId]
+      if (visit) {
+        const newVisit = { ...visit, ...updatedVisit }
+        return {
+          ...state,
+          entities: {
+            ...state.entities,
+            [shivaId]: { ...shiva, visits: { ...shiva.visits, [visitId]: newVisit } },
+          },
+        }
+      }
+      return state
+    }
     case ShivaActions.SelectShiva: {
       return {
         ...state,

@@ -1,20 +1,21 @@
-import { startOfDay, addDays } from 'date-fns'
 import { BackendError } from '../types'
 
 export type ROLE = 'Editor' | 'Mourner' | 'Visitor'
+export type ShivaId = string
 export interface Mourner {
   name: string
   relationship: string
 }
 
 export interface Visit {
+  id: string
   date: Date
   length: number
   mourners: number[]
   visitors: string[]
 }
 export interface Shiva {
-  id: string
+  id: ShivaId
   nameOfDeceased: string
   startDate: Date
   endDate: Date
@@ -24,7 +25,7 @@ export interface Shiva {
   mournerKey: string
   visitorKey: string
   titleImage: URL | null
-  visits: Visit[]
+  visits: { [key: string]: Visit }
   about?: string
   images: URL[]
   mealSignups?: string
@@ -32,36 +33,6 @@ export interface Shiva {
   donations?: string
   inviteMessage?: string
 }
-
-const generateRandomKey = (): string => {
-  return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
-}
-
-/**
- * @description Initializes a new Shiva object with default params.
- * @param shiva - Optional partial shiva model for overriding defaults
- * @example - const shiva = initializeShiva({nameOfDeceased: 'John Doe'})
- */
-export const initializeShiva = (newShiva?: Partial<Shiva>): Shiva => ({
-  id: '',
-  nameOfDeceased: '',
-  startDate: startOfDay(new Date()),
-  endDate: startOfDay(addDays(new Date(), 7)),
-  message: '',
-  mourners: [],
-  videoLink: null,
-  mournerKey: generateRandomKey(),
-  visitorKey: generateRandomKey(),
-  visits: [],
-  titleImage: null,
-  about: '',
-  images: [],
-  mealSignups: '',
-  minianTimes: '',
-  donations: '',
-  inviteMessage: '',
-  ...newShiva,
-})
 
 export interface ShivaState {
   loading: boolean

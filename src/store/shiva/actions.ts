@@ -1,6 +1,6 @@
 import { ActionType, createAction } from 'typesafe-actions'
 import { BackendError } from '../types'
-import { Shiva } from './types'
+import { Shiva, Visit } from './types'
 import * as ShivaActionTypes from './constants'
 
 //
@@ -54,6 +54,16 @@ export const updateShivaError = createAction(ShivaActionTypes.UpdateShivaError)<
 export type UpdateShivaError = ActionType<typeof updateShivaError>
 
 //
+export const addShivaVisit = createAction(ShivaActionTypes.AddVisit)<{ shivaId: string; visit: Visit }>()
+export type AddShivaVisit = ActionType<typeof addShivaVisit>
+
+export const updateShivaVisit = createAction(ShivaActionTypes.UpdateVisit)<{ shivaId: string; visitId: string; updatedVisit: Partial<Visit> }>()
+export type UpdateShivaVisit = ActionType<typeof updateShivaVisit>
+
+export const deleteShivaVisit = createAction(ShivaActionTypes.DeleteVisit)<{ shivaId: string; visitId: string }>()
+export type DeleteShivaVisit = ActionType<typeof deleteShivaVisit>
+
+//
 export const selectShiva = createAction(ShivaActionTypes.SelectShiva)<string | null>()
 export type SelectShiva = ActionType<typeof selectShiva>
 
@@ -76,5 +86,8 @@ export type ActionTypes =
   | UpdateShivaRequest
   | UpdateShivaSuccess
   | UpdateShivaError
+  | AddShivaVisit
+  | UpdateShivaVisit
+  | DeleteShivaVisit
   | SelectShiva
   | ResetShiva

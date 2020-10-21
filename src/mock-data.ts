@@ -1,5 +1,6 @@
 import { Session } from './store/auth/types'
-import { Shiva, initializeShiva } from './store/shiva/types'
+import { Shiva } from './store/shiva/types'
+import { initializeShiva, initializeVisit } from './store/shiva/helpers'
 
 export const test_session: Session = {
   token: 'aU3BuL62emYeFyGpkYpZ',
@@ -32,7 +33,7 @@ export const shivas: Shiva[] = [
     mournerKey: 'HgyQFcacW7',
     visitorKey: 'YpNVU8ZkOz',
     titleImage: new URL('https://www.villagevoice.com/wp-content/uploads/2013/12/9415887.0.jpg'),
-    visits: [],
+    visits: {},
   }),
   initializeShiva({
     id: 'nYHti5evgaCynqKc',
@@ -55,7 +56,7 @@ export const shivas: Shiva[] = [
     mournerKey: 'Kw9sFWi6JX',
     visitorKey: 'Y8cxY0KKGl',
     titleImage: new URL('https://bloximages.chicago2.vip.townnews.com/pottsmerc.com/content/tncms/assets/v3/editorial/1/61/161a5c45-0437-503c-a943-ab7fa7f8dfcc/5b7c785d5c9f4.image.jpg'),
-    visits: [],
+    visits: {},
   }),
   initializeShiva({
     id: 'fUzzVqRoRde0ihGM',
@@ -78,14 +79,15 @@ export const shivas: Shiva[] = [
     mournerKey: '0PaCMhDDrD',
     visitorKey: 'jPIFUxMDIx',
     titleImage: new URL('https://vignette.wikia.nocookie.net/anchorman/images/e/ec/Brian-fantana.jpg/revision/latest'),
-    visits: [
-      {
+    visits: {
+      one: initializeVisit({
+        id: 'one',
         date: new Date('2020-04-13 13:00'),
         length: 4,
         visitors: [],
         mourners: [],
-      },
-    ],
+      }),
+    },
     images: [
       new URL('https://assets.capitalfm.com/2013/50/-brian-fantana-anchorman-1387281923-view-0.jpg'),
       new URL('https://assets.mycast.io/characters/brian-fantana-9394-normal.jpg?1565808314'),
