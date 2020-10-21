@@ -1,6 +1,7 @@
 import React from 'react'
 import ShivaItem from './item'
-import { initializeShiva, Shiva } from '../../store/shiva/types'
+import { Shiva } from '../../store/shiva/types'
+import { initializeShiva } from '../../store/shiva/helpers'
 
 export default {
   title: 'ShivaItem',

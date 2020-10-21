@@ -55,13 +55,14 @@ describe('Shiva reducer', () => {
     expect(newState.visitorKeys).toMatchObject({})
   })
   it('should add a new visit to existing shiva', () => {
-    const newShiva = initializeShiva({ nameOfDeceased: 'Ron Burgundy' })
+    const newShiva = initializeShiva({ id: '__id__', nameOfDeceased: 'Ron Burgundy' })
     const { id } = newShiva
     const state = ShivaReducer(initialState, Actions.createShivaSuccess(newShiva))
     expect(state.entities).toHaveProperty(id)
-    expect(state.entities[id].visits.length).toEqual(0)
+    expect(Object.keys(state.entities[id].visits).length).toEqual(0)
     // now we can add a visit
-    const newState = ShivaReducer(state, Actions.addShivaVisit({ shivaId: id, visit: initializeVisit(id) }))
+    debugger
+    const newState = ShivaReducer(state, Actions.addShivaVisit({ shivaId: id, visit: initializeVisit() }))
     expect(Object.keys(state.entities[id].visits).length).toEqual(0)
     expect(Object.keys(newState.entities[id].visits).length).toEqual(1)
   })

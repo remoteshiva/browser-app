@@ -37,13 +37,13 @@ const Minian = styled.div`
 `
 
 const VisitingHours = ({ newShiva, startDate, endDate, submit, selectStep }: VisitingStepProps<VisitingProps>) => {
-  const [values, setValues] = useState({ visits: newShiva.visits })
+  const [visits, SetVisits] = useState(newShiva.visits)
   const [minianTimes, setMinianTimes] = useState(newShiva.minianTimes)
   const handleInput = (html: string) => {
     setMinianTimes(html)
   }
   return (
-    <StepLayout title={'Set visiting hours'} step={4} submit={() => submit({ ...values, minianTimes }, Steps.DONE)} submitText="Done" stepperClickHandler={selectStep}>
+    <StepLayout title={'Set visiting hours'} step={4} submit={() => submit({visits, minianTimes }, Steps.DONE)} submitText="Done" stepperClickHandler={selectStep}>
       <Row>
         <FixedColumn width={500}>
           <p>Specify the times when visitors should be able to join the video chatroom by clicking and dragging on the calendar.</p>
@@ -54,7 +54,7 @@ const VisitingHours = ({ newShiva, startDate, endDate, submit, selectStep }: Vis
       </Row>
       <Row>
         <FlexColumn>
-          <Calendar height={'431px'} editMode={true} startDate={startDate} endDate={endDate} visits={values.visits} />
+          <Calendar height={'431px'} editMode={true} startDate={startDate} endDate={endDate} visits={visits} />
         </FlexColumn>
       </Row>
       <Row>

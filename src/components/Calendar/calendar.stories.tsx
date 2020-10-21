@@ -41,11 +41,11 @@ export default {
   component: Calendar,
 }
 
-export const EmptyCalendar = () => <Calendar editMode={false} startDate={startDate} endDate={endDate} visits={[]} />
+// export const EmptyCalendar = () => <Calendar editMode={false} startDate={startDate} endDate={endDate} visits={[]} />
 
-export const BusyCalendar = () => <Calendar editMode={false} startDate={startDate} endDate={endDate} visits={visits} />
+// export const BusyCalendar = () => <Calendar editMode={false} startDate={startDate} endDate={endDate} visits={visits} />
 
-export const UserCalendar = () => <Calendar editMode={true} startDate={startDate} endDate={endDate} visits={[]} />
+// export const UserCalendar = () => <Calendar editMode={true} startDate={startDate} endDate={endDate} visits={[]} />
 
-// limit the size of the calendar to activate inner scroll
-export const WithScroll = () => <Calendar height={'450px'} editMode={false} startDate={startDate} endDate={endDate} visits={visits} />
+// // limit the size of the calendar to activate inner scroll
+// export const WithScroll = () => <Calendar height={'450px'} editMode={false} startDate={startDate} endDate={endDate} visits={visits} />

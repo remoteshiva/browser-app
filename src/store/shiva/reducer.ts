@@ -3,6 +3,7 @@ import * as ShivaActions from './constants'
 import { ShivaState, Shiva } from './types'
 import { ActionTypes } from './actions'
 import { arrayToObject } from '../helpers'
+import { initializeShiva } from './helpers'
 
 export const initialState: ShivaState = {
   loading: false,
@@ -11,10 +12,14 @@ export const initialState: ShivaState = {
   visitorKeys: {},
   mournerKeys: {},
   selectedShiva: null,
+  newShiva: null,
 }
 
 const reducer: Reducer<ShivaState> = (state = initialState, action: ActionTypes): ShivaState => {
   switch (action.type) {
+    case ShivaActions.InitNewShiva: {
+      return { ...state, newShiva: initializeShiva() }
+    }
     case ShivaActions.FetchShivaListRequest: {
       return { ...state, loading: true }
     }

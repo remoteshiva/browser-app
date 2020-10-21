@@ -2,8 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 import { Shiva } from '../../store/shiva/types'
 import CloseIcon from '../../assets/img/closex.svg'
-import { ClickOutside } from '../ClickOutside'
-import { VerticalSpace, ApproveButton } from '../common'
+import { ClickOutside } from '../../components/ClickOutside'
+import { VerticalSpace, ApproveButton } from '../../components/common'
 
 const Fade = styled.div`
   position: fixed;

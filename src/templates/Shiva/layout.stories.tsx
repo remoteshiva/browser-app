@@ -1,7 +1,7 @@
 import React from 'react'
 import ShivaLayout from './'
 import { shivas } from '../../mock-data'
-import { initializeShiva } from '../../store/shiva/types'
+import { initializeShiva } from '../../store/shiva/helpers'
 
 export default {
   title: 'Shiva Layout',

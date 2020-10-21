@@ -1,7 +1,8 @@
 import { auth } from 'firebase'
 import { firestore } from '../firebase.config'
 import { AppThunk, omit } from './common'
-import { initializeShiva, Shiva } from '../store/shiva/types'
+import { Shiva } from '../store/shiva/types'
+import { initializeShiva } from '../store/shiva/helpers'
 import {
   fetchShivaListRequest,
   fetchShivaListSuccess,

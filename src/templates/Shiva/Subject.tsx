@@ -4,9 +4,9 @@ import styled from 'styled-components'
 import { updateShiva } from '../../services/shiva'
 import Camera from '../../assets/img/camera.svg'
 import EditIcon from '../../assets/img/editWhite.svg'
-import PhotoDropzone from '../Dropzone'
-import Editable from '../Editable'
-import { Row, FlexColumn, FixedColumn } from '../flexLayout'
+import PhotoDropzone from '../../components/Dropzone'
+import Editable from '../../components/Editable'
+import { Row, FlexColumn, FixedColumn } from '../../components/flexLayout'
 import { ShivaPanel, withPanel } from './Panel'
 
 const Container = styled.div`

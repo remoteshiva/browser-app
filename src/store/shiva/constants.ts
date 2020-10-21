@@ -21,6 +21,8 @@ export const DeleteShivaError = '{RS}shiva/DELETE_SHIVA_ERROR'
 
 // others
 
+export const InitNewShiva = '{RS}shiva/Initialize new Shiva'
+
 export const AddVisit = '{RS}shiva/Add Shiva Visit'
 export const UpdateVisit = '{RS}/shiva/Update Shiva Visit'
 export const DeleteVisit = '{RS}/shiva/Delete Shiva Visit'

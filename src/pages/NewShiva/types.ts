@@ -24,7 +24,7 @@ export interface ChatProps {
 }
 
 export interface VisitingProps {
-  visits: Visit[]
+  visits: { [key: string]: Visit }
   minianTimes?: string
 }
 

@@ -14,3 +14,9 @@ export function arrayToObject<T extends BackendObject>(array: T[]) {
     return obj
   }, {})
 }
+
+export function arrayToMap<K extends unknown, T extends BackendObject>(array: T[]) {
+  const map = new Map<K, T>()
+  array.forEach(item => map.set(item.id as K, item))
+  return map
+}

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { ShivaPanel, withPanel } from './Panel'
-import Editable from '../Editable'
+import Editable from '../../components/Editable'
 
 const Donations = ({ shiva, editing }: ShivaPanel) => {
   const instructions = `Add link here`

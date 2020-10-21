@@ -12,7 +12,7 @@ const pixelToMinutes = (offset: number) => (pixel: number) => offset + pixel / P
 interface Props extends CalendarContextProps {
   editMode: boolean
   day: Date
-  visits: Visit[]
+  visits: { [key: string]: Visit }
   mourners?: Mourner[]
   scrollYOffset: Pixels
 }
@@ -42,6 +42,7 @@ class Column extends PureComponent<Props, State> {
     console.log('minutes', minutes)
     const ts = addMinutes(this.props.day, minutes)
     const newVisit: Visit = {
+      id: Date.now().toString(),
       date: ts,
       length: 4,
       mourners: [],
@@ -77,12 +78,12 @@ class Column extends PureComponent<Props, State> {
     const height = (endHour - startHour) * PIXELS_PER_HOUR + 1
     return (
       <ColumnWrapper height={`${height}px`} onMouseDown={editMode ? this.handleMouseDown : noop} onMouseMove={editMode ? this.handleMouseMove : noop}>
-        {this.props.visits
+        {/* {this.props.visits.values()
           .filter(visit => getDate(visit.date) === getDate(day))
           .map((visit, i) => (
             <CalendarEvent key={i} hourOffset={this.props.startHour} visit={visit} />
           ))}
-        {this.state.top ? <NewEvent top={this.state.top} bottom={this.state.bottom} /> : null}
+        {this.state.top ? <NewEvent top={this.state.top} bottom={this.state.bottom} /> : null} */}
       </ColumnWrapper>
     )
   }
