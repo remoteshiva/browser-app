@@ -17,7 +17,7 @@ interface Props {
   role: ROLE
 }
 
-const ShivaLayout = ({ shiva, role }: Props) => {
+const ShivaTemplate = ({ shiva, role }: Props) => {
   const [showDialog, setShowDialog] = useState(false)
   return (
     <LayoutWrapper>
@@ -45,4 +45,4 @@ const ShivaLayout = ({ shiva, role }: Props) => {
   )
 }
 
-export default ShivaLayout
+export default ShivaTemplate
