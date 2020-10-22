@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
-import { updateShiva } from '../../services/shiva'
+import { patchShiva } from '../../services/shiva'
 import { ShivaPanel, withPanel } from './Panel'
 import { VerticalSpace } from '../../components/common'
 import Editable from '../../components/Editable'
@@ -61,7 +61,7 @@ const Mourners = ({ role, shiva, editing, save }: ShivaPanel) => {
   useEffect(() => {
     if (save && save > 0) {
       const partialShiva = { mourners }
-      dispatch(updateShiva(shiva.id, partialShiva))
+      dispatch(patchShiva(shiva.id, partialShiva))
     }
   })
   const handleInput = (index: number, key: string, value: string) => {

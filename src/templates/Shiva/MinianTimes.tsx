@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { updateShiva } from '../../services/shiva'
+import { patchShiva } from '../../services/shiva'
 import { ShivaPanel, withPanel } from './Panel'
 import Editable from '../../components/Editable'
 
@@ -13,7 +13,7 @@ const MinianTimes = ({ shiva, editing, save }: ShivaPanel) => {
     if (save && save > 0) {
       const partialShiva = { minianTimes }
       console.log('im saving the shiva')
-      dispatch(updateShiva(shiva.id, partialShiva))
+      dispatch(patchShiva(shiva.id, partialShiva))
     }
   })
   const handleInput = (html: string) => {

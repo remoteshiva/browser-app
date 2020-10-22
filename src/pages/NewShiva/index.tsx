@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import {Prompt} from 'react-router'
 import { useParams } from 'react-router'
 import { push } from 'connected-react-router'
 import styled from 'styled-components'
 import * as Routes from '../../routes'
 import { AppDispatch, RootState } from '../../store'
-import { Shiva } from '../../store/shiva/types'
 import { selectShiva, initNewShiva, updateNewShiva, deleteNewShiva } from '../../store/shiva/actions'
-import { createShiva } from '../../services/shiva'
+import { postShiva } from '../../services/shiva'
 import BackButton from './back'
 import BasicDetails from './BasicDetails'
 import VideoChatLink from './VideoChatLink'
@@ -36,7 +36,10 @@ const NewShiva = () => {
       dispatch(initNewShiva())
       dispatch(push(Routes.NEW_SHIVA('1')))
     }
-  },[newShiva, dispatch, step])
+    return () => {
+      dispatch(deleteNewShiva())
+    }
+  },[])
 
   const submitStepData = async <T extends {}>(data: T, nextStep: T.Steps) => {
     if(newShiva){
@@ -44,12 +47,10 @@ const NewShiva = () => {
       if (nextStep === T.Steps.DONE) {
         try {
           // create the new shiva on the backend
-          const { id } = await dispatch(createShiva(newShiva))
+          const { id } = await dispatch(postShiva(newShiva))
           // select the new shiva before navigating to its page
           dispatch(selectShiva(id))
           dispatch(push(Routes.SHIVA_PAGE(id)))
-          // clean up
-          dispatch(deleteNewShiva())
         } catch (error) {
           console.log('Failed to create new Shiva', error)
         }
@@ -92,6 +93,12 @@ const NewShiva = () => {
   }
   return (
     <Wrapper>
+      <Prompt when={currentStep===T.Steps.DONE ? false : true} message={(location => {
+        if(location.pathname.includes(Routes.NEW_SHIVA())){
+          return false
+        }
+        return 'Are you sure you want to leave ? Your Shiva will not be saved'
+      })}/>
       <BackButton />
       {renderStep()}
     </Wrapper>
