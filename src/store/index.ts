@@ -7,7 +7,11 @@ import { AppReducer } from './app/reducer'
 import { AuthReducer } from './auth/reducer'
 import { ShivaReducer } from './shiva/reducer'
 
-export const history = createBrowserHistory()
+export const history = createBrowserHistory({
+  getUserConfirmation(message, callback) {
+    callback(window.confirm(`${message}`))
+  },
+})
 
 const rootReducer = combineReducers({
   router: connectRouter(history),

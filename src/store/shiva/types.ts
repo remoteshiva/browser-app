@@ -7,6 +7,10 @@ export interface Mourner {
   relationship: string
 }
 
+export type EntityMap = { [key: string]: Shiva }
+export type VisitMap = { [key: string]: Visit }
+export type KeyMap = { [key: string]: string }
+
 export interface Visit {
   id: string
   date: Date
@@ -25,7 +29,7 @@ export interface Shiva {
   mournerKey: string
   visitorKey: string
   titleImage: URL | null
-  visits: { [key: string]: Visit }
+  visits: VisitMap
   about?: string
   images: URL[]
   mealSignups?: string
@@ -36,10 +40,10 @@ export interface Shiva {
 
 export interface ShivaState {
   loading: boolean
-  entities: { [key: string]: Shiva } // all shiva objects, arranged by id
+  entities: EntityMap // all shiva objects, arranged by id
   shivas: string[] // list of shiva ids
-  visitorKeys: { [key: string]: string } // map visitor keys to shiva ids
-  mournerKeys: { [key: string]: string } // map mourner keys to shiva ids
+  visitorKeys: KeyMap // map visitor keys to shiva ids
+  mournerKeys: KeyMap // map mourner keys to shiva ids
   selectedShiva: string | null // id of selected shiva
   newShiva: Shiva | null
   error?: BackendError

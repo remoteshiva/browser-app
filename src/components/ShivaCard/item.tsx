@@ -4,7 +4,7 @@ import { push } from 'connected-react-router'
 import { Shiva } from '../../store/shiva/types'
 import { addNotification } from '../../store/app/actions'
 import { initializeNotification } from '../../store/app/types'
-import { createShiva, deleteShiva } from '../../services/shiva'
+import { postShiva, deleteExistingShiva } from '../../services/shiva'
 import CheckIcon from '../../assets/img/checkbox.svg'
 import { ShivaItemWrapper } from './styles'
 import Dropdown, { MenuItem } from './dropdown'
@@ -62,10 +62,10 @@ const ShivaItem = (props: ShivaProps) => {
         dispatch(push(`/shiva/${id}`))
         break
       case 4: // duplicate shiva
-        dispatch(createShiva(props))
+        dispatch(postShiva(props))
         break
       case 5: // delete shiva
-        dispatch(deleteShiva(id))
+        dispatch(deleteExistingShiva(id))
         break
     }
   }

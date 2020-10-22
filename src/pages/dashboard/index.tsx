@@ -1,11 +1,9 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React from 'react'
+import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { RootState } from '../../store'
-import { fetchMyShivas, deleteShiva } from '../../services/shiva'
 import ShivaList from '../../components/ShivaCard/list'
 import Loading from '../../components/Loading'
-import { selectShiva } from '../../store/shiva/actions'
 
 const Wrapper = styled.div`
   padding-top: 75px;

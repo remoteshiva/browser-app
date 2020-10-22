@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
-import { updateShiva } from '../../services/shiva'
+import { patchShiva } from '../../services/shiva'
 import Camera from '../../assets/img/camera.svg'
 import EditIcon from '../../assets/img/editWhite.svg'
 import PhotoDropzone from '../../components/Dropzone'
@@ -82,9 +82,9 @@ const Subject = ({ shiva, editing, save }: ShivaPanel) => {
     if (save && save > 0) {
       const partialShiva = { message, titleImage }
       console.log('saving partial shiva', partialShiva)
-      dispatch(updateShiva(shiva.id, partialShiva))
+      dispatch(patchShiva(shiva.id, partialShiva))
     }
-  })
+  },[save, dispatch, message, titleImage, shiva.id])
   const handleInput = (html: string) => {
     setMessage(html)
   }

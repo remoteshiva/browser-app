@@ -140,9 +140,12 @@ const reducer: Reducer<ShivaState> = (state = initialState, action: ActionTypes)
       return state
     }
     case ShivaActions.AddVisit: {
-      const shiva = { ...state.entities[action.payload.shivaId] }
-      shiva.visits = { ...shiva.visits, [action.payload.visit.id]: action.payload.visit }
-      return { ...state, entities: { ...state.entities, [action.payload.shivaId]: shiva } }
+      if (action.payload.shivaId in state.entities) {
+        const shiva = { ...state.entities[action.payload.shivaId] }
+        shiva.visits = { ...shiva.visits, [action.payload.visit.id]: action.payload.visit }
+        return { ...state, entities: { ...state.entities, [action.payload.shivaId]: shiva } }
+      }
+      return state
     }
     case ShivaActions.DeleteVisit: {
       const { shivaId, visitId } = action.payload

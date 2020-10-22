@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
-import { updateShiva } from '../../services/shiva'
+import { patchShiva } from '../../services/shiva'
 import DeleteIcon from '../../assets/img/delete.svg'
 import Editable from '../../components/Editable'
 import PhotoDropzone from '../../components/Dropzone'
@@ -41,7 +41,7 @@ const About = ({ shiva, editing, save }: ShivaPanel) => {
   useEffect(() => {
     if (save && save > 0) {
       const partialShiva = { about, images }
-      dispatch(updateShiva(shiva.id, partialShiva))
+      dispatch(patchShiva(shiva.id, partialShiva))
     }
   })
   const handleInput = (html: string) => {

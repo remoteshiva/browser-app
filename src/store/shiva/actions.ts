@@ -1,101 +1,61 @@
-import { ActionType, createAction } from 'typesafe-actions'
+import { ActionType, createAction, createAsyncAction } from 'typesafe-actions'
 import { BackendError } from '../types'
-import { Shiva, Visit } from './types'
-import * as ShivaActionTypes from './constants'
+import { Shiva, Visit, ShivaId } from './types'
+import * as AT from './constants'
 
 //
-export const fetchShivaListRequest = createAction(ShivaActionTypes.FetchShivaListRequest)()
-export type FetchShivaListRequest = ActionType<typeof fetchShivaListRequest>
-
-export const fetchShivaListSuccess = createAction(ShivaActionTypes.FetchShivaListSuccess)<Shiva[]>()
-export type FetchShivaListSuccess = ActionType<typeof fetchShivaListSuccess>
-
-export const fetchShivaListError = createAction(ShivaActionTypes.FetchShivaListError)<BackendError>()
-export type FetchShivaListError = ActionType<typeof fetchShivaListError>
+export const fetchShivaList = createAsyncAction(AT.FetchShivaListRequest, AT.FetchShivaListSuccess, AT.FetchShivaListError)<undefined, Shiva[], BackendError>()
+export type FetchShivaList = ActionType<typeof fetchShivaList>
 
 //
-export const fetchShivaRequest = createAction(ShivaActionTypes.FetchShivaRequest)()
-export type FetchShivaRequest = ActionType<typeof fetchShivaRequest>
-
-export const fetchShivaSuccess = createAction(ShivaActionTypes.FetchShivaSuccess)<Shiva>()
-export type FetchShivaSuccess = ActionType<typeof fetchShivaSuccess>
-
-export const fetchShivaError = createAction(ShivaActionTypes.FetchShivaError)<BackendError>()
-export type FetchShivaError = ActionType<typeof fetchShivaError>
+export const fetchShiva = createAsyncAction(AT.FetchShivaRequest, AT.FetchShivaSuccess, AT.FetchShivaError)<undefined, Shiva, BackendError>()
+export type FetchShiva = ActionType<typeof fetchShiva>
 
 //
-export const createShivaRequest = createAction(ShivaActionTypes.CreateShivaRequest)()
-export type CreateShivaRequest = ActionType<typeof createShivaRequest>
-
-export const createShivaSuccess = createAction(ShivaActionTypes.CreateShivaSuccess)<Shiva>()
-export type CreateShivaSuccess = ActionType<typeof createShivaSuccess>
-
-export const createShivaError = createAction(ShivaActionTypes.CreateShivaError)<BackendError>()
-export type CreateShivaError = ActionType<typeof createShivaError>
+export const createShiva = createAsyncAction(AT.CreateShivaRequest, AT.CreateShivaSuccess, AT.CreateShivaError)<undefined, Shiva, BackendError>()
+export type CreateShiva = ActionType<typeof createShiva>
 
 //
-export const deleteShivaRequest = createAction(ShivaActionTypes.DeleteShivaRequest)()
-export type DeleteShivaRequest = ActionType<typeof deleteShivaRequest>
-
-export const deleteShivaSuccess = createAction(ShivaActionTypes.DeleteShivaSuccess)<string>()
-export type DeleteShivaSuccess = ActionType<typeof deleteShivaSuccess>
-
-export const deleteShivaError = createAction(ShivaActionTypes.DeleteShivaError)<BackendError>()
-export type DeleteShivaError = ActionType<typeof deleteShivaError>
+export const deleteShiva = createAsyncAction(AT.DeleteShivaRequest, AT.DeleteShivaSuccess, AT.DeleteShivaError)<undefined, ShivaId, BackendError>()
+export type DeleteShiva = ActionType<typeof deleteShiva>
 
 //
-export const updateShivaRequest = createAction(ShivaActionTypes.UpdateShivaRequest)()
-export type UpdateShivaRequest = ActionType<typeof updateShivaRequest>
-
-export const updateShivaSuccess = createAction(ShivaActionTypes.UpdateShivaSuccess)<{ shivaId: string; shiva: Partial<Shiva> }>()
-export type UpdateShivaSuccess = ActionType<typeof updateShivaSuccess>
-
-export const updateShivaError = createAction(ShivaActionTypes.UpdateShivaError)<BackendError>()
-export type UpdateShivaError = ActionType<typeof updateShivaError>
+export const updateShiva = createAsyncAction(AT.UpdateShivaRequest, AT.UpdateShivaSuccess, AT.UpdateShivaError)<undefined, { shivaId: ShivaId; shiva: Partial<Shiva> }, BackendError>()
+export type UpdateShiva = ActionType<typeof updateShiva>
 
 //
-export const initNewShiva = createAction(ShivaActionTypes.InitNewShiva)()
+export const initNewShiva = createAction(AT.InitNewShiva)()
 export type InitNewShiva = ActionType<typeof initNewShiva>
 
-export const updateNewShiva = createAction(ShivaActionTypes.UpdateNewShiva)<Partial<Shiva>>()
+export const updateNewShiva = createAction(AT.UpdateNewShiva)<Partial<Shiva>>()
 export type UpdateNewShiva = ActionType<typeof updateNewShiva>
 
-export const deleteNewShiva = createAction(ShivaActionTypes.DeleteNewShiva)()
+export const deleteNewShiva = createAction(AT.DeleteNewShiva)()
 export type DeleteNewShiva = ActionType<typeof deleteNewShiva>
 
 //
-export const addShivaVisit = createAction(ShivaActionTypes.AddVisit)<{ shivaId: string; visit: Visit }>()
+export const addShivaVisit = createAction(AT.AddVisit)<{ shivaId: string; visit: Visit }>()
 export type AddShivaVisit = ActionType<typeof addShivaVisit>
 
-export const updateShivaVisit = createAction(ShivaActionTypes.UpdateVisit)<{ shivaId: string; visitId: string; updatedVisit: Partial<Visit> }>()
+export const updateShivaVisit = createAction(AT.UpdateVisit)<{ shivaId: string; visitId: string; updatedVisit: Partial<Visit> }>()
 export type UpdateShivaVisit = ActionType<typeof updateShivaVisit>
 
-export const deleteShivaVisit = createAction(ShivaActionTypes.DeleteVisit)<{ shivaId: string; visitId: string }>()
+export const deleteShivaVisit = createAction(AT.DeleteVisit)<{ shivaId: string; visitId: string }>()
 export type DeleteShivaVisit = ActionType<typeof deleteShivaVisit>
 
 //
-export const selectShiva = createAction(ShivaActionTypes.SelectShiva)<string | null>()
+export const selectShiva = createAction(AT.SelectShiva)<string | null>()
 export type SelectShiva = ActionType<typeof selectShiva>
 
-export const resetShiva = createAction(ShivaActionTypes.ResetShiva)()
+export const resetShiva = createAction(AT.ResetShiva)()
 export type ResetShiva = ActionType<typeof resetShiva>
 
 export type ActionTypes =
-  | FetchShivaListRequest
-  | FetchShivaListSuccess
-  | FetchShivaListError
-  | FetchShivaRequest
-  | FetchShivaSuccess
-  | FetchShivaError
-  | CreateShivaRequest
-  | CreateShivaSuccess
-  | CreateShivaError
-  | DeleteShivaRequest
-  | DeleteShivaSuccess
-  | DeleteShivaError
-  | UpdateShivaRequest
-  | UpdateShivaSuccess
-  | UpdateShivaError
+  | FetchShivaList
+  | FetchShiva
+  | CreateShiva
+  | DeleteShiva
+  | UpdateShiva
   | InitNewShiva
   | UpdateNewShiva
   | DeleteNewShiva
