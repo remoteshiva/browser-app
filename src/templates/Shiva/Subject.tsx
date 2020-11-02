@@ -1,13 +1,16 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
-import { patchShiva } from '../../services/shiva'
+import { patchSelectedShiva } from '../../services/shiva'
+import { addNotification } from '../../store/app/actions'
 import Camera from '../../assets/img/camera.svg'
 import EditIcon from '../../assets/img/editWhite.svg'
 import PhotoDropzone from '../../components/Dropzone'
 import Editable from '../../components/Editable'
 import { Row, FlexColumn, FixedColumn } from '../../components/flexLayout'
 import { ShivaPanel, withPanel } from './Panel'
+import { initializeNotification } from '../../store/app/types'
+
 
 const Container = styled.div`
   padding-top: 20px;
@@ -77,14 +80,24 @@ const Subject = ({ shiva, editing, save }: ShivaPanel) => {
   const dispatch = useDispatch()
   const [message, setMessage] = useState(shiva.message)
   const [titleImage, setTitleImage] = useState(shiva.titleImage)
-
   useEffect(() => {
-    if (save && save > 0) {
-      const partialShiva = { message, titleImage }
-      console.log('saving partial shiva', partialShiva)
-      dispatch(patchShiva(shiva.id, partialShiva))
+    const saveShiva = async () => {
+      if (save && save > 0) {
+        const partialShiva = { message, titleImage }
+        console.log('saving partial shiva', partialShiva)
+        try{
+          await dispatch(patchSelectedShiva(partialShiva))
+        }catch(error){
+          dispatch(addNotification(initializeNotification({
+            title: 'Failed to save Shiva',
+            description: error.code,
+            type: 'error'
+          })))
+        }
+      }
     }
-  },[save, dispatch, message, titleImage, shiva.id])
+    saveShiva()
+  },[save])
   const handleInput = (html: string) => {
     setMessage(html)
   }
