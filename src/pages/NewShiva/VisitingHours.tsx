@@ -54,7 +54,7 @@ const VisitingHours = ({ newShiva, startDate, endDate, submit, selectStep }: Vis
       </Row>
       <Row>
         <FlexColumn>
-          <Calendar height={'431px'} editMode={true} startDate={startDate} endDate={endDate} visits={visits} />
+          <Calendar height={'431px'} mode='Add'  {...newShiva} />
         </FlexColumn>
       </Row>
       <Row>

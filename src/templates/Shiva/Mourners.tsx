@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
-import { patchShiva } from '../../services/shiva'
+import { patchSelectedShiva } from '../../services/shiva'
 import { ShivaPanel, withPanel } from './Panel'
 import { VerticalSpace } from '../../components/common'
 import Editable from '../../components/Editable'
@@ -14,6 +14,7 @@ const mournerPathPrefix = `${process.env.REACT_APP_BASE_URL}/m/`
 const visitorPathPrefix = `${process.env.REACT_APP_BASE_URL}/v/`
 
 const Wrapper = styled.div`
+  font-family: 'Lato';
   li {
     display: flex;
     flex-direction: row;
@@ -37,10 +38,12 @@ const Wrapper = styled.div`
   .name {
     width: 118px;
     margin-right: 14px;
+    font-size: 16px;
   }
   .relationship {
+    font-size: 16px;
     width: 100px;
-    font-weight: 100;
+    font-weight: 300;
     font-style: italic;
     color: ${props => props.theme.colors.doveGray};
     white-space: nowrap;
@@ -55,15 +58,10 @@ const AddMournerButton = styled.button`
 `
 type RE = React.ChangeEvent<HTMLInputElement>
 
-const Mourners = ({ role, shiva, editing, save }: ShivaPanel) => {
-  const dispatch = useDispatch()
+const Mourners = ({ role, shiva, editing }: ShivaPanel) => {
+
   const [mourners, setMourners] = useState(shiva.mourners)
-  useEffect(() => {
-    if (save && save > 0) {
-      const partialShiva = { mourners }
-      dispatch(patchShiva(shiva.id, partialShiva))
-    }
-  })
+
   const handleInput = (index: number, key: string, value: string) => {
     const newMourners = mourners.map((m, i) => {
       if (i === index) {

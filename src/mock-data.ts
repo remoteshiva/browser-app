@@ -82,8 +82,8 @@ export const shivas: Shiva[] = [
     visits: {
       one: initializeVisit({
         id: 'one',
-        date: new Date('2020-04-13 13:00'),
-        length: 4,
+        startTime: new Date('2020-04-13 13:00'),
+        endTime: new Date('2020-04-13 16:00'),
         visitors: [],
         mourners: [],
       }),

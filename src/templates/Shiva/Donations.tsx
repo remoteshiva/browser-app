@@ -1,10 +1,20 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { patchSelectedShiva } from '../../services/shiva'
 import { ShivaPanel, withPanel } from './Panel'
 import Editable from '../../components/Editable'
 
-const Donations = ({ shiva, editing }: ShivaPanel) => {
+const Donations = ({ shiva, editing, save }: ShivaPanel) => {
   const instructions = `Add link here`
   const [donations, setDonations] = useState(shiva.donations)
+  const dispatch = useDispatch()
+  useEffect(() => {
+    if (save && save > 0 ) {
+      console.log(`saving shiva ${save}`)
+      const partialShiva = { donations }
+      dispatch(patchSelectedShiva(partialShiva))
+    }
+  }, [save])
   const handleInput = (html: string) => {
     setDonations(html)
   }

@@ -29,5 +29,9 @@ export const AddVisit = '{RS}shiva/Add Shiva Visit'
 export const UpdateVisit = '{RS}/shiva/Update Shiva Visit'
 export const DeleteVisit = '{RS}/shiva/Delete Shiva Visit'
 
-export const SelectShiva = '{RS}shiva/SELECT_SHIVA'
-export const ResetShiva = '{RS}shiva/RESET_SHIVA'
+export const AddVisitor = '{RS}/Shiva/Add visitor to visit'
+
+export const SelectShiva = '{RS}shiva/Select Shiva'
+export const ResetShiva = '{RS}shiva/Reset all shivas from store'
+
+export const SelectVisit = '{RS}shiva/Select Visit'

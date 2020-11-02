@@ -1,8 +1,11 @@
-import React, { PureComponent } from 'react'
-import { addMinutes, getDate } from 'date-fns'
-import { Visit, Mourner } from '../../store/shiva/types'
+import React, { useState, useRef, memo } from 'react'
+import { useDispatch } from 'react-redux'
+import { addMinutes, getDate, format } from 'date-fns'
+import { VisitMap, Mourner} from '../../store/shiva/types'
+import { addVisit, updateVisit, deleteVisit } from '../../store/shiva/actions'
+import { initializeVisit } from '../../store/shiva/helpers'
 import { withCalendarContext, CalendarContextProps } from './context'
-import { CalendarEvent, NewEvent } from './event'
+import { Visit , NewVisit } from '../Visit'
 import { ColumnWrapper, PIXELS_PER_MINUTE, PIXELS_PER_HOUR, SNAP, Pixels } from './styles'
 
 const noop = () => {}
@@ -10,82 +13,98 @@ const noop = () => {}
 const pixelToMinutes = (offset: number) => (pixel: number) => offset + pixel / PIXELS_PER_MINUTE
 
 interface Props extends CalendarContextProps {
-  editMode: boolean
   day: Date
-  visits: { [key: string]: Visit }
-  mourners?: Mourner[]
-  scrollYOffset: Pixels
+  visits: VisitMap
+  mourners: Mourner[]
 }
 
-interface State {
-  newVisit: Visit | null
-  top: Pixels | null
-  bottom: Pixels
-}
+const Column = memo(({mode, day, visits, mourners, endHour, startHour}:Props) => {
+  const dispatch = useDispatch()
+  const [dragging, setDragging] = useState(false)
+  const [startY, setStartY] = useState(0)
+  const [currentY, setCurrentY] = useState(0)
 
-class Column extends PureComponent<Props, State> {
-  private rafBusy: boolean = false // the requestAnimationFrame "busy" status
+  const node = useRef<HTMLDivElement>(null)
+  const newEventRef = useRef<HTMLDivElement>(null)
+  const rafBusy = useRef(false)
+  const height = (endHour - startHour) * PIXELS_PER_HOUR + 1
 
-  constructor(props: Props) {
-    super(props)
-    this.state = {
-      newVisit: null,
-      top: null,
-      bottom: 0,
-    }
+  const pixelToTimeDisplay = (pixels: number) => {
+    return format(addMinutes(day,pixelToMinutes(startHour * 60)(pixels)), 'p')
   }
-  public handleMouseDown = (event: React.MouseEvent) => {
-    const target = event.target as HTMLElement
-    var rect = target.getBoundingClientRect()
-    console.log(this.props.scrollYOffset, rect.top, 'page', event.pageY, 'client', event.clientY)
-    const minutes = pixelToMinutes(9 * 60)(event.clientY + rect.top - this.props.scrollYOffset)
-    console.log('minutes', minutes)
-    const ts = addMinutes(this.props.day, minutes)
-    const newVisit: Visit = {
-      id: Date.now().toString(),
-      date: ts,
-      length: 4,
-      mourners: [],
-      visitors: [],
-    }
-    this.setState({ newVisit, top: event.pageY - rect.top })
-    window.addEventListener('mouseup', this.handleMouseUp)
+  const pixelToDate = (pixels: number) => {
+    return addMinutes(day,pixelToMinutes(startHour * 60)(pixels))
   }
-  public handleMouseMove = (event: React.MouseEvent) => {
-    event.stopPropagation()
-    event.persist()
-    if (!this.rafBusy) {
-      const top = this.state.top
-      window.requestAnimationFrame(() => {
-        if (top) {
-          const target = event.target as HTMLTextAreaElement
-          var rect = target.getBoundingClientRect()
-          var bottom = event.pageY - rect.top
-          this.setState({ bottom: bottom > SNAP ? bottom : SNAP })
+  const handleMouseDown = (event: React.MouseEvent) => {
+    if(!rafBusy.current){
+      event.persist()
+      window.requestAnimationFrame(()=>{
+        const y = event.nativeEvent.offsetY
+        console.log('startin in hour', addMinutes(day,pixelToMinutes(startHour * 60)(y)))
+        setStartY(y)
+        setCurrentY(y)
+        setDragging(true)
+        const node = newEventRef.current
+        if(node){
+          node.style.top = `${y}px`
         }
-        this.rafBusy = false
+        rafBusy.current = false
       })
-      this.rafBusy = true
+      rafBusy.current = true
     }
   }
-  public handleMouseUp = (event: MouseEvent) => {
-    // call up with the new event
-    this.setState({ newVisit: null, top: null, bottom: 0 })
-    window.removeEventListener('mouseup', this.handleMouseUp)
+  const handleMouseMove = (event: React.MouseEvent) => {
+    event.preventDefault()
+    event.stopPropagation()
+    if(!rafBusy.current && dragging){
+      event.persist()
+      window.requestAnimationFrame(()=>{
+        const node = newEventRef.current
+        if(node){
+          const rect = node.getBoundingClientRect()
+          const y = event.clientY - rect.top
+          setCurrentY(y)
+          node.style.height = `${y}px`
+        }
+        rafBusy.current = false
+      })
+      rafBusy.current = true
+    }
+
   }
-  render() {
-    const { editMode, day, startHour, endHour } = this.props
-    const height = (endHour - startHour) * PIXELS_PER_HOUR + 1
-    return (
-      <ColumnWrapper height={`${height}px`} onMouseDown={editMode ? this.handleMouseDown : noop} onMouseMove={editMode ? this.handleMouseMove : noop}>
-        {/* {this.props.visits.values()
-          .filter(visit => getDate(visit.date) === getDate(day))
-          .map((visit, i) => (
-            <CalendarEvent key={i} hourOffset={this.props.startHour} visit={visit} />
-          ))}
-        {this.state.top ? <NewEvent top={this.state.top} bottom={this.state.bottom} /> : null} */}
-      </ColumnWrapper>
-    )
+  const handleMouseUp = (event: React.MouseEvent) => {
+    if(dragging){
+      const node = newEventRef.current
+      if(node){
+        const visit = initializeVisit({
+          startTime: pixelToDate(startY),
+          endTime: pixelToDate(currentY)
+        })
+        dispatch(addVisit(visit))
+
+      }
+      setDragging(false)
+      setStartY(0)
+      setCurrentY(0)
+    }
   }
-}
+  return (
+    <ColumnWrapper
+      ref={node}
+      height={`${height}px`}
+      mode={mode}
+      onMouseDown={mode !== 'View' ? handleMouseDown : noop}
+      onMouseMove={mode !== 'View' ? handleMouseMove : noop}
+      onMouseUp={mode !== 'View' ? handleMouseUp : noop}
+    >
+      { Object.keys(visits).filter(id => getDate(visits[id].startTime) === getDate(day))
+        .map((id) => (
+          <Visit key={id} mode={mode} hourOffset={startHour} visit={visits[id]} mourners={mourners}/>
+        ))}
+      {dragging ? <NewVisit ref={newEventRef} start={pixelToTimeDisplay(startY)} end={pixelToTimeDisplay(startY+currentY)}/> : null}
+    </ColumnWrapper>
+  )
+})
+
+
 export default withCalendarContext(Column)
