@@ -1,6 +1,6 @@
 import { Reducer } from 'redux'
 import * as ShivaActions from './constants'
-import { ShivaState, Shiva } from './types'
+import { ShivaState, Shiva, VisitMap, Visit } from './types'
 import { ActionTypes } from './actions'
 import { arrayToObject } from '../helpers'
 import { initializeShiva } from './helpers'
@@ -12,7 +12,33 @@ export const initialState: ShivaState = {
   visitorKeys: {},
   mournerKeys: {},
   selectedShiva: null,
+  selectedVisit: null,
   newShiva: null,
+}
+
+const visitReducer = (visits: VisitMap, action: ActionTypes): VisitMap => {
+  switch (action.type) {
+    case ShivaActions.AddVisit:
+      return { ...visits, [action.payload.id]: action.payload }
+    case ShivaActions.UpdateVisit:
+      const { visitId, partialVisit } = action.payload
+      if (visitId in visits) {
+        const updatedVisit: Visit = { ...visits[visitId], ...partialVisit }
+        return { ...visits, ...{ [visitId]: updatedVisit } }
+      }
+      return visits
+    case ShivaActions.DeleteVisit:
+      const { [action.payload]: omit, ...newVisits } = visits
+      return { ...newVisits }
+    // case ShivaActions.AddVisitor:
+    //   const { visitId: vid, visitor } = action.payload
+    //   if (visitId in visits) {
+    //     return { ...visits }
+    //   }
+    //   return visits
+    default:
+      return visits
+  }
 }
 
 const reducer: Reducer<ShivaState> = (state = initialState, action: ActionTypes): ShivaState => {
@@ -137,44 +163,33 @@ const reducer: Reducer<ShivaState> = (state = initialState, action: ActionTypes)
       }
     }
     case ShivaActions.UpdateShivaError: {
-      return state
+      return { ...state, loading: false, error: action.payload }
     }
-    case ShivaActions.AddVisit: {
-      if (action.payload.shivaId in state.entities) {
-        const shiva = { ...state.entities[action.payload.shivaId] }
-        shiva.visits = { ...shiva.visits, [action.payload.visit.id]: action.payload.visit }
-        return { ...state, entities: { ...state.entities, [action.payload.shivaId]: shiva } }
-      }
-      return state
-    }
+    case ShivaActions.AddVisit:
+    case ShivaActions.UpdateVisit:
     case ShivaActions.DeleteVisit: {
-      const { shivaId, visitId } = action.payload
-      const shiva = state.entities[shivaId]
-      const { [visitId]: omit, ...visits } = shiva.visits
-      const newShiva = { ...shiva, visits: { ...visits } }
-      const entities = { ...state.entities, [shivaId]: newShiva }
-      return { ...state, entities }
+      // get shiva
+      let shiva: Shiva
+      if (state.newShiva) {
+        shiva = { ...state.newShiva, visits: visitReducer(state.newShiva.visits, action) }
+        return { ...state, newShiva: shiva }
+      } else if (state.selectedShiva) {
+        const s = state.entities[state.selectedShiva]
+        shiva = { ...s, visits: visitReducer(s.visits, action) }
+        return { ...state, entities: { ...state.entities, [shiva.id]: shiva } }
+      } else return state
     }
-    case ShivaActions.UpdateVisit: {
-      const { shivaId, visitId, updatedVisit } = action.payload
-      const shiva = state.entities[shivaId]
-      const visit = shiva.visits[visitId]
-      if (visit) {
-        const newVisit = { ...visit, ...updatedVisit }
-        return {
-          ...state,
-          entities: {
-            ...state.entities,
-            [shivaId]: { ...shiva, visits: { ...shiva.visits, [visitId]: newVisit } },
-          },
-        }
+    case ShivaActions.SelectVisit: {
+      return {
+        ...state,
+        selectedVisit: action.payload,
       }
-      return state
     }
     case ShivaActions.SelectShiva: {
       return {
         ...state,
         selectedShiva: action.payload,
+        selectedVisit: null, // reset the selected visit everytime the selected shiva is set
       }
     }
     case ShivaActions.ResetShiva: {
@@ -185,5 +200,5 @@ const reducer: Reducer<ShivaState> = (state = initialState, action: ActionTypes)
     }
   }
 }
-
-export { reducer as ShivaReducer }
+// visitReducer is exported for testing only. Should be done with rewire rather than export
+export { reducer as ShivaReducer, visitReducer }

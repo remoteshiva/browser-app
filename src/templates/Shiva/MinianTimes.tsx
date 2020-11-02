@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { patchShiva } from '../../services/shiva'
+import { Shiva, ShivaId } from '../../store/shiva/types'
+import { patchSelectedShiva } from '../../services/shiva'
 import { ShivaPanel, withPanel } from './Panel'
 import Editable from '../../components/Editable'
 
 const MinianTimes = ({ shiva, editing, save }: ShivaPanel) => {
   const instructions = `Add link here`
-  const dispatch = useDispatch()
   const [minianTimes, setMinianTimes] = useState(shiva.minianTimes)
-
+  const dispatch = useDispatch()
   useEffect(() => {
-    if (save && save > 0) {
+    if (save && save > 0 ) {
+      console.log(`saving shiva ${save}`)
       const partialShiva = { minianTimes }
-      console.log('im saving the shiva')
-      dispatch(patchShiva(shiva.id, partialShiva))
+      dispatch(patchSelectedShiva(partialShiva))
     }
-  })
+  }, [save])
   const handleInput = (html: string) => {
     setMinianTimes(html)
   }

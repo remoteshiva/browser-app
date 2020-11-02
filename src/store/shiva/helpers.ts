@@ -31,11 +31,13 @@ export const initializeShiva = (newShiva?: Partial<Shiva>): Shiva => ({
   ...newShiva,
 })
 
-export const initializeVisit = (visit?: Partial<Visit>): Visit => ({
-  id: generateRandomKey(),
-  date: new Date(),
-  length: 0,
-  mourners: [],
-  visitors: [],
-  ...visit,
-})
+export const initializeVisit = (visit?: Partial<Visit>): Visit => {
+  return {
+    id: generateRandomKey(),
+    startTime: new Date(),
+    endTime: new Date(),
+    mourners: [],
+    visitors: [],
+    ...visit,
+  }
+}

@@ -1,51 +1,91 @@
 import React from 'react'
-import Calendar from './'
+import { Story } from '@storybook/react'
+import { VisitMap } from '../../store/shiva/types'
+import Calendar, { Props } from './'
 
 const startDate = new Date('2020-03-12')
 const endDate = new Date('2020-03-19')
-const visits = [
-  {
-    date: new Date('2020-03-12 10:30'),
-    length: 4,
-    visitors: ['Brian Fantana', 'Brick Tamland', 'David Koechner'],
+const visits: VisitMap = {
+  '1':{
+    id: '1',
+    startTime: new Date('2020-03-12 10:30'),
+    endTime: new Date('2020-03-12 13:45'),
+    visitors: [
+      {name:'Brian Fantana', email: 'brian@channel4.com'},
+      {name:'Brick Tamland', email: 'brick@channel4.com'},
+      {name:'David Koechner', email: 'david@channel4.com'}
+    ],
     mourners: [0, 1],
   },
-  {
-    date: new Date('2020-03-13 9:30'),
-    length: 4,
-    visitors: ['Brian Fantana', 'Brick Tamland', 'David Koechner'],
+  '2':{
+    id: '2',
+    startTime: new Date('2020-03-13 9:30'),
+    endTime: new Date('2020-03-13 11:30'),
+    visitors: [
+      {name:'Brian Fantana', email: 'brian@channel4.com'},
+      {name:'Brick Tamland', email: 'brick@channel4.com'},
+      {name:'David Koechner', email: 'david@channel4.com'}
+    ],
     mourners: [0, 1],
   },
-  {
-    date: new Date('2020-03-13 14:30'),
-    length: 4,
-    visitors: ['Brian Fantana', 'Brick Tamland', 'David Koechner'],
+  '3':{
+    id: '3',
+    startTime: new Date('2020-03-13 14:30'),
+    endTime: new Date('2020-03-13 17:30'),
+    visitors: [
+      {name:'Brian Fantana', email: 'brian@channel4.com'},
+      {name:'Brick Tamland', email: 'brick@channel4.com'},
+      {name:'David Koechner', email: 'david@channel4.com'}
+    ],
     mourners: [0, 1],
   },
-  {
-    date: new Date('2020-03-14 11:00'),
-    length: 2,
-    visitors: ['Brian Fantana', 'Brick Tamland', 'David Koechner'],
+  '4':{
+    id: '4',
+    startTime: new Date('2020-03-14 11:00'),
+    endTime: new Date('2020-03-14 17:00'),
+    visitors: [
+      {name:'Brian Fantana', email: 'brian@channel4.com'},
+      {name:'Brick Tamland', email: 'brick@channel4.com'},
+      {name:'David Koechner', email: 'david@channel4.com'}
+    ],
     mourners: [1],
   },
-  {
-    date: new Date('2020-03-14 15:30'),
-    length: 2,
-    visitors: ['Brian Fantana'],
+  '5':{
+    id: '5',
+    startTime: new Date('2020-03-14 15:30'),
+    endTime: new Date('2020-03-14 21:45'),
+    visitors: [
+      {name:'Brian Fantana', email: 'brian@channel4.com'},
+    ],
     mourners: [1],
-  },
-]
+  }
+}
 
 export default {
   title: 'Calendar',
   component: Calendar,
 }
 
-// export const EmptyCalendar = () => <Calendar editMode={false} startDate={startDate} endDate={endDate} visits={[]} />
+const Template: Story<Props> = (props) => {
+  return <Calendar {...props}/>
+}
 
-// export const BusyCalendar = () => <Calendar editMode={false} startDate={startDate} endDate={endDate} visits={visits} />
+export const EmptyCalendar = Template.bind({})
+EmptyCalendar.args = {
+  mode: 'View', startDate, endDate, visits: {}
+}
 
-// export const UserCalendar = () => <Calendar editMode={true} startDate={startDate} endDate={endDate} visits={[]} />
+export const BusyCalendar = Template.bind({})
+BusyCalendar.args = {
+  mode: 'View', startDate, endDate, visits
+}
 
+export const UserCalendar = Template.bind({})
+UserCalendar.args = {
+  mode: 'Edit', startDate, endDate, visits: {}
+}
 // // limit the size of the calendar to activate inner scroll
-// export const WithScroll = () => <Calendar height={'450px'} editMode={false} startDate={startDate} endDate={endDate} visits={visits} />
+export const WithScroll=  Template.bind({})
+WithScroll.args = {
+  height: '450px', mode: 'Edit', startDate, endDate, visits: {}
+}

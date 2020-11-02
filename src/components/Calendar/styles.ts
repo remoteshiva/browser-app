@@ -1,4 +1,6 @@
 import styled from 'styled-components'
+import CloseIcon from '../../assets/img/closex.svg'
+import { CalendarMode } from '../types'
 
 export const PIXELS_PER_HOUR = 40
 export const PIXELS_PER_MINUTE = PIXELS_PER_HOUR / 60
@@ -93,6 +95,7 @@ export const GridColumns = styled.div<GridProps>`
 `
 
 interface ColumnWrapper {
+  mode: CalendarMode
   height?: string
 }
 export const ColumnWrapper = styled.div<ColumnWrapper>`
@@ -102,30 +105,6 @@ export const ColumnWrapper = styled.div<ColumnWrapper>`
   background-position: 100px;
   position: relative;
   height: ${props => (props.height ? props.height : 'auto')};
-  overflow: hidden;
-  cursor: crosshair !important;
-`
-
-interface EventWrapperProps {
-  top: number
-  height: number
-}
-
-export const EventWrapper = styled.div<EventWrapperProps>`
-  position: absolute;
-  box-sizing: border-box;
-  width: 90%;
-  margin: 0 5% 0 5%;
-  height: ${props => `${props.height}px`};
-  top: ${props => `${props.top}px`};
-  background-color: rgba(146, 70, 35, 0.12);
-  font-family: 'Lato';
-  font-size: 13px;
-  padding: 4px;
-  color: ${props => props.theme.colors.richGold};
-  > div {
-    font-family: 'Lato';
-    font-size: 13px;
-    line-height: 18px;
-  }
+  overflow: visible;
+  cursor: ${props => (props.mode !== 'View' ? 'crosshair' : 'pointer')};
 `

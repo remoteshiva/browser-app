@@ -14,6 +14,7 @@ const Button = styled.button`
   padding: 23px 85px 23px 85px;
   text-align: center;
   font-size: 18px;
+  outline: none;
   &:disabled {
     background-color: ${props => props.theme.colors.doveGray};
   }

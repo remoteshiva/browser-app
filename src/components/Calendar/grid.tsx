@@ -1,31 +1,23 @@
 import React, { useState } from 'react'
 import { eachDayOfInterval } from 'date-fns'
-import { Visit } from '../../store/shiva/types'
+import { Visit, Mourner } from '../../store/shiva/types'
 import Column from './Column'
 import { GridContainer, GridBackground, GridColumns } from './styles'
 
 interface GridProps {
-  editMode: boolean
   startDate: Date
   endDate: Date
   visits: { [key: string]: Visit }
+  mourners: Mourner[]
 }
-export const Grid = ({ editMode, startDate, endDate, visits }: GridProps) => {
-  const [offset, setOffset] = useState(0)
-
-  // useEffect(() => {
-  //   window.onscroll = () => {
-  //     setOffset(window.pageYOffset)
-  //   }
-  // }, []);
-
+export const Grid = ({ startDate, endDate, visits, mourners }: GridProps) => {
   const days = eachDayOfInterval({ start: startDate, end: endDate })
   return (
     <GridContainer numOfColumns={days.length}>
       <GridBackground>Click and drag to add visiting hours</GridBackground>
       <GridColumns numOfColumns={days.length}>
         {days.map((day, i) => (
-          <Column key={i} editMode={editMode} day={day} visits={visits} scrollYOffset={offset} />
+          <Column key={i} day={day} visits={visits} mourners={mourners}/>
         ))}
       </GridColumns>
     </GridContainer>

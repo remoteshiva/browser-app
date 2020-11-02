@@ -10,13 +10,15 @@ const VideoLink = ({ shiva, editing, save }: ShivaPanel) => {
   const dispatch = useDispatch()
   useEffect(() => {
     if (save && save > 0) {
+      console.log(`saving shiva ${save}`, videoLink)
       const partialShiva = { videoLink }
       dispatch(patchShiva(shiva.id, partialShiva))
     }
-  })
+  }, [save])
   const handleInput = (html: string) => {
     try {
       const url = new URL(html)
+      debugger
       setVideoLink(url)
     } catch (error) {}
   }
@@ -24,7 +26,7 @@ const VideoLink = ({ shiva, editing, save }: ShivaPanel) => {
   return (
     <>
       <h2>Video link</h2>
-      <Editable className={editing ? 'video-link active' : 'video-link'} html={link || editing ? link : instructions} active={editing || false} onInput={handleInput} />
+      <Editable className={editing ? 'video-link active' : 'video-link'} html={link ? link : editing ? '' : instructions} active={editing || false} onInput={handleInput} />
     </>
   )
 }

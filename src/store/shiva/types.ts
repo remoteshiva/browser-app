@@ -2,6 +2,7 @@ import { BackendError } from '../types'
 
 export type ROLE = 'Editor' | 'Mourner' | 'Visitor'
 export type ShivaId = string
+export type VisitId = string
 export interface Mourner {
   name: string
   relationship: string
@@ -11,12 +12,19 @@ export type EntityMap = { [key: string]: Shiva }
 export type VisitMap = { [key: string]: Visit }
 export type KeyMap = { [key: string]: string }
 
+export interface Visitor {
+  name: string
+  email: string
+  time?: string
+  timezone?: string
+}
+
 export interface Visit {
-  id: string
-  date: Date
-  length: number
+  id: VisitId
+  startTime: Date
+  endTime: Date
   mourners: number[]
-  visitors: string[]
+  visitors: Visitor[]
 }
 export interface Shiva {
   id: ShivaId
@@ -41,10 +49,11 @@ export interface Shiva {
 export interface ShivaState {
   loading: boolean
   entities: EntityMap // all shiva objects, arranged by id
-  shivas: string[] // list of shiva ids
+  shivas: ShivaId[] // list of shiva ids
   visitorKeys: KeyMap // map visitor keys to shiva ids
   mournerKeys: KeyMap // map mourner keys to shiva ids
-  selectedShiva: string | null // id of selected shiva
+  selectedShiva: ShivaId | null // id of selected shiva
+  selectedVisit: VisitId | null // id of selected shiva
   newShiva: Shiva | null
   error?: BackendError
 }

@@ -1,6 +1,6 @@
 import { ActionType, createAction, createAsyncAction } from 'typesafe-actions'
 import { BackendError } from '../types'
-import { Shiva, Visit, ShivaId } from './types'
+import { Shiva, Visit, ShivaId, VisitId, Visitor } from './types'
 import * as AT from './constants'
 
 //
@@ -34,18 +34,23 @@ export const deleteNewShiva = createAction(AT.DeleteNewShiva)()
 export type DeleteNewShiva = ActionType<typeof deleteNewShiva>
 
 //
-export const addShivaVisit = createAction(AT.AddVisit)<{ shivaId: string; visit: Visit }>()
-export type AddShivaVisit = ActionType<typeof addShivaVisit>
+export const addVisit = createAction(AT.AddVisit)<Visit>()
+export type AddVisit = ActionType<typeof addVisit>
 
-export const updateShivaVisit = createAction(AT.UpdateVisit)<{ shivaId: string; visitId: string; updatedVisit: Partial<Visit> }>()
-export type UpdateShivaVisit = ActionType<typeof updateShivaVisit>
+export const updateVisit = createAction(AT.UpdateVisit)<{ visitId: VisitId; partialVisit: Partial<Visit> }>()
+export type UpdateVisit = ActionType<typeof updateVisit>
 
-export const deleteShivaVisit = createAction(AT.DeleteVisit)<{ shivaId: string; visitId: string }>()
-export type DeleteShivaVisit = ActionType<typeof deleteShivaVisit>
+export const deleteVisit = createAction(AT.DeleteVisit)<VisitId>()
+export type DeleteVisit = ActionType<typeof deleteVisit>
 
+export const addVisitor = createAction(AT.AddVisitor)<{ visitId: VisitId; visitor: Visitor }>()
+export type AddVisitor = ActionType<typeof addVisitor>
 //
-export const selectShiva = createAction(AT.SelectShiva)<string | null>()
+export const selectShiva = createAction(AT.SelectShiva)<ShivaId | null>()
 export type SelectShiva = ActionType<typeof selectShiva>
+
+export const selectVisit = createAction(AT.SelectVisit)<VisitId | null>()
+export type SelectVisit = ActionType<typeof selectVisit>
 
 export const resetShiva = createAction(AT.ResetShiva)()
 export type ResetShiva = ActionType<typeof resetShiva>
@@ -59,8 +64,10 @@ export type ActionTypes =
   | InitNewShiva
   | UpdateNewShiva
   | DeleteNewShiva
-  | AddShivaVisit
-  | UpdateShivaVisit
-  | DeleteShivaVisit
+  | AddVisit
+  | UpdateVisit
+  | DeleteVisit
+  | AddVisitor
   | SelectShiva
+  | SelectVisit
   | ResetShiva
