@@ -122,7 +122,7 @@ export const Visit = ({mode, visit, mourners, hourOffset}: Props) => {
       >
         <VisitWrapper>
           {mode === 'Edit' ? <div className='close' onClick={handleDeleteEvent}></div> : null}
-          <div>{visit.mourners.length} Mourners</div>
+          <div>{mourners.length - visit.mourners.length} Mourners</div>
           <div>{visit.visitors.length} Visitors</div>
         </VisitWrapper>
       </div>
