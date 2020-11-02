@@ -1,6 +1,4 @@
-import { useSelector } from 'react-redux'
 import { auth } from 'firebase'
-import { RootState } from '../store'
 import { firestore } from '../firebase.config'
 import { AppThunk, omit } from './common'
 import { Shiva, ShivaId, Visit } from '../store/shiva/types'
@@ -8,10 +6,17 @@ import { initializeShiva, initializeVisit } from '../store/shiva/helpers'
 import { arrayToObject } from '../store/helpers'
 import { fetchShivaList, fetchShiva, createShiva, deleteShiva, updateShiva } from '../store/shiva/actions'
 import { BackendError } from '../store/types'
-import { resolve } from 'dns'
+
+const santisizeShiva = (shiva: Partial<Shiva>) => {
+  return {
+    ...shiva,
+    ...(shiva.titleImage && { titleImage: shiva.titleImage.toString() }),
+    ...(shiva.images && { images: shiva.images.map(url => url.toString()) }),
+  }
+}
 
 export const fetchMyShivas = (): AppThunk<Promise<Shiva[]>> => async (dispatch): Promise<Shiva[]> => {
-  return new Promise<Shiva[]>(async resolve => {
+  return new Promise<Shiva[]>(async (resolve, reject) => {
     dispatch(fetchShivaList.request())
     try {
       // we filter shivas by uid since we cannot apply restriction rules on the Shiva collection and still access
@@ -32,10 +37,9 @@ export const fetchMyShivas = (): AppThunk<Promise<Shiva[]>> => async (dispatch):
       dispatch(fetchShivaList.success(shivas))
       resolve(shivas)
     } catch (error) {
-      debugger
       const backendError: BackendError = { message: error }
       dispatch(fetchShivaList.failure(backendError))
-      resolve(undefined)
+      reject(error)
     }
   })
 }
@@ -71,7 +75,7 @@ export const fetchShivaById = (shivaId: string): AppThunk<Promise<Shiva>> => asy
 export type ShivaKey = 'mourner' | 'visitor'
 
 export const fetchShivaByKey = (key: string, keyType: ShivaKey): AppThunk<Promise<Shiva>> => async (dispatch): Promise<Shiva> => {
-  return new Promise<Shiva>(async resolve => {
+  return new Promise<Shiva>(async (resolve, reject) => {
     dispatch(fetchShiva.request())
     try {
       const query = await firestore.collection('shivas').where(`${keyType}Key`, '==', key).get()
@@ -83,17 +87,17 @@ export const fetchShivaByKey = (key: string, keyType: ShivaKey): AppThunk<Promis
         resolve(shiva)
       } else {
         dispatch(fetchShiva.failure({ code: 404, message: 'Not found' }))
-        resolve(undefined)
+        reject({ code: 404, message: 'Not found' })
       }
     } catch (error) {
       dispatch(fetchShiva.failure({ code: 404, message: error }))
-      resolve(undefined)
+      reject(error)
     }
   })
 }
 
 export const postShiva = (shiva: Shiva): AppThunk<Promise<Shiva>> => async (dispatch): Promise<Shiva> => {
-  return new Promise<Shiva>(async resolve => {
+  return new Promise<Shiva>(async (resolve, reject) => {
     dispatch(createShiva.request())
     try {
       const { id } = await firestore.collection('shivas').add({ ...omit(shiva, 'id'), uid: auth().currentUser?.uid })
@@ -102,7 +106,7 @@ export const postShiva = (shiva: Shiva): AppThunk<Promise<Shiva>> => async (disp
       resolve(newShiva)
     } catch (error) {
       dispatch(createShiva.failure({ message: error }))
-      resolve(undefined)
+      reject(undefined)
     }
   })
 }
@@ -122,13 +126,13 @@ export const deleteExistingShiva = (shivaId: string): AppThunk<Promise<string>> 
 }
 
 export const patchShiva = (shivaId: ShivaId, shiva: Partial<Shiva>): AppThunk<Promise<Partial<Shiva>>> => async (dispatch): Promise<Partial<Shiva>> => {
-  return new Promise<Partial<Shiva>>(async resolve => {
+  return new Promise<Partial<Shiva>>(async (resolve, reject) => {
     dispatch(updateShiva.request())
     try {
-      await firestore.collection('shivas').doc(shivaId).update(shiva)
+      await firestore.collection('shivas').doc(shivaId).update(santisizeShiva(shiva))
     } catch (error) {
       dispatch(updateShiva.failure({ message: error }))
-      resolve(undefined)
+      reject(error)
     }
     dispatch(updateShiva.success({ shivaId, shiva }))
     resolve(shiva)
