@@ -35,3 +35,5 @@ export const SelectShiva = '{RS}shiva/Select Shiva'
 export const ResetShiva = '{RS}shiva/Reset all shivas from store'
 
 export const SelectVisit = '{RS}shiva/Select Visit'
+
+export const ClearError = '{RS}shiva/Clear error'

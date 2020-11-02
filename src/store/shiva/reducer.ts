@@ -14,6 +14,7 @@ export const initialState: ShivaState = {
   selectedShiva: null,
   selectedVisit: null,
   newShiva: null,
+  error: null,
 }
 
 const visitReducer = (visits: VisitMap, action: ActionTypes): VisitMap => {
@@ -194,6 +195,9 @@ const reducer: Reducer<ShivaState> = (state = initialState, action: ActionTypes)
     }
     case ShivaActions.ResetShiva: {
       return initialState
+    }
+    case ShivaActions.ClearError: {
+      return { ...state, error: null }
     }
     default: {
       return state

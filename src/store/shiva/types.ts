@@ -55,5 +55,5 @@ export interface ShivaState {
   selectedShiva: ShivaId | null // id of selected shiva
   selectedVisit: VisitId | null // id of selected shiva
   newShiva: Shiva | null
-  error?: BackendError
+  error: BackendError | null
 }
