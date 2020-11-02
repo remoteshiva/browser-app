@@ -56,12 +56,17 @@ const AddMournerButton = styled.button`
   font-size: 16px;
   color: ${props => props.theme.colors.richGold};
 `
-type RE = React.ChangeEvent<HTMLInputElement>
 
-const Mourners = ({ role, shiva, editing }: ShivaPanel) => {
-
+const Mourners = ({ role, shiva, editing, save }: ShivaPanel) => {
+  const dispatch = useDispatch()
   const [mourners, setMourners] = useState(shiva.mourners)
-
+  useEffect(() => {
+    if (save && save > 0 ) {
+      console.log(`saving shiva ${save}`)
+      const partialShiva = { mourners }
+      dispatch(patchSelectedShiva(partialShiva))
+    }
+  }, [save])
   const handleInput = (index: number, key: string, value: string) => {
     const newMourners = mourners.map((m, i) => {
       if (i === index) {
