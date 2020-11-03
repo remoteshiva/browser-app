@@ -18,6 +18,7 @@ const colors = {
   blackHaze: '#e0ddd6',
   desertStorm: '#f4f1ee',
   venetianRed: '#DA0011',
+  cottonSeed: '#bfb9af'
 }
 
 const fonts = ['Lato', 'Lora', 'sans-serif']

@@ -1,11 +1,11 @@
 import React, { useState, useRef, memo } from 'react'
 import { useDispatch } from 'react-redux'
-import { addMinutes, getDate, format } from 'date-fns'
+import { addMinutes, getDate, format, roundToNearestMinutes } from 'date-fns'
 import { VisitMap, Mourner} from '../../store/shiva/types'
 import { addVisit, updateVisit, deleteVisit } from '../../store/shiva/actions'
 import { initializeVisit } from '../../store/shiva/helpers'
 import { withCalendarContext, CalendarContextProps } from './context'
-import { Visit , NewVisit } from '../Visit'
+import { Visit, NewVisit } from '../Visit'
 import { ColumnWrapper, PIXELS_PER_MINUTE, PIXELS_PER_HOUR, SNAP, Pixels } from './styles'
 
 const noop = () => {}
@@ -29,24 +29,25 @@ const Column = memo(({mode, day, visits, mourners, endHour, startHour}:Props) =>
   const rafBusy = useRef(false)
   const height = (endHour - startHour) * PIXELS_PER_HOUR + 1
 
-  const pixelToTimeDisplay = (pixels: number) => {
-    return format(addMinutes(day,pixelToMinutes(startHour * 60)(pixels)), 'p')
-  }
   const pixelToDate = (pixels: number) => {
-    return addMinutes(day,pixelToMinutes(startHour * 60)(pixels))
+    return roundToNearestMinutes(addMinutes(day,pixelToMinutes(startHour * 60)(pixels)),{nearestTo: 15})
+  }
+  const pixelToTimeDisplay = (pixels: number) => {
+    return format(pixelToDate(pixels), 'p')
   }
   const handleMouseDown = (event: React.MouseEvent) => {
     if(!rafBusy.current){
       event.persist()
       window.requestAnimationFrame(()=>{
         const y = event.nativeEvent.offsetY
-        console.log('startin in hour', addMinutes(day,pixelToMinutes(startHour * 60)(y)))
         setStartY(y)
-        setCurrentY(y)
+        setCurrentY(y+1)
         setDragging(true)
         const node = newEventRef.current
         if(node){
           node.style.top = `${y}px`
+          node.style.height = '0px'
+          node.style.cursor = 'row-resize'
         }
         rafBusy.current = false
       })
@@ -76,12 +77,10 @@ const Column = memo(({mode, day, visits, mourners, endHour, startHour}:Props) =>
     if(dragging){
       const node = newEventRef.current
       if(node){
-        const visit = initializeVisit({
-          startTime: pixelToDate(startY),
-          endTime: pixelToDate(currentY)
-        })
+        const startTime = pixelToDate(startY)
+        const endTime = pixelToDate(currentY)
+        const visit = initializeVisit({startTime, endTime})
         dispatch(addVisit(visit))
-
       }
       setDragging(false)
       setStartY(0)

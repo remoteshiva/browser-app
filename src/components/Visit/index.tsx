@@ -1,4 +1,4 @@
-import React, { useState, forwardRef, useRef } from 'react'
+import React, { useState, useRef, useCallback } from 'react'
 import { useDispatch, useSelector} from 'react-redux'
 import { RootState } from '../../store/'
 import { getHours, getMinutes } from 'date-fns'
@@ -9,21 +9,9 @@ import ToolTip from './ToolTip'
 import VisitData from './Data'
 import Visitor from './Visitor'
 import { VisitWrapper, PIXELS_PER_HOUR, PIXELS_PER_MINUTE } from './styles'
+import NewVisit from './new'
 
-
-
-interface NewVisitProps {
-  start: string
-  end: string
-}
-// this is a temporary event meant for drawing only
-export const NewVisit = forwardRef(({start, end}:NewVisitProps, ref: React.Ref<HTMLDivElement>) => {
- return(
-  <VisitWrapper ref={ref}>
-    {start} - {end}
-  </VisitWrapper>
-  )
-})
+export { NewVisit }
 
 interface InteractionData {
   isPristine: boolean
@@ -33,7 +21,7 @@ interface InteractionData {
   mouseY: number
 }
 
-type Interaction = { type: 'none' } | { type: 'drag'; data: any } | { type: 'resize-from-top'; data: any } | { type: 'resize-from-bottom'; data: any }
+type Interaction = { type: 'none' } | { type: 'drag'; data: InteractionData } | { type: 'resize-from-top'; data: InteractionData } | { type: 'resize-from-bottom'; data: InteractionData }
 type InteractionType = 'drag' | 'resize-from-top' | 'resize-from-bottom'
 
 interface Props {
@@ -43,14 +31,17 @@ interface Props {
   hourOffset: number
 }
 
-
 type ShowToolTip = 'Data' | 'Visitor' | null
 
 export const Visit = ({mode, visit, mourners, hourOffset}: Props) => {
   const dispatch = useDispatch()
   const meRef = useRef<HTMLDivElement>(null)
+  const rafBusy = useRef(false)
   const { selectedVisit } = useSelector((state: RootState) => state.shiva)
   const [ showTip, setShowTip] = useState<ShowToolTip>(null)
+  const [ interaction, setInteraction ] = useState<Interaction>({ type: 'none' })
+  const [offsetY, setOffsetY] = useState(0)
+  const offsetRef = useRef(offsetY)
 
 
   const timeToPixels = (date: Date) => {
@@ -71,9 +62,48 @@ export const Visit = ({mode, visit, mourners, hourOffset}: Props) => {
     event.preventDefault()
     dispatch(deleteVisit(visit.id))
   }
+
   const handleMouseDown = (event: React.MouseEvent) => {
     event.stopPropagation()
+    if (interaction.type === 'none'){
+      const data: InteractionData = {
+        isPristine: true,
+        dragStartX: event.clientX,
+        dragStartY: event.clientY,
+        mouseX: event.clientX,
+        mouseY: event.clientY,
+      }
+      setInteraction({ type: 'drag', data })
+    }
   }
+  const handleMouseMove = (event: React.MouseEvent) => {
+    event.preventDefault()
+    event.stopPropagation()
+    if(!rafBusy.current && interaction.type === 'drag'){
+      event.persist()
+      window.requestAnimationFrame(()=>{
+        const node = meRef.current
+        if(node){
+          node.style.top = `${node.offsetTop  + event.clientY - interaction.data.mouseY}px`
+          setInteraction({
+            ...interaction,
+            data: {
+              ...interaction.data,
+              mouseY: event.clientY
+            }
+          })
+        }
+        rafBusy.current = false
+      })
+      rafBusy.current = true
+    }
+  }
+
+  const handleMouseUp = (event: React.MouseEvent) => {
+    event.stopPropagation()
+    setInteraction({ type: 'none' })
+  }
+
   const hideTip = () => {
     setShowTip(null)
     dispatch(selectVisit(null))
@@ -112,20 +142,26 @@ export const Visit = ({mode, visit, mourners, hourOffset}: Props) => {
 
   const startPosition = timeToPixels(visit.startTime)
   const endPosition = timeToPixels(visit.endTime)
-
   return(
     <>
-      <div
+      <VisitWrapper
         ref={meRef}
-        onClick={handleClick} onMouseDown={handleMouseDown}
-        style={{position: 'absolute', top: `${startPosition}px`, height: `${endPosition}px`, width: '100%'}}
+        style={{top: `${startPosition}px`, height: `${endPosition}px`}}
+        onClickCapture={handleClick}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
       >
-        <VisitWrapper>
-          {mode === 'Edit' ? <div className='close' onClick={handleDeleteEvent}></div> : null}
-          <div>{mourners.length - visit.mourners.length} Mourners</div>
-          <div>{visit.visitors.length} Visitors</div>
-        </VisitWrapper>
-      </div>
+        {mode === 'Edit' ?
+          <>
+            <div className='close' onClick={handleDeleteEvent}></div>
+            <div className='gripper-bottom' onClickCapture={ev => ev.stopPropagation()}></div>
+          </>
+          : null
+        }
+        <div>{mourners.length - visit.mourners.length} Mourners</div>
+        <div>{visit.visitors.length} Visitors</div>
+      </VisitWrapper>
       { renderToolTip() }
     </>
   )
