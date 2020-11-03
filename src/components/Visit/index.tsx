@@ -1,14 +1,14 @@
-import React, { useState, useRef, useCallback } from 'react'
+import React, { useState, useRef } from 'react'
 import { useDispatch, useSelector} from 'react-redux'
 import { RootState } from '../../store/'
 import { getHours, getMinutes } from 'date-fns'
-import { Visit as VisitModel, Visitor as VisitorModel, Mourner } from '../../store/shiva/types'
+import { Visit as VisitModel, VisitId, Visitor as VisitorModel, Mourner } from '../../store/shiva/types'
 import { selectVisit, deleteVisit, updateVisit } from '../../store/shiva/actions'
 import { CalendarMode } from '../types'
 import ToolTip from './ToolTip'
 import VisitData from './Data'
 import Visitor from './Visitor'
-import { VisitWrapper, PIXELS_PER_HOUR, PIXELS_PER_MINUTE } from './styles'
+import { VisitWrapper, PIXELS_PER_HOUR, PIXELS_PER_MINUTE, Pixels } from './styles'
 import NewVisit from './new'
 
 export { NewVisit }
@@ -29,11 +29,12 @@ interface Props {
   visit: VisitModel
   mourners: Mourner[]
   hourOffset: number
+  onVisitChange: (visitId: VisitId, top: Pixels, bottom: Pixels)=>void
 }
 
 type ShowToolTip = 'Data' | 'Visitor' | null
 
-export const Visit = ({mode, visit, mourners, hourOffset}: Props) => {
+export const Visit = ({mode, visit, mourners, hourOffset, onVisitChange}: Props) => {
   const dispatch = useDispatch()
   const meRef = useRef<HTMLDivElement>(null)
   const rafBusy = useRef(false)
@@ -42,7 +43,6 @@ export const Visit = ({mode, visit, mourners, hourOffset}: Props) => {
   const [ interaction, setInteraction ] = useState<Interaction>({ type: 'none' })
   const [offsetY, setOffsetY] = useState(0)
   const offsetRef = useRef(offsetY)
-
 
   const timeToPixels = (date: Date) => {
     const hour = getHours(date)
@@ -53,9 +53,10 @@ export const Visit = ({mode, visit, mourners, hourOffset}: Props) => {
   const handleClick = (event: React.MouseEvent) => {
     event.preventDefault()
     event.stopPropagation()
-    // setClickPosition({x: event.nativeEvent.offsetX, y: event.nativeEvent.offsetY})
-    dispatch(selectVisit(visit.id))
-    setShowTip('Data')
+    if(mode!=='Edit'){
+      dispatch(selectVisit(visit.id))
+      setShowTip('Data')
+    }
   }
   const handleDeleteEvent = (event: React.MouseEvent) => {
     event.stopPropagation()
@@ -65,7 +66,7 @@ export const Visit = ({mode, visit, mourners, hourOffset}: Props) => {
 
   const handleMouseDown = (event: React.MouseEvent) => {
     event.stopPropagation()
-    if (interaction.type === 'none'){
+    if (interaction.type === 'none' && mode==='Edit'){
       const data: InteractionData = {
         isPristine: true,
         dragStartX: event.clientX,
@@ -96,24 +97,57 @@ export const Visit = ({mode, visit, mourners, hourOffset}: Props) => {
         rafBusy.current = false
       })
       rafBusy.current = true
+    } else if(!rafBusy.current && interaction.type === 'resize-from-bottom'){
+      event.persist()
+      window.requestAnimationFrame(()=>{
+        const node = meRef.current
+        if(node){
+          node.style.height = `${node.offsetHeight  + event.clientY - interaction.data.mouseY}px`
+          setInteraction({
+            ...interaction,
+            data: {
+              ...interaction.data,
+              mouseY: event.clientY
+            }
+          })
+        }
+        rafBusy.current = false
+      })
+      rafBusy.current = true
     }
   }
-
   const handleMouseUp = (event: React.MouseEvent) => {
     event.stopPropagation()
-    setInteraction({ type: 'none' })
+    if(interaction.type !== 'none'){
+      const node = meRef.current
+      if(node){
+        onVisitChange(visit.id, node.offsetTop, node.offsetHeight)
+      }
+      setInteraction({ type: 'none' })
+      return false
+    }
   }
-
+  const handleResize = (event: React.MouseEvent) => {
+    event.stopPropagation()
+    if (interaction.type === 'none' && mode==='Edit'){
+      const data: InteractionData = {
+        isPristine: true,
+        dragStartX: event.clientX,
+        dragStartY: event.clientY,
+        mouseX: event.clientX,
+        mouseY: event.clientY,
+      }
+      setInteraction({ type: 'resize-from-bottom' , data })
+    }
+  }
   const hideTip = () => {
     setShowTip(null)
     dispatch(selectVisit(null))
   }
-
   const displayAddVisitor = () => {
     setShowTip('Visitor')
     console.log('show the add visitor')
   }
-
   const submitVisitor = (visitor: VisitorModel) => {
     setShowTip(null)
     dispatch(updateVisit({
@@ -121,7 +155,6 @@ export const Visit = ({mode, visit, mourners, hourOffset}: Props) => {
       partialVisit: {visitors: [...visit.visitors, visitor]}
     }))
   }
-
   const renderToolTip = () => {
     if(selectedVisit !== visit.id)
       return null
@@ -139,7 +172,6 @@ export const Visit = ({mode, visit, mourners, hourOffset}: Props) => {
       return null
     }
   }
-
   const startPosition = timeToPixels(visit.startTime)
   const endPosition = timeToPixels(visit.endTime)
   return(
@@ -155,7 +187,7 @@ export const Visit = ({mode, visit, mourners, hourOffset}: Props) => {
         {mode === 'Edit' ?
           <>
             <div className='close' onClick={handleDeleteEvent}></div>
-            <div className='gripper-bottom' onClickCapture={ev => ev.stopPropagation()}></div>
+            <div className='gripper-bottom' onMouseDown={handleResize}></div>
           </>
           : null
         }

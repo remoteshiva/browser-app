@@ -1,7 +1,7 @@
 import React, { useState, useRef, memo } from 'react'
 import { useDispatch } from 'react-redux'
 import { addMinutes, getDate, format, roundToNearestMinutes } from 'date-fns'
-import { VisitMap, Mourner} from '../../store/shiva/types'
+import { VisitMap, Mourner, VisitId} from '../../store/shiva/types'
 import { addVisit, updateVisit, deleteVisit } from '../../store/shiva/actions'
 import { initializeVisit } from '../../store/shiva/helpers'
 import { withCalendarContext, CalendarContextProps } from './context'
@@ -87,6 +87,9 @@ const Column = memo(({mode, day, visits, mourners, endHour, startHour}:Props) =>
       setCurrentY(0)
     }
   }
+  const handleVisitChange = (visitId: VisitId, top: Pixels, bottom: Pixels) => {
+    console.log('we have a visit change', visitId, top, bottom)
+  }
   return (
     <ColumnWrapper
       ref={node}
@@ -98,8 +101,16 @@ const Column = memo(({mode, day, visits, mourners, endHour, startHour}:Props) =>
     >
       { Object.keys(visits).filter(id => getDate(visits[id].startTime) === getDate(day))
         .map((id) => (
-          <Visit key={id} mode={mode} hourOffset={startHour} visit={visits[id]} mourners={mourners}/>
-        ))}
+          <Visit
+            key={id}
+            mode={mode}
+            hourOffset={startHour}
+            visit={visits[id]}
+            mourners={mourners}
+            onVisitChange={handleVisitChange}
+          />
+        ))
+      }
       {dragging ? <NewVisit ref={newEventRef} start={pixelToTimeDisplay(startY)} end={pixelToTimeDisplay(startY+currentY)}/> : null}
     </ColumnWrapper>
   )
