@@ -14,7 +14,7 @@ export const Grid = ({ startDate, endDate, visits, mourners }: GridProps) => {
   const days = eachDayOfInterval({ start: startDate, end: endDate })
   return (
     <GridContainer numOfColumns={days.length}>
-      <GridBackground>Click and drag to add visiting hours</GridBackground>
+      {Object.keys(visits).length === 0 ? <GridBackground>Click and drag to add visiting hours</GridBackground> : null }
       <GridColumns numOfColumns={days.length}>
         {days.map((day, i) => (
           <Column key={i} day={day} visits={visits} mourners={mourners}/>

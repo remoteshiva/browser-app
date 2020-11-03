@@ -6,16 +6,10 @@ export const PIXELS_PER_MINUTE = PIXELS_PER_HOUR / 60
 export const SNAP = 15
 export type Pixels = number
 
-interface VisitWrapperProps {
-  top?: number
-  height?: number
-}
-
-export const VisitWrapper = styled.div<VisitWrapperProps>`
+export const VisitWrapper = styled.div`
   position: absolute;
   box-sizing: border-box;
   width: 90%;
-  height: 100%;
   margin: 0 5% 0 5%;
   background-color: rgba(146, 70, 35, 0.12);
   font-family: 'Lato';
@@ -37,5 +31,18 @@ export const VisitWrapper = styled.div<VisitWrapperProps>`
     right: 5px;
     width: 8px;
     height: 8px;
+  }
+  .gripper-bottom {
+    position: absolute;
+    margin: auto;
+    left: 0;
+    right: 0;
+    max-width: 25px;
+    height: 3px;
+    bottom: 5px;
+    border-radius: 1.5px;
+    background-color: ${props => props.theme.colors.cottonSeed};
+    opacity: 0.62;
+    cursor: row-resize;
   }
 `
