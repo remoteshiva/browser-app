@@ -66,12 +66,12 @@ interface GridProps {
   numOfColumns: number
 }
 export const GridContainer = styled.div<GridProps>`
+  display: grid;
+  position: relative;
   width: 100%;
   margin-top: 10px;
-  display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr;
-  /* overflow-y:hidden; */
 `
 
 export const GridBackground = styled.div`

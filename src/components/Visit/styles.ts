@@ -16,7 +16,6 @@ export const VisitWrapper = styled.div`
   font-size: 13px;
   padding: 10px;
   cursor: pointer;
-  overflow: hidden;
   color: ${props => props.theme.colors.richGold};
   > div {
     font-family: 'Lato';

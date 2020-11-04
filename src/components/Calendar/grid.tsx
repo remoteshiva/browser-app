@@ -20,6 +20,7 @@ export const Grid = ({ startDate, endDate, visits, mourners }: GridProps) => {
           <Column key={i} day={day} visits={visits} mourners={mourners}/>
         ))}
       </GridColumns>
+      <div id='visit-tips'></div>
     </GridContainer>
   )
 }

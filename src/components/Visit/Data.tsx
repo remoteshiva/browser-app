@@ -76,13 +76,6 @@ interface Props extends Visit {
 }
 
 const VisitData = ({mode, mournersList, visitors, mourners, onAddVisitor}: Props) => {
-  const handleClick = (event: React.MouseEvent) => {
-    event.preventDefault()
-    event.stopPropagation()
-  }
-  const handleMouseDown = (event: React.MouseEvent) => {
-    event.stopPropagation()
-  }
   const renderMourners = () => {
     let list: Mourner[]
     if(mode==='Edit'){
@@ -93,7 +86,7 @@ const VisitData = ({mode, mournersList, visitors, mourners, onAddVisitor}: Props
     return list.map((m,i) => <MournerRow key={i} mode={mode} {...m}/>)
   }
   return (
-    <Wrapper onClick={handleClick} onMouseDown={handleMouseDown}>
+    <Wrapper>
       <div className='title'>Mourners</div>
       {renderMourners()}
       <VerticalSpace height={10}/>
