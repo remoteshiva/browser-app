@@ -6,7 +6,6 @@ import { ApproveButton } from '../../components/common'
 
 const Wrapper = styled.div`
   width: 360px;
-  background-color: ${props=>props.theme.colors.sauvignonLight};
   border-radius: 2px;
   box-shadow: 0 2px 15px 0 rgba(123, 119, 108, 0.37);
   text-align: left;

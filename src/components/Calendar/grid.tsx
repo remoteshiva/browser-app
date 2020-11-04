@@ -1,13 +1,13 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { eachDayOfInterval } from 'date-fns'
-import { Visit, Mourner } from '../../store/shiva/types'
+import { VisitMap, Mourner } from '../../store/shiva/types'
 import Column from './Column'
 import { GridContainer, GridBackground, GridColumns } from './styles'
 
 interface GridProps {
   startDate: Date
   endDate: Date
-  visits: { [key: string]: Visit }
+  visits: VisitMap
   mourners: Mourner[]
 }
 export const Grid = ({ startDate, endDate, visits, mourners }: GridProps) => {

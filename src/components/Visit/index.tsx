@@ -1,7 +1,8 @@
-import React, { useState, useRef, useCallback } from 'react'
+import React, { useState, useRef, useCallback, useContext } from 'react'
 import { useDispatch, useSelector} from 'react-redux'
-import { RootState } from '../../store/'
+import { ThemeContext } from 'styled-components'
 import { getHours, getMinutes } from 'date-fns'
+import { RootState } from '../../store/'
 import { Visit as VisitModel, VisitId, Visitor as VisitorModel, Mourner } from '../../store/shiva/types'
 import { selectVisit, deleteVisit, updateVisit } from '../../store/shiva/actions'
 import { CalendarMode } from '../types'
@@ -38,6 +39,7 @@ type ShowToolTip = 'Data' | 'Visitor' | null
 
 export const Visit = ({mode, visit, mourners, hourOffset, onVisitChange}: Props) => {
   const dispatch = useDispatch()
+  const theme= useContext(ThemeContext)
   const meRef = useRef<HTMLDivElement>(null)
   const rafBusy = useRef(false)
   const { selectedVisit } = useSelector((state: RootState) => state.shiva)
@@ -139,7 +141,7 @@ export const Visit = ({mode, visit, mourners, hourOffset, onVisitChange}: Props)
         case 'Data':
           return <ToolTip left='100px' top={node.style.top} onHide={hideTip}><VisitData mode={mode} {...visit} mournersList={mourners} onAddVisitor={displayAddVisitor}/></ToolTip>
         case 'Visitor':
-          return <ToolTip left='100px' top={node.style.top} onHide={hideTip}><Visitor onSubmitVisitor={submitVisitor} {...visit}/></ToolTip>
+          return <ToolTip left='100px' top={node.style.top} onHide={hideTip} backgroundColor={theme.colors.sauvignonLight}><Visitor onSubmitVisitor={submitVisitor} {...visit}/></ToolTip>
         case null:
           return null
       }

@@ -105,6 +105,6 @@ export const ColumnWrapper = styled.div<ColumnWrapper>`
   background-position: 100px;
   position: relative;
   height: ${props => (props.height ? props.height : 'auto')};
-  overflow: visible;
+  overflow: hidden;
   cursor: ${props => (props.mode !== 'View' ? 'crosshair' : 'pointer')};
 `
