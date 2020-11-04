@@ -55,8 +55,6 @@ const Column = memo(({mode, day, visits, mourners, endHour, startHour}:Props) =>
     }
   }
   const handleMouseMove = (event: React.MouseEvent) => {
-    event.preventDefault()
-    event.stopPropagation()
     if(!rafBusy.current && dragging){
       event.persist()
       window.requestAnimationFrame(()=>{
@@ -88,7 +86,10 @@ const Column = memo(({mode, day, visits, mourners, endHour, startHour}:Props) =>
     }
   }
   const handleVisitChange = (visitId: VisitId, top: Pixels, bottom: Pixels) => {
-    console.log('we have a visit change', visitId, top, bottom)
+    const startTime = pixelToDate(top)
+    const endTime = pixelToDate(bottom)
+    const partialVisit = {startTime, endTime}
+    dispatch(updateVisit({visitId, partialVisit}))
   }
   return (
     <ColumnWrapper
