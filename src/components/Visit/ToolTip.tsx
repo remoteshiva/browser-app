@@ -1,10 +1,11 @@
-import React, { useEffect, ReactNode, useRef, MutableRefObject, RefObject} from 'react'
+import React, {  ReactNode } from 'react'
 import styled from 'styled-components'
 import { ClickOutside } from '../ClickOutside'
 
 interface WrapperProps {
   left: string
   top: string
+  backgroundColor?: string
 }
 const Wrapper = styled.div<WrapperProps>`
   position: absolute;
@@ -12,9 +13,9 @@ const Wrapper = styled.div<WrapperProps>`
   top: ${props => props.top};
   box-shadow: 0 2px 20px 0 rgba(65, 65, 58, 0.1);
   border-radius: 5px;
-  background-color: white;
+  background-color:${props=> props.backgroundColor ? props.backgroundColor :  'white'};
   text-align: center;
-  z-index: 10;
+  z-index: 9999;
 
   #arrow {
     position: absolute;
@@ -22,11 +23,11 @@ const Wrapper = styled.div<WrapperProps>`
     height: 10px;
     &:after {
       content: ' ';
-      background-color: white;
+      background-color: ${props=> props.backgroundColor ? props.backgroundColor :  'white'};
       box-shadow: -1px -1px 1pxrgba(65, 65, 58, 0.1);
       position: absolute;
       top:30px;
-      left: -25px;
+      left: -5px;
       transform: rotate(45deg);
       width: 10px;
       height: 10px;
@@ -47,11 +48,10 @@ interface Props  extends WrapperProps{
   children?: ReactNode
 }
 
-const ToolTip = ({left, top, onHide, children}: Props) => {
-  const node = useRef() as MutableRefObject<HTMLDivElement>
+const ToolTip = ({left, top, backgroundColor, onHide, children}: Props) => {
   return(
     <ClickOutside onClickOutside={onHide}>
-      <Wrapper left={left} top={top}>
+      <Wrapper left={left} top={top} backgroundColor={backgroundColor}>
         <div id='arrow'/>
         {children}
       </Wrapper>
