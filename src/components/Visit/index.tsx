@@ -123,7 +123,6 @@ export const Visit = ({mode, visit, mourners, hourOffset, onVisitChange}: Props)
   }
   const displayAddVisitor = () => {
     setShowTip('Visitor')
-    console.log('show the add visitor')
   }
   const submitVisitor = (visitor: VisitorModel) => {
     setShowTip(null)
@@ -137,11 +136,20 @@ export const Visit = ({mode, visit, mourners, hourOffset, onVisitChange}: Props)
       return null
     const node = meRef.current
     if(node){
+      const rect = node.getBoundingClientRect()
       switch(showTip){
         case 'Data':
-          return <ToolTip left='100px' top={node.style.top} onHide={hideTip}><VisitData mode={mode} {...visit} mournersList={mourners} onAddVisitor={displayAddVisitor}/></ToolTip>
+          return(
+            <ToolTip left={`${rect.left}px`}  top={`${node.offsetTop}px`} onHide={hideTip}>
+              <VisitData mode={mode} {...visit} mournersList={mourners} onAddVisitor={displayAddVisitor}/>
+            </ToolTip>
+          )
         case 'Visitor':
-          return <ToolTip left='100px' top={node.style.top} onHide={hideTip} backgroundColor={theme.colors.sauvignonLight}><Visitor onSubmitVisitor={submitVisitor} {...visit}/></ToolTip>
+          return(
+            <ToolTip left={`${rect.left}px`}  top={`${node.offsetTop}px`} onHide={hideTip} backgroundColor={theme.colors.sauvignonLight}>
+              <Visitor onSubmitVisitor={submitVisitor} {...visit}/>
+            </ToolTip>
+          )
         case null:
           return null
       }

@@ -40,7 +40,6 @@ interface Props extends Visit {
 const Visitor = ({startTime, onSubmitVisitor}: Props) => {
   const [values, setValues] = useState({ name: '', email: '' })
   const [time, setTime] = useState(format(startTime, 'p'))
-  const [timezone, setTimezone] = useState('EST')
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target
@@ -53,7 +52,6 @@ const Visitor = ({startTime, onSubmitVisitor}: Props) => {
       name: values.name,
       email: values.email,
       time,
-      timezone,
     })
   }
 
@@ -93,17 +91,7 @@ const Visitor = ({startTime, onSubmitVisitor}: Props) => {
             value={time}
             onChange={()=>{}}
             required
-            className="appearance-none bg-grey-lighter rounded py-3 px-4 mb-3 mr-2"
-            style={{width: '48%'}}
-          />
-          <input
-            name="timezone"
-            type="text"
-            value={timezone}
-            onChange={()=>{}}
-            required
-            className="appearance-none bg-grey-lighter rounded py-3 px-4 mb-3"
-            style={{width: '48%'}}
+            className="appearance-none block w-full bg-grey-lighter rounded py-3 px-4 mb-3 mr-2"
           />
         </label>
         <ApproveButton  style={{width: '100%'}} type="submit">

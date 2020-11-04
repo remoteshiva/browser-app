@@ -21,7 +21,6 @@ export const CardWrapper = styled.div<CardWrapperProps>`
   display: flex;
   position: relative;
   flex-direction: ${props => (props.direction ? props.direction : 'row')};
-  overflow: hidden;
   width: 100%;
   margin-bottom: 20px;
   padding: 20px;

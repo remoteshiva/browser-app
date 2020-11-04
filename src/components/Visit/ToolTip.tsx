@@ -1,4 +1,5 @@
-import React, {  ReactNode } from 'react'
+import React, { ReactNode, useRef, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import styled from 'styled-components'
 import { ClickOutside } from '../ClickOutside'
 
@@ -34,13 +35,6 @@ const Wrapper = styled.div<WrapperProps>`
       pointer-events: none;
     }
   }
-
-  &[data-popper-placement^='top'] > #arrow {
-    bottom: -30px;
-    :after {
-      box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
-    }
-  }
 `
 
 interface Props  extends WrapperProps{
@@ -49,7 +43,15 @@ interface Props  extends WrapperProps{
 }
 
 const ToolTip = ({left, top, backgroundColor, onHide, children}: Props) => {
-  return(
+  const el = useRef(document.createElement('div'))
+  useEffect(()=>{
+    const mount = document.getElementById('visit-tips') as HTMLElement
+    mount!.appendChild(el.current)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    return () => void mount!.removeChild(el.current)
+  },[])
+
+  const renderTip = () => (
     <ClickOutside onClickOutside={onHide}>
       <Wrapper left={left} top={top} backgroundColor={backgroundColor}>
         <div id='arrow'/>
@@ -57,6 +59,7 @@ const ToolTip = ({left, top, backgroundColor, onHide, children}: Props) => {
       </Wrapper>
     </ClickOutside>
   )
+  return createPortal(renderTip(), el.current)
 }
 
 export default ToolTip
