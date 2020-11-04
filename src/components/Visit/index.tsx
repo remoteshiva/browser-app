@@ -1,10 +1,11 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useCallback } from 'react'
 import { useDispatch, useSelector} from 'react-redux'
 import { RootState } from '../../store/'
 import { getHours, getMinutes } from 'date-fns'
 import { Visit as VisitModel, VisitId, Visitor as VisitorModel, Mourner } from '../../store/shiva/types'
 import { selectVisit, deleteVisit, updateVisit } from '../../store/shiva/actions'
 import { CalendarMode } from '../types'
+import { useEventListener } from '../common'
 import ToolTip from './ToolTip'
 import VisitData from './Data'
 import Visitor from './Visitor'
@@ -13,16 +14,17 @@ import NewVisit from './new'
 
 export { NewVisit }
 
-interface InteractionData {
-  isPristine: boolean
-  dragStartX: number
-  dragStartY: number
-  mouseX: number
-  mouseY: number
+type InteractionType = 'drag' | 'resize-from-top' | 'resize-from-bottom' | null
+type Interaction = {
+  type: InteractionType,
+  deltaX: Pixels,
+  deltaY: Pixels
 }
-
-type Interaction = { type: 'none' } | { type: 'drag'; data: InteractionData } | { type: 'resize-from-top'; data: InteractionData } | { type: 'resize-from-bottom'; data: InteractionData }
-type InteractionType = 'drag' | 'resize-from-top' | 'resize-from-bottom'
+const NoInteraction: Interaction = {
+  type: null,
+  deltaX: 0,
+  deltaY: 0,
+}
 
 interface Props {
   mode: CalendarMode
@@ -40,9 +42,12 @@ export const Visit = ({mode, visit, mourners, hourOffset, onVisitChange}: Props)
   const rafBusy = useRef(false)
   const { selectedVisit } = useSelector((state: RootState) => state.shiva)
   const [ showTip, setShowTip] = useState<ShowToolTip>(null)
-  const [ interaction, setInteraction ] = useState<Interaction>({ type: 'none' })
-  const [offsetY, setOffsetY] = useState(0)
-  const offsetRef = useRef(offsetY)
+  const [ interaction, _setInteraction ] = useState<Interaction>(NoInteraction)
+  const interactionRef = useRef(interaction);
+  const setInteraction = (data:any) => {
+    interactionRef.current = data
+    _setInteraction(data)
+  };
 
   const timeToPixels = (date: Date) => {
     const hour = getHours(date)
@@ -51,8 +56,6 @@ export const Visit = ({mode, visit, mourners, hourOffset, onVisitChange}: Props)
 
   }
   const handleClick = (event: React.MouseEvent) => {
-    event.preventDefault()
-    event.stopPropagation()
     if(mode!=='Edit'){
       dispatch(selectVisit(visit.id))
       setShowTip('Data')
@@ -63,81 +66,53 @@ export const Visit = ({mode, visit, mourners, hourOffset, onVisitChange}: Props)
     event.preventDefault()
     dispatch(deleteVisit(visit.id))
   }
-
-  const handleMouseDown = (event: React.MouseEvent) => {
+  const handleDrag = (ev: React.MouseEvent) => handleMouseDown(ev, 'drag')
+  const handleResizeFromTop = (ev: React.MouseEvent) => handleMouseDown(ev, 'resize-from-top')
+  const handleResizeFromBottom = (ev: React.MouseEvent) => handleMouseDown(ev, 'resize-from-bottom')
+  const handleMouseDown = (event: React.MouseEvent, type: InteractionType) => {
     event.stopPropagation()
-    if (interaction.type === 'none' && mode==='Edit'){
-      const data: InteractionData = {
-        isPristine: true,
-        dragStartX: event.clientX,
-        dragStartY: event.clientY,
-        mouseX: event.clientX,
-        mouseY: event.clientY,
-      }
-      setInteraction({ type: 'drag', data })
+    if (interaction.type === null && mode==='Edit'){
+      setInteraction({ type, deltaX: event.clientX, deltaY: event.clientY })
     }
   }
-  const handleMouseMove = (event: React.MouseEvent) => {
+  const handleMouseMove = useCallback((event: MouseEvent)=>{
     event.preventDefault()
     event.stopPropagation()
-    if(!rafBusy.current && interaction.type === 'drag'){
-      event.persist()
+    if(!rafBusy.current && interactionRef.current.type !== null){
       window.requestAnimationFrame(()=>{
         const node = meRef.current
         if(node){
-          node.style.top = `${node.offsetTop  + event.clientY - interaction.data.mouseY}px`
+          switch(interaction.type){
+            case 'drag':
+              node.style.top = `${node.offsetTop  + event.clientY - interactionRef.current.deltaY}px`
+              break;
+            case 'resize-from-top':
+              node.style.top = `${node.offsetTop  + event.clientY - interactionRef.current.deltaY}px`
+              node.style.height = `${node.offsetHeight - event.clientY + interactionRef.current.deltaY}px`
+              break;
+            case 'resize-from-bottom':
+              node.style.height = `${node.offsetHeight  + event.clientY - interactionRef.current.deltaY}px`
+              break;
+          }
           setInteraction({
-            ...interaction,
-            data: {
-              ...interaction.data,
-              mouseY: event.clientY
-            }
-          })
-        }
-        rafBusy.current = false
-      })
-      rafBusy.current = true
-    } else if(!rafBusy.current && interaction.type === 'resize-from-bottom'){
-      event.persist()
-      window.requestAnimationFrame(()=>{
-        const node = meRef.current
-        if(node){
-          node.style.height = `${node.offsetHeight  + event.clientY - interaction.data.mouseY}px`
-          setInteraction({
-            ...interaction,
-            data: {
-              ...interaction.data,
-              mouseY: event.clientY
-            }
+            ...interactionRef.current,
+            deltaX: event.clientX,
+            deltaY: event.clientY
           })
         }
         rafBusy.current = false
       })
       rafBusy.current = true
     }
-  }
+  }, [interaction])
   const handleMouseUp = (event: React.MouseEvent) => {
-    event.stopPropagation()
-    if(interaction.type !== 'none'){
+    if(interactionRef.current.type !== null){
       const node = meRef.current
       if(node){
         onVisitChange(visit.id, node.offsetTop, node.offsetHeight)
       }
-      setInteraction({ type: 'none' })
+      setInteraction(NoInteraction)
       return false
-    }
-  }
-  const handleResize = (event: React.MouseEvent) => {
-    event.stopPropagation()
-    if (interaction.type === 'none' && mode==='Edit'){
-      const data: InteractionData = {
-        isPristine: true,
-        dragStartX: event.clientX,
-        dragStartY: event.clientY,
-        mouseX: event.clientX,
-        mouseY: event.clientY,
-      }
-      setInteraction({ type: 'resize-from-bottom' , data })
     }
   }
   const hideTip = () => {
@@ -172,6 +147,7 @@ export const Visit = ({mode, visit, mourners, hourOffset, onVisitChange}: Props)
       return null
     }
   }
+  useEventListener('mousemove', handleMouseMove)
   const startPosition = timeToPixels(visit.startTime)
   const endPosition = timeToPixels(visit.endTime)
   return(
@@ -180,14 +156,14 @@ export const Visit = ({mode, visit, mourners, hourOffset, onVisitChange}: Props)
         ref={meRef}
         style={{top: `${startPosition}px`, height: `${endPosition}px`}}
         onClickCapture={handleClick}
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
+        onMouseDown={handleDrag}
         onMouseUp={handleMouseUp}
       >
         {mode === 'Edit' ?
           <>
             <div className='close' onClick={handleDeleteEvent}></div>
-            <div className='gripper-bottom' onMouseDown={handleResize}></div>
+            <div className='gripper gripper-top' onMouseDown={handleResizeFromTop}></div>
+            <div className='gripper gripper-bottom' onMouseDown={handleResizeFromBottom}></div>
           </>
           : null
         }

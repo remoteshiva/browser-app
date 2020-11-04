@@ -32,17 +32,22 @@ export const VisitWrapper = styled.div`
     width: 8px;
     height: 8px;
   }
-  .gripper-bottom {
+  .gripper {
     position: absolute;
     margin: auto;
     left: 0;
     right: 0;
     max-width: 25px;
     height: 3px;
-    bottom: 5px;
     border-radius: 1.5px;
     background-color: ${props => props.theme.colors.cottonSeed};
     opacity: 0.62;
     cursor: row-resize;
+  }
+  .gripper-top {
+    top: 5px;
+  }
+  .gripper-bottom {
+    bottom: 5px;
   }
 `
