@@ -15,6 +15,17 @@ const santisizeShiva = (shiva: Partial<Shiva>) => {
   }
 }
 
+const hydrateShiva = (item: any) => {
+  const visitList = Object.values(item.data().visits).map((visit: any) => ({ ...visit, startTime: visit.startTime.toDate(), endTime: visit.endTime.toDate() }))
+  return initializeShiva({
+    ...item.data(),
+    id: item.id,
+    startDate: item.data().startDate.toDate(),
+    endDate: item.data().endDate.toDate(),
+    visits: arrayToObject<Visit>(visitList),
+  })
+}
+
 export const fetchMyShivas = (): AppThunk<Promise<Shiva[]>> => async (dispatch): Promise<Shiva[]> => {
   return new Promise<Shiva[]>(async (resolve, reject) => {
     dispatch(fetchShivaList.request())
@@ -24,15 +35,7 @@ export const fetchMyShivas = (): AppThunk<Promise<Shiva[]>> => async (dispatch):
       const snapshot = await firestore.collection('shivas').where('uid', '==', auth().currentUser?.uid).get()
       // retrieve data from query snapshot and match to shiva interface
       const shivas = snapshot.docs.map(item => {
-        const data = item.data()
-        const visitList = Object.values(data.visits).map((visit: any) => ({ ...visit, startTime: visit.startTime.toDate(), endTime: visit.endTime.toDate() }))
-        return initializeShiva({
-          ...data,
-          id: item.id,
-          startDate: data.startDate.toDate(),
-          endDate: data.endDate.toDate(),
-          visits: arrayToObject<Visit>(visitList),
-        })
+        return hydrateShiva(item)
       })
       dispatch(fetchShivaList.success(shivas))
       resolve(shivas)
@@ -45,30 +48,21 @@ export const fetchMyShivas = (): AppThunk<Promise<Shiva[]>> => async (dispatch):
 }
 
 export const fetchShivaById = (shivaId: string): AppThunk<Promise<Shiva>> => async (dispatch): Promise<Shiva> => {
-  return new Promise<Shiva>(async resolve => {
+  return new Promise<Shiva>(async (resolve, reject) => {
     dispatch(fetchShiva.request())
     try {
       const item = await firestore.collection('shivas').doc(shivaId).get()
       if (item.exists) {
-        const data = item.data()
-        if (!data) throw new Error('Shiva Not Found')
-        else {
-          const shiva = initializeShiva({
-            ...data,
-            id: item.id,
-            startDate: data.startDate.toDate(),
-            endDate: data.endDate.toDate(),
-            visits: data.visits.map((visit: any) => ({ ...visit, startTime: visit.startTime.toDate(), endTime: visit.endTime.toDate() })),
-          })
-          dispatch(fetchShiva.success(shiva))
-          resolve(shiva)
-        }
+        const shiva = hydrateShiva(item)
+        dispatch(fetchShiva.success(shiva))
+        resolve(shiva)
       } else {
-        throw new Error('Shiva Not Found')
+        const err: BackendError = { code: 404, message: 'Shiva Not Found' }
+        throw err
       }
     } catch (error) {
-      dispatch(fetchShiva.failure({ message: error }))
-      resolve(undefined)
+      dispatch(fetchShiva.failure(error))
+      reject(error)
     }
   })
 }
@@ -80,9 +74,7 @@ export const fetchShivaByKey = (key: string, keyType: ShivaKey): AppThunk<Promis
     try {
       const query = await firestore.collection('shivas').where(`${keyType}Key`, '==', key).get()
       if (!query.empty) {
-        const item = query.docs[0]
-        const data = item.data()
-        const shiva = initializeShiva({ ...data, id: item.id, startDate: data.startDate.toDate(), endDate: data.endDate.toDate() })
+        const shiva = hydrateShiva(query.docs[0])
         dispatch(fetchShiva.success(shiva))
         resolve(shiva)
       } else {
@@ -112,7 +104,7 @@ export const postShiva = (shiva: Shiva): AppThunk<Promise<Shiva>> => async (disp
 }
 
 export const deleteExistingShiva = (shivaId: string): AppThunk<Promise<string>> => async (dispatch): Promise<string> => {
-  return new Promise<string>(async resolve => {
+  return new Promise<string>(async (resolve, reject) => {
     dispatch(deleteShiva.request())
     try {
       await firestore.collection('shivas').doc(shivaId).delete()
@@ -120,7 +112,7 @@ export const deleteExistingShiva = (shivaId: string): AppThunk<Promise<string>> 
       resolve(shivaId)
     } catch (error) {
       dispatch(deleteShiva.failure({ message: error }))
-      resolve(undefined)
+      reject(error)
     }
   })
 }
@@ -158,9 +150,10 @@ export const updateSelectedShiva = (): AppThunk<Promise<Partial<Shiva>>> => asyn
   if (selectedShiva) {
     return dispatch(patchShiva(selectedShiva, entities[selectedShiva]))
   } else {
-    return new Promise<Partial<Shiva>>(async resolve => {
-      dispatch(updateShiva.failure({ message: 'Operation failed, Selected Shiva is null' }))
-      resolve(undefined)
+    return new Promise<Partial<Shiva>>(async (resolve, reject) => {
+      const err: BackendError = { message: 'Operation failed, Selected Shiva is null' }
+      dispatch(updateShiva.failure(err))
+      reject(err)
     })
   }
 }

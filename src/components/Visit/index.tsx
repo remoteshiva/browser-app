@@ -5,6 +5,7 @@ import { getHours, getMinutes } from 'date-fns'
 import { RootState } from '../../store/'
 import { Visit as VisitModel, VisitId, Visitor as VisitorModel, Mourner } from '../../store/shiva/types'
 import { selectVisit, deleteVisit, updateVisit } from '../../store/shiva/actions'
+import { updateSelectedShiva } from '../../services/shiva'
 import { CalendarMode } from '../types'
 import { useEventListener } from '../common'
 import ToolTip from './ToolTip'
@@ -130,6 +131,7 @@ export const Visit = ({mode, visit, mourners, hourOffset, onVisitChange}: Props)
       visitId: visit.id,
       partialVisit: {visitors: [...visit.visitors, visitor]}
     }))
+    dispatch(updateSelectedShiva())
   }
   const renderToolTip = () => {
     if(selectedVisit !== visit.id)
@@ -184,51 +186,4 @@ export const Visit = ({mode, visit, mourners, hourOffset, onVisitChange}: Props)
     </>
   )
 }
-
-
-/*
-interface State {
-  interaction: Interaction
-}
-
-type popup = 'VisitData' | 'VisitAdd'
-export const CalendarEventOld = ({editMode, visit, hourOffset, mourners}:Props) => {
-  const dispatch = useDispatch()
-  const [clickPosition, setClickPosition ] = useState({x: 0, y: 0})
-  const [popupType, setPopupType] = useState<popup>('VisitData')
-  const { selectedVisit } = useSelector((state: RootState) => state.shiva)
-  const hour = getHours(visit.startTime)
-  const minutes = getMinutes(visit.startTime)
-  const offset = (hour - hourOffset) * PIXELS_PER_HOUR + minutes * PIXELS_PER_MINUTE
-
-  const handleClick = (event: React.MouseEvent) => {
-    event.preventDefault()
-    event.stopPropagation()
-    setClickPosition({x: event.nativeEvent.offsetX, y: event.nativeEvent.offsetY})
-    dispatch(selectVisit(visit.id))
-  }
-  const handleMouseDown = (event: React.MouseEvent) => {
-    event.stopPropagation()
-  }
-  const handleDeleteEvent = (event: React.MouseEvent) => {
-    dispatch(deleteVisit(visit.id))
-  }
-  return(
-    <>
-      <VisitWrapper onClick={handleClick} onMouseDown={handleMouseDown} top={offset} height={PIXELS_PER_HOUR * 4}>
-        {editMode? <div className='close' onClick={handleDeleteEvent}></div> : null}
-        <div>{visit.mourners.length} Mourners</div>
-        <div>{visit ? visit.visitors.length : 0} Visitors</div>
-      </VisitWrapper>
-      { selectedVisit ===visit.id  ?
-        popupType === 'VisitData' ?
-          <ToolTip left={clickPosition.x} top={clickPosition.y}><VisitData {...visit} mournersList={mourners} visitAdd={()=>{setPopupType('VisitAdd')}}/></ToolTip> :
-          <ToolTip left={clickPosition.x} top={clickPosition.y}><VisitAdd {...visit}/></ToolTip> :
-        null
-      }
-    </>
-
-  )
-}
-*/
 
