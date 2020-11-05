@@ -8,7 +8,6 @@ const Schedule = ({ shiva, editing, save }: ShivaPanel) => {
   const dispatch = useDispatch()
   useEffect(() => {
     if (save && save > 0 ) {
-      console.log(`saving shiva ${save}`)
       dispatch(updateSelectedShiva())
     }
   }, [save])

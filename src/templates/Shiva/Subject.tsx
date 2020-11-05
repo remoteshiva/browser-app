@@ -114,29 +114,28 @@ const Subject = ({ shiva, editing, save }: ShivaPanel) => {
     </>
   )
   return (
-    <>
-      <Row>
-        <FixedColumn width={180}>
-          <Container>
-            {titleImage ? (
-              <div style={{ position: 'relative', display: 'inline-block' }}>
-                <SubjectImage style={{ backgroundImage: `url(${titleImage?.toString()})` }} />
-                {renderSelectImage(editing || false)}
-              </div>
-            ) : (
-              <div style={{ position: 'relative', display: 'inline-block' }}>
-                <EmptySubjectImage />
-                {renderSelectImage(editing || false)}
-              </div>
-            )}
-          </Container>
-        </FixedColumn>
-        <FlexColumn>
-          <Title>Shiva for {shiva.nameOfDeceased} Z"L</Title>
-          <Editable className={`${editing ? 'active' : ''} subject`} html={message || ''} active={editing || false} onInput={handleInput} />
-        </FlexColumn>
+    <Row>
+      <FixedColumn width={180}>
+        <Container>
+          {titleImage ? (
+            <div style={{ position: 'relative', display: 'inline-block' }}>
+              <SubjectImage style={{ backgroundImage: `url(${titleImage?.toString()})` }} />
+              {renderSelectImage(editing || false)}
+            </div>
+          ) : (
+            <div style={{ position: 'relative', display: 'inline-block' }}>
+              <EmptySubjectImage />
+              {renderSelectImage(editing || false)}
+            </div>
+          )}
+        </Container>
+      </FixedColumn>
+      <FlexColumn>
+        <Title>Shiva for {shiva.nameOfDeceased} Z"L</Title>
+        <Editable className={`${editing ? 'active' : ''} subject`} html={message || ''} active={editing || false} onInput={handleInput} />
+      </FlexColumn>
       </Row>
-    </>
+
   )
 }
 

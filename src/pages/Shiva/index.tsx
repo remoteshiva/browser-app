@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
+import { push } from 'connected-react-router'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams, useHistory } from 'react-router-dom'
+import * as Routes from '../../routes'
 import { RootState, AppDispatch } from '../../store'
 import CloseIcon from '../../assets/img/closex.svg'
 import { ApproveButton, VerticalSpace } from '../../components/common'
@@ -71,7 +73,10 @@ const ShivaPage = () => {
       try {
         const { id: shivaId } = await dispatch(fetchShivaById(id))
         dispatch(selectShiva(shivaId))
-      } catch (error) {}
+      } catch (error) {
+        console.log('Failed to fetch Shiva', error)
+        dispatch(push(Routes.NOT_FOUND))
+      }
     }
     if (id in entities) {
       dispatch(selectShiva(id))
