@@ -1,8 +1,8 @@
 import { Reducer } from 'redux'
 import * as ShivaActions from './constants'
 import { ShivaState, Shiva, VisitMap, Visit } from './types'
-import { ActionTypes } from './actions'
-import { arrayToObject } from '../helpers'
+import { ActionTypes, NewShivaActionTypes, VisitActionTypes } from './actions'
+import { arrayToMap } from '../helpers'
 import { initializeShiva } from './helpers'
 
 export const initialState: ShivaState = {
@@ -17,7 +17,29 @@ export const initialState: ShivaState = {
   error: null,
 }
 
-const visitReducer = (visits: VisitMap, action: ActionTypes): VisitMap => {
+type MaybeNewShiva = Shiva | null
+
+const newShivaReducer = (newShiva: MaybeNewShiva, action: NewShivaActionTypes): MaybeNewShiva => {
+  switch (action.type) {
+    case ShivaActions.InitNewShiva: {
+      return { ...initializeShiva() }
+    }
+    case ShivaActions.UpdateNewShiva: {
+      if (newShiva === null) {
+        return { ...initializeShiva(), ...action.payload }
+      } else {
+        return { ...newShiva, ...action.payload }
+      }
+    }
+    case ShivaActions.DeleteNewShiva: {
+      return null
+    }
+    default:
+      return newShiva
+  }
+}
+
+const visitReducer = (visits: VisitMap, action: VisitActionTypes): VisitMap => {
   switch (action.type) {
     case ShivaActions.AddVisit:
       return { ...visits, [action.payload.id]: action.payload }
@@ -44,24 +66,15 @@ const visitReducer = (visits: VisitMap, action: ActionTypes): VisitMap => {
 
 const reducer: Reducer<ShivaState> = (state = initialState, action: ActionTypes): ShivaState => {
   switch (action.type) {
-    case ShivaActions.InitNewShiva: {
-      return { ...state, newShiva: initializeShiva() }
-    }
-    case ShivaActions.UpdateNewShiva: {
-      if (state.newShiva === null) {
-        return { ...state, newShiva: { ...initializeShiva(), ...action.payload } }
-      } else {
-        return { ...state, newShiva: { ...state.newShiva, ...action.payload } }
-      }
-    }
-    case ShivaActions.DeleteNewShiva: {
-      return { ...state, newShiva: null }
-    }
+    case ShivaActions.InitNewShiva:
+    case ShivaActions.UpdateNewShiva:
+    case ShivaActions.DeleteNewShiva:
+      return { ...state, newShiva: newShivaReducer(state.newShiva, action) }
     case ShivaActions.FetchShivaListRequest: {
       return { ...state, loading: true }
     }
     case ShivaActions.FetchShivaListSuccess: {
-      const newEntities = arrayToObject<Shiva>(action.payload)
+      const newEntities = arrayToMap<Shiva>(action.payload)
       const newVisitorKeys = Object.assign({}, ...action.payload.map(shiva => ({ [shiva.visitorKey]: shiva.id })))
       const newMournerKeys = Object.assign({}, ...action.payload.map(shiva => ({ [shiva.mournerKey]: shiva.id })))
       return {
@@ -205,4 +218,4 @@ const reducer: Reducer<ShivaState> = (state = initialState, action: ActionTypes)
   }
 }
 // visitReducer is exported for testing only. Should be done with rewire rather than export
-export { reducer as ShivaReducer, visitReducer }
+export { reducer as ShivaReducer, visitReducer, newShivaReducer }

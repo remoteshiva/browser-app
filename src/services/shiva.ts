@@ -2,12 +2,12 @@ import { auth } from 'firebase'
 import { firestore } from '../firebase.config'
 import { AppThunk, omit } from './common'
 import { Shiva, ShivaId, Visit } from '../store/shiva/types'
-import { initializeShiva, initializeVisit } from '../store/shiva/helpers'
-import { arrayToObject } from '../store/helpers'
+import { initializeShiva } from '../store/shiva/helpers'
+import { arrayToMap } from '../store/helpers'
 import { fetchShivaList, fetchShiva, createShiva, deleteShiva, updateShiva } from '../store/shiva/actions'
 import { BackendError } from '../store/types'
 
-const santisizeShiva = (shiva: Partial<Shiva>) => {
+const dehydrateShiva = (shiva: Partial<Shiva>) => {
   return {
     ...shiva,
     ...(shiva.titleImage && { titleImage: shiva.titleImage.toString() }),
@@ -22,7 +22,7 @@ const hydrateShiva = (item: any) => {
     id: item.id,
     startDate: item.data().startDate.toDate(),
     endDate: item.data().endDate.toDate(),
-    visits: arrayToObject<Visit>(visitList),
+    visits: arrayToMap<Visit>(visitList),
   })
 }
 
@@ -121,7 +121,7 @@ export const patchShiva = (shivaId: ShivaId, shiva: Partial<Shiva>): AppThunk<Pr
   return new Promise<Partial<Shiva>>(async (resolve, reject) => {
     dispatch(updateShiva.request())
     try {
-      await firestore.collection('shivas').doc(shivaId).update(santisizeShiva(shiva))
+      await firestore.collection('shivas').doc(shivaId).update(dehydrateShiva(shiva))
     } catch (error) {
       dispatch(updateShiva.failure({ message: error }))
       reject(error)
