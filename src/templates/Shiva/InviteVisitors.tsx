@@ -1,9 +1,12 @@
-import React from 'react'
+import React, {useState} from 'react'
+import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import { Shiva } from '../../store/shiva/types'
 import CloseIcon from '../../assets/img/closex.svg'
 import { ClickOutside } from '../../components/ClickOutside'
 import { VerticalSpace, ApproveButton } from '../../components/common'
+import LinkWithCopy from './LinkWithCopy'
+import { patchSelectedShiva } from '../../services/shiva'
 
 const Fade = styled.div`
   position: fixed;
@@ -47,27 +50,6 @@ const Modal = styled(ClickOutside)`
     font-family: 'Lato';
     font-size: 16px;
   }
-  .linktext {
-    display: inline-block;
-    background-color: white;
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
-    width: 280px;
-    line-height: 47px;
-    color: ${props => props.theme.colors.heavyMetal};
-    opacity: 0.6;
-    text-align: left;
-    padding-left: 15px;
-  }
-  .linkcopy {
-    display: inline-block;
-    background-color: ${props => props.theme.colors.richGold};
-    color: white;
-    padding: 0 18px;
-    line-height: 47px;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-  }
   textarea {
     height: 143px;
     padding: 15px;
@@ -102,7 +84,21 @@ interface Props {
 }
 
 const InviteVisitorsModal = ({ shiva, onClose }: Props) => {
+  const dispatch = useDispatch()
+  const [message, setMessage] = useState(shiva.inviteMessage)
   const link = `${process.env.REACT_APP_BASE_URL}/v/${shiva.visitorKey}`
+
+  const handleMessageChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setMessage(event.target.value)
+  }
+  const handleCopyMessage = async () => {
+    const partial = { inviteMessage: message }
+    try{
+      const res = await dispatch(patchSelectedShiva(partial))
+    }catch(error){
+      console.log(error)
+    }
+  }
   return (
     <Fade>
       <Modal onClickOutside={onClose}>
@@ -110,20 +106,19 @@ const InviteVisitorsModal = ({ shiva, onClose }: Props) => {
         <h2>Invite Visitors</h2>
         <VerticalSpace height={20} />
         <p>
-          Send the link below (along with the password if you choose to add one) to people who might be interested in attending the shiva. If mourners belong to synagogues, consider sending a message
+          Send the link below to people who might be interested in attending the shiva. If mourners belong to synagogues, consider sending a message
           with this link to their synagogue bulletins.
         </p>
         <VerticalSpace height={20} />
         <section>
           <div className="label">Copy this URL to share:</div>
-          <div className="linktext">{link}</div>
-          <button className="linkcopy">copy</button>
+          <LinkWithCopy text={link}/>
         </section>
         <section>
           <div className="label">Message to copy (optional)</div>
-          <textarea />
+          <textarea value={message} onChange={handleMessageChange}/>
           <div>
-            <ApproveButton>Copy message</ApproveButton>
+            <ApproveButton onClick={handleCopyMessage}>Copy message</ApproveButton>
           </div>
         </section>
       </Modal>

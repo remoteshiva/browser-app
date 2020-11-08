@@ -137,9 +137,10 @@ export const patchSelectedShiva = (shiva: Partial<Shiva>): AppThunk<Promise<Part
   if (selectedShiva) {
     return dispatch(patchShiva(selectedShiva, shiva))
   } else {
-    return new Promise<Partial<Shiva>>(async resolve => {
-      dispatch(updateShiva.failure({ message: 'Operation failed, Selected Shiva is null' }))
-      resolve(undefined)
+    return new Promise<Partial<Shiva>>(async (_resolve, reject) => {
+      const err: BackendError = { message: 'Operation failed, Selected Shiva is null' }
+      dispatch(updateShiva.failure(err))
+      reject(err)
     })
   }
 }
@@ -150,7 +151,7 @@ export const updateSelectedShiva = (): AppThunk<Promise<Partial<Shiva>>> => asyn
   if (selectedShiva) {
     return dispatch(patchShiva(selectedShiva, entities[selectedShiva]))
   } else {
-    return new Promise<Partial<Shiva>>(async (resolve, reject) => {
+    return new Promise<Partial<Shiva>>(async (_resolve, reject) => {
       const err: BackendError = { message: 'Operation failed, Selected Shiva is null' }
       dispatch(updateShiva.failure(err))
       reject(err)
