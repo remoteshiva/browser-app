@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
+import { addNotification } from '../../store/app/actions'
+import { initializeNotification } from '../../store/app/types'
 import { patchSelectedShiva } from '../../services/shiva'
 import { ShivaPanel, withPanel } from './Panel'
 import { VerticalSpace } from '../../components/common'
 import Editable from '../../components/Editable'
 import CopyIcon from '../../assets/img/copy.svg'
+import CheckIcon from '../../assets/img/checkbox.svg'
 import AddIcon from '../../assets/img/add.svg'
 import DeleteIcon from '../../assets/img/delete.svg'
 import { MournerName, Note, Relationship } from './styles'
@@ -86,6 +89,7 @@ const Mourners = ({ role, shiva, editing, save }: ShivaPanel) => {
     if (navigator.clipboard) {
       try {
         await navigator.clipboard.writeText(text)
+        notify('Link copied', 'The link for mourners to edit the shiva has been added to your clipboard.')
       } catch (error) {
         console.log(error) // we should show a message
       }
@@ -95,7 +99,18 @@ const Mourners = ({ role, shiva, editing, save }: ShivaPanel) => {
     }
   }
   const handleCopyInviteLink = async () => {
-    await copyToClipboard(`${visitorPathPrefix}${shiva.visitorKey}`)
+    await copyToClipboard(`${mournerPathPrefix}${shiva.mournerKey}`)
+  }
+  const notify = (title: string, description: string) => {
+    dispatch(
+      addNotification(
+        initializeNotification({
+          title,
+          description,
+          icon: CheckIcon,
+        })
+      )
+    )
   }
   return (
     <Wrapper>
