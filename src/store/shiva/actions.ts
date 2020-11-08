@@ -58,18 +58,18 @@ export type ResetShiva = ActionType<typeof resetShiva>
 export const clearError = createAction(AT.ClearError)()
 export type ClearError = ActionType<typeof clearError>
 
+export type NewShivaActionTypes = InitNewShiva | UpdateNewShiva | DeleteNewShiva
+
+export type VisitActionTypes = AddVisit | UpdateVisit | DeleteVisit
+
 export type ActionTypes =
+  | NewShivaActionTypes
+  | VisitActionTypes
   | FetchShivaList
   | FetchShiva
   | CreateShiva
   | DeleteShiva
   | UpdateShiva
-  | InitNewShiva
-  | UpdateNewShiva
-  | DeleteNewShiva
-  | AddVisit
-  | UpdateVisit
-  | DeleteVisit
   | AddVisitor
   | SelectShiva
   | SelectVisit
