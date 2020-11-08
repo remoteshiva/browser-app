@@ -22,13 +22,11 @@ const ShivaTemplate = ({ shiva, role }: Props) => {
   return (
     <LayoutWrapper>
       <Row>
-        <main>
-          <FlexColumn>
-            <Subject shiva={shiva} darkMode={false} role={role} direction={Direction.row} />
-            <Schedule shiva={shiva} darkMode={false} role={role} direction={Direction.column} />
-            <About shiva={shiva} darkMode={shiva.about || shiva.images.length > 0 ? false : true} role={role} direction={Direction.column} />
-          </FlexColumn>
-        </main>
+        <FlexColumn>
+          <Subject shiva={shiva} darkMode={false} role={role} direction={Direction.row} />
+          <Schedule shiva={shiva} darkMode={false} role={role} direction={Direction.column} />
+          <About shiva={shiva} darkMode={shiva.about || shiva.images.length > 0 ? false : true} role={role} direction={Direction.column} />
+        </FlexColumn>
         <aside style={{ marginLeft: '20px' }}>
           <FixedColumn width={256}>
             {role !== 'Visitor' ? <Button onClick={() => setShowDialog(true)}>Invite visitors</Button> : null}

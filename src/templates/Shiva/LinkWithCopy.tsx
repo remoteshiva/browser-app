@@ -53,7 +53,7 @@ const LinkWithCopy = ({text}: Props) => {
     if (navigator.clipboard) {
       try {
         await navigator.clipboard.writeText(text)
-        notify('Link copied', 'The link for mourners to edit the shiva has been added to your clipboard.')
+        notify('Link copied', 'The link for visitors has been added to your clipboard.')
       } catch (error) {
         console.log(error) // we should show a message
       }
