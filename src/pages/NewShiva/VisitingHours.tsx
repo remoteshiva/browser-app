@@ -1,49 +1,19 @@
 import React, { useState } from 'react'
-import styled from 'styled-components'
-import { VisitingStepProps, VisitingProps, Steps } from './types'
+import { StepProps, VisitingProps, Steps } from './types'
 import { Row, FixedColumn, FlexColumn } from '../../components/flexLayout'
 import Editable from '../../components/Editable'
 import StepLayout from './Layout'
 import Calendar from '../../components/Calendar'
+import { CalendarContainer, Minian } from './styles'
 
-const Minian = styled.div`
-  margin-top: 40px;
-  width: 500px;
-  h2 {
-    display: inline-block;
-    color: ${props => props.theme.colors.heavyMetal};
-    font-size: 28px;
-    font-family: 'Lora';
-  }
-  .optional {
-    display: inline-block;
-    color: ${props => props.theme.colors.doveGray};
-    font-size: 18px;
-    font-family: 'Lora';
-  }
-  p {
-    color: ${props => props.theme.colors.heavyMetal};
-    font-family: 'Lato';
-    font-size: 16px;
-    line-height: 24px;
-  }
-  .minian {
-    margin-top: 30px;
-    width: 327px;
-    height: 177px;
-    border: solid 1px ${props => props.theme.colors.sauvignonLight};
-    padding: 12px;
-  }
-`
 
-const VisitingHours = ({ newShiva, startDate, endDate, submit, selectStep }: VisitingStepProps<VisitingProps>) => {
-  const [visits, SetVisits] = useState(newShiva.visits)
+const VisitingHours = ({ newShiva, submit, selectStep }: StepProps<VisitingProps>) => {
   const [minianTimes, setMinianTimes] = useState(newShiva.minianTimes)
   const handleInput = (html: string) => {
     setMinianTimes(html)
   }
   return (
-    <StepLayout title={'Set visiting hours'} step={4} submit={() => submit({visits, minianTimes }, Steps.DONE)} submitText="Done" stepperClickHandler={selectStep}>
+    <StepLayout title={'Set visiting hours'} step={4} submit={() => submit({visits: newShiva.visits, minianTimes }, Steps.DONE)} submitText="Done" stepperClickHandler={selectStep}>
       <Row>
         <FixedColumn width={500}>
           <p>Specify the times when visitors should be able to join the video chatroom by clicking and dragging on the calendar.</p>
@@ -54,7 +24,9 @@ const VisitingHours = ({ newShiva, startDate, endDate, submit, selectStep }: Vis
       </Row>
       <Row>
         <FlexColumn>
-          <Calendar height={'431px'} mode='Add'  {...newShiva} />
+          <CalendarContainer>
+            <Calendar mode='Add'  {...newShiva} />
+          </CalendarContainer>
         </FlexColumn>
       </Row>
       <Row>
