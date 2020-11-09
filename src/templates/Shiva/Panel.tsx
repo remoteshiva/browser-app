@@ -33,7 +33,6 @@ export const withPanel = <P extends object>(Component: React.ComponentType<P>): 
   }
   const onCancel = () => {
     setEditing(false)
-    console.log('cancel and repd')
     doReset(prev=>prev+1)
   }
 

@@ -46,11 +46,13 @@ const NewShiva = () => {
       setCurrentStep(nextStep)
       if (nextStep === T.Steps.DONE) {
         try {
+          // update new shiva with submitted data
+          dispatch(updateNewShiva(data))
           // create the new shiva on the backend
           const { id } = await dispatch(postShiva(newShiva))
           // select the new shiva before navigating to its page
           dispatch(selectShiva(id))
-          dispatch(push(Routes.SHIVA_PAGE(id)))
+          dispatch(push(Routes.SHIVA_PAGE(id), {newShiva: true}))
         } catch (error) {
           console.log('Failed to create new Shiva', error)
         }
@@ -61,13 +63,14 @@ const NewShiva = () => {
       }
     }
   }
-  const selectStep = (step: number) => {
-    setCurrentStep(step)
-    dispatch(push(Routes.NEW_SHIVA(`${step}`)))
+  const selectStep = (newStep: number) => {
+    if(newStep<=currentStep){
+      setCurrentStep(newStep)
+      dispatch(push(Routes.NEW_SHIVA(`${step}`)))
+    }
   }
 
   const renderStep = () => {
-    console.log('render step', newShiva)
     if(newShiva !==null){
       switch (currentStep) {
         case T.Steps.BASIC_DETAILS:
@@ -80,8 +83,6 @@ const NewShiva = () => {
           return (
             <VisitingHours
               newShiva={newShiva}
-              startDate={newShiva.startDate}
-              endDate={newShiva.endDate}
               submit={(data: T.VisitingProps, nextStep: T.Steps) => submitStepData<T.VisitingProps>(data, nextStep)}
               selectStep={selectStep}
             />

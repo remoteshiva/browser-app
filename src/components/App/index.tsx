@@ -60,6 +60,7 @@ const App = ({ history }: Props) => {
           <Main />
           <Footer />
           <ToastContainer />
+          <div id='modal'></div>
         </div>
       </ConnectedRouter>
     </Theme>

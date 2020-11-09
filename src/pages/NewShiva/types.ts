@@ -33,8 +33,3 @@ export interface StepProps<T> {
   submit: (data: T, nextStep: Steps) => void
   selectStep: (step: number) => void
 }
-
-export interface VisitingStepProps<T> extends StepProps<T> {
-  startDate: Date
-  endDate: Date
-}
