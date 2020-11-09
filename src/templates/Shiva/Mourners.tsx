@@ -18,6 +18,7 @@ const visitorPathPrefix = `${process.env.REACT_APP_BASE_URL}/v/`
 
 const Wrapper = styled.div`
   font-family: 'Lato';
+  overflow: hidden;
   li {
     display: flex;
     flex-direction: row;
@@ -57,7 +58,7 @@ const Wrapper = styled.div`
 const AddMournerButton = styled.button`
   font-family: 'Lato';
   font-size: 16px;
-  color: ${props => props.theme.colors.richGold};
+  color: ${props => props.theme.colors.richGold} !important;
 `
 
 const Mourners = ({ role, shiva, editing, save }: ShivaPanel) => {
