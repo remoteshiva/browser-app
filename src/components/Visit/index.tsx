@@ -11,8 +11,10 @@ import { useEventListener } from '../common'
 import ToolTip from './ToolTip'
 import VisitData from './Data'
 import Visitor from './Visitor'
-import { VisitWrapper, PIXELS_PER_HOUR, PIXELS_PER_MINUTE, Pixels } from './styles'
 import NewVisit from './new'
+import ConfirmDeleteModal from './ConfirmDelete'
+import { VisitWrapper, PIXELS_PER_HOUR, PIXELS_PER_MINUTE, Pixels } from './styles'
+
 
 export { NewVisit }
 
@@ -45,6 +47,7 @@ export const Visit = ({mode, visit, mourners, hourOffset, onVisitChange}: Props)
   const rafBusy = useRef(false)
   const { selectedVisit } = useSelector((state: RootState) => state.shiva)
   const [ showTip, setShowTip] = useState<ShowToolTip>(null)
+  const [ showConfirm, setShowConfirm ] = useState(false)
   const [ interaction, _setInteraction ] = useState<Interaction>(NoInteraction)
   const interactionRef = useRef(interaction);
   const setInteraction = (data:any) => {
@@ -67,6 +70,12 @@ export const Visit = ({mode, visit, mourners, hourOffset, onVisitChange}: Props)
   const handleDeleteEvent = (event: React.MouseEvent) => {
     event.stopPropagation()
     event.preventDefault()
+    if(visit.visitors.length)
+      setShowConfirm(true)
+    else
+      handleConfirmDelete()
+  }
+  const handleConfirmDelete = () => {
     dispatch(deleteVisit(visit.id))
   }
   const handleDrag = (ev: React.MouseEvent) => handleMouseDown(ev, 'drag')
@@ -183,6 +192,7 @@ export const Visit = ({mode, visit, mourners, hourOffset, onVisitChange}: Props)
         <div>{visit.visitors.length} Visitors</div>
       </VisitWrapper>
       { renderToolTip() }
+      { showConfirm ? <ConfirmDeleteModal onConfirm={handleConfirmDelete} onCancel={()=>setShowConfirm(false)}/> : null}
     </>
   )
 }

@@ -36,7 +36,7 @@ const Column = memo(({mode, day, visits, mourners, endHour, startHour}:Props) =>
     return format(pixelToDate(pixels), 'p')
   }
   const handleMouseDown = (event: React.MouseEvent) => {
-    if(!rafBusy.current){
+    if(event.target === event.currentTarget && !rafBusy.current){
       event.persist()
       window.requestAnimationFrame(()=>{
         const y = event.nativeEvent.offsetY

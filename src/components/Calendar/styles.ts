@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import CloseIcon from '../../assets/img/closex.svg'
 import { CalendarMode } from '../types'
 
 export const PIXELS_PER_HOUR = 40
@@ -7,14 +6,10 @@ export const PIXELS_PER_MINUTE = PIXELS_PER_HOUR / 60
 export const SNAP = 15
 export type Pixels = number
 
-interface CalendarWrapperProps {
-  height?: string
-}
-export const CalendarWrapper = styled.div<CalendarWrapperProps>`
+export const CalendarWrapper = styled.div`
   display: flex;
   background-color: white;
   padding: 10px;
-  height: ${props => (props.height ? props.height : 'auto')};
 `
 
 export const Timezone = styled.div`
