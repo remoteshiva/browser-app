@@ -3,6 +3,7 @@ import { addDays } from 'date-fns'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import '../../assets/styles/datepicker.css'
+import { getLocaleDateFormat } from '../../utils'
 import BasicDetailsArt from '../../assets/img/add-basic-details.svg'
 import { Row, FixedColumn, FlexColumn } from '../../components/flexLayout'
 import { StepProps, BasicDetailsProps, Steps } from './types'
@@ -10,6 +11,7 @@ import { StyledForm, ImageWrapper } from './styles'
 import StepLayout from './Layout'
 
 type ChangeEvent = React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>
+
 
 const BasicDetails = ({ newShiva, submit, selectStep }: StepProps<BasicDetailsProps>) => {
   const { nameOfDeceased, startDate, endDate, message }: BasicDetailsProps = newShiva
@@ -51,6 +53,7 @@ const BasicDetails = ({ newShiva, submit, selectStep }: StepProps<BasicDetailsPr
               <label>
                 Start date of shiva
                 <DatePicker
+                  dateFormat={getLocaleDateFormat()}
                   selected={values.startDate}
                   onChange={(date: Date) => setValues({ ...values, startDate: date })}
                   customInput={<input className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3" />}
