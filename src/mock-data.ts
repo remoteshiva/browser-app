@@ -85,7 +85,7 @@ export const shivas: Shiva[] = [
         startTime: new Date('2020-04-13 13:00'),
         endTime: new Date('2020-04-13 16:00'),
         visitors: [],
-        mourners: [],
+        missingMourners: [],
       }),
     },
     images: [
