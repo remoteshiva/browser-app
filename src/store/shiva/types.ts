@@ -1,8 +1,10 @@
 import { BackendError } from '../types'
 
-export type ROLE = 'Editor' | 'Mourner' | 'Visitor'
+export type Role = 'Editor' | 'Mourner' | 'Visitor'
 export type ShivaId = string
 export type VisitId = string
+export type MournerId = string
+
 export interface Mourner {
   name: string
   relationship: string
@@ -23,7 +25,7 @@ export interface Visit {
   id: VisitId
   startTime: Date
   endTime: Date
-  mourners: number[]
+  missingMourners: MournerId[] // mourners who do not participate in this visit
   visitors: Visitor[]
 }
 export interface Shiva {

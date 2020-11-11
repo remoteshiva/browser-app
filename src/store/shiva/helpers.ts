@@ -36,7 +36,7 @@ export const initializeVisit = (visit?: Partial<Visit>): Visit => {
     id: generateRandomKey(),
     startTime: new Date(),
     endTime: new Date(),
-    mourners: [],
+    missingMourners: [],
     visitors: [],
     ...visit,
   }

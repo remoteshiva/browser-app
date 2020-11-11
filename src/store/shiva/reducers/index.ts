@@ -1,9 +1,10 @@
 import { Reducer } from 'redux'
-import * as ShivaActions from './constants'
-import { ShivaState, Shiva, VisitMap, Visit } from './types'
-import { ActionTypes, NewShivaActionTypes, VisitActionTypes } from './actions'
-import { arrayToMap } from '../helpers'
-import { initializeShiva } from './helpers'
+import * as ShivaActions from '../constants'
+import { ShivaState, Shiva } from '../types'
+import { ActionTypes } from '../actions'
+import { arrayToMap } from '../../helpers'
+import { newShivaReducer } from './newShiva'
+import { visitReducer } from './visit'
 
 export const initialState: ShivaState = {
   loading: false,
@@ -15,53 +16,6 @@ export const initialState: ShivaState = {
   selectedVisit: null,
   newShiva: null,
   error: null,
-}
-
-type MaybeNewShiva = Shiva | null
-
-const newShivaReducer = (newShiva: MaybeNewShiva, action: NewShivaActionTypes): MaybeNewShiva => {
-  switch (action.type) {
-    case ShivaActions.InitNewShiva: {
-      return { ...initializeShiva() }
-    }
-    case ShivaActions.UpdateNewShiva: {
-      if (newShiva === null) {
-        return { ...initializeShiva(), ...action.payload }
-      } else {
-        return { ...newShiva, ...action.payload }
-      }
-    }
-    case ShivaActions.DeleteNewShiva: {
-      return null
-    }
-    default:
-      return newShiva
-  }
-}
-
-const visitReducer = (visits: VisitMap, action: VisitActionTypes): VisitMap => {
-  switch (action.type) {
-    case ShivaActions.AddVisit:
-      return { ...visits, [action.payload.id]: action.payload }
-    case ShivaActions.UpdateVisit:
-      const { visitId, partialVisit } = action.payload
-      if (visitId in visits) {
-        const updatedVisit: Visit = { ...visits[visitId], ...partialVisit }
-        return { ...visits, ...{ [visitId]: updatedVisit } }
-      }
-      return visits
-    case ShivaActions.DeleteVisit:
-      const { [action.payload]: omit, ...newVisits } = visits
-      return { ...newVisits }
-    // case ShivaActions.AddVisitor:
-    //   const { visitId: vid, visitor } = action.payload
-    //   if (visitId in visits) {
-    //     return { ...visits }
-    //   }
-    //   return visits
-    default:
-      return visits
-  }
 }
 
 const reducer: Reducer<ShivaState> = (state = initialState, action: ActionTypes): ShivaState => {
@@ -203,7 +157,7 @@ const reducer: Reducer<ShivaState> = (state = initialState, action: ActionTypes)
       return {
         ...state,
         selectedShiva: action.payload,
-        selectedVisit: null, // reset the selected visit everytime the selected shiva is set
+        selectedVisit: state.selectedShiva === action.payload ? state.selectedVisit : null, // reset the selected visit everytime the selected shiva is set
       }
     }
     case ShivaActions.ResetShiva: {
@@ -217,5 +171,5 @@ const reducer: Reducer<ShivaState> = (state = initialState, action: ActionTypes)
     }
   }
 }
-// visitReducer is exported for testing only. Should be done with rewire rather than export
+// visitReducer and newShivaReducer are exported for testing only. Should be done with rewire rather than export
 export { reducer as ShivaReducer, visitReducer, newShivaReducer }

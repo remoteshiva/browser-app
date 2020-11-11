@@ -1,8 +1,8 @@
-import { initializeShiva, initializeVisit } from './helpers'
-import * as Actions from './actions'
-import { ShivaReducer, visitReducer, initialState } from './reducer'
-import { shivas } from '../../mock-data'
-import { VisitMap, Visitor } from './types'
+import { initializeShiva, initializeVisit } from '../helpers'
+import * as Actions from '../actions'
+import { ShivaReducer, visitReducer, initialState } from './index'
+import { shivas } from '../../../mock-data'
+import { VisitMap, Visitor } from '../types'
 
 describe('Shiva reducer', () => {
   it('should be loading after fetch shiva request', () => {
