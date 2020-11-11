@@ -25,7 +25,7 @@ const VisitingHours = ({ newShiva, submit, selectStep }: StepProps<VisitingProps
       <Row>
         <FlexColumn>
           <CalendarContainer>
-            <Calendar mode='Add'  {...newShiva} />
+            <Calendar role='Editor' mode='Add'  {...newShiva} />
           </CalendarContainer>
         </FlexColumn>
       </Row>

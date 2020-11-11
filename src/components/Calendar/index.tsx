@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Shiva } from '../../store/shiva/types'
+import { Shiva, Role } from '../../store/shiva/types'
 import { Row, ColumnContainer, FixedColumn, FlexColumn } from '../flexLayout'
 import { CalendarMode } from '../types'
 import { CalendarProvider } from './context'
@@ -10,11 +10,12 @@ import { CalendarWrapper, Timezone } from './styles'
 
 export interface Props extends Shiva {
   mode: CalendarMode
+  role: Role
 }
-const Calendar = ({ startDate, endDate, visits, mourners, mode }: Props) => {
+const Calendar = ({ startDate, endDate, visits, mourners, mode, role }: Props) => {
   const sideBarWidth = 60
   return (
-    <CalendarProvider mode={mode} startHour={9} endHour={22}>
+    <CalendarProvider mode={mode} role={role} startHour={9} endHour={22}>
       <CalendarWrapper>
         <ColumnContainer width={'100%'}>
           <Row>

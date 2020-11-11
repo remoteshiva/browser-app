@@ -2,11 +2,11 @@ import React, { useState, useRef, memo } from 'react'
 import { useDispatch } from 'react-redux'
 import { addMinutes, getDate, format, roundToNearestMinutes } from 'date-fns'
 import { VisitMap, Mourner, VisitId} from '../../store/shiva/types'
-import { addVisit, updateVisit, deleteVisit } from '../../store/shiva/actions'
+import { addVisit, updateVisit } from '../../store/shiva/actions'
 import { initializeVisit } from '../../store/shiva/helpers'
 import { withCalendarContext, CalendarContextProps } from './context'
 import { Visit, NewVisit } from '../Visit'
-import { ColumnWrapper, PIXELS_PER_MINUTE, PIXELS_PER_HOUR, SNAP, Pixels } from './styles'
+import { ColumnWrapper, PIXELS_PER_MINUTE, PIXELS_PER_HOUR, Pixels } from './styles'
 
 const noop = () => {}
 
@@ -18,7 +18,7 @@ interface Props extends CalendarContextProps {
   mourners: Mourner[]
 }
 
-const Column = memo(({mode, day, visits, mourners, endHour, startHour}:Props) => {
+const Column = memo(({mode, role, day, visits, mourners, endHour, startHour}:Props) => {
   const dispatch = useDispatch()
   const [dragging, setDragging] = useState(false)
   const [startY, setStartY] = useState(0)
@@ -105,6 +105,7 @@ const Column = memo(({mode, day, visits, mourners, endHour, startHour}:Props) =>
           <Visit
             key={id}
             mode={mode}
+            role={role}
             hourOffset={startHour}
             visit={visits[id]}
             mourners={mourners}
