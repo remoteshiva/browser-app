@@ -1,9 +1,10 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import { Shiva } from '../../store/shiva/types'
 import CloseIcon from '../../assets/img/closex.svg'
 import { ClickOutside } from '../../components/ClickOutside'
+import { useNotify } from '../../components/common/hooks'
 import { VerticalSpace, ApproveButton } from '../../components/common'
 import LinkWithCopy from './LinkWithCopy'
 import { patchSelectedShiva } from '../../services/shiva'
@@ -85,7 +86,8 @@ interface Props {
 
 const InviteVisitorsModal = ({ shiva, onClose }: Props) => {
   const dispatch = useDispatch()
-  const [message, setMessage] = useState(shiva.inviteMessage)
+  const notify = useNotify()
+  const [message, setMessage] = useState(shiva.inviteMessage || '')
   const link = `${process.env.REACT_APP_BASE_URL}/v/${shiva.visitorKey}`
 
   const handleMessageChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -95,10 +97,27 @@ const InviteVisitorsModal = ({ shiva, onClose }: Props) => {
     const partial = { inviteMessage: message }
     try{
       const res = await dispatch(patchSelectedShiva(partial))
+      if (navigator.clipboard) {
+        try {
+          await navigator.clipboard.writeText(message)
+          notify('Message copied', 'The message for visitors has been added to your clipboard.')
+        } catch (error) {
+          console.log(error) // we should show a message
+        }
+      } else {
+        // this is a polyfill
+        document.execCommand('copy')
+      }
     }catch(error){
       console.log(error)
     }
   }
+
+  useEffect(()=>{
+    if (message==='')
+      setMessage(`With great sadness, we share that ${shiva.nameOfDeceased}, Z”L, has passed. Those mourning are sitting shiva remotely. Shiva details, including visiting hours and link, can be found at ${link}`)
+  }, [])
+
   return (
     <Fade>
       <Modal onClickOutside={onClose}>
