@@ -2,9 +2,11 @@ import React, {useState} from 'react'
 import styled from 'styled-components'
 import { format } from 'date-fns'
 import { Visit, Visitor as VisitorModel } from '../../store/shiva/types'
-import { ApproveButton } from '../../components/common'
+import { ApproveButton, VerticalSpace } from '../../components/common'
+import TimePicker from '../TimePicker'
 
 const Wrapper = styled.div`
+  font-family: 'Lato';
   width: 360px;
   border-radius: 2px;
   box-shadow: 0 2px 15px 0 rgba(123, 119, 108, 0.37);
@@ -85,15 +87,9 @@ const Visitor = ({startTime, onSubmitVisitor}: Props) => {
         </label>
         <label>
           Around what time do you plan to stop by?
-          <input
-            name="time"
-            type="text"
-            value={time}
-            onChange={()=>{}}
-            required
-            className="appearance-none block w-full bg-grey-lighter rounded py-3 px-4 mb-3 mr-2"
-          />
+          <TimePicker startTime={9} endTime={3}/>
         </label>
+        <VerticalSpace height={20}/>
         <ApproveButton  style={{width: '100%'}} type="submit">
           Save my visit
         </ApproveButton>

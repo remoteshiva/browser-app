@@ -1,9 +1,9 @@
-import React, { useState, useRef, useCallback, useContext } from 'react'
+import React, { useState, useRef, useContext } from 'react'
 import { useDispatch, useSelector} from 'react-redux'
 import { ThemeContext } from 'styled-components'
 import { getHours, getMinutes } from 'date-fns'
 import { RootState } from '../../store/'
-import { Visit as VisitModel, VisitId, Visitor as VisitorModel, Mourner } from '../../store/shiva/types'
+import { Visit as VisitModel, VisitId, Visitor as VisitorModel, Mourner, MournerId, Role } from '../../store/shiva/types'
 import { selectVisit, deleteVisit, updateVisit } from '../../store/shiva/actions'
 import { updateSelectedShiva } from '../../services/shiva'
 import { CalendarMode } from '../types'
@@ -31,6 +31,7 @@ const NoInteraction: Interaction = {
 }
 
 interface Props {
+  role: Role,
   mode: CalendarMode
   visit: VisitModel
   mourners: Mourner[]
@@ -40,7 +41,7 @@ interface Props {
 
 type ShowToolTip = 'Data' | 'Visitor' | null
 
-export const Visit = ({mode, visit, mourners, hourOffset, onVisitChange}: Props) => {
+export const Visit = ({role, mode, visit, mourners, hourOffset, onVisitChange}: Props) => {
   const dispatch = useDispatch()
   const theme= useContext(ThemeContext)
   const meRef = useRef<HTMLDivElement>(null)
@@ -64,6 +65,7 @@ export const Visit = ({mode, visit, mourners, hourOffset, onVisitChange}: Props)
   const handleClick = (event: React.MouseEvent) => {
     if(mode!=='Edit'){
       dispatch(selectVisit(visit.id))
+      console.log('selecting visit', visit.id)
       setShowTip('Data')
     }
   }
@@ -87,7 +89,7 @@ export const Visit = ({mode, visit, mourners, hourOffset, onVisitChange}: Props)
       setInteraction({ type, deltaX: event.clientX, deltaY: event.clientY })
     }
   }
-  const handleMouseMove = useCallback((event: MouseEvent)=>{
+  const handleMouseMove = (event: MouseEvent)=>{
     event.preventDefault()
     event.stopPropagation()
     if(!rafBusy.current && interactionRef.current.type !== null){
@@ -116,8 +118,8 @@ export const Visit = ({mode, visit, mourners, hourOffset, onVisitChange}: Props)
       })
       rafBusy.current = true
     }
-  }, [interaction])
-  const handleMouseUp = (event: React.MouseEvent) => {
+  }
+  const handleMouseUp = (event: MouseEvent) => {
     if(interactionRef.current.type !== null){
       const node = meRef.current
       if(node){
@@ -131,9 +133,6 @@ export const Visit = ({mode, visit, mourners, hourOffset, onVisitChange}: Props)
     setShowTip(null)
     dispatch(selectVisit(null))
   }
-  const displayAddVisitor = () => {
-    setShowTip('Visitor')
-  }
   const submitVisitor = (visitor: VisitorModel) => {
     setShowTip(null)
     dispatch(updateVisit({
@@ -142,9 +141,26 @@ export const Visit = ({mode, visit, mourners, hourOffset, onVisitChange}: Props)
     }))
     dispatch(updateSelectedShiva())
   }
+  const handleToggleMournerParticipation = (mourner: MournerId, attending: boolean)=>{
+    if(attending){
+      dispatch(updateVisit({
+        visitId: visit.id,
+        partialVisit: {missingMourners: visit.missingMourners.filter(m => m!==mourner)}
+      }))
+    }else{
+      const ms = new Set(visit.missingMourners)
+      ms.add(mourner)
+      dispatch(updateVisit({
+        visitId: visit.id,
+        partialVisit: {missingMourners: Array.from(ms)}
+      }))
+    }
+    dispatch(updateSelectedShiva())
+  }
   const renderToolTip = () => {
-    if(selectedVisit !== visit.id)
+    if(selectedVisit !== visit.id){
       return null
+    }
     const node = meRef.current
     if(node){
       const rect = node.getBoundingClientRect()
@@ -152,7 +168,13 @@ export const Visit = ({mode, visit, mourners, hourOffset, onVisitChange}: Props)
         case 'Data':
           return(
             <ToolTip left={`${rect.left}px`}  top={`${node.offsetTop}px`} onHide={hideTip}>
-              <VisitData mode={mode} {...visit} mournersList={mourners} onAddVisitor={displayAddVisitor}/>
+              <VisitData
+                {...visit}
+                role={role}
+                mournersList={mourners}
+                onAddVisitor={()=>setShowTip('Visitor')}
+                onToggleMournerParticipation={handleToggleMournerParticipation}
+              />
             </ToolTip>
           )
         case 'Visitor':
@@ -169,6 +191,8 @@ export const Visit = ({mode, visit, mourners, hourOffset, onVisitChange}: Props)
     }
   }
   useEventListener('mousemove', handleMouseMove)
+  useEventListener('mouseup', handleMouseUp)
+
   const startPosition = timeToPixels(visit.startTime)
   const endPosition = timeToPixels(visit.endTime)
   return(
@@ -178,7 +202,6 @@ export const Visit = ({mode, visit, mourners, hourOffset, onVisitChange}: Props)
         style={{top: `${startPosition}px`, height: `${endPosition}px`}}
         onClickCapture={handleClick}
         onMouseDown={handleDrag}
-        onMouseUp={handleMouseUp}
       >
         {mode === 'Edit' ?
           <>
@@ -188,7 +211,7 @@ export const Visit = ({mode, visit, mourners, hourOffset, onVisitChange}: Props)
           </>
           : null
         }
-        <div>{mourners.length - visit.mourners.length} Mourners</div>
+        <div>{mourners.length -  (visit.missingMourners ? visit.missingMourners.length : 0)} Mourners</div>
         <div>{visit.visitors.length} Visitors</div>
       </VisitWrapper>
       { renderToolTip() }
