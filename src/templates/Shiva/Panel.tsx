@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Shiva, ROLE } from '../../store/shiva/types'
+import { Shiva, Role } from '../../store/shiva/types'
 import Card from './Card'
 
 export enum Direction {
@@ -8,13 +8,13 @@ export enum Direction {
 }
 export interface ShivaPanel {
   shiva: Shiva
-  role: ROLE
+  role: Role
   editing?: boolean
   save?: number
 }
 
 interface withPanelProps {
-  role: ROLE
+  role: Role
   direction?: Direction
   darkMode: boolean
 }

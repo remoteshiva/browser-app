@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Shiva, ROLE } from '../../store/shiva/types'
+import { Shiva, Role } from '../../store/shiva/types'
 import { Row, FlexColumn, FixedColumn } from '../../components/flexLayout'
 import Subject from './Subject'
 import About from './About'
@@ -14,7 +14,7 @@ import { LayoutWrapper, Direction, Button } from './styles'
 
 interface Props {
   shiva: Shiva
-  role: ROLE
+  role: Role
 }
 
 const ShivaTemplate = ({ shiva, role }: Props) => {

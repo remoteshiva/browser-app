@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react'
 import styled from 'styled-components'
-import { ROLE } from '../../store/shiva/types'
+import { Role } from '../../store/shiva/types'
 import { CardWrapper, Direction } from './styles'
 import EditIcon from '../../assets/img/editWhite.svg'
 import SaveIcon from '../../assets/img/save.svg'
@@ -8,7 +8,7 @@ import CancelIcon from '../../assets/img/cancel.svg'
 
 interface Props {
   darkMode: boolean
-  role: ROLE
+  role: Role
   editing?: boolean
   onModeChange: () => void
   onCancel: () => void

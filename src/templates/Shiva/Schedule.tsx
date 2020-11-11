@@ -4,7 +4,7 @@ import { updateSelectedShiva } from '../../services/shiva'
 import Calendar from '../../components/Calendar'
 import { ShivaPanel, withPanel } from './Panel'
 
-const Schedule = ({ shiva, editing, save }: ShivaPanel) => {
+const Schedule = ({ shiva, editing, save, role }: ShivaPanel) => {
   const dispatch = useDispatch()
   useEffect(() => {
     if (save && save > 0 ) {
@@ -15,7 +15,7 @@ const Schedule = ({ shiva, editing, save }: ShivaPanel) => {
     <>
       <h2>Attend the shiva</h2>
       <p>Click on a slot to see who is planning to attend and to indicate when you plan to stop by.</p>
-      <Calendar mode={editing? 'Edit': 'View'} {...shiva} />
+      <Calendar mode={editing? 'Edit': 'View'} role={role} {...shiva} />
     </>
   )
 }
