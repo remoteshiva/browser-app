@@ -1,9 +1,6 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
-import { addNotification } from '../../store/app/actions'
-import { initializeNotification } from '../../store/app/types'
-import CheckIcon from '../../assets/img/checkbox.svg'
+import { useNotify } from '../../components/common/hooks'
 
 const Wrapper = styled.div`
   display: flex;
@@ -37,18 +34,8 @@ interface Props {
   text: string
 }
 const LinkWithCopy = ({text}: Props) => {
-  const dispatch = useDispatch()
-  const notify = (title: string, description: string) => {
-    dispatch(
-      addNotification(
-        initializeNotification({
-          title,
-          description,
-          icon: CheckIcon,
-        })
-      )
-    )
-  }
+  const notify = useNotify()
+
   const handleCopyLink = async () => {
     if (navigator.clipboard) {
       try {

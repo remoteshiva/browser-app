@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
-import { addNotification } from '../../store/app/actions'
-import { initializeNotification } from '../../store/app/types'
+import { useNotify } from '../../components/common/hooks'
 import { patchSelectedShiva } from '../../services/shiva'
 import { ShivaPanel, withPanel } from './Panel'
 import { VerticalSpace } from '../../components/common'
 import Editable from '../../components/Editable'
 import CopyIcon from '../../assets/img/copy.svg'
-import CheckIcon from '../../assets/img/checkbox.svg'
 import AddIcon from '../../assets/img/add.svg'
 import DeleteIcon from '../../assets/img/delete.svg'
 import { MournerName, Note, Relationship } from './styles'
@@ -63,6 +61,7 @@ const AddMournerButton = styled.button`
 
 const Mourners = ({ role, shiva, editing, save }: ShivaPanel) => {
   const dispatch = useDispatch()
+  const notify = useNotify()
   const [mourners, setMourners] = useState(shiva.mourners)
   useEffect(() => {
     if (save && save > 0 ) {
@@ -101,17 +100,6 @@ const Mourners = ({ role, shiva, editing, save }: ShivaPanel) => {
   }
   const handleCopyInviteLink = async () => {
     await copyToClipboard(`${mournerPathPrefix}${shiva.mournerKey}`)
-  }
-  const notify = (title: string, description: string) => {
-    dispatch(
-      addNotification(
-        initializeNotification({
-          title,
-          description,
-          icon: CheckIcon,
-        })
-      )
-    )
   }
   return (
     <Wrapper>

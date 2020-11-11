@@ -2,10 +2,8 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { push } from 'connected-react-router'
 import { Shiva } from '../../store/shiva/types'
-import { addNotification } from '../../store/app/actions'
-import { initializeNotification } from '../../store/app/types'
+import { useNotify } from '../../components/common/hooks'
 import { postShiva, deleteExistingShiva } from '../../services/shiva'
-import CheckIcon from '../../assets/img/checkbox.svg'
 import { ShivaItemWrapper } from './styles'
 import Dropdown, { MenuItem } from './dropdown'
 
@@ -25,6 +23,7 @@ const menu: MenuItem[] = [
 const ShivaItem = (props: ShivaProps) => {
   const { id, nameOfDeceased, startDate, endDate, mournerKey, visitorKey } = props
   const dispatch = useDispatch()
+  const notify = useNotify()
   const copyToClipboard = async (text: string) => {
     if (navigator.clipboard) {
       try {
@@ -36,17 +35,6 @@ const ShivaItem = (props: ShivaProps) => {
       // this is a polyfill
       document.execCommand('copy')
     }
-  }
-  const notify = (title: string, description: string) => {
-    dispatch(
-      addNotification(
-        initializeNotification({
-          title,
-          description,
-          icon: CheckIcon,
-        })
-      )
-    )
   }
   const handleMenuClick = async (menu: MenuItem) => {
     switch (menu.id) {

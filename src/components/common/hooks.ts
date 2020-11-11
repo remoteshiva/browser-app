@@ -1,4 +1,9 @@
 import { useRef, useEffect, RefObject } from 'react'
+import { useDispatch } from 'react-redux'
+import { addNotification } from '../../store/app/actions'
+import { initializeNotification } from '../../store/app/types'
+import CheckIcon from '../../assets/img/checkbox.svg'
+import { AppDispatch } from '../../store'
 
 export function useEventListener<T extends HTMLElement = HTMLDivElement>(eventName: string, handler: Function, element?: RefObject<T>) {
   // Create a ref that stores handler
@@ -26,4 +31,19 @@ export function useEventListener<T extends HTMLElement = HTMLDivElement>(eventNa
       targetElement.removeEventListener(eventName, eventListener)
     }
   }, [eventName, element, handler])
+}
+
+export function useNotify() {
+  const dispatch = useDispatch<AppDispatch>()
+  return (title: string, description: string) => {
+    dispatch(
+      addNotification(
+        initializeNotification({
+          title,
+          description,
+          icon: CheckIcon,
+        })
+      )
+    )
+  }
 }
