@@ -97,7 +97,7 @@ interface Props extends Visit {
 }
 
 const VisitData = ({role, mournersList, visitors, missingMourners, onAddVisitor, onToggleMournerParticipation}: Props) => {
-
+  missingMourners = missingMourners || []
   const renderMourners = () => {
     return mournersList.map((m,i) =>
       <MournerRow
