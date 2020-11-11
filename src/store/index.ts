@@ -5,7 +5,7 @@ import { routerMiddleware, connectRouter } from 'connected-react-router'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { AppReducer } from './app/reducer'
 import { AuthReducer } from './auth/reducer'
-import { ShivaReducer } from './shiva/reducer'
+import { ShivaReducer } from './shiva/reducers'
 
 export const history = createBrowserHistory({
   getUserConfirmation(message, callback) {
