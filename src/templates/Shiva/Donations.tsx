@@ -20,7 +20,7 @@ const Donations = ({ shiva, editing, save }: ShivaPanel) => {
   }
   return (
     <>
-      <h2>Memorial Donations</h2>
+      <h2>Memorial donations</h2>
       <Editable className={editing ? 'active' : ''} html={donations ? donations : editing ? '' : instructions} active={editing || false} onInput={handleInput} />
     </>
   )

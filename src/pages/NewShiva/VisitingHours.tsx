@@ -31,7 +31,7 @@ const VisitingHours = ({ newShiva, submit, selectStep }: StepProps<VisitingProps
       </Row>
       <Row>
         <Minian>
-          <h2>Add Minian Times</h2>&nbsp;&nbsp;
+          <h2>Add Minyan Times</h2>&nbsp;&nbsp;
           <div className="optional">(Optional)</div>
           <p>If you’d like to have minyan, write which times minyan will take place and the link visitors will use to join the minyan.</p>
           <Editable className="minian" active={true} onInput={handleInput} html={minianTimes || ''} />
