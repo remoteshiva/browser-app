@@ -85,7 +85,7 @@ export const Visit = ({role, mode, visit, mourners, hourOffset, onVisitChange}: 
   const handleResizeFromBottom = (ev: React.MouseEvent) => handleMouseDown(ev, 'resize-from-bottom')
   const handleMouseDown = (event: React.MouseEvent, type: InteractionType) => {
     event.stopPropagation()
-    if (interaction.type === null && mode==='Edit'){
+    if (interaction.type === null && mode==='Edit' && visit.visitors.length===0){
       setInteraction({ type, deltaX: event.clientX, deltaY: event.clientY })
     }
   }
@@ -206,8 +206,8 @@ export const Visit = ({role, mode, visit, mourners, hourOffset, onVisitChange}: 
         {mode === 'Edit' ?
           <>
             <div className='close' onClick={handleDeleteEvent}></div>
-            <div className='gripper gripper-top' onMouseDown={handleResizeFromTop}></div>
-            <div className='gripper gripper-bottom' onMouseDown={handleResizeFromBottom}></div>
+            { visit.visitors.length===0 ? <div className='gripper gripper-top' onMouseDown={handleResizeFromTop}></div> : null }
+            { visit.visitors.length===0 ? <div className='gripper gripper-bottom' onMouseDown={handleResizeFromBottom}></div>: null }
           </>
           : null
         }
