@@ -66,11 +66,17 @@ export const Minian = styled.div`
     font-size: 16px;
     line-height: 24px;
   }
-  .minian {
+  .minyan {
     margin-top: 30px;
     width: 327px;
     height: 177px;
     border: solid 1px ${props => props.theme.colors.sauvignonLight};
     padding: 12px;
+    font-family: 'Lato';
+    font-size: 16px;
+    background-color: ${props => props.theme.colors.white};
+    &:empty:before {
+      color: ${props => props.theme.colors.dawn};
+    }
   }
 `
