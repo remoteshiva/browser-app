@@ -4,9 +4,16 @@ import sanitizeHtml from 'sanitize-html'
 
 export const noop = () => {}
 
-const Wrapper = styled.div`
+interface WrapperProps{
+  placeholder: string
+}
+const Wrapper = styled.div<WrapperProps>`
   *:read-write:focus {
     outline: none;
+  }
+  .editable:empty:before {
+    display: block;
+    content: '${props=>props.placeholder}';
   }
 `
 interface Props {
@@ -15,11 +22,12 @@ interface Props {
   name?: string
   tagName?: string
   className?: string
+  placeholder?: string
   style?: object
   children?: ReactNode
   onInput: (html: string) => void
 }
-const Editable = ({ html, name, tagName, active, style, className, onInput, children }: Props) => {
+const Editable = ({ html, name, tagName, active, style, className, onInput, children, placeholder }: Props) => {
   const el = useRef<HTMLElement>()
   useEffect(() => {
     if (!el.current) return
@@ -63,7 +71,7 @@ const Editable = ({ html, name, tagName, active, style, className, onInput, chil
     }
   }
   return (
-    <Wrapper>
+    <Wrapper placeholder={placeholder || ''}>
       {React.createElement(
         tagName || 'div',
         {
