@@ -5,26 +5,25 @@ import { patchSelectedShiva } from '../../services/shiva'
 import { ShivaPanel, withPanel } from './Panel'
 import Editable from '../../components/Editable'
 
-const MinianTimes = ({ shiva, editing, save }: ShivaPanel) => {
+const MinyanTimes = ({ shiva, editing, save }: ShivaPanel) => {
   const instructions = `Add link here`
-  const [minianTimes, setMinianTimes] = useState(shiva.minianTimes)
+  const [minyanTimes, setminyanTimes] = useState(shiva.minyanTimes)
   const dispatch = useDispatch()
   useEffect(() => {
     if (save && save > 0 ) {
-      console.log(`saving shiva ${save}`)
-      const partialShiva = { minianTimes }
+      const partialShiva = { minyanTimes }
       dispatch(patchSelectedShiva(partialShiva))
     }
   }, [save])
   const handleInput = (html: string) => {
-    setMinianTimes(html)
+    setminyanTimes(html)
   }
   return (
     <>
       <h2>Minyan times</h2>
-      <Editable className={editing ? 'active' : ''} html={minianTimes ? minianTimes : editing ? '' : instructions} active={editing || false} onInput={handleInput} />
+      <Editable className={editing ? 'active' : ''} html={minyanTimes ? minyanTimes : editing ? '' : instructions} active={editing || false} onInput={handleInput} />
     </>
   )
 }
 
-export default withPanel(MinianTimes)
+export default withPanel(MinyanTimes)

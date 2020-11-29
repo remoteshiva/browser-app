@@ -5,7 +5,7 @@ import { getHours, getMinutes } from 'date-fns'
 import { RootState } from '../../store/'
 import { Visit as VisitModel, VisitId, Visitor as VisitorModel, Mourner, MournerId, Role } from '../../store/shiva/types'
 import { selectVisit, deleteVisit, updateVisit } from '../../store/shiva/actions'
-import { updateSelectedShiva } from '../../services/shiva'
+import { updateSelectedShiva, addVisitorMessage } from '../../services/shiva'
 import { CalendarMode } from '../types'
 import { useEventListener } from '../common'
 import ToolTip from './ToolTip'
@@ -46,7 +46,7 @@ export const Visit = ({role, mode, visit, mourners, hourOffset, onVisitChange}: 
   const theme= useContext(ThemeContext)
   const meRef = useRef<HTMLDivElement>(null)
   const rafBusy = useRef(false)
-  const { selectedVisit } = useSelector((state: RootState) => state.shiva)
+  const { selectedVisit, selectedShiva } = useSelector((state: RootState) => state.shiva)
   const [ showTip, setShowTip] = useState<ShowToolTip>(null)
   const [ showConfirm, setShowConfirm ] = useState(false)
   const [ interaction, _setInteraction ] = useState<Interaction>(NoInteraction)
@@ -140,6 +140,9 @@ export const Visit = ({role, mode, visit, mourners, hourOffset, onVisitChange}: 
       partialVisit: {visitors: [...visit.visitors, visitor]}
     }))
     dispatch(updateSelectedShiva())
+    // log the visitor in order to receive email from shiva
+    dispatch(addVisitorMessage(visitor, visit.id, selectedShiva || ''))
+
   }
   const handleToggleMournerParticipation = (mourner: MournerId, attending: boolean)=>{
     if(attending){
