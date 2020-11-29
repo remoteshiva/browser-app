@@ -22,12 +22,13 @@ interface Props {
   name?: string
   tagName?: string
   className?: string
+  href?: string
   placeholder?: string
   style?: object
   children?: ReactNode
   onInput: (html: string) => void
 }
-const Editable = ({ html, name, tagName, active, style, className, onInput, children, placeholder }: Props) => {
+const Editable = ({ html, name, tagName, href, active, style, className, onInput, children, placeholder }: Props) => {
   const el = useRef<HTMLElement>()
   useEffect(() => {
     if (!el.current) return
@@ -42,14 +43,18 @@ const Editable = ({ html, name, tagName, active, style, className, onInput, chil
     if (!el.current) return
     onInput(el.current.innerHTML)
   }
-  const onPaste = (e: React.ClipboardEvent) => {
-    e.stopPropagation()
-    e.preventDefault()
+  const onPaste = (event: React.ClipboardEvent) => {
     if (!el.current) return
-    el.current.innerHTML = sanitize(e.clipboardData.getData('text/html'))
+    let dataType: string
+    if('text/html' in event.clipboardData.types)
+      dataType = 'text/html'
+    else
+      dataType = 'text/pain'
+    el.current.innerHTML = sanitize(event.clipboardData.getData(dataType))
     onInput(el.current.innerHTML)
   }
   const sanitize = (dirtyHtml: string): string => {
+    console.log(dirtyHtml)
     return sanitizeHtml(dirtyHtml, {})
   }
   const replaceCaret = (el: HTMLElement) => {
@@ -77,6 +82,8 @@ const Editable = ({ html, name, tagName, active, style, className, onInput, chil
         {
           ref: el,
           className: `editable ${className}`,
+          ...(href && {href}),
+          ...(href && { target:"_blank"}),
           style,
           name,
           contentEditable: active,
@@ -86,7 +93,7 @@ const Editable = ({ html, name, tagName, active, style, className, onInput, chil
           onBlur: noop,
           onKeyUp: noop,
           onKeyDown: noop,
-          onPaste,
+          onPaste
         },
         children
       )}

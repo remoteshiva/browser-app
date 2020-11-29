@@ -74,6 +74,7 @@ export const Minian = styled.div`
     padding: 12px;
     font-family: 'Lato';
     font-size: 16px;
+    overflow: auto;
     background-color: ${props => props.theme.colors.white};
     &:empty:before {
       color: ${props => props.theme.colors.dawn};

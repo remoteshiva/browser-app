@@ -2,7 +2,7 @@ import React from 'react'
 import MealsPanel from './Meals'
 import SchedulePanel from './Schedule'
 import MournersPanel from './Mourners'
-import { Shiva, ROLE } from '../../store/shiva/types'
+import { Shiva, Role } from '../../store/shiva/types'
 import { initializeShiva } from '../../store/shiva/helpers'
 import { Direction } from './styles'
 

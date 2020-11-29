@@ -15,7 +15,7 @@ const visits: VisitMap = {
       {name:'Brick Tamland', email: 'brick@channel4.com'},
       {name:'David Koechner', email: 'david@channel4.com'}
     ],
-    mourners: [0, 1],
+    missingMourners: [],
   },
   '2':{
     id: '2',
@@ -26,7 +26,7 @@ const visits: VisitMap = {
       {name:'Brick Tamland', email: 'brick@channel4.com'},
       {name:'David Koechner', email: 'david@channel4.com'}
     ],
-    mourners: [0, 1],
+    missingMourners: [],
   },
   '3':{
     id: '3',
@@ -37,7 +37,7 @@ const visits: VisitMap = {
       {name:'Brick Tamland', email: 'brick@channel4.com'},
       {name:'David Koechner', email: 'david@channel4.com'}
     ],
-    mourners: [0, 1],
+    missingMourners: [],
   },
   '4':{
     id: '4',
@@ -48,7 +48,7 @@ const visits: VisitMap = {
       {name:'Brick Tamland', email: 'brick@channel4.com'},
       {name:'David Koechner', email: 'david@channel4.com'}
     ],
-    mourners: [1],
+    missingMourners: [],
   },
   '5':{
     id: '5',
@@ -57,7 +57,7 @@ const visits: VisitMap = {
     visitors: [
       {name:'Brian Fantana', email: 'brian@channel4.com'},
     ],
-    mourners: [1],
+    missingMourners: [],
   }
 }
 
@@ -66,26 +66,26 @@ export default {
   component: Calendar,
 }
 
-const Template: Story<Props> = (props) => {
-  return <Calendar {...props}/>
-}
+// const Template: Story<Props> = (props) => {
+//   return <Calendar {...props}/>
+// }
 
-export const EmptyCalendar = Template.bind({})
-EmptyCalendar.args = {
-  mode: 'View', startDate, endDate, visits: {}
-}
+// export const EmptyCalendar = Template.bind({})
+// EmptyCalendar.args = {
+//   mode: 'View', startDate, endDate, visits: {}
+// }
 
-export const BusyCalendar = Template.bind({})
-BusyCalendar.args = {
-  mode: 'View', startDate, endDate, visits
-}
+// export const BusyCalendar = Template.bind({})
+// BusyCalendar.args = {
+//   mode: 'View', startDate, endDate, visits
+// }
 
-export const UserCalendar = Template.bind({})
-UserCalendar.args = {
-  mode: 'Edit', startDate, endDate, visits: {}
-}
-// // limit the size of the calendar to activate inner scroll
-export const WithScroll=  Template.bind({})
-WithScroll.args = {
-  height: '450px', mode: 'Edit', startDate, endDate, visits: {}
-}
+// export const UserCalendar = Template.bind({})
+// UserCalendar.args = {
+//   mode: 'Edit', startDate, endDate, visits: {}
+// }
+// // // limit the size of the calendar to activate inner scroll
+// export const WithScroll=  Template.bind({})
+// WithScroll.args = {
+//   height: '450px', mode: 'Edit', startDate, endDate, visits: {}
+// }

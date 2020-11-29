@@ -25,7 +25,7 @@ export const initializeShiva = (newShiva?: Partial<Shiva>): Shiva => ({
   about: '',
   images: [],
   mealSignups: '',
-  minianTimes: '',
+  minyanTimes: '',
   donations: '',
   inviteMessage: '',
   ...newShiva,

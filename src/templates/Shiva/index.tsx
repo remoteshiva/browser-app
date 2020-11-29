@@ -6,7 +6,7 @@ import About from './About'
 import Schedule from './Schedule'
 import Mourners from './Mourners'
 import VideoLink from './VideoLink'
-import MinianTimes from './MinianTimes'
+import MinyanTimes from './MinyanTimes'
 import Meals from './Meals'
 import Donations from './Donations'
 import InviteVisitors from './InviteVisitors'
@@ -32,7 +32,7 @@ const ShivaTemplate = ({ shiva, role }: Props) => {
             {role !== 'Visitor' ? <Button onClick={() => setShowDialog(true)}>Invite visitors</Button> : null}
             <VideoLink shiva={shiva} darkMode={shiva.videoLink ? false : true} role={role} direction={Direction.column} />
             <Mourners shiva={shiva} darkMode={false} role={role} direction={Direction.column} />
-            <MinianTimes shiva={shiva} darkMode={shiva.minianTimes ? false : true} role={role} direction={Direction.column} />
+            <MinyanTimes shiva={shiva} darkMode={shiva.minyanTimes ? false : true} role={role} direction={Direction.column} />
             <Meals shiva={shiva} darkMode={shiva.mealSignups ? false : true} role={role} direction={Direction.column} />
             <Donations shiva={shiva} darkMode={shiva.donations ? false : true} role={role} direction={Direction.column} />
           </FixedColumn>

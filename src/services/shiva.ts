@@ -1,15 +1,17 @@
-import { auth } from 'firebase'
+import firebase, { auth } from 'firebase'
 import { firestore } from '../firebase.config'
 import { AppThunk, omit } from './common'
-import { Shiva, ShivaId, Visit } from '../store/shiva/types'
+import { Shiva, ShivaId, Visit, VisitId, Visitor } from '../store/shiva/types'
 import { initializeShiva } from '../store/shiva/helpers'
 import { arrayToMap } from '../store/helpers'
 import { fetchShivaList, fetchShiva, createShiva, deleteShiva, updateShiva } from '../store/shiva/actions'
 import { BackendError } from '../store/types'
+import VideoLink from '../templates/Shiva/VideoLink'
 
 const dehydrateShiva = (shiva: Partial<Shiva>) => {
   return {
     ...shiva,
+    ...(shiva.videoLink && { videoLink: shiva.videoLink.toString() }),
     ...(shiva.titleImage && { titleImage: shiva.titleImage.toString() }),
     ...(shiva.images && { images: shiva.images.map(url => url.toString()) }),
   }
@@ -23,6 +25,7 @@ const hydrateShiva = (item: any) => {
     startDate: item.data().startDate.toDate(),
     endDate: item.data().endDate.toDate(),
     visits: arrayToMap<Visit>(visitList),
+    ...(item.data().videoLink && { videoLink: new URL(item.data().videoLink) }),
   })
 }
 
@@ -92,13 +95,13 @@ export const postShiva = (shiva: Shiva): AppThunk<Promise<Shiva>> => async (disp
   return new Promise<Shiva>(async (resolve, reject) => {
     dispatch(createShiva.request())
     try {
-      const { id } = await firestore.collection('shivas').add({ ...omit(shiva, 'id'), uid: auth().currentUser?.uid })
+      const { id } = await firestore.collection('shivas').add({ ...omit(dehydrateShiva(shiva), 'id'), uid: auth().currentUser?.uid })
       const newShiva = { ...shiva, id }
       dispatch(createShiva.success(newShiva))
       resolve(newShiva)
     } catch (error) {
       dispatch(createShiva.failure({ message: error }))
-      reject(undefined)
+      reject(error)
     }
   })
 }
@@ -157,4 +160,21 @@ export const updateSelectedShiva = (): AppThunk<Promise<Partial<Shiva>>> => asyn
       reject(err)
     })
   }
+}
+
+export const addVisitorMessage = (visitor: Visitor, visitId: VisitId, shivaId: ShivaId): AppThunk<Promise<void>> => async (dispatch): Promise<void> => {
+  return new Promise<void>(async (resolve, reject) => {
+    try {
+      await firestore.collection('visitor_messages').add({
+        created: firebase.firestore.FieldValue.serverTimestamp(),
+        visitor,
+        visitId,
+        shivaId,
+        templateName: 'add_visitor',
+      })
+      resolve()
+    } catch (error) {
+      reject(error)
+    }
+  })
 }

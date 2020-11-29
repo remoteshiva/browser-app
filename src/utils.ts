@@ -216,3 +216,12 @@ export function getLocaleDateFormat(): string {
   }
   return formats[navigator.language] || 'dd/MM/yyyy'
 }
+
+export function isValidURL(url: string) {
+  try {
+    new URL(url)
+  } catch (_) {
+    return false
+  }
+  return true
+}

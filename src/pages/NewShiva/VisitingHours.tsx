@@ -8,12 +8,12 @@ import { CalendarContainer, Minian } from './styles'
 
 
 const VisitingHours = ({ newShiva, submit, selectStep }: StepProps<VisitingProps>) => {
-  const [minianTimes, setMinianTimes] = useState(newShiva.minianTimes)
+  const [minyanTimes, setminyanTimes] = useState(newShiva.minyanTimes)
   const handleInput = (html: string) => {
-    setMinianTimes(html)
+    setminyanTimes(html)
   }
   return (
-    <StepLayout title={'Set visiting hours'} step={4} submit={() => submit({visits: newShiva.visits, minianTimes }, Steps.DONE)} submitText="Done" stepperClickHandler={selectStep}>
+    <StepLayout title={'Set visiting hours'} step={4} submit={() => submit({visits: newShiva.visits, minyanTimes }, Steps.DONE)} submitText="Done" stepperClickHandler={selectStep}>
       <Row>
         <FixedColumn width={500}>
           <p>Specify the times when visitors should be able to join the video chatroom by clicking and dragging on the calendar.</p>
@@ -25,7 +25,7 @@ const VisitingHours = ({ newShiva, submit, selectStep }: StepProps<VisitingProps
       <Row>
         <FlexColumn>
           <CalendarContainer>
-            <Calendar role='Editor' mode='Add'  {...newShiva} />
+            <Calendar role='Editor' mode='Edit'  {...newShiva} />
           </CalendarContainer>
         </FlexColumn>
       </Row>
@@ -34,7 +34,7 @@ const VisitingHours = ({ newShiva, submit, selectStep }: StepProps<VisitingProps
           <h2>Add Minyan Times</h2>&nbsp;&nbsp;
           <div className="optional">(Optional)</div>
           <p>If you’d like to have minyan, write which times minyan will take place and the link visitors will use to join the minyan.</p>
-          <Editable className="minian" active={true} onInput={handleInput} html={minianTimes || ''} />
+          <Editable className="minyan" active={true} onInput={handleInput} html={minyanTimes || ''} placeholder="Type something here"/>
         </Minian>
       </Row>
     </StepLayout>

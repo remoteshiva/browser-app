@@ -18,7 +18,6 @@ export interface Visitor {
   name: string
   email: string
   time?: string
-  timezone?: string
 }
 
 export interface Visit {
@@ -43,7 +42,7 @@ export interface Shiva {
   about?: string
   images: URL[]
   mealSignups?: string
-  minianTimes?: string
+  minyanTimes?: string
   donations?: string
   inviteMessage?: string
 }

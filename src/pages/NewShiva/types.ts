@@ -1,6 +1,7 @@
 import { Mourner, Visit, Shiva } from '../../store/shiva/types'
 
 export enum Steps {
+  UNKNOWN = 0,
   BASIC_DETAILS = 1,
   VIDEO_CHAT_LINK,
   MOURNERS,
@@ -20,12 +21,12 @@ export interface MournersProps {
 }
 
 export interface ChatProps {
-  videoChatLink: URL | null
+  videoLink: URL | null
 }
 
 export interface VisitingProps {
   visits: { [key: string]: Visit }
-  minianTimes?: string
+  minyanTimes?: string
 }
 
 export interface StepProps<T> {
