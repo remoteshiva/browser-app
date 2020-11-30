@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import { Mourner } from '../../store/shiva/types'
@@ -48,10 +48,14 @@ interface MournerBoxProps extends MournerProps {
 
 const MournerBox = ({ index, name, relationship, onUpdate, onRemove }: MournerBoxProps) => {
   const [values, setValues] = useState({ index, name, relationship })
+
+  useEffect(() => {
+    onUpdate({ ...values })
+  }, [values]);
+
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target
     setValues({ ...values, [name]: value })
-    onUpdate({ ...values })
   }
 
   return (
@@ -73,7 +77,7 @@ const Mourners = ({ newShiva, submit, selectStep }: StepProps<MournersProps>) =>
   const [mournerKey] = useState(newShiva.mournerKey)
 
   const handleAddMourner = () => {
-    setMourners([...mourners, { name: '', relationship: '' }])
+    setMourners([...mourners, emptyMourner])
   }
   const handleRemoveMourner = (index: number) => {
     const l = [...mourners]
