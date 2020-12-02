@@ -102,7 +102,10 @@ const Subject = ({ shiva, editing, save }: ShivaPanel) => {
     setMessage(html)
   }
   const handImageUploaded = (url: string) => {
-    setTitleImage(new URL(url))
+    const newTitleImage = new URL(url)
+    setTitleImage(newTitleImage)
+    const partialShiva = { titleImage: newTitleImage }
+    dispatch(patchSelectedShiva(partialShiva))
   }
   const renderSelectImage = (editing: boolean) => (
     <>
@@ -120,12 +123,12 @@ const Subject = ({ shiva, editing, save }: ShivaPanel) => {
           {titleImage ? (
             <div style={{ position: 'relative', display: 'inline-block' }}>
               <SubjectImage style={{ backgroundImage: `url(${titleImage?.toString()})` }} />
-              {renderSelectImage(editing || false)}
+              {renderSelectImage(true)}
             </div>
           ) : (
             <div style={{ position: 'relative', display: 'inline-block' }}>
               <EmptySubjectImage />
-              {renderSelectImage(editing || false)}
+              {renderSelectImage(true)}
             </div>
           )}
         </Container>
