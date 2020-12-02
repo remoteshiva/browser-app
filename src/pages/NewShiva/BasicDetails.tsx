@@ -55,6 +55,7 @@ const BasicDetails = ({ newShiva, submit, selectStep }: StepProps<BasicDetailsPr
                 <DatePicker
                   dateFormat={getLocaleDateFormat()}
                   selected={values.startDate}
+                  minDate={values.startDate}
                   onChange={(date: Date) => setValues({ ...values, startDate: date })}
                   customInput={<input className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3" />}
                 />
