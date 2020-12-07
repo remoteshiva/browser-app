@@ -37,7 +37,7 @@ const About = ({ shiva, editing, save }: ShivaPanel) => {
   const instructions = `You can use this space to include an obituary, eulogies, and stories you’d like to share about ${shiva.nameOfDeceased}. If you do not include any information, this component will not appear on the visitor page.`
   const dispatch = useDispatch()
   const [about, setAbout] = useState(shiva.about)
-  const [images, setImages] = useState(shiva.images)
+  const [images, setImages] = useState<URL[]>(shiva.images)
   useEffect(() => {
     if (save && save > 0) {
       const partialShiva = { about, images }
@@ -51,7 +51,7 @@ const About = ({ shiva, editing, save }: ShivaPanel) => {
     setImages([...images.filter((m, i) => i !== index)])
   }
   const handImageUploaded = (url: string) => {
-    setImages([...images, new URL(url)])
+    setImages(ims => [...ims, new URL(url)])
   }
   return (
     <>
@@ -76,7 +76,7 @@ const About = ({ shiva, editing, save }: ShivaPanel) => {
             </ImageContainer>
           ))}
           <PhotoDropzoneWrapper>
-            <PhotoDropzone onImageUploaded={handImageUploaded} active={editing ? editing : false} />
+            <PhotoDropzone onImageUploaded={handImageUploaded} active={editing || false} />
           </PhotoDropzoneWrapper>
         </FixedColumn>
       </Row>
