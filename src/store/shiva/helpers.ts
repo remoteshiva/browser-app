@@ -2,7 +2,7 @@ import { startOfDay, addDays } from 'date-fns'
 import { Shiva, Visit } from './types'
 
 const generateRandomKey = (): string => {
-  return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
+  return Math.random().toString(36).substring(2, 6) + Math.random().toString(36).substring(2, 6)
 }
 
 /**

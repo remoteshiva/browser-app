@@ -6,8 +6,11 @@ import { initializeShiva } from '../store/shiva/helpers'
 import { arrayToMap } from '../store/helpers'
 import { fetchShivaList, fetchShiva, createShiva, deleteShiva, updateShiva } from '../store/shiva/actions'
 import { BackendError } from '../store/types'
-import VideoLink from '../templates/Shiva/VideoLink'
 
+/**
+ * @description serializes a partial Shiva object for firebase persistence
+ * @param shiva Partial Shiva object
+ */
 const dehydrateShiva = (shiva: Partial<Shiva>) => {
   return {
     ...shiva,
@@ -17,6 +20,11 @@ const dehydrateShiva = (shiva: Partial<Shiva>) => {
   }
 }
 
+/**
+ * @description deserializes a single shiva object from firestore to match the Shiva interface
+ * @param item a firestore shiva document
+ * @returns a fully initialized Shiva model
+ */
 const hydrateShiva = (item: any) => {
   const visitList = Object.values(item.data().visits).map((visit: any) => ({ ...visit, startTime: visit.startTime.toDate(), endTime: visit.endTime.toDate() }))
   return initializeShiva({
@@ -91,6 +99,11 @@ export const fetchShivaByKey = (key: string, keyType: ShivaKey): AppThunk<Promis
   })
 }
 
+/**
+ * @description Posts a Shiva object to firebase, for storage
+ * @param shiva Fully initialized Shiva model
+ * @returns Promise
+ */
 export const postShiva = (shiva: Shiva): AppThunk<Promise<Shiva>> => async (dispatch): Promise<Shiva> => {
   return new Promise<Shiva>(async (resolve, reject) => {
     dispatch(createShiva.request())
@@ -120,6 +133,11 @@ export const deleteExistingShiva = (shivaId: string): AppThunk<Promise<string>> 
   })
 }
 
+/**
+ *
+ * @param shivaId Id of the existing `Shiva` to patch
+ * @param shiva  A partial shiva object containing `Shiva` fields that need to be updated
+ */
 export const patchShiva = (shivaId: ShivaId, shiva: Partial<Shiva>): AppThunk<Promise<Partial<Shiva>>> => async (dispatch): Promise<Partial<Shiva>> => {
   return new Promise<Partial<Shiva>>(async (resolve, reject) => {
     dispatch(updateShiva.request())
@@ -134,6 +152,11 @@ export const patchShiva = (shivaId: ShivaId, shiva: Partial<Shiva>): AppThunk<Pr
   })
 }
 
+/**
+ * @description Patches the selected `Shiva` object
+ * @param shiva A partial shiva object containing `Shiva` fields that need to be updated
+ * @returns Promise
+ */
 export const patchSelectedShiva = (shiva: Partial<Shiva>): AppThunk<Promise<Partial<Shiva>>> => async (dispatch, getState): Promise<Partial<Shiva>> => {
   const state = getState()
   const { selectedShiva } = state.shiva
