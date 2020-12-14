@@ -117,7 +117,7 @@ const Mourners = ({ newShiva, submit, selectStep }: StepProps<MournersProps>) =>
   }
 
   const submitMourners = () => {
-    submit({ mourners, mournerKey }, Steps.VISITS)
+    submit({ mourners: mourners.filter(m => m.name !== '' && m.relationship !== ''), mournerKey }, Steps.VISITS)
   }
   return (
     <StepLayout title={'Add mourners'} step={3} submit={() => submitMourners()} submitText="Next: Set visiting hours" stepperClickHandler={selectStep}>
