@@ -21,12 +21,17 @@ const dehydrateShiva = (shiva: Partial<Shiva>) => {
 }
 
 /**
- * @description deserializes a single shiva object from firestore to match the Shiva interface
+ * @description deserializes a single shiva object from firestore to match the Shiva interface. Converts timestamps to Javascript `Date` objects
  * @param item a firestore shiva document
  * @returns a fully initialized Shiva model
  */
 const hydrateShiva = (item: any) => {
-  const visitList = Object.values(item.data().visits).map((visit: any) => ({ ...visit, startTime: visit.startTime.toDate(), endTime: visit.endTime.toDate() }))
+  const visitList = Object.values(item.data().visits).map((visit: any) => ({
+    ...visit,
+    visitors: visit.visitors.map((visitor: { name: any; email: any; time: any }) => ({ name: visitor.name, email: visitor.email, time: visitor.time.toDate() })),
+    startTime: visit.startTime.toDate(),
+    endTime: visit.endTime.toDate(),
+  }))
   return initializeShiva({
     ...item.data(),
     id: item.id,

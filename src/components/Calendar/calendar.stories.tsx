@@ -11,9 +11,9 @@ const visits: VisitMap = {
     startTime: new Date('2020-03-12 10:30'),
     endTime: new Date('2020-03-12 13:45'),
     visitors: [
-      {name:'Brian Fantana', email: 'brian@channel4.com'},
-      {name:'Brick Tamland', email: 'brick@channel4.com'},
-      {name:'David Koechner', email: 'david@channel4.com'}
+      {name:'Brian Fantana', email: 'brian@channel4.com', time: new Date('2020-03-12 10:30')},
+      {name:'Brick Tamland', email: 'brick@channel4.com', time: new Date('2020-03-12 11:30')},
+      {name:'David Koechner', email: 'david@channel4.com', time: new Date('2020-03-12 12:30')}
     ],
     missingMourners: [],
   },
@@ -22,9 +22,9 @@ const visits: VisitMap = {
     startTime: new Date('2020-03-13 9:30'),
     endTime: new Date('2020-03-13 11:30'),
     visitors: [
-      {name:'Brian Fantana', email: 'brian@channel4.com'},
-      {name:'Brick Tamland', email: 'brick@channel4.com'},
-      {name:'David Koechner', email: 'david@channel4.com'}
+      {name:'Brian Fantana', email: 'brian@channel4.com', time: new Date('2020-03-13 9:30')},
+      {name:'Brick Tamland', email: 'brick@channel4.com', time: new Date('2020-03-13 9:45')},
+      {name:'David Koechner', email: 'david@channel4.com', time: new Date('2020-03-13 9:30')}
     ],
     missingMourners: [],
   },
@@ -33,9 +33,9 @@ const visits: VisitMap = {
     startTime: new Date('2020-03-13 14:30'),
     endTime: new Date('2020-03-13 17:30'),
     visitors: [
-      {name:'Brian Fantana', email: 'brian@channel4.com'},
-      {name:'Brick Tamland', email: 'brick@channel4.com'},
-      {name:'David Koechner', email: 'david@channel4.com'}
+      {name:'Brian Fantana', email: 'brian@channel4.com', time: new Date('2020-03-13 14:30')},
+      {name:'Brick Tamland', email: 'brick@channel4.com',time: new Date('2020-03-13 14:30')},
+      {name:'David Koechner', email: 'david@channel4.com',time: new Date('2020-03-13 14:30')}
     ],
     missingMourners: [],
   },
@@ -44,9 +44,9 @@ const visits: VisitMap = {
     startTime: new Date('2020-03-14 11:00'),
     endTime: new Date('2020-03-14 17:00'),
     visitors: [
-      {name:'Brian Fantana', email: 'brian@channel4.com'},
-      {name:'Brick Tamland', email: 'brick@channel4.com'},
-      {name:'David Koechner', email: 'david@channel4.com'}
+      {name:'Brian Fantana', email: 'brian@channel4.com', time: new Date('2020-03-14 11:00')},
+      {name:'Brick Tamland', email: 'brick@channel4.com', time: new Date('2020-03-14 11:00')},
+      {name:'David Koechner', email: 'david@channel4.com', time: new Date('2020-03-14 11:00')}
     ],
     missingMourners: [],
   },
@@ -55,7 +55,7 @@ const visits: VisitMap = {
     startTime: new Date('2020-03-14 15:30'),
     endTime: new Date('2020-03-14 21:45'),
     visitors: [
-      {name:'Brian Fantana', email: 'brian@channel4.com'},
+      {name:'Brian Fantana', email: 'brian@channel4.com', time: new Date('2020-03-14 15:30')},
     ],
     missingMourners: [],
   }

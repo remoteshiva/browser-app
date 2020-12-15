@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import { format } from 'date-fns'
 import { Visit, Visitor, Mourner, MournerId, Role } from '../../store/shiva/types'
 import CheckedIcon from '../../assets/img/checkbox-round-checked.svg'
 import UncheckedIcon from '../../assets/img/checkbox-round-unchecked.svg'
@@ -22,6 +23,7 @@ const Wrapper = styled.div`
   }
   .mourner{
     display: flex;
+    overflow: hidden;
     &.editor{
       margin-top: 10px;
       min-height: 20px;
@@ -37,6 +39,7 @@ const Wrapper = styled.div`
       margin-right: 14px;
       font-weight: normal;
       color: ${props=> props.theme.colors.doveGray};
+      white-space: nowrap;
     }
     .relationship{
       display: inline;
@@ -85,7 +88,7 @@ const MournerRow = ({name, relationship, attending, role, onCheckChanged}: Mourn
 
 const VisitorRow = ({name, time}: Visitor) => (
   <div className='visitor'>
-    {name} ({time? time: null})
+    {name} ({time? format(time, 'p') : null})
   </div>
 )
 
