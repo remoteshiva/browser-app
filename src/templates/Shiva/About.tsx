@@ -38,6 +38,7 @@ const About = ({ shiva, editing, save }: ShivaPanel) => {
   const dispatch = useDispatch()
   const [about, setAbout] = useState(shiva.about)
   const [images, setImages] = useState<URL[]>(shiva.images)
+  const [uploading, setUploading] = useState(false)
   useEffect(() => {
     if (save && save > 0) {
       const partialShiva = { about, images }
@@ -50,8 +51,12 @@ const About = ({ shiva, editing, save }: ShivaPanel) => {
   const handleDeleteImage = (index: number) => {
     setImages([...images.filter((m, i) => i !== index)])
   }
+  const handleImageUploading = () => {
+    setUploading(true)
+  }
   const handImageUploaded = (url: string) => {
     setImages(ims => [...ims, new URL(url)])
+    setUploading(false)
   }
   return (
     <>
@@ -75,9 +80,14 @@ const About = ({ shiva, editing, save }: ShivaPanel) => {
               ) : null}
             </ImageContainer>
           ))}
-          <PhotoDropzoneWrapper>
-            <PhotoDropzone onImageUploaded={handImageUploaded} active={editing || false} />
-          </PhotoDropzoneWrapper>
+          {editing ?
+          <PhotoDropzoneWrapper className={uploading? 'uploading': ''}>
+            <PhotoDropzone
+              onImageUploading={handleImageUploading}
+              onImageUploaded={handImageUploaded}
+              active={editing || false}
+            />
+          </PhotoDropzoneWrapper> : null }
         </FixedColumn>
       </Row>
     </>

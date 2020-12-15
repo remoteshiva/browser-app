@@ -65,7 +65,6 @@ const Mourners = ({ role, shiva, editing, save }: ShivaPanel) => {
   const [mourners, setMourners] = useState(shiva.mourners)
   useEffect(() => {
     if (save && save > 0 ) {
-      console.log(`saving shiva ${save}`)
       const partialShiva = { mourners }
       dispatch(patchSelectedShiva(partialShiva))
     }
