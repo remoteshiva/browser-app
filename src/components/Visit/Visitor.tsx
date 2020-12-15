@@ -39,13 +39,17 @@ const Wrapper = styled.div`
 interface Props extends Visit {
   onSubmitVisitor: (visitor:VisitorModel)=> void
 }
-const Visitor = ({startTime, onSubmitVisitor}: Props) => {
+const Visitor = ({startTime, endTime, onSubmitVisitor}: Props) => {
   const [values, setValues] = useState({ name: '', email: '' })
-  const [time, setTime] = useState(format(startTime, 'p'))
+  const [time, setTime] = useState(startTime)
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target
     setValues({ ...values, [name]: value })
+  }
+
+  const handleTimeChange = (time: Date) => {
+    setTime(time)
   }
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>)=> {
@@ -59,7 +63,7 @@ const Visitor = ({startTime, onSubmitVisitor}: Props) => {
 
   return<Wrapper>
     <div className='title'>Visit {format(startTime, 'EEEE, MMMM Qo')}</div>
-    <div className='timeslot'>{format(startTime, 'p')}</div>
+    <div className='timeslot'>{format(startTime, 'p')} - {format(endTime, 'p')}</div>
     <form onSubmit={handleSubmit}>
         <label>
           Name
@@ -87,7 +91,7 @@ const Visitor = ({startTime, onSubmitVisitor}: Props) => {
         </label>
         <label>
           Around what time do you plan to stop by?
-          <TimePicker startTime={9} endTime={3}/>
+          <TimePicker startTime={startTime} endTime={endTime} onChange={handleTimeChange}/>
         </label>
         <VerticalSpace height={20}/>
         <ApproveButton  style={{width: '100%'}} type="submit">

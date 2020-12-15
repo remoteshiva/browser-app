@@ -65,7 +65,6 @@ export const Visit = ({role, mode, visit, mourners, hourOffset, onVisitChange}: 
   const handleClick = (event: React.MouseEvent) => {
     if(mode!=='Edit'){
       dispatch(selectVisit(visit.id))
-      console.log('selecting visit', visit.id)
       setShowTip('Data')
     }
   }

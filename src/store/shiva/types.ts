@@ -17,7 +17,7 @@ export type KeyMap = { [key: string]: string }
 export interface Visitor {
   name: string
   email: string
-  time?: string
+  time: Date
 }
 
 export interface Visit {
