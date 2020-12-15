@@ -12,7 +12,6 @@ const Wrapper = styled.div<WrapperProps>`
     outline: none;
   }
   .editable:empty:before {
-    display: block;
     content: '${props=>props.placeholder}';
   }
 `
@@ -54,7 +53,6 @@ const Editable = ({ html, name, tagName, href, active, style, className, onInput
     onInput(el.current.innerHTML)
   }
   const sanitize = (dirtyHtml: string): string => {
-    console.log(dirtyHtml)
     return sanitizeHtml(dirtyHtml, {})
   }
   const replaceCaret = (el: HTMLElement) => {

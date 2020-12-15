@@ -4,11 +4,13 @@ import { useDropzone } from 'react-dropzone'
 
 interface Props {
   active: boolean
+  onImageUploading: () => void
   onImageUploaded: (url: string) => void
 }
-const PhotoDropzone = ({ active, onImageUploaded }: Props) => {
+const PhotoDropzone = ({ active, onImageUploading, onImageUploaded }: Props) => {
   const [uploading, setUploading] = useState(0)
   const onDrop = useCallback((files: File[]) => {
+    onImageUploading()
     files.map(file => {
       const reader = new FileReader()
       reader.onload = () => {
@@ -38,7 +40,7 @@ const PhotoDropzone = ({ active, onImageUploaded }: Props) => {
       return file
     })
   }, [])
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop, multiple: false, accept: 'image/*' })
+  const { getRootProps, getInputProps } = useDropzone({ onDrop, multiple: false, accept: 'image/*' })
   return (
     <div style={{ width: '100%', height: '100%' }} {...getRootProps()}>
       <input {...getInputProps()} disabled={!active} />

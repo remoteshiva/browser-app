@@ -101,6 +101,9 @@ const Subject = ({ shiva, editing, save }: ShivaPanel) => {
   const handleInput = (html: string) => {
     setMessage(html)
   }
+  const handleImageUploading = () => {
+
+  }
   const handImageUploaded = (url: string) => {
     const newTitleImage = new URL(url)
     setTitleImage(newTitleImage)
@@ -111,7 +114,11 @@ const Subject = ({ shiva, editing, save }: ShivaPanel) => {
     <>
       {editing ? (
         <RoundEditClicker src={EditIcon}>
-          <PhotoDropzone onImageUploaded={handImageUploaded} active={editing ? editing : false} />
+          <PhotoDropzone
+            onImageUploading={handleImageUploading}
+            onImageUploaded={handImageUploaded}
+            active={editing || false}
+          />
         </RoundEditClicker>
       ) : null}
     </>
