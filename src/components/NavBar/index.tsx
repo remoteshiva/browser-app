@@ -13,6 +13,7 @@ import LoginBar from './LoginBar'
 const MY_SHIVAS = 'My Shivas'
 const RESET_PASSWORD = 'Reset Password'
 const ACCOUNT_DETAILS = 'Account Details'
+const FAQ = 'Help'
 const LOG_OUT = 'Log Out'
 
 interface UserBarProps {
@@ -20,11 +21,13 @@ interface UserBarProps {
 }
 const UserBar = ({ user }: UserBarProps) => {
   const [isActive, setActive] = useState(false)
-  const menu = [MY_SHIVAS, RESET_PASSWORD, /*ACCOUNT_DETAILS,*/ LOG_OUT]
+  const menu = [MY_SHIVAS, RESET_PASSWORD, FAQ, /*ACCOUNT_DETAILS,*/ LOG_OUT]
   const dispatch = useDispatch()
   const handleMenuClick = (item: string) => {
     if (item === MY_SHIVAS) {
       dispatch(push(Routes.MY_SHIVAS))
+    } else if (item === FAQ) {
+      dispatch(push(Routes.FAQ))
     } else if (item === LOG_OUT) {
       dispatch(logoutUser())
     }
