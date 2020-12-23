@@ -80,7 +80,7 @@ const Login = () => {
         Login with Google
       </LightButton>
       <VerticalSpace height={20} />
-      <a href="#">I forgot my password</a>
+      {/* <a href="#">I forgot my password</a> */}
     </Wrapper>
   )
 }

@@ -10,7 +10,7 @@ const Schedule = ({ shiva, editing, save, role }: ShivaPanel) => {
     if (save && save > 0 ) {
       dispatch(updateSelectedShiva())
     }
-  }, [save])
+  }, [dispatch, save])
   return (
     <>
       <h2>Attend the shiva</h2>
