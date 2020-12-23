@@ -77,17 +77,18 @@ const RoundEditClicker = styled.button<RoundClickerProps>`
 `
 
 const Subject = ({ shiva, editing, save }: ShivaPanel) => {
-  const dispatch = useDispatch()
-  const [message, setMessage] = useState(shiva.message)
-  const [titleImage, setTitleImage] = useState(shiva.titleImage)
+  const dispatch = useDispatch();
+  const [message, setMessage] = useState(shiva.message);
+  const [titleImage, setTitleImage] = useState(shiva.titleImage);
+
   useEffect(() => {
     const saveShiva = async () => {
       if (save && save > 0) {
         const partialShiva = { message, titleImage }
         console.log('saving partial shiva', partialShiva)
-        try{
-          await dispatch(patchSelectedShiva(partialShiva))
-        }catch(error){
+        try {
+          dispatch(patchSelectedShiva(partialShiva))
+        } catch (error) {
           dispatch(addNotification(initializeNotification({
             title: 'Failed to save Shiva',
             description: error.code,
@@ -95,12 +96,12 @@ const Subject = ({ shiva, editing, save }: ShivaPanel) => {
           })))
         }
       }
-    }
-    saveShiva()
-  },[save])
+    };
+    saveShiva();
+  }, [dispatch, message, save, titleImage]);
   const handleInput = (html: string) => {
     setMessage(html)
-  }
+  };
   const handleImageUploading = () => {
 
   }

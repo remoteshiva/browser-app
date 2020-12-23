@@ -14,7 +14,7 @@ const Donations = ({ shiva, editing, save }: ShivaPanel) => {
       const partialShiva = { donations }
       dispatch(patchSelectedShiva(partialShiva))
     }
-  }, [save])
+  }, [dispatch, donations, save])
   const handleInput = (html: string) => {
     setDonations(html)
   }
