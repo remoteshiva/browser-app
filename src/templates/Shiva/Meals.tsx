@@ -4,17 +4,18 @@ import { patchSelectedShiva } from '../../services/shiva'
 import { ShivaPanel, withPanel } from './Panel'
 import Editable from '../../components/Editable'
 
+
 const Meals = ({ shiva, editing, save }: ShivaPanel) => {
   const instructions = `Add link here`
   const [mealSignups, setMealSignups] = useState(shiva.mealSignups)
   const dispatch = useDispatch()
   useEffect(() => {
-    if (save && save > 0) {
+    if (save && save > 0 ) {
       console.log(`saving shiva ${save}`)
       const partialShiva = { mealSignups }
       dispatch(patchSelectedShiva(partialShiva))
     }
-  }, [dispatch, mealSignups, save])
+  }, [save])
   const handleInput = (html: string) => {
     setMealSignups(html)
   }

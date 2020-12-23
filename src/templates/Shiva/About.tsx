@@ -44,7 +44,7 @@ const About = ({ shiva, editing, save }: ShivaPanel) => {
       const partialShiva = { about, images }
       dispatch(patchSelectedShiva(partialShiva))
     }
-  }, [about, dispatch, images, save])
+  }, [save])
   const handleInput = (html: string) => {
     setAbout(html)
   }
