@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import styled from 'styled-components'
-import { Shiva } from '../../store/shiva/types'
 import CloseIcon from '../../assets/img/closex.svg'
 import WarningIcon from '../../assets/img/warning.svg'
 import { ClickOutside } from '../../components/ClickOutside'
