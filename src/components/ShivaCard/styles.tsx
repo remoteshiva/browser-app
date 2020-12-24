@@ -19,6 +19,7 @@ const BaseItemWrapper = styled.li`
 
 export const ShivaItemWrapper = styled(BaseItemWrapper)`
   box-shadow: 0 2px 20px 0 rgba(0, 0, 0, 0.04);
+  border: 1px solid transparent;
   background-color: ${props => props.theme.colors.white};
   font-family: 'Lora';
   &:hover {
@@ -34,10 +35,12 @@ export const ShivaItemWrapper = styled(BaseItemWrapper)`
   }
   section {
     margin: 85px 10px 5px 10px;
+    padding-left: 1.2rem;
     > p {
       font-family: 'Lora';
       font-size: 34px;
       font-weight: 400;
+
     }
     > div {
       font-family: 'Lato';

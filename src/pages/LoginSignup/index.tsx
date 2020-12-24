@@ -24,11 +24,11 @@ const LoginSignup = ({ page }: Props) => {
     dispatch(push(`/${p.toString()}`))
   }
   return (
-    <div style={{ minHeight: '870px' }}>
-      <Row>
+    <div style={{ height: 'calc(100vh-100px)'}}>
+      <Row style={{ height: 'calc(100vh - 78px)'}}>
         <FlexColumn>
           <GraphicsWrapper>
-            <img src={Graphics} alt="video conference" />
+            <img  style={{ maxWidth: '60%'}} src={Graphics} alt="video conference" />
           </GraphicsWrapper>
         </FlexColumn>
         <FixedColumn width={533}>
