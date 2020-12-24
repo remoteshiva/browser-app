@@ -97,7 +97,7 @@ const Subject = ({ shiva, editing, save }: ShivaPanel) => {
       }
     }
     saveShiva()
-  },[save])
+  },[dispatch, message, save, titleImage])
   const handleInput = (html: string) => {
     setMessage(html)
   }
