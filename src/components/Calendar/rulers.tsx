@@ -1,5 +1,5 @@
 import React from 'react'
-import { eachDayOfInterval } from 'date-fns'
+import { eachDayOfInterval, format } from 'date-fns'
 import { HRulerWrapper, VRulerWrapper, Day, Hour } from './styles'
 import { withCalendarContext, CalendarContextProps } from './context'
 
