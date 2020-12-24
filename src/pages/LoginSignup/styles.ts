@@ -39,7 +39,7 @@ export const Tab = styled.button<TabProps>`
   color: ${props => props.theme.colors.heavyMetal};
   opacity: ${props => (props.active ? 1 : 0.21)};
   border-bottom: ${props => (props.active ? 'solid 2px #41413a' : 0)};
-  cursor: default;
+  cursor: pointer;
 `
 interface SpaceProps {
   height: number
