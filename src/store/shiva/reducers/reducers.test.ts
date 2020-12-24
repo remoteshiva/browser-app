@@ -85,6 +85,7 @@ describe('Visit Reducer', () => {
     const visitor: Visitor = {
       name: 'Ron Burgundy',
       email: 'ron@channel4.com',
+      time: new Date(),
     }
     const newVisitMap = visitReducer(visitMap, Actions.updateVisit({ visitId: '1', partialVisit: { visitors: [visitor] } }))
     expect(visitMap['1'].visitors).toEqual([])
