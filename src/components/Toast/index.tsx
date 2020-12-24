@@ -28,7 +28,7 @@ const Toast = ({ id, icon, title, description }: Notification) => {
         dispatch(clearTimeout(timer))
       }
     }
-  }, [dispatch, id, timer])
+  }, [])
   return (
     <NotificationWrapper key={id} className={Position.br}>
       {icon ? (

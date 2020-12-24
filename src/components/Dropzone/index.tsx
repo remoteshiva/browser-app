@@ -8,7 +8,7 @@ interface Props {
   onImageUploaded: (url: string) => void
 }
 const PhotoDropzone = ({ active, onImageUploading, onImageUploaded }: Props) => {
-  const [, setUploading] = useState(0)
+  const [uploading, setUploading] = useState(0)
   const onDrop = useCallback((files: File[]) => {
     onImageUploading()
     files.map(file => {
@@ -39,7 +39,7 @@ const PhotoDropzone = ({ active, onImageUploading, onImageUploaded }: Props) => 
       reader.readAsArrayBuffer(file)
       return file
     })
-  }, [onImageUploaded, onImageUploading])
+  }, [])
   const { getRootProps, getInputProps } = useDropzone({ onDrop, multiple: false, accept: 'image/*' })
   return (
     <div style={{ width: '100%', height: '100%' }} {...getRootProps()}>
