@@ -71,6 +71,7 @@ export const DropdownButton = styled.span`
     width: 6px;
     height: 19px;
     object-fit: contain;
+    cursor: pointer;
   }
 `
 
