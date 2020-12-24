@@ -51,7 +51,7 @@ const MournerBox = ({ index, name, relationship, onUpdate, onRemove }: MournerBo
 
   useEffect(() => {
     onUpdate({ ...values })
-  }, [values]);
+  }, [onUpdate, values]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target

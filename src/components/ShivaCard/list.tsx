@@ -19,7 +19,7 @@ const ShivaList = ({ entities, shivas }: Props) => {
       {shivas.map(shivaId => (
         <ShivaItem key={shivaId} {...entities[shivaId]} />
       ))}
-      <NewShivaItem onClick={() =>dispatch(push(Routes.NEW_SHIVA('1')))}/>
+      <NewShivaItem onClick={() => dispatch(push(Routes.NEW_SHIVA('1')))}/>
     </ShivaListWrapper>
   )
 }

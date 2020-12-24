@@ -60,7 +60,7 @@ const NewShiva = () => {
     return () => {
       dispatch(deleteNewShiva())
     }
-  },[])
+  },[dispatch, newShiva])
 
   const submitStepData = async <T extends {}>(data: T, nextStep: T.Steps) => {
     if(newShiva){

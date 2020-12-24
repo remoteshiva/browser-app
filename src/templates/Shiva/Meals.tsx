@@ -15,7 +15,7 @@ const Meals = ({ shiva, editing, save }: ShivaPanel) => {
       const partialShiva = { mealSignups }
       dispatch(patchSelectedShiva(partialShiva))
     }
-  }, [save])
+  }, [dispatch, mealSignups, save])
   const handleInput = (html: string) => {
     setMealSignups(html)
   }

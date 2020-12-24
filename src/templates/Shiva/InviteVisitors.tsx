@@ -116,7 +116,7 @@ const InviteVisitorsModal = ({ shiva, onClose }: Props) => {
   useEffect(()=>{
     if (message==='')
       setMessage(`With great sadness, we share that ${shiva.nameOfDeceased}, Z”L, has passed. Those mourning are sitting shiva remotely. Shiva details, including visiting hours and link, can be found at ${link}`)
-  }, [])
+  }, [link, message, shiva.nameOfDeceased])
 
   return (
     <Fade>

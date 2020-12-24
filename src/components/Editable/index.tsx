@@ -6,7 +6,7 @@ import { debounce } from '../../utils'
 
 export const noop = () => {}
 
-interface WrapperProps{
+interface WrapperProps {
   placeholder: string
 }
 const Wrapper = styled.div<WrapperProps>`
@@ -14,7 +14,7 @@ const Wrapper = styled.div<WrapperProps>`
     outline: none;
   }
   .editable:empty:before {
-    content: '${props=>props.placeholder}';
+    content: '${props => props.placeholder}';
   }
 `
 interface Props {
@@ -31,7 +31,10 @@ interface Props {
 }
 const Editable = ({ html, name, tagName, href, active, style, className, onInput, children, placeholder }: Props) => {
   const el = useRef<HTMLElement>()
-  const delayedInput = useCallback(debounce(h => onInput(h), 500), [])
+  const delayedInput = useCallback(
+    debounce(h => onInput(h), 500),
+    []
+  )
   useEffect(() => {
     if (!el.current) return
     if (html !== el.current.innerHTML) {
@@ -41,17 +44,15 @@ const Editable = ({ html, name, tagName, href, active, style, className, onInput
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.stopPropagation()
     e.preventDefault()
-    if (el.current){
+    if (el.current) {
       delayedInput(anchorme(el.current.innerHTML))
     }
   }
   const onPaste = (event: React.ClipboardEvent) => {
     if (!el.current) return
     let dataType: string
-    if('text/html' in event.clipboardData.types)
-      dataType = 'text/html'
-    else
-      dataType = 'text/pain'
+    if ('text/html' in event.clipboardData.types) dataType = 'text/html'
+    else dataType = 'text/pain'
     el.current.innerHTML = sanitize(event.clipboardData.getData(dataType))
     onInput(el.current.innerHTML)
   }
@@ -83,8 +84,8 @@ const Editable = ({ html, name, tagName, href, active, style, className, onInput
         {
           ref: el,
           className: `editable ${className}`,
-          ...(href && {href}),
-          ...(href && { target:"_blank"}),
+          ...(href && { href }),
+          ...(href && { target: '_blank' }),
           style,
           name,
           contentEditable: active,
@@ -94,7 +95,7 @@ const Editable = ({ html, name, tagName, href, active, style, className, onInput
           onBlur: noop,
           onKeyUp: noop,
           onKeyDown: noop,
-          onPaste
+          onPaste,
         },
         children
       )}

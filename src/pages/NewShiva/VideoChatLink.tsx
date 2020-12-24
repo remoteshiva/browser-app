@@ -6,8 +6,8 @@ import { StepProps, ChatProps, Steps } from './types'
 import { StyledForm, ImageWrapper } from './styles'
 import StepLayout from './Layout'
 
-
-const instructionsLink = 'http://remoteshiva.org'
+// TODO: Implement
+// const instructionsLink = 'http://remoteshiva.org'
 
 const VideoChatLink = ({newShiva, submit, selectStep}: StepProps<ChatProps>) => {
   const [values, setValues] = useState({videoLink: newShiva.videoLink?.toString() || ''})
