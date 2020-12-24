@@ -36,10 +36,14 @@ export const Tab = styled.button<TabProps>`
   font-family: 'Lora';
   font-size: 43px;
   line-height: 58px;
+  margin-right: 1rem;
   color: ${props => props.theme.colors.heavyMetal};
   opacity: ${props => (props.active ? 1 : 0.21)};
-  border-bottom: ${props => (props.active ? 'solid 2px #41413a' : 0)};
+  border-bottom: ${props => (props.active ? 'solid 2px #41413a' : 'solid 2px transparent')};
   cursor: pointer;
+  &:hover {
+    border-bottom: solid 2px #41413a;
+  }
 `
 interface SpaceProps {
   height: number
