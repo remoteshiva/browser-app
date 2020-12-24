@@ -25,6 +25,7 @@ export const ShivaItemWrapper = styled(BaseItemWrapper)`
   &:hover {
     border: 1px solid ${rgba('#924623', 0.15)};
     box-shadow: 0 2px 20px 0 rgba(0, 0, 0, 0.18);
+    cursor: pointer;
   }
   &:active {
     border: 0;
