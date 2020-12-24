@@ -14,7 +14,7 @@ const VideoLink = ({ shiva, editing, save }: ShivaPanel) => {
       const partialShiva = { videoLink }
       dispatch(patchShiva(shiva.id, partialShiva))
     }
-  }, [dispatch, save, shiva.id, videoLink])
+  }, [save])
   const handleInput = (html: string) => {
     try {
       const url = new URL(html)
