@@ -12,7 +12,7 @@ import DeleteIcon from '../../assets/img/delete.svg'
 import { MournerName, Note, Relationship } from './styles'
 
 const mournerPathPrefix = `${process.env.REACT_APP_BASE_URL}/m/`
-const visitorPathPrefix = `${process.env.REACT_APP_BASE_URL}/v/`
+// const visitorPathPrefix = `${process.env.REACT_APP_BASE_URL}/v/` TODO: implement
 
 const Wrapper = styled.div`
   font-family: 'Lato';
@@ -68,7 +68,7 @@ const Mourners = ({ role, shiva, editing, save }: ShivaPanel) => {
       const partialShiva = { mourners }
       dispatch(patchSelectedShiva(partialShiva))
     }
-  }, [save])
+  }, [dispatch, mourners, save])
   const handleInput = (index: number, key: string, value: string) => {
     const newMourners = mourners.map((m, i) => {
       if (i === index) {

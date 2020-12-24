@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { Shiva, ShivaId } from '../../store/shiva/types'
 import { patchSelectedShiva } from '../../services/shiva'
 import { ShivaPanel, withPanel } from './Panel'
 import Editable from '../../components/Editable'
@@ -14,7 +13,7 @@ const MinyanTimes = ({ shiva, editing, save }: ShivaPanel) => {
       const partialShiva = { minyanTimes }
       dispatch(patchSelectedShiva(partialShiva))
     }
-  }, [save])
+  }, [dispatch, minyanTimes, save])
   const handleInput = (html: string) => {
     setminyanTimes(html)
   }

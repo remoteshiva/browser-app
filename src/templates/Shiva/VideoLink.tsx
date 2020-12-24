@@ -5,7 +5,6 @@ import { ShivaPanel, withPanel } from './Panel'
 import Editable from '../../components/Editable'
 import { isValidURL } from '../../utils'
 
-
 const VideoLink = ({ shiva, editing, save }: ShivaPanel) => {
   const instructions = `Add link here`
   const [videoLink, setVideoLink] = useState(shiva.videoLink ? shiva.videoLink.toString() : '')
@@ -13,27 +12,32 @@ const VideoLink = ({ shiva, editing, save }: ShivaPanel) => {
   const dispatch = useDispatch()
   useEffect(() => {
     if (save && save > 0) {
-      if(isValidURL(videoLink)){
+      if (isValidURL(videoLink)) {
         setValidURL(true)
         const partialShiva = { videoLink: new URL(videoLink) }
         dispatch(patchShiva(shiva.id, partialShiva))
-      }else{
+      } else {
         setValidURL(false)
       }
     }
-  }, [save])
-
+  }, [dispatch, save, shiva.id, videoLink])
+  // const handleInput = (html: string) => {
+  //   try {
+  //     const url = new URL(html).toString()
+  //     setVideoLink(url)
+  //   } catch (error) {}
+  // }
   const link = videoLink?.toString() || ''
   return (
     <>
       <h2>Video link</h2>
       <Editable
-        tagName='a'
+        tagName="a"
         href={link}
-        className={'video-link ' + (editing ? 'active' : (validURL ? '' : 'invalid'))}
+        className={'video-link ' + (editing ? 'active' : validURL ? '' : 'invalid')}
         html={link ? link : editing ? '' : instructions}
         active={editing || false}
-        onInput={(html:string)=>setVideoLink(html)}
+        onInput={(html: string) => setVideoLink(html)}
       />
     </>
   )
