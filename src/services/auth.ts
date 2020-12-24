@@ -147,21 +147,20 @@ const createUser = async (user: FBUser, name: string) => {
   return getUser(user.uid)
 }
 
-// TODO: do we need this?
-// const createOAuthUser = async (email: string, displayName: string) => {
-//   firestore
-//     .collection('users')
-//     .add({
-//       email,
-//       displayName,
-//     })
-//     .then(function (docRef) {
-//       console.log('Document written with ID: ', docRef.id)
-//     })
-//     .catch(function (error) {
-//       console.error('Error adding document: ', error)
-//     })
-// }
+const createOAuthUser = async (email: string, displayName: string) => {
+  firestore
+    .collection('users')
+    .add({
+      email,
+      displayName,
+    })
+    .then(function (docRef) {
+      console.log('Document written with ID: ', docRef.id)
+    })
+    .catch(function (error) {
+      console.error('Error adding document: ', error)
+    })
+}
 
 const getUser = async (uid: string): Promise<any> => {
   if (!uid) return null
