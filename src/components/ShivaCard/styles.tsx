@@ -19,6 +19,7 @@ const BaseItemWrapper = styled.li`
 
 export const ShivaItemWrapper = styled(BaseItemWrapper)`
   box-shadow: 0 2px 20px 0 rgba(0, 0, 0, 0.04);
+  border: 1px solid transparent;
   background-color: ${props => props.theme.colors.white};
   font-family: 'Lora';
   &:hover {
@@ -34,10 +35,12 @@ export const ShivaItemWrapper = styled(BaseItemWrapper)`
   }
   section {
     margin: 85px 10px 5px 10px;
+    padding-left: 1.2rem;
     > p {
       font-family: 'Lora';
       font-size: 34px;
       font-weight: 400;
+
     }
     > div {
       font-family: 'Lato';
@@ -46,10 +49,10 @@ export const ShivaItemWrapper = styled(BaseItemWrapper)`
   }
 `
 
-export const NewShivaItemWrapper = styled(BaseItemWrapper)` 
+export const NewShivaItemWrapper = styled(BaseItemWrapper)`
   ${tw`flex items-center justify-center`}
-  border-color:${props => props.theme.colors.doveGray}; 
-  color:${props => props.theme.colors.doveGray}; 
+  border-color:${props => props.theme.colors.doveGray};
+  color:${props => props.theme.colors.doveGray};
   border-width: 1px;
   border-style: dashed;
   font-size: 18px;
@@ -63,7 +66,7 @@ export const DropdownWrapper = styled(ClickOutside)`
 `
 
 export const DropdownButton = styled.span`
-  ${tw`inline-flex justify-center px-4 py-2 bg-white leading-5 focus:outline-none focus:border-blue-300 transition ease-in-out duration-150`}
+  ${tw`inline-flex justify-center px-1 py-2 bg-white leading-5 focus:outline-none focus:border-blue-300 transition ease-in-out duration-150`}
   img {
     width: 6px;
     height: 19px;
