@@ -28,7 +28,7 @@ const LoginSignup = ({ page }: Props) => {
       <Row style={{ height: 'calc(100vh - 78px)'}}>
         <FlexColumn>
           <GraphicsWrapper>
-            <img  style={{ maxWidth: '60%'}} src={Graphics} alt="video conference" />
+            <img  style={{ maxWidth: '70%'}} src={Graphics} alt="video conference" />
           </GraphicsWrapper>
         </FlexColumn>
         <FixedColumn width={533}>
