@@ -1,0 +1,142 @@
+[debug] [2020-12-25T03:32:21.217Z] ----------------------------------------------------------------------
+[debug] [2020-12-25T03:32:21.219Z] Command:       /usr/local/Cellar/node/15.3.0/bin/node /usr/local/bin/firebase deploy --only hosting:remote-shiva-testing
+[debug] [2020-12-25T03:32:21.220Z] CLI Version:   9.1.0
+[debug] [2020-12-25T03:32:21.220Z] Platform:      darwin
+[debug] [2020-12-25T03:32:21.220Z] Node Version:  v15.3.0
+[debug] [2020-12-25T03:32:21.221Z] Time:          Thu Dec 24 2020 22:32:21 GMT-0500 (Eastern Standard Time)
+[debug] [2020-12-25T03:32:21.222Z] ----------------------------------------------------------------------
+[debug] [2020-12-25T03:32:21.222Z] 
+[debug] [2020-12-25T03:32:21.231Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-12-25T03:32:21.231Z] > authorizing via signed-in user
+[debug] [2020-12-25T03:32:21.231Z] [iam] checking project remote-shiva-testing for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2020-12-25T03:32:21.234Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2020-12-25T03:32:21.235Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2020-12-25T03:32:21.407Z] <<< HTTP RESPONSE 200 {"date":"Fri, 25 Dec 2020 03:32:21 GMT","pragma":"no-cache","cache-control":"no-cache, no-store, max-age=0, must-revalidate","expires":"Mon, 01 Jan 1990 00:00:00 GMT","content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","server":"scaffolding on HTTPServer2","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-12-25T03:32:21.446Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/remote-shiva-testing:testIamPermissions  
+ {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2020-12-25T03:32:21.844Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Fri, 25 Dec 2020 03:32:21 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=287","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-12-25T03:32:21.845Z] [iam] error while checking permissions, command may fail: FirebaseError: Authorization failed. This account is missing the following required permissions on project remote-shiva-testing:
+
+  firebase.projects.get
+  firebasehosting.sites.update
+[debug] [2020-12-25T03:32:21.846Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/remote-shiva-testing  
+ 
+[debug] [2020-12-25T03:32:22.265Z] <<< HTTP RESPONSE 403 {"vary":"X-Origin, Referer, Origin,Accept-Encoding","content-type":"application/json; charset=UTF-8","date":"Fri, 25 Dec 2020 03:32:22 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-12-25T03:32:22.265Z] <<< HTTP RESPONSE BODY {"error":{"code":403,"message":"The caller does not have permission","status":"PERMISSION_DENIED"}}
+[debug] [2020-12-25T03:32:22.267Z] HTTP Error: 403, The caller does not have permission
+[debug] [2020-12-25T03:32:22.268Z] FirebaseError: HTTP Error: 403, The caller does not have permission
+    at module.exports (/usr/local/lib/node_modules/firebase-tools/lib/responseToError.js:38:12)
+    at Request._callback (/usr/local/lib/node_modules/firebase-tools/lib/api.js:41:35)
+    at Request.self.callback (/usr/local/lib/node_modules/firebase-tools/node_modules/request/request.js:185:22)
+    at Request.emit (node:events:376:20)
+    at Request.EventEmitter.emit (node:domain:470:12)
+    at Request.<anonymous> (/usr/local/lib/node_modules/firebase-tools/node_modules/request/request.js:1154:10)
+    at Request.emit (node:events:376:20)
+    at Request.EventEmitter.emit (node:domain:470:12)
+    at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/firebase-tools/node_modules/request/request.js:1076:12)
+    at Object.onceWrapper (node:events:482:28)
+    at IncomingMessage.emit (node:events:388:22)
+    at IncomingMessage.EventEmitter.emit (node:domain:470:12)
+    at endReadableNT (node:internal/streams/readable:1294:12)
+    at processTicksAndRejections (node:internal/process/task_queues:80:21)
+[error] 
+[error] Error: Failed to get Firebase project remote-shiva-testing. Please make sure the project exists and your account has permission to access it.
+[debug] [2020-12-25T03:33:53.384Z] ----------------------------------------------------------------------
+[debug] [2020-12-25T03:33:53.386Z] Command:       /usr/local/Cellar/node/15.3.0/bin/node /usr/local/bin/firebase deploy --only hosting:remote-shiva-testing
+[debug] [2020-12-25T03:33:53.387Z] CLI Version:   9.1.0
+[debug] [2020-12-25T03:33:53.387Z] Platform:      darwin
+[debug] [2020-12-25T03:33:53.387Z] Node Version:  v15.3.0
+[debug] [2020-12-25T03:33:53.388Z] Time:          Thu Dec 24 2020 22:33:53 GMT-0500 (Eastern Standard Time)
+[debug] [2020-12-25T03:33:53.388Z] ----------------------------------------------------------------------
+[debug] [2020-12-25T03:33:53.388Z] 
+[debug] [2020-12-25T03:33:53.395Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-12-25T03:33:53.396Z] > authorizing via signed-in user
+[debug] [2020-12-25T03:33:53.396Z] [iam] checking project remote-shiva-testing for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2020-12-25T03:33:53.399Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/remote-shiva-testing:testIamPermissions  
+ {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2020-12-25T03:33:53.874Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Fri, 25 Dec 2020 03:33:53 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=312","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-12-25T03:33:53.875Z] [iam] error while checking permissions, command may fail: FirebaseError: Authorization failed. This account is missing the following required permissions on project remote-shiva-testing:
+
+  firebase.projects.get
+  firebasehosting.sites.update
+[debug] [2020-12-25T03:33:53.876Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/remote-shiva-testing  
+ 
+[debug] [2020-12-25T03:33:54.280Z] <<< HTTP RESPONSE 403 {"vary":"X-Origin, Referer, Origin,Accept-Encoding","content-type":"application/json; charset=UTF-8","date":"Fri, 25 Dec 2020 03:33:54 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-12-25T03:33:54.280Z] <<< HTTP RESPONSE BODY {"error":{"code":403,"message":"The caller does not have permission","status":"PERMISSION_DENIED"}}
+[debug] [2020-12-25T03:33:54.282Z] HTTP Error: 403, The caller does not have permission
+[debug] [2020-12-25T03:33:54.283Z] FirebaseError: HTTP Error: 403, The caller does not have permission
+    at module.exports (/usr/local/lib/node_modules/firebase-tools/lib/responseToError.js:38:12)
+    at Request._callback (/usr/local/lib/node_modules/firebase-tools/lib/api.js:41:35)
+    at Request.self.callback (/usr/local/lib/node_modules/firebase-tools/node_modules/request/request.js:185:22)
+    at Request.emit (node:events:376:20)
+    at Request.EventEmitter.emit (node:domain:470:12)
+    at Request.<anonymous> (/usr/local/lib/node_modules/firebase-tools/node_modules/request/request.js:1154:10)
+    at Request.emit (node:events:376:20)
+    at Request.EventEmitter.emit (node:domain:470:12)
+    at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/firebase-tools/node_modules/request/request.js:1076:12)
+    at Object.onceWrapper (node:events:482:28)
+    at IncomingMessage.emit (node:events:388:22)
+    at IncomingMessage.EventEmitter.emit (node:domain:470:12)
+    at endReadableNT (node:internal/streams/readable:1294:12)
+    at processTicksAndRejections (node:internal/process/task_queues:80:21)
+[error] 
+[error] Error: Failed to get Firebase project remote-shiva-testing. Please make sure the project exists and your account has permission to access it.
+[debug] [2020-12-25T03:37:08.414Z] ----------------------------------------------------------------------
+[debug] [2020-12-25T03:37:08.415Z] Command:       /usr/local/Cellar/node/15.3.0/bin/node /usr/local/bin/firebase deploy
+[debug] [2020-12-25T03:37:08.416Z] CLI Version:   9.1.0
+[debug] [2020-12-25T03:37:08.416Z] Platform:      darwin
+[debug] [2020-12-25T03:37:08.416Z] Node Version:  v15.3.0
+[debug] [2020-12-25T03:37:08.417Z] Time:          Thu Dec 24 2020 22:37:08 GMT-0500 (Eastern Standard Time)
+[debug] [2020-12-25T03:37:08.417Z] ----------------------------------------------------------------------
+[debug] [2020-12-25T03:37:08.417Z] 
+[debug] [2020-12-25T03:37:08.425Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-12-25T03:37:08.426Z] > authorizing via signed-in user
+[debug] [2020-12-25T03:37:08.426Z] [iam] checking project remote-shiva-testing for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]
+[debug] [2020-12-25T03:37:08.428Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/remote-shiva-testing:testIamPermissions  
+ {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]}
+[debug] [2020-12-25T03:37:08.869Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Fri, 25 Dec 2020 03:37:08 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=326","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-12-25T03:37:08.870Z] [iam] error while checking permissions, command may fail: FirebaseError: Authorization failed. This account is missing the following required permissions on project remote-shiva-testing:
+
+  cloudfunctions.functions.create
+  cloudfunctions.functions.delete
+  cloudfunctions.functions.get
+  cloudfunctions.functions.list
+  cloudfunctions.functions.update
+  cloudfunctions.operations.get
+  datastore.indexes.create
+  datastore.indexes.delete
+  datastore.indexes.list
+  datastore.indexes.update
+  firebase.projects.get
+  firebasehosting.sites.update
+  firebaserules.releases.create
+  firebaserules.releases.update
+  firebaserules.rulesets.create
+[debug] [2020-12-25T03:37:08.871Z] >>> HTTP REQUEST POST https://iam.googleapis.com/v1/projects/remote-shiva-testing/serviceAccounts/remote-shiva-testing@appspot.gserviceaccount.com:testIamPermissions  
+ {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2020-12-25T03:37:09.113Z] <<< HTTP RESPONSE 404 {"vary":"X-Origin, Referer, Origin,Accept-Encoding","content-type":"application/json; charset=UTF-8","date":"Fri, 25 Dec 2020 03:37:09 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-12-25T03:37:09.114Z] <<< HTTP RESPONSE BODY {"error":{"code":404,"message":"Not found; Gaia id not found for email remote-shiva-testing@appspot.gserviceaccount.com","status":"NOT_FOUND"}}
+[debug] [2020-12-25T03:37:09.115Z] [functions] service account IAM check errored, deploy may fail: HTTP Error: 404, Not found; Gaia id not found for email remote-shiva-testing@appspot.gserviceaccount.com {"name":"FirebaseError","children":[],"context":{"body":{"error":{"code":404,"message":"Not found; Gaia id not found for email remote-shiva-testing@appspot.gserviceaccount.com","status":"NOT_FOUND"}},"response":{"statusCode":404,"body":{"error":{"code":404,"message":"Not found; Gaia id not found for email remote-shiva-testing@appspot.gserviceaccount.com","status":"NOT_FOUND"}},"headers":{"vary":"X-Origin, Referer, Origin,Accept-Encoding","content-type":"application/json; charset=UTF-8","date":"Fri, 25 Dec 2020 03:37:09 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"},"request":{"uri":{"protocol":"https:","slashes":true,"auth":null,"host":"iam.googleapis.com","port":443,"hostname":"iam.googleapis.com","hash":null,"search":null,"query":null,"pathname":"/v1/projects/remote-shiva-testing/serviceAccounts/remote-shiva-testing@appspot.gserviceaccount.com:testIamPermissions","path":"/v1/projects/remote-shiva-testing/serviceAccounts/remote-shiva-testing@appspot.gserviceaccount.com:testIamPermissions","href":"https://iam.googleapis.com/v1/projects/remote-shiva-testing/serviceAccounts/remote-shiva-testing@appspot.gserviceaccount.com:testIamPermissions"},"method":"POST"}}},"exit":1,"message":"HTTP Error: 404, Not found; Gaia id not found for email remote-shiva-testing@appspot.gserviceaccount.com","status":404}
+[debug] [2020-12-25T03:37:09.120Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/remote-shiva-testing  
+ 
+[debug] [2020-12-25T03:37:09.505Z] <<< HTTP RESPONSE 403 {"vary":"X-Origin, Referer, Origin,Accept-Encoding","content-type":"application/json; charset=UTF-8","date":"Fri, 25 Dec 2020 03:37:09 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-12-25T03:37:09.506Z] <<< HTTP RESPONSE BODY {"error":{"code":403,"message":"The caller does not have permission","status":"PERMISSION_DENIED"}}
+[debug] [2020-12-25T03:37:09.506Z] HTTP Error: 403, The caller does not have permission
+[debug] [2020-12-25T03:37:09.507Z] FirebaseError: HTTP Error: 403, The caller does not have permission
+    at module.exports (/usr/local/lib/node_modules/firebase-tools/lib/responseToError.js:38:12)
+    at Request._callback (/usr/local/lib/node_modules/firebase-tools/lib/api.js:41:35)
+    at Request.self.callback (/usr/local/lib/node_modules/firebase-tools/node_modules/request/request.js:185:22)
+    at Request.emit (node:events:376:20)
+    at Request.EventEmitter.emit (node:domain:470:12)
+    at Request.<anonymous> (/usr/local/lib/node_modules/firebase-tools/node_modules/request/request.js:1154:10)
+    at Request.emit (node:events:376:20)
+    at Request.EventEmitter.emit (node:domain:470:12)
+    at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/firebase-tools/node_modules/request/request.js:1076:12)
+    at Object.onceWrapper (node:events:482:28)
+    at IncomingMessage.emit (node:events:388:22)
+    at IncomingMessage.EventEmitter.emit (node:domain:470:12)
+    at endReadableNT (node:internal/streams/readable:1294:12)
+    at processTicksAndRejections (node:internal/process/task_queues:80:21)
+[error] 
+[error] Error: Failed to get Firebase project remote-shiva-testing. Please make sure the project exists and your account has permission to access it.
