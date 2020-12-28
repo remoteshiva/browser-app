@@ -31,46 +31,45 @@ const NewShiva = () => {
   const { newShiva } = useSelector((state: RootState) => state.shiva)
   const [currentStep, setCurrentStep] = useState<T.Steps>(Number(step))
 
-  useEffect(()=>{
+  useEffect(() => {
     const commit = async () => {
-      if(!newShiva) return
-      try{
+      if (!newShiva) return
+      try {
         // create the new shiva on the backend
         const { id } = await dispatch(postShiva(newShiva))
         // delete the newShiva object
         dispatch(deleteNewShiva())
         // select the new shiva before navigating to its page
         dispatch(selectShiva(id))
-        dispatch(push(Routes.SHIVA_PAGE(id), {newShiva: true}))
+        dispatch(push(Routes.SHIVA_PAGE(id), { newShiva: true }))
 
       } catch (error) {
         console.log('Failed to create new Shiva', error)
       }
     }
-    if(currentStep===T.Steps.DONE){
+    if (currentStep===T.Steps.DONE) {
       commit()
     }
   }, [currentStep, newShiva, dispatch])
-  useEffect(()=>{
-    if(newShiva ===null ){
+  useEffect(() => {
+    if (newShiva === null) {
       dispatch(initNewShiva())
       dispatch(push(Routes.NEW_SHIVA('1')))
       setCurrentStep(T.Steps.BASIC_DETAILS)
     }
-    return () => {
-      dispatch(deleteNewShiva())
-    }
-  },[dispatch, newShiva])
+    // dispatch(deleteNewShiva());
+    // return
+  }, [dispatch, newShiva])
 
   const submitStepData = async <T extends {}>(data: T, nextStep: T.Steps) => {
-    if(newShiva){
+    if (newShiva) {
       setCurrentStep(nextStep)
       dispatch(updateNewShiva(data))
       dispatch(push(Routes.NEW_SHIVA(`${nextStep}`)))
     }
   }
   const selectStep = (newStep: number) => {
-    if(newStep<=currentStep){ // do not allow navigating forward
+    if (newStep <= currentStep) { // do not allow navigating forward
       setCurrentStep(newStep)
       dispatch(push(Routes.NEW_SHIVA(`${step}`)))
     }
