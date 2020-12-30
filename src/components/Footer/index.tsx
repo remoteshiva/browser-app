@@ -9,6 +9,6 @@ const Wrapper = styled.footer`
   color: #fff;
 `
 
-const Footer = () => <Wrapper style={{ paddingTop: '2rem' }}>©RemoteShiva 2020</Wrapper>
+const Footer = () => <Wrapper style={{ paddingTop: '2rem' }}>© RemoteShiva 2020-2021 <br/> This initiative was made possible through ROI Community's Coronavirus Response Micro Grant Program.</Wrapper>
 
 export default Footer
