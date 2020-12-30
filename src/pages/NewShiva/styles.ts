@@ -45,7 +45,7 @@ export const CalendarContainer = styled.div`
   overflow-y: auto;
 `
 
-export const Minyan = styled.div`
+export const Minian = styled.div`
   margin-top: 40px;
   width: 500px;
   h2 {

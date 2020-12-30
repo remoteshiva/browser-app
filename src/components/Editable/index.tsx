@@ -99,7 +99,7 @@ const Editable = ({ html, name, tagName, href, active, style, className, onInput
           onBlur: noop,
           onKeyUp: noop,
           onKeyDown: noop,
-          onPaste,
+          onPaste
         },
         children
       )}

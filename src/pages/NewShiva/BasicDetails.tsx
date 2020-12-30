@@ -21,6 +21,7 @@ const BasicDetails = ({ newShiva, submit, selectStep }: StepProps<BasicDetailsPr
   const handleInputChange = (event: ChangeEvent) => {
     const { name, value } = event.target
     setValues({ ...values, [name]: value })
+    setError('')
   }
   const handleSubmit = () => {
     if (values.nameOfDeceased === '') {
