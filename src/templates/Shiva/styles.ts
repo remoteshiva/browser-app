@@ -108,7 +108,9 @@ export const MournerName = styled.div`
   flex: 1;
   font-family: 'Lato';
   font-size: 16px;
+  white-space: nowrap;
   overflow: hidden;
+  text-overflow: ellipsis;
 `
 
 export const Relationship = styled.div`
@@ -116,7 +118,9 @@ export const Relationship = styled.div`
   font-weight: 100;
   font-style: italic;
   color: ${props => props.theme.colors.doveGray};
+  white-space: nowrap;
   overflow: hidden;
+  text-overflow: ellipsis;
 `
 
 export const Note = styled.div`

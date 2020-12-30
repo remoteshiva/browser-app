@@ -62,7 +62,7 @@ const MournerBox = ({ index, name, relationship, onUpdate, onRemove }: MournerBo
     <MournerBoxWrapper>
       <MournerBoxClear onClick={() => onRemove(values.index)} src={ClearIcon} />
       <input name="name" type="text" value={values.name} onChange={handleInputChange} placeholder="Name" required autoComplete="off" />
-      <input name="relationship" type="text" value={values.relationship} onChange={handleInputChange} placeholder="Relationship" required autoComplete="off" />
+      <input name="relationship" type="text" value={values.relationship} onChange={handleInputChange} placeholder="Relationship to deceased" required autoComplete="off" />
     </MournerBoxWrapper>
   )
 }
