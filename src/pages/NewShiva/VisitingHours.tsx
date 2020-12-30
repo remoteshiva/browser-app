@@ -4,13 +4,13 @@ import { Row, FixedColumn, FlexColumn } from '../../components/flexLayout'
 import Editable from '../../components/Editable'
 import StepLayout from './Layout'
 import Calendar from '../../components/Calendar'
-import { CalendarContainer, Minian } from './styles'
+import { CalendarContainer, Minyan } from './styles'
 
 
 const VisitingHours = ({ newShiva, submit, selectStep }: StepProps<VisitingProps>) => {
-  const [minyanTimes, setminyanTimes] = useState(newShiva.minyanTimes)
+  const [minyanTimes, setMinyanTimes] = useState(newShiva.minyanTimes)
   const handleInput = (html: string) => {
-    setminyanTimes(html)
+    setMinyanTimes(html)
   }
   return (
     <StepLayout title={'Set visiting hours'} step={4} submit={() => submit({visits: newShiva.visits, minyanTimes }, Steps.DONE)} submitText="Done" stepperClickHandler={selectStep}>
@@ -30,12 +30,12 @@ const VisitingHours = ({ newShiva, submit, selectStep }: StepProps<VisitingProps
         </FlexColumn>
       </Row>
       <Row>
-        <Minian>
+        <Minyan>
           <h2>Add Minyan Times</h2>&nbsp;&nbsp;
           <div className="optional">(Optional)</div>
           <p>If you’d like to have minyan, write which times minyan will take place and the link visitors will use to join the minyan.</p>
           <Editable className="minyan" active={true} onInput={handleInput} html={minyanTimes || ''} placeholder="Type something here"/>
-        </Minian>
+        </Minyan>
       </Row>
     </StepLayout>
   )

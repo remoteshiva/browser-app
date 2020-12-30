@@ -51,14 +51,18 @@ const Editable = ({ html, name, tagName, href, active, style, className, onInput
   const onPaste = (event: React.ClipboardEvent) => {
     if (!el.current) return
     let dataType: string
-    if ('text/html' in event.clipboardData.types) dataType = 'text/html'
-    else dataType = 'text/pain'
-    el.current.innerHTML = sanitize(event.clipboardData.getData(dataType))
+    if ('text/html' in event.clipboardData.types) {
+      dataType = 'text/html'
+    } else {
+      dataType = 'text/plain'
+    }
+    el.current.innerHTML = el.current.innerHTML + sanitize(event.clipboardData.getData(dataType))
     onInput(el.current.innerHTML)
   }
   const sanitize = (dirtyHtml: string): string => {
     return sanitizeHtml(dirtyHtml, {})
   }
+  // TODO: is this used?
   const replaceCaret = (el: HTMLElement) => {
     // Place the caret at the end of the element
     const target = document.createTextNode('')

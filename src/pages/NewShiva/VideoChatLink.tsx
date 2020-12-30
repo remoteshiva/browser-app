@@ -15,7 +15,6 @@ const VideoChatLink = ({newShiva, submit, selectStep}: StepProps<ChatProps>) => 
   const handleInputChange = (event:React.ChangeEvent<HTMLInputElement>) => {
     const {name, value} = event.target
     setValues({...values, [name]: value})
-    setError('')
   }
   const handleSubmit = () => {
     if(values.videoLink === '')
