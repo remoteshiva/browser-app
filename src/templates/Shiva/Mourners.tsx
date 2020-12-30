@@ -109,8 +109,8 @@ const Mourners = ({ role, shiva, editing, save }: ShivaPanel) => {
             {editing ? (
               <>
                 <img src={DeleteIcon} alt="delete" onClick={() => handleDeleteMourner(i)} />
-                <Editable className="base name" html={m.name} active={true} onInput={(html: string) => handleInput(i, 'name', html)} />
-                <Editable className="base relationship" html={m.relationship} active={true} onInput={(html: string) => handleInput(i, 'relationship', html)} />
+                <Editable className="base name" placeholder="Name" html={m.name} active={true} onInput={(html: string) => handleInput(i, 'name', html)} />
+                <Editable className="base relationship" placeholder="Relationship" html={m.relationship} active={true} onInput={(html: string) => handleInput(i, 'relationship', html)} />
               </>
             ) : (
               <>
