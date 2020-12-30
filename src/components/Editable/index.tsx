@@ -49,14 +49,14 @@ const Editable = ({ html, name, tagName, href, active, style, className, onInput
     }
   }
   const onPaste = (event: React.ClipboardEvent) => {
-    if (!el.current) return
-    let dataType: string
+    if (!el.current) return;
+    let dataType: string;
     if ('text/html' in event.clipboardData.types) {
       dataType = 'text/html'
     } else {
       dataType = 'text/plain'
     }
-    el.current.innerHTML = el.current.innerHTML + sanitize(event.clipboardData.getData(dataType))
+    el.current.innerHTML = el.current.innerHTML + sanitize(event.clipboardData.getData(dataType));
     onInput(el.current.innerHTML)
   }
   const sanitize = (dirtyHtml: string): string => {
@@ -99,7 +99,7 @@ const Editable = ({ html, name, tagName, href, active, style, className, onInput
           onBlur: noop,
           onKeyUp: noop,
           onKeyDown: noop,
-          onPaste
+          onPaste,
         },
         children
       )}
