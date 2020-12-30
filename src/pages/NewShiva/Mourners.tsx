@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useCallback, useState, useRef, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import { Mourner } from '../../store/shiva/types'
@@ -109,12 +109,12 @@ const Mourners = ({ newShiva, submit, selectStep }: StepProps<MournersProps>) =>
       }
     }
   }
-  const setMournerData = ({ index, name, relationship }: MournerProps) => {
-    console.log('setting mourner data', index, name, relationship)
-    const m = [...mourners]
-    m[index] = { name, relationship }
-    setMourners([...m])
-  }
+
+  const setMournerData = useCallback(({ index, name, relationship }: MournerProps) => {
+    const m = mourners;
+    m[index] = { name, relationship };
+    setMourners(m);
+  }, [mourners]);
 
   const submitMourners = () => {
     submit({ mourners: mourners.filter(m => m.name !== '' && m.relationship !== ''), mournerKey }, Steps.VISITS)

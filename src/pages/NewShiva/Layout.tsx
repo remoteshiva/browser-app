@@ -19,12 +19,12 @@ interface Props {
   submit: ()=> void
   submitText: string
   children: ReactNode
-  stepperClickHandler? : (step:number) => void
+  stepperClickHandler? : (step: number) => void
 }
 
 const Wrapper = styled.div`
   p {
-    color: ${props => props.theme.colors.heavyMetal}; 
+    color: ${props => props.theme.colors.heavyMetal};
     font-size: 16px;
     line-height: 24px;
     white-space: pre-line;
@@ -34,7 +34,7 @@ const Wrapper = styled.div`
   }
 `
 
-const StepLayout = ({title, step, submit, submitText, children, stepperClickHandler}:Props) => (
+const StepLayout = ({title, step, submit, submitText, children, stepperClickHandler}: Props) => (
   <Wrapper>
     <Row>
     <FixedColumn width={254}>

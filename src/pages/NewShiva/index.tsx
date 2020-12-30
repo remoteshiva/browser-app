@@ -57,33 +57,33 @@ const NewShiva = () => {
       dispatch(push(Routes.NEW_SHIVA('1')))
       setCurrentStep(T.Steps.BASIC_DETAILS)
     }
-    // dispatch(deleteNewShiva());
-    // return
+    // dispatch(deleteNewShiva()); // TODO: INVESTIGATE
+    return
   }, [dispatch, newShiva])
 
-  const submitStepData = async <T extends {}>(data: T, nextStep: T.Steps) => {
+  const submitStepData = <T extends {}>(data: T, nextStep: T.Steps) => {
     if (newShiva) {
-      setCurrentStep(nextStep)
       dispatch(updateNewShiva(data))
-      dispatch(push(Routes.NEW_SHIVA(`${nextStep}`)))
+      setCurrentStep(nextStep);
+      dispatch(push(Routes.NEW_SHIVA(nextStep.toString())))
     }
   }
   const selectStep = (newStep: number) => {
-    if (newStep <= currentStep) { // do not allow navigating forward
+    if (+newStep <= +currentStep) { // do not allow navigating forward
       setCurrentStep(newStep)
-      dispatch(push(Routes.NEW_SHIVA(`${step}`)))
+      dispatch(push(Routes.NEW_SHIVA(newStep.toString())))
     }
   }
 
   const renderStep = () => {
-    if(newShiva !==null){
+    if (newShiva !== null) {
       switch (currentStep) {
         case T.Steps.BASIC_DETAILS:
-          return <BasicDetails newShiva={newShiva} submit={(data: T.BasicDetailsProps, nextStep: T.Steps) => submitStepData<T.BasicDetailsProps>(data, nextStep)} selectStep={selectStep} />
+          return <BasicDetails newShiva={newShiva} submit={(data: T.BasicDetailsProps, nextStep: number) => submitStepData<T.BasicDetailsProps>(data, nextStep)} selectStep={selectStep} />
         case T.Steps.VIDEO_CHAT_LINK:
-          return <VideoChatLink newShiva={newShiva} submit={(data: T.ChatProps, nextStep: T.Steps) => submitStepData<T.ChatProps>(data, nextStep)} selectStep={selectStep} />
+          return <VideoChatLink newShiva={newShiva} submit={(data: T.ChatProps, nextStep: number) => submitStepData<T.ChatProps>(data, nextStep)} selectStep={selectStep} />
         case T.Steps.MOURNERS:
-          return <Mourners newShiva={newShiva} submit={(data: T.MournersProps, nextStep: T.Steps) => submitStepData<T.MournersProps>(data, nextStep)} selectStep={selectStep} />
+          return <Mourners newShiva={newShiva} submit={(data: T.MournersProps, nextStep: number) => submitStepData<T.MournersProps>(data, nextStep)} selectStep={selectStep} />
         case T.Steps.VISITS:
           return (
             <VisitingHours
@@ -103,7 +103,7 @@ const NewShiva = () => {
         if(location.pathname.includes(Routes.NEW_SHIVA())){
           return false
         }
-        return 'Are you sure you want to leave ? Your Shiva will not be saved'
+        return 'Are you sure you want to leave? Your shiva will not be saved.'
       })}/>
       <BackButton />
       {renderStep()}

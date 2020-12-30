@@ -35,7 +35,7 @@ const VideoChatLink = ({newShiva, submit, selectStep}: StepProps<ChatProps>) => 
     >
       <Row>
         <FixedColumn width={360}>
-          <p>Add a link to the video call room, like Zoom, that you’ll use for the shiva. Make sure to set up the video call so that you can use the same link across all the days and times of the shiva. <a href='https://blog.remoteshiva.org/index.php/setup-your-shiva-video-room/'>See here for more information</a> on different video platform options you can use. Keep in mind a Zoom Pro account is needed to have one ongoing video call with the same link, whereas Google Meet lets you do this for free. Link to your video chatting room:</p>
+          <p>Add a link to the video call room, like Zoom, that you’ll use for the shiva. Make sure to set up the video call so that you can use the same link across all the days and times of the shiva. <a href='https://blog.remoteshiva.org/index.php/setup-your-shiva-video-room/'>See here for more information</a> on different video platform options you can use. <strong>Keep in mind a Zoom Pro account is needed to have one ongoing video call with the same link, </strong> whereas Google Meet lets you do this for free.</p>
           <StyledForm>
             <label>
               Link to your videochatting room
