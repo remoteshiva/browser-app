@@ -100,7 +100,7 @@ const Mourners = ({ newShiva, submit, selectStep }: StepProps<MournersProps>) =>
             )
           },
           error => {
-            console.log(error) // we should show a message
+            console.log(error) // TODO: we should show a message
           }
         )
       } else {
