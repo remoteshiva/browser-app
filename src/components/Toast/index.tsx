@@ -28,7 +28,8 @@ const Toast = ({ id, icon, title, description }: Notification) => {
         dispatch(clearTimeout(timer))
       }
     }
-  }, [dispatch, id, timer])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
   return (
     <NotificationWrapper key={id} className={Position.br}>
       {icon ? (
