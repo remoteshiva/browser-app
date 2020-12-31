@@ -60,7 +60,7 @@ const Editable = ({ html, name, tagName, href, active, style, className, onInput
     onInput(el.current.innerHTML)
   }
   const sanitize = (dirtyHtml: string): string => {
-    return sanitizeHtml(dirtyHtml, { allowedTags: [], allowedAttributes: {} })
+    return sanitizeHtml(dirtyHtml, { allowedTags: [], allowedAttributes: {}})
   }
   // TODO: is this used?
   const replaceCaret = (el: HTMLElement) => {

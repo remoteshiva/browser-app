@@ -135,7 +135,7 @@ const Mourners = ({ role, shiva, editing, save }: ShivaPanel) => {
             Copy invite link
           </button>
           <VerticalSpace height={10} />
-          <Note>Note: Anyone who accesses the shiva through this link will be able to edit it.</Note>
+          <Note>Note: Anyone who accesses the shiva through this mourners' link will be able to edit it.</Note>
         </>
       )}
     </Wrapper>
