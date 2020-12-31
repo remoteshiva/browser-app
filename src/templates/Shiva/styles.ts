@@ -31,6 +31,9 @@ export const CardWrapper = styled.div<CardWrapperProps>`
     line-height: 1.5;
     display: block;
     &.subject,
+    &.active {
+        border-bottom: 1px dashed ${props => props.theme.colors.blueChill};
+      }
     &.about {
       min-height: 174px;
       width: 100%;
