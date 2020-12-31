@@ -93,7 +93,7 @@ const Mourners = ({ role, shiva, editing, save }: ShivaPanel) => {
         console.log(error) // we should show a message
       }
     } else {
-      // this is a polyfill
+      // this is a polyfill TODO: fix for safari?
       document.execCommand('copy')
     }
   }
@@ -135,7 +135,7 @@ const Mourners = ({ role, shiva, editing, save }: ShivaPanel) => {
             Copy invite link
           </button>
           <VerticalSpace height={10} />
-          <Note>Note: Anyone who accesses the shiva through this link will be able to edit.</Note>
+          <Note>Note: Anyone who accesses the shiva through this link will be able to edit it.</Note>
         </>
       )}
     </Wrapper>
