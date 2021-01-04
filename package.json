@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@tailwindcss/ui": "^0.5.0",
+    "anchorme": "^2.1.2",
     "connected-react-router": "^6.8.0",
     "date-fns": "^2.16.1",
     "firebase": "^7.19.1",
@@ -57,6 +58,7 @@
     "postcss-cli": "^7.1.1",
     "react-is": "^16.13.1",
     "redux-devtools-extension": "^2.13.8",
+    "ts-jest": "^26.4.4",
     "twin.macro": "^1.7.0",
     "typescript": "^3.7.5"
   },
