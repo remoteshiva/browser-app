@@ -1,6 +1,8 @@
-import React, { useRef, useEffect, ReactNode } from 'react'
+import React, { useRef, useEffect, ReactNode, useCallback } from 'react'
 import styled from 'styled-components'
 import sanitizeHtml from 'sanitize-html'
+import anchorme from 'anchorme'
+import { debounce } from '../../utils'
 
 export const noop = () => {}
 
@@ -29,18 +31,19 @@ interface Props {
 }
 const Editable = ({ html, name, tagName, href, active, style, className, onInput, children, placeholder }: Props) => {
   const el = useRef<HTMLElement>()
+  const delayedInput = useCallback(debounce(h => onInput(h), 500), [])
   useEffect(() => {
     if (!el.current) return
     if (html !== el.current.innerHTML) {
-      el.current.innerHTML = html
-      // // replaceCaret(el.current)
+      el.current.innerHTML = anchorme(html)
     }
   }, [html])
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.stopPropagation()
     e.preventDefault()
-    if (!el.current) return
-    onInput(el.current.innerHTML)
+    if (el.current){
+      delayedInput(anchorme(el.current.innerHTML))
+    }
   }
   const onPaste = (event: React.ClipboardEvent) => {
     if (!el.current) return

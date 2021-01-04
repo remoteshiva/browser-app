@@ -19,8 +19,11 @@ const Wrapper = styled.div`
   } */
 `
 
-const EditableContainer = () => {
-  const [content, setContent] = useState('')
+interface Props {
+  input?: string
+}
+const EditableContainer = ({input}: Props) => {
+  const [content, setContent] = useState(input || '')
   const [editable, setEditable] = useState<boolean>(true)
   const handleInput = (html: string) => {
     setContent(html)
@@ -30,11 +33,13 @@ const EditableContainer = () => {
       <div>This is the content: {content}</div>
       <input type="checkbox" checked={editable} onChange={() => setEditable(!editable)} />
       <br />
-      {/* <Wrapper> */}
-      <Editable html={content} active={editable} onInput={handleInput} />
-      {/* </Wrapper> */}
+      <Wrapper>
+        <Editable html={content} active={editable} onInput={handleInput} />
+      </Wrapper>
     </>
   )
 }
 
 export const Default = () => <EditableContainer />
+
+export const WithLink = () => <EditableContainer input='one two three http://google.com is the best place'/>
