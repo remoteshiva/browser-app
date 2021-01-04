@@ -96,7 +96,7 @@ const InviteVisitorsModal = ({ shiva, onClose }: Props) => {
   const handleCopyMessage = async () => {
     const partial = { inviteMessage: message }
     try{
-      const res = await dispatch(patchSelectedShiva(partial))
+      dispatch(patchSelectedShiva(partial))
       if (navigator.clipboard) {
         try {
           await navigator.clipboard.writeText(message)

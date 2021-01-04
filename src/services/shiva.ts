@@ -28,7 +28,7 @@ const dehydrateShiva = (shiva: Partial<Shiva>) => {
 const hydrateShiva = (item: any) => {
   const visitList = Object.values(item.data().visits).map((visit: any) => ({
     ...visit,
-    visitors: visit.visitors.map((visitor: { name: any; email: any; time: any }) => ({ name: visitor.name, email: visitor.email, time: visitor.time.toDate() })),
+    visitors: visit.visitors.map((visitor: { name: any; email: any; time: Date }) => ({ name: visitor.name, email: visitor.email, time: visitor.time})),
     startTime: visit.startTime.toDate(),
     endTime: visit.endTime.toDate(),
   }))
