@@ -6,6 +6,7 @@ const test_session: Session = {
   user: {
     displayName: 'Ron Burgundy',
     photoURL: null,
+    email: 'ron@channel4.com',
   },
 }
 
