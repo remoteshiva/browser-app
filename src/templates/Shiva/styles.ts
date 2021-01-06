@@ -30,7 +30,6 @@ export const CardWrapper = styled.div<CardWrapperProps>`
   .editable {
     line-height: 1.5;
     display: block;
-    &.subject,
     &.active {
         border-bottom: 1px dashed ${props => props.theme.colors.blueChill};
       }

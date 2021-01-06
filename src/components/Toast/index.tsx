@@ -19,6 +19,7 @@ const Toast = ({ id, icon, title, description }: Notification) => {
   const [timer, setTimer] = useState<Timeout>(null)
   useEffect(() => {
     setTimer(
+      // @ts-ignore
       setTimeout(() => {
         dispatch(removeNotification(id))
       }, 5000)
