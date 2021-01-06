@@ -33,6 +33,7 @@ const NoInteraction: Interaction = {
 interface Props {
   role: Role,
   mode: CalendarMode
+  day: Date
   visit: VisitModel
   mourners: Mourner[]
   hourOffset: number
@@ -41,7 +42,7 @@ interface Props {
 
 type ShowToolTip = 'Data' | 'Visitor' | null
 
-export const Visit = ({role, mode, visit, mourners, hourOffset, onVisitChange}: Props) => {
+export const Visit = ({role, mode, day, visit, mourners, hourOffset, onVisitChange}: Props) => {
   const dispatch = useDispatch()
   const theme= useContext(ThemeContext)
   const meRef = useRef<HTMLDivElement>(null)
@@ -182,7 +183,7 @@ export const Visit = ({role, mode, visit, mourners, hourOffset, onVisitChange}: 
         case 'Visitor':
           return(
             <ToolTip left={`${rect.left}px`}  top={`${node.offsetTop}px`} onHide={hideTip} backgroundColor={theme.colors.sauvignonLight}>
-              <Visitor onSubmitVisitor={submitVisitor} {...visit}/>
+              <Visitor day={day} onSubmitVisitor={submitVisitor} {...visit}/>
             </ToolTip>
           )
         case null:
