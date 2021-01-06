@@ -37,9 +37,10 @@ const Wrapper = styled.div`
 `
 
 interface Props extends Visit {
+  day: Date
   onSubmitVisitor: (visitor:VisitorModel)=> void
 }
-const Visitor = ({startTime, endTime, onSubmitVisitor}: Props) => {
+const Visitor = ({startTime, endTime, day, onSubmitVisitor}: Props) => {
   const [values, setValues] = useState({ name: '', email: '' })
   const [time, setTime] = useState(startTime)
 
@@ -62,7 +63,7 @@ const Visitor = ({startTime, endTime, onSubmitVisitor}: Props) => {
   }
 
   return<Wrapper>
-    <div className='title'>Visit {format(startTime, 'EEEE, MMMM Qo')}</div>
+    <div className='title'>Visit {format(day, 'EEEE, MMMM do')}</div>
     <div className='timeslot'>{format(startTime, 'p')} - {format(endTime, 'p')}</div>
     <form onSubmit={handleSubmit}>
         <label>

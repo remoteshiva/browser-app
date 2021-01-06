@@ -107,6 +107,7 @@ const Column = memo(({mode, role, day, visits, mourners, endHour, startHour}:Pro
             mode={mode}
             role={role}
             hourOffset={startHour}
+            day={day}
             visit={visits[id]}
             mourners={mourners}
             onVisitChange={handleVisitChange}
