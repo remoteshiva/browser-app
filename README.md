@@ -3,6 +3,11 @@ Front-end application for Remote Shiva
 
 ## Development
 Main branch for development is `develop`
+
+Make sure you have local copies of .env and .env.development.local
+.env is just empty strings
+.env.development.local has the actual values
+
 ```bash
 $ git clone https://github.com/remoteshiva/browser-app.git
 $ cd ..
