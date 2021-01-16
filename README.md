@@ -7,7 +7,8 @@ Main branch for development is `develop`
 $ git clone https://github.com/remoteshiva/browser-app.git
 $ cd ..
 $ git checkout develop
-$ npm install
+$ yarn install
+$ yarn start
 ```
 
 ### Stack and build scripts
