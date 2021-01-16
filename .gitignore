@@ -31,3 +31,4 @@ yarn-error.log*
 
 mailgun/node_modules
 /.idea
+firebase-debug.log

@@ -16,5 +16,15 @@ $ yarn install
 $ yarn start
 ```
 
+
+## Deploying
+```bash
+cd firebase/functions
+npm install
+cd ../..
+yarn build
+firebase deploy
+```
+
 ### Stack and build scripts
 See [package.json](https://github.com/remoteshiva/browser-app/blob/develop/package.json).
