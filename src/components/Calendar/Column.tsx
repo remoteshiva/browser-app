@@ -109,7 +109,7 @@ const Column = memo(({mode, role, day, visits, mourners, endHour, startHour}:Pro
             hourOffset={startHour}
             day={day}
             visit={visits[id]}
-            mourners={mourners}
+            mourners={mourners.filter(m => m.name !== '' && m.relationship !== '')} // filter empty mourners
             onVisitChange={handleVisitChange}
           />
         ))

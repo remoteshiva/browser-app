@@ -79,7 +79,7 @@ const Visitor = ({startTime, endTime, day, onSubmitVisitor}: Props) => {
           />
         </label>
         <label>
-          Email (for confirmation and to edit visit)
+          Email (for notifications)
           <input
             name="email"
             type="email"
@@ -91,8 +91,8 @@ const Visitor = ({startTime, endTime, day, onSubmitVisitor}: Props) => {
           />
         </label>
         <label>
-          Around what time do you plan to stop by?
-          <TimePicker startTime={startTime} endTime={endTime} onChange={handleTimeChange}/>
+          When will you visit?
+          <TimePicker startTime={startTime} endTime={endTime} onChange={handleTimeChange} />
         </label>
         <VerticalSpace height={20}/>
         <ApproveButton  style={{width: '100%'}} type="submit">

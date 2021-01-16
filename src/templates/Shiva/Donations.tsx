@@ -10,11 +10,10 @@ const Donations = ({ shiva, editing, save }: ShivaPanel) => {
   const dispatch = useDispatch()
   useEffect(() => {
     if (save && save > 0 ) {
-      console.log(`saving shiva ${save}`)
       const partialShiva = { donations }
       dispatch(patchSelectedShiva(partialShiva))
     }
-  }, [save])
+  }, [dispatch, donations, save])
   const handleInput = (html: string) => {
     setDonations(html)
   }

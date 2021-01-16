@@ -1,5 +1,5 @@
 import React from 'react'
-import { eachDayOfInterval, format } from 'date-fns'
+import { eachDayOfInterval } from 'date-fns'
 import { HRulerWrapper, VRulerWrapper, Day, Hour } from './styles'
 import { withCalendarContext, CalendarContextProps } from './context'
 
@@ -12,7 +12,7 @@ export const HorizontalRuler = withCalendarContext(({ startDate, endDate }: Hori
   return (
     <HRulerWrapper numOfColumns={days.length}>
       {days.map((day, i) => (
-        <Day key={i}>{day.toLocaleDateString()}</Day>
+        <Day key={i}>{day.toLocaleDateString(undefined, { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' })}</Day>
       ))}
     </HRulerWrapper>
   )

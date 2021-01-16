@@ -21,7 +21,7 @@ const rootReducer = combineReducers({
 })
 
 export type RootState = ReturnType<typeof rootReducer>
-export type AppDispatch = ThunkDispatch<RootState, any, AnyAction>
+export type AppDispatch = ThunkDispatch<RootState, unknown, AnyAction>
 
 export default function configureStore() {
   return createStore(rootReducer, composeWithDevTools(applyMiddleware(routerMiddleware(history), thunk)))

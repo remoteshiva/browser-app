@@ -31,60 +31,59 @@ const NewShiva = () => {
   const { newShiva } = useSelector((state: RootState) => state.shiva)
   const [currentStep, setCurrentStep] = useState<T.Steps>(Number(step))
 
-  useEffect(()=>{
+  useEffect(() => {
     const commit = async () => {
-      if(!newShiva) return
-      try{
+      if (!newShiva) return
+      try {
         // create the new shiva on the backend
         const { id } = await dispatch(postShiva(newShiva))
         // delete the newShiva object
         dispatch(deleteNewShiva())
         // select the new shiva before navigating to its page
         dispatch(selectShiva(id))
-        dispatch(push(Routes.SHIVA_PAGE(id), {newShiva: true}))
+        dispatch(push(Routes.SHIVA_PAGE(id), { newShiva: true }))
 
       } catch (error) {
         console.log('Failed to create new Shiva', error)
       }
     }
-    if(currentStep===T.Steps.DONE){
+    if (currentStep===T.Steps.DONE) {
       commit()
     }
   }, [currentStep, newShiva, dispatch])
-  useEffect(()=>{
-    if(newShiva ===null ){
+  useEffect(() => {
+    if (newShiva === null) {
       dispatch(initNewShiva())
       dispatch(push(Routes.NEW_SHIVA('1')))
       setCurrentStep(T.Steps.BASIC_DETAILS)
     }
-    return () => {
-      dispatch(deleteNewShiva())
-    }
-  },[])
+    // dispatch(deleteNewShiva()); // TODO: INVESTIGATE
+    return
+  }, [dispatch, newShiva])
 
-  const submitStepData = async <T extends {}>(data: T, nextStep: T.Steps) => {
-    if(newShiva){
-      setCurrentStep(nextStep)
+  const submitStepData = <T extends {}>(data: T, nextStep: T.Steps) => {
+    if (newShiva) {
       dispatch(updateNewShiva(data))
-      dispatch(push(Routes.NEW_SHIVA(`${nextStep}`)))
+      setCurrentStep(nextStep);
+      dispatch(push(Routes.NEW_SHIVA(nextStep.toString())))
     }
   }
   const selectStep = (newStep: number) => {
-    if(newStep<=currentStep){ // do not allow navigating forward
+    if (+newStep <= +currentStep) { // do not allow navigating forward
       setCurrentStep(newStep)
-      dispatch(push(Routes.NEW_SHIVA(`${step}`)))
+      dispatch(push(Routes.NEW_SHIVA(newStep.toString())))
     }
   }
 
   const renderStep = () => {
-    if(newShiva !==null){
+    if (newShiva !== null) {
       switch (currentStep) {
         case T.Steps.BASIC_DETAILS:
-          return <BasicDetails newShiva={newShiva} submit={(data: T.BasicDetailsProps, nextStep: T.Steps) => submitStepData<T.BasicDetailsProps>(data, nextStep)} selectStep={selectStep} />
+          return <BasicDetails newShiva={newShiva} submit={(data: T.BasicDetailsProps, nextStep: number) => submitStepData<T.BasicDetailsProps>(data, nextStep)} selectStep={selectStep} />
         case T.Steps.VIDEO_CHAT_LINK:
-          return <VideoChatLink newShiva={newShiva} submit={(data: T.ChatProps, nextStep: T.Steps) => submitStepData<T.ChatProps>(data, nextStep)} selectStep={selectStep} />
+          return <VideoChatLink newShiva={newShiva} submit={(data: T.ChatProps, nextStep: number) => submitStepData<T.ChatProps>(data, nextStep)} selectStep={selectStep} />
         case T.Steps.MOURNERS:
-          return <Mourners newShiva={newShiva} submit={(data: T.MournersProps, nextStep: T.Steps) => submitStepData<T.MournersProps>(data, nextStep)} selectStep={selectStep} />
+          return <Mourners newShiva={newShiva} submit={(data: T.MournersProps, nextStep: number) => submitStepData<T.MournersProps>(data, nextStep)} selectStep={selectStep} />
         case T.Steps.VISITS:
           return (
             <VisitingHours
@@ -104,7 +103,7 @@ const NewShiva = () => {
         if(location.pathname.includes(Routes.NEW_SHIVA())){
           return false
         }
-        return 'Are you sure you want to leave ? Your Shiva will not be saved'
+        return 'Are you sure you want to leave? Your shiva will not be saved.'
       })}/>
       <BackButton />
       {renderStep()}

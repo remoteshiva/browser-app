@@ -19,6 +19,7 @@ const Toast = ({ id, icon, title, description }: Notification) => {
   const [timer, setTimer] = useState<Timeout>(null)
   useEffect(() => {
     setTimer(
+      // @ts-ignore
       setTimeout(() => {
         dispatch(removeNotification(id))
       }, 5000)
@@ -28,6 +29,7 @@ const Toast = ({ id, icon, title, description }: Notification) => {
         dispatch(clearTimeout(timer))
       }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   return (
     <NotificationWrapper key={id} className={Position.br}>
