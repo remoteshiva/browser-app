@@ -41,7 +41,6 @@ export const ShivaItemWrapper = styled(BaseItemWrapper)`
       font-family: 'Lora';
       font-size: 34px;
       font-weight: 400;
-
     }
     > div {
       font-family: 'Lato';
