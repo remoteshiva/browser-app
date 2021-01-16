@@ -46,7 +46,7 @@ const LinkWithCopy = ({text}: Props) => {
       }
     } else {
       // this is a polyfill
-      document.execCommand('copy')
+      document.execCommand('copy', true)
     }
   }
   return <Wrapper>

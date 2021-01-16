@@ -15,7 +15,7 @@ const BackArrow = styled.img`
 
 const BackWrapper = styled.div`
   margin-bottom: 40px;
-  cursor: pointer !important;
+  cursor: pointer;
 `
 
 const Back = () => {
@@ -24,7 +24,7 @@ const Back = () => {
     <BackWrapper onClick={() => dispatch(push(Routes.MY_SHIVAS))}>
       <div>
         <BackArrow src={BackArrowIcon} />
-        Back to my shivas
+        Back to My Shivas
       </div>
     </BackWrapper>
   )

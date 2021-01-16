@@ -14,6 +14,7 @@ const Wrapper = styled.div`
     font-family: Lora;
     font-weight: 200;
     font-size: 56px;
+    padding-bottom: 3rem;
   }
 `
 

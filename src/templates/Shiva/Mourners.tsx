@@ -12,7 +12,7 @@ import DeleteIcon from '../../assets/img/delete.svg'
 import { MournerName, Note, Relationship } from './styles'
 
 const mournerPathPrefix = `${process.env.REACT_APP_BASE_URL}/m/`
-const visitorPathPrefix = `${process.env.REACT_APP_BASE_URL}/v/`
+// const visitorPathPrefix = `${process.env.REACT_APP_BASE_URL}/v/` TODO: implement
 
 const Wrapper = styled.div`
   font-family: 'Lato';
@@ -68,7 +68,7 @@ const Mourners = ({ role, shiva, editing, save }: ShivaPanel) => {
       const partialShiva = { mourners }
       dispatch(patchSelectedShiva(partialShiva))
     }
-  }, [save])
+  }, [dispatch, mourners, save])
   const handleInput = (index: number, key: string, value: string) => {
     const newMourners = mourners.map((m, i) => {
       if (i === index) {
@@ -93,7 +93,7 @@ const Mourners = ({ role, shiva, editing, save }: ShivaPanel) => {
         console.log(error) // we should show a message
       }
     } else {
-      // this is a polyfill
+      // this is a polyfill TODO: fix for safari?
       document.execCommand('copy')
     }
   }
@@ -109,8 +109,8 @@ const Mourners = ({ role, shiva, editing, save }: ShivaPanel) => {
             {editing ? (
               <>
                 <img src={DeleteIcon} alt="delete" onClick={() => handleDeleteMourner(i)} />
-                <Editable className="base name" html={m.name} active={true} onInput={(html: string) => handleInput(i, 'name', html)} />
-                <Editable className="base relationship" html={m.relationship} active={true} onInput={(html: string) => handleInput(i, 'relationship', html)} />
+                <Editable className="base name" placeholder="Name" html={m.name} active={true} onInput={(html: string) => handleInput(i, 'name', html)} />
+                <Editable className="base relationship" placeholder="Relationship" html={m.relationship} active={true} onInput={(html: string) => handleInput(i, 'relationship', html)} />
               </>
             ) : (
               <>
@@ -135,7 +135,7 @@ const Mourners = ({ role, shiva, editing, save }: ShivaPanel) => {
             Copy invite link
           </button>
           <VerticalSpace height={10} />
-          <Note>Note: Anyone who accesses the shiva through this link will be able to edit.</Note>
+          <Note>Note: Anyone who accesses the shiva through this mourners' link will be able to edit it.</Note>
         </>
       )}
     </Wrapper>

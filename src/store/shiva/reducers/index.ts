@@ -171,5 +171,5 @@ const reducer: Reducer<ShivaState> = (state = initialState, action: ActionTypes)
     }
   }
 }
-// visitReducer and newShivaReducer are exported for testing only. Should be done with rewire rather than export
+// TODO: visitReducer and newShivaReducer are exported for testing only. Should be done with rewire rather than export
 export { reducer as ShivaReducer, visitReducer, newShivaReducer }

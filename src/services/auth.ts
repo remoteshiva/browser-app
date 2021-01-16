@@ -4,6 +4,7 @@ import * as Routes from '../routes'
 import { firestore } from '../firebase.config'
 import { AppThunk } from './common'
 import { Session } from '../store/auth/types'
+import { fetchMyShivas } from '../services/shiva'
 import { loginError, loginRequest, loginSuccess, logoutRequest, logout, signupRequest, signupSuccess, signupError } from '../store/auth/actions'
 import { resetShiva } from '../store/shiva/actions'
 
@@ -91,6 +92,7 @@ export const loginWithGoogle = (): AppThunk<Promise<Session>> => async (dispatch
       if (fbuser) {
         await createUser(fbuser, fbuser.displayName || '')
         dispatch(signupSuccess())
+        await dispatch(fetchMyShivas())
         dispatch(push(Routes.MY_SHIVAS))
       }
     } catch (error) {
@@ -147,20 +149,21 @@ const createUser = async (user: FBUser, name: string) => {
   return getUser(user.uid)
 }
 
-const createOAuthUser = async (email: string, displayName: string) => {
-  firestore
-    .collection('users')
-    .add({
-      email,
-      displayName,
-    })
-    .then(function (docRef) {
-      console.log('Document written with ID: ', docRef.id)
-    })
-    .catch(function (error) {
-      console.error('Error adding document: ', error)
-    })
-}
+// TODO:implement
+// const createOAuthUser = async (email: string, displayName: string) => {
+//   firestore
+//     .collection('users')
+//     .add({
+//       email,
+//       displayName,
+//     })
+//     .then(function (docRef) {
+//       console.log('Document written with ID: ', docRef.id)
+//     })
+//     .catch(function (error) {
+//       console.error('Error adding document: ', error)
+//     })
+// }
 
 const getUser = async (uid: string): Promise<any> => {
   if (!uid) return null

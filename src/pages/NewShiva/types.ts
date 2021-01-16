@@ -3,10 +3,10 @@ import { Mourner, Visit, Shiva } from '../../store/shiva/types'
 export enum Steps {
   UNKNOWN = 0,
   BASIC_DETAILS = 1,
-  VIDEO_CHAT_LINK,
-  MOURNERS,
-  VISITS,
-  DONE,
+  VIDEO_CHAT_LINK = 2,
+  MOURNERS = 3,
+  VISITS = 4,
+  DONE = 5,
 }
 export interface BasicDetailsProps {
   nameOfDeceased: string

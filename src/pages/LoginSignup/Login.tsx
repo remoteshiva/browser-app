@@ -38,11 +38,8 @@ const Login = () => {
     setDisplayError(true)
     const session = await dispatch(loginWithCredentials(values.email, values.password))
     if (session !== undefined) {
-      console.log('SESSION')
-      console.log(session)
       await dispatch(fetchMyShivas())
       dispatch(push(Routes.MY_SHIVAS))
-
     }
   }
   return (

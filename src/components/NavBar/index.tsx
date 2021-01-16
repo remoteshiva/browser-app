@@ -12,7 +12,7 @@ import LoginBar from './LoginBar'
 
 const MY_SHIVAS = 'My Shivas'
 const RESET_PASSWORD = 'Reset Password'
-const ACCOUNT_DETAILS = 'Account Details'
+// const ACCOUNT_DETAILS = 'Account Details' TODO: implement
 const FAQ = 'Help'
 const LOG_OUT = 'Log Out'
 

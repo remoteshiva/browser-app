@@ -12,8 +12,8 @@ import StepLayout from './Layout'
 
 type ChangeEvent = React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>
 
-
 const BasicDetails = ({ newShiva, submit, selectStep }: StepProps<BasicDetailsProps>) => {
+  const welcomePlaceholder = `Thank you for visiting the shiva of John Doe, Z”L. He is dearly missed. If you would like to help the family in any way, please see the meal train link below, and you can be in touch with Rabbi Jamie Albertson at 555-555-555 or jalbertson@shul.com.`;
   const { nameOfDeceased, startDate, endDate, message }: BasicDetailsProps = newShiva
   const [values, setValues] = useState({ nameOfDeceased, startDate, endDate, message })
   const [error, setError] = useState('')
@@ -21,7 +21,6 @@ const BasicDetails = ({ newShiva, submit, selectStep }: StepProps<BasicDetailsPr
   const handleInputChange = (event: ChangeEvent) => {
     const { name, value } = event.target
     setValues({ ...values, [name]: value })
-    setError('')
   }
   const handleSubmit = () => {
     if (values.nameOfDeceased === '') {
@@ -55,7 +54,7 @@ const BasicDetails = ({ newShiva, submit, selectStep }: StepProps<BasicDetailsPr
                 <DatePicker
                   dateFormat={getLocaleDateFormat()}
                   selected={values.startDate}
-                  minDate={ new Date()}
+                  minDate={new Date()}
                   onChange={(date: Date) => setValues({ ...values, startDate: date })}
                   customInput={<input className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3" />}
                 />
@@ -66,7 +65,7 @@ const BasicDetails = ({ newShiva, submit, selectStep }: StepProps<BasicDetailsPr
                   onChange={handleInputChange}
                   name="message"
                   value={values.message}
-                  placeholder="Type something here"
+                  placeholder={welcomePlaceholder}
                   className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
                 />
               </label>
