@@ -1,8 +1,7 @@
-import React, { useRef, useEffect, ReactNode, useCallback } from 'react'
+import React, { useRef, useEffect, ReactNode } from 'react'
 import styled from 'styled-components'
 import sanitizeHtml from 'sanitize-html'
-import anchorme from 'anchorme'
-import { debounce } from '../../utils'
+import anchorme from 'anchorme';
 
 export const noop = () => {}
 
@@ -31,38 +30,39 @@ interface Props {
 }
 const Editable = ({ html, name, tagName, href, active, style, className, onInput, children, placeholder }: Props) => {
   const el = useRef<HTMLElement>()
-  const delayedInput = useCallback(
-    debounce(h => onInput(h), 500),
-    []
-  )
   useEffect(() => {
     if (!el.current) return
     if (html !== el.current.innerHTML) {
-      el.current.innerHTML = anchorme(html)
+      // TODO: test to see if target blank actually works
+      el.current.innerHTML = anchorme({
+        input: html,
+        options: {
+          attributes: {
+            target: "_blank",
+          },
+        },
+      })
+      // // replaceCaret(el.current)
     }
   }, [html])
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.stopPropagation()
     e.preventDefault()
-    if (el.current) {
-      delayedInput(anchorme(el.current.innerHTML))
-    }
+    if (!el.current) return
+    // don't try to anchorme here, it will break
+    onInput(el.current.innerHTML)
   }
   const onPaste = (event: React.ClipboardEvent) => {
     if (!el.current) return
     let dataType: string
-    if ('text/html' in event.clipboardData.types) {
-      dataType = 'text/html'
-    } else {
-      dataType = 'text/plain'
-    }
+    if ('text/html' in event.clipboardData.types) dataType = 'text/html'
+    else dataType = 'text/plain'
     el.current.innerHTML = el.current.innerHTML + sanitize(event.clipboardData.getData(dataType))
     onInput(el.current.innerHTML)
   }
   const sanitize = (dirtyHtml: string): string => {
-    return sanitizeHtml(dirtyHtml, { allowedTags: [], allowedAttributes: {}})
+    return sanitizeHtml(dirtyHtml, { allowedTags: [], allowedAttributes: {} })
   }
-  // TODO: is this used?
   const replaceCaret = (el: HTMLElement) => {
     // Place the caret at the end of the element
     const target = document.createTextNode('')
@@ -102,7 +102,7 @@ const Editable = ({ html, name, tagName, href, active, style, className, onInput
           onPaste,
         },
         children
-      )}
+        )}
     </Wrapper>
   )
 }
