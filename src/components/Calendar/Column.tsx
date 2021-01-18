@@ -1,7 +1,7 @@
 import React, { useState, useRef, memo } from 'react'
 import { useDispatch } from 'react-redux'
 import { addMinutes, getDate, format, roundToNearestMinutes } from 'date-fns'
-import { VisitMap, Mourner, VisitId} from '../../store/shiva/types'
+import { VisitMap, Mourner, VisitId } from '../../store/shiva/types'
 import { addVisit, updateVisit } from '../../store/shiva/actions'
 import { initializeVisit } from '../../store/shiva/helpers'
 import { withCalendarContext, CalendarContextProps } from './context'
@@ -18,7 +18,7 @@ interface Props extends CalendarContextProps {
   mourners: Mourner[]
 }
 
-const Column = memo(({mode, role, day, visits, mourners, endHour, startHour}:Props) => {
+const Column = memo(({ mode, role, day, visits, mourners, endHour, startHour }: Props) => {
   const dispatch = useDispatch()
   const [dragging, setDragging] = useState(false)
   const [startY, setStartY] = useState(0)
@@ -26,58 +26,57 @@ const Column = memo(({mode, role, day, visits, mourners, endHour, startHour}:Pro
 
   const node = useRef<HTMLDivElement>(null)
   const newEventRef = useRef<HTMLDivElement>(null)
-  const rafBusy = useRef(false)
+  const refBusy = useRef(false)
   const height = (endHour - startHour) * PIXELS_PER_HOUR + 1
 
   const pixelToDate = (pixels: number) => {
-    return roundToNearestMinutes(addMinutes(day,pixelToMinutes(startHour * 60)(pixels)),{nearestTo: 15})
+    return roundToNearestMinutes(addMinutes(day, pixelToMinutes(startHour * 60)(pixels)), { nearestTo: 15 })
   }
   const pixelToTimeDisplay = (pixels: number) => {
     return format(pixelToDate(pixels), 'p')
   }
   const handleMouseDown = (event: React.MouseEvent) => {
-    if(event.target === event.currentTarget && !rafBusy.current){
+    if (event.target === event.currentTarget && !refBusy.current) {
       event.persist()
-      window.requestAnimationFrame(()=>{
+      window.requestAnimationFrame(() => {
         const y = event.nativeEvent.offsetY
         setStartY(y)
-        setCurrentY(y+1)
+        setCurrentY(y + 1)
         setDragging(true)
         const node = newEventRef.current
-        if(node){
+        if (node) {
           node.style.top = `${y}px`
           node.style.height = '0px'
           node.style.cursor = 'row-resize'
         }
-        rafBusy.current = false
+        refBusy.current = false
       })
-      rafBusy.current = true
+      refBusy.current = true
     }
   }
   const handleMouseMove = (event: React.MouseEvent) => {
-    if(!rafBusy.current && dragging){
+    if (!refBusy.current && dragging) {
       event.persist()
-      window.requestAnimationFrame(()=>{
+      window.requestAnimationFrame(() => {
         const node = newEventRef.current
-        if(node){
+        if (node) {
           const rect = node.getBoundingClientRect()
           const y = event.clientY - rect.top
           setCurrentY(y)
           node.style.height = `${y}px`
         }
-        rafBusy.current = false
+        refBusy.current = false
       })
-      rafBusy.current = true
+      refBusy.current = true
     }
-
   }
   const handleMouseUp = (event: React.MouseEvent) => {
-    if(dragging){
+    if (dragging) {
       const node = newEventRef.current
-      if(node){
+      if (node) {
         const startTime = pixelToDate(startY)
         const endTime = pixelToDate(currentY)
-        const visit = initializeVisit({startTime, endTime})
+        const visit = initializeVisit({ startTime, endTime })
         dispatch(addVisit(visit))
       }
       setDragging(false)
@@ -88,8 +87,8 @@ const Column = memo(({mode, role, day, visits, mourners, endHour, startHour}:Pro
   const handleVisitChange = (visitId: VisitId, top: Pixels, bottom: Pixels) => {
     const startTime = pixelToDate(top)
     const endTime = pixelToDate(bottom)
-    const partialVisit = {startTime, endTime}
-    dispatch(updateVisit({visitId, partialVisit}))
+    const partialVisit = { startTime, endTime }
+    dispatch(updateVisit({ visitId, partialVisit }))
   }
   return (
     <ColumnWrapper
@@ -100,8 +99,9 @@ const Column = memo(({mode, role, day, visits, mourners, endHour, startHour}:Pro
       onMouseMove={mode !== 'View' ? handleMouseMove : noop}
       onMouseUp={mode !== 'View' ? handleMouseUp : noop}
     >
-      { Object.keys(visits).filter(id => getDate(visits[id].startTime) === getDate(day))
-        .map((id) => (
+      {Object.keys(visits)
+        .filter(id => getDate(visits[id].startTime) === getDate(day))
+        .map(id => (
           <Visit
             key={id}
             mode={mode}
@@ -112,12 +112,10 @@ const Column = memo(({mode, role, day, visits, mourners, endHour, startHour}:Pro
             mourners={mourners.filter(m => m.name !== '' && m.relationship !== '')} // filter empty mourners
             onVisitChange={handleVisitChange}
           />
-        ))
-      }
-      {dragging ? <NewVisit ref={newEventRef} start={pixelToTimeDisplay(startY)} end={pixelToTimeDisplay(startY+currentY)}/> : null}
+        ))}
+      {dragging ? <NewVisit ref={newEventRef} start={pixelToTimeDisplay(startY)} end={pixelToTimeDisplay(startY + currentY)} /> : null}
     </ColumnWrapper>
   )
 })
-
 
 export default withCalendarContext(Column)

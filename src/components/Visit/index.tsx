@@ -1,5 +1,5 @@
 import React, { useState, useRef, useContext } from 'react'
-import { useDispatch, useSelector} from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { ThemeContext } from 'styled-components'
 import { getHours, getMinutes } from 'date-fns'
 import { RootState } from '../../store/'
@@ -15,13 +15,12 @@ import NewVisit from './new'
 import ConfirmDeleteModal from './ConfirmDelete'
 import { VisitWrapper, PIXELS_PER_HOUR, PIXELS_PER_MINUTE, Pixels } from './styles'
 
-
 export { NewVisit }
 
 type InteractionType = 'drag' | 'resize-from-top' | 'resize-from-bottom' | null
 type Interaction = {
-  type: InteractionType,
-  deltaX: Pixels,
+  type: InteractionType
+  deltaX: Pixels
   deltaY: Pixels
 }
 const NoInteraction: Interaction = {
@@ -31,40 +30,39 @@ const NoInteraction: Interaction = {
 }
 
 interface Props {
-  role: Role,
+  role: Role
   mode: CalendarMode
   day: Date
   visit: VisitModel
   mourners: Mourner[]
   hourOffset: number
-  onVisitChange: (visitId: VisitId, top: Pixels, bottom: Pixels)=>void
+  onVisitChange: (visitId: VisitId, top: Pixels, bottom: Pixels) => void
 }
 
 type ShowToolTip = 'Data' | 'Visitor' | null
 
-export const Visit = ({role, mode, day, visit, mourners, hourOffset, onVisitChange}: Props) => {
+export const Visit = ({ role, mode, day, visit, mourners, hourOffset, onVisitChange }: Props) => {
   const dispatch = useDispatch()
-  const theme= useContext(ThemeContext)
+  const theme = useContext(ThemeContext)
   const meRef = useRef<HTMLDivElement>(null)
-  const rafBusy = useRef(false)
+  const refBusy = useRef(false)
   const { selectedVisit, selectedShiva } = useSelector((state: RootState) => state.shiva)
-  const [ showTip, setShowTip] = useState<ShowToolTip>(null)
-  const [ showConfirm, setShowConfirm ] = useState(false)
-  const [ interaction, _setInteraction ] = useState<Interaction>(NoInteraction)
-  const interactionRef = useRef(interaction);
-  const setInteraction = (data:any) => {
+  const [showTip, setShowTip] = useState<ShowToolTip>(null)
+  const [showConfirm, setShowConfirm] = useState(false)
+  const [interaction, _setInteraction] = useState<Interaction>(NoInteraction)
+  const interactionRef = useRef(interaction)
+  const setInteraction = (data: any) => {
     interactionRef.current = data
     _setInteraction(data)
-  };
+  }
 
   const timeToPixels = (date: Date) => {
     const hour = getHours(date)
     const minutes = getMinutes(date)
     return (hour - hourOffset) * PIXELS_PER_HOUR + minutes * PIXELS_PER_MINUTE
-
   }
   const handleClick = (event: React.MouseEvent) => {
-    if(mode!=='Edit'){
+    if (mode !== 'Edit') {
       dispatch(selectVisit(visit.id))
       setShowTip('Data')
     }
@@ -72,10 +70,8 @@ export const Visit = ({role, mode, day, visit, mourners, hourOffset, onVisitChan
   const handleDeleteEvent = (event: React.MouseEvent) => {
     event.stopPropagation()
     event.preventDefault()
-    if(visit.visitors.length)
-      setShowConfirm(true)
-    else
-      handleConfirmDelete()
+    if (visit.visitors.length) setShowConfirm(true)
+    else handleConfirmDelete()
   }
   const handleConfirmDelete = () => {
     dispatch(deleteVisit(visit.id))
@@ -85,44 +81,44 @@ export const Visit = ({role, mode, day, visit, mourners, hourOffset, onVisitChan
   const handleResizeFromBottom = (ev: React.MouseEvent) => handleMouseDown(ev, 'resize-from-bottom')
   const handleMouseDown = (event: React.MouseEvent, type: InteractionType) => {
     event.stopPropagation()
-    if (interaction.type === null && mode==='Edit' && visit.visitors.length===0){
+    if (interaction.type === null && mode === 'Edit' && visit.visitors.length === 0) {
       setInteraction({ type, deltaX: event.clientX, deltaY: event.clientY })
     }
   }
-  const handleMouseMove = (event: MouseEvent)=>{
+  const handleMouseMove = (event: MouseEvent) => {
     event.preventDefault()
     event.stopPropagation()
-    if(!rafBusy.current && interactionRef.current.type !== null){
-      window.requestAnimationFrame(()=>{
+    if (!refBusy.current && interactionRef.current.type !== null) {
+      window.requestAnimationFrame(() => {
         const node = meRef.current
-        if(node){
-          switch(interaction.type){
+        if (node) {
+          switch (interaction.type) {
             case 'drag':
-              node.style.top = `${node.offsetTop  + event.clientY - interactionRef.current.deltaY}px`
-              break;
+              node.style.top = `${node.offsetTop + event.clientY - interactionRef.current.deltaY}px`
+              break
             case 'resize-from-top':
-              node.style.top = `${node.offsetTop  + event.clientY - interactionRef.current.deltaY}px`
+              node.style.top = `${node.offsetTop + event.clientY - interactionRef.current.deltaY}px`
               node.style.height = `${node.offsetHeight - event.clientY + interactionRef.current.deltaY}px`
-              break;
+              break
             case 'resize-from-bottom':
-              node.style.height = `${node.offsetHeight  + event.clientY - interactionRef.current.deltaY}px`
-              break;
+              node.style.height = `${node.offsetHeight + event.clientY - interactionRef.current.deltaY}px`
+              break
           }
           setInteraction({
             ...interactionRef.current,
             deltaX: event.clientX,
-            deltaY: event.clientY
+            deltaY: event.clientY,
           })
         }
-        rafBusy.current = false
+        refBusy.current = false
       })
-      rafBusy.current = true
+      refBusy.current = true
     }
   }
   const handleMouseUp = (event: MouseEvent) => {
-    if(interactionRef.current.type !== null){
+    if (interactionRef.current.type !== null) {
       const node = meRef.current
-      if(node){
+      if (node) {
         onVisitChange(visit.id, node.offsetTop, node.offsetHeight)
       }
       setInteraction(NoInteraction)
@@ -135,61 +131,60 @@ export const Visit = ({role, mode, day, visit, mourners, hourOffset, onVisitChan
   }
   const submitVisitor = (visitor: VisitorModel) => {
     setShowTip(null)
-    dispatch(updateVisit({
-      visitId: visit.id,
-      partialVisit: {visitors: [...visit.visitors, visitor]}
-    }))
+    dispatch(
+      updateVisit({
+        visitId: visit.id,
+        partialVisit: { visitors: [...visit.visitors, visitor] },
+      })
+    )
     dispatch(updateSelectedShiva())
     // log the visitor in order to receive email from shiva
     dispatch(addVisitorMessage(visitor, visit.id, selectedShiva || ''))
-
   }
-  const handleToggleMournerParticipation = (mourner: MournerId, attending: boolean)=>{
-    if(attending){
-      dispatch(updateVisit({
-        visitId: visit.id,
-        partialVisit: {missingMourners: visit.missingMourners.filter(m => m!==mourner)}
-      }))
-    }else{
+  const handleToggleMournerParticipation = (mourner: MournerId, attending: boolean) => {
+    if (attending) {
+      dispatch(
+        updateVisit({
+          visitId: visit.id,
+          partialVisit: { missingMourners: visit.missingMourners.filter(m => m !== mourner) },
+        })
+      )
+    } else {
       const ms = new Set(visit.missingMourners)
       ms.add(mourner)
-      dispatch(updateVisit({
-        visitId: visit.id,
-        partialVisit: {missingMourners: Array.from(ms)}
-      }))
+      dispatch(
+        updateVisit({
+          visitId: visit.id,
+          partialVisit: { missingMourners: Array.from(ms) },
+        })
+      )
     }
     dispatch(updateSelectedShiva())
   }
   const renderToolTip = () => {
-    if(selectedVisit !== visit.id){
+    if (selectedVisit !== visit.id) {
       return null
     }
     const node = meRef.current
-    if(node){
+    if (node) {
       const rect = node.getBoundingClientRect()
-      switch(showTip){
+      switch (showTip) {
         case 'Data':
-          return(
-            <ToolTip left={`${rect.left}px`}  top={`${node.offsetTop}px`} onHide={hideTip}>
-              <VisitData
-                {...visit}
-                role={role}
-                mournersList={mourners}
-                onAddVisitor={()=>setShowTip('Visitor')}
-                onToggleMournerParticipation={handleToggleMournerParticipation}
-              />
+          return (
+            <ToolTip left={`${rect.left}px`} top={`${node.offsetTop}px`} onHide={hideTip}>
+              <VisitData {...visit} role={role} mournersList={mourners} onAddVisitor={() => setShowTip('Visitor')} onToggleMournerParticipation={handleToggleMournerParticipation} />
             </ToolTip>
           )
         case 'Visitor':
-          return(
-            <ToolTip left={`${rect.left}px`}  top={`${node.offsetTop}px`} onHide={hideTip} backgroundColor={theme.colors.sauvignonLight}>
-              <Visitor day={day} onSubmitVisitor={submitVisitor} {...visit}/>
+          return (
+            <ToolTip left={`${rect.left}px`} top={`${node.offsetTop}px`} onHide={hideTip} backgroundColor={theme.colors.sauvignonLight}>
+              <Visitor day={day} onSubmitVisitor={submitVisitor} {...visit} />
             </ToolTip>
           )
         case null:
           return null
       }
-    }else{
+    } else {
       return null
     }
   }
@@ -198,28 +193,21 @@ export const Visit = ({role, mode, day, visit, mourners, hourOffset, onVisitChan
 
   const startPosition = timeToPixels(visit.startTime)
   const endPosition = timeToPixels(visit.endTime)
-  return(
+  return (
     <>
-      <VisitWrapper
-        ref={meRef}
-        style={{top: `${startPosition}px`, height: `${endPosition}px`}}
-        onClickCapture={handleClick}
-        onMouseDown={handleDrag}
-      >
-        {mode === 'Edit' ?
+      <VisitWrapper ref={meRef} style={{ top: `${startPosition}px`, height: `${endPosition}px` }} onClickCapture={handleClick} onMouseDown={handleDrag}>
+        {mode === 'Edit' ? (
           <>
-            <div className='close' onClick={handleDeleteEvent}></div>
-            { visit.visitors.length===0 ? <div className='gripper gripper-top' onMouseDown={handleResizeFromTop}></div> : null }
-            { visit.visitors.length===0 ? <div className='gripper gripper-bottom' onMouseDown={handleResizeFromBottom}></div>: null }
+            <div className="close" onClick={handleDeleteEvent}></div>
+            {visit.visitors.length === 0 ? <div className="gripper gripper-top" onMouseDown={handleResizeFromTop}></div> : null}
+            {visit.visitors.length === 0 ? <div className="gripper gripper-bottom" onMouseDown={handleResizeFromBottom}></div> : null}
           </>
-          : null
-        }
-        <div>{mourners.length -  (visit.missingMourners ? visit.missingMourners.length : 0)} Mourners</div>
+        ) : null}
+        <div>{mourners.length - (visit.missingMourners ? visit.missingMourners.length : 0)} Mourners</div>
         <div>{visit.visitors.length} Visitors</div>
       </VisitWrapper>
-      { renderToolTip() }
-      { showConfirm ? <ConfirmDeleteModal onConfirm={handleConfirmDelete} onCancel={()=>setShowConfirm(false)}/> : null}
+      {renderToolTip()}
+      {showConfirm ? <ConfirmDeleteModal onConfirm={handleConfirmDelete} onCancel={() => setShowConfirm(false)} /> : null}
     </>
   )
 }
-

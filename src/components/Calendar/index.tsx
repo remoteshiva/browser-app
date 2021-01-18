@@ -7,7 +7,6 @@ import { Grid } from './grid'
 import { VerticalRuler, HorizontalRuler } from './rulers'
 import { CalendarWrapper, Timezone } from './styles'
 
-
 export interface Props extends Shiva {
   mode: CalendarMode
   role: Role
@@ -15,7 +14,7 @@ export interface Props extends Shiva {
 const Calendar = ({ startDate, endDate, visits, mourners, mode, role }: Props) => {
   const sideBarWidth = 60
   return (
-    <CalendarProvider mode={mode} role={role} startHour={9} endHour={22}>
+    <CalendarProvider mode={mode} role={role} startHour={7} endHour={22}>
       <CalendarWrapper>
         <ColumnContainer width={'100%'}>
           <Row>
