@@ -24,7 +24,7 @@ exports.sendVisitorEmail = functions.firestore.document(`visitor_messages/{mailI
       to: visitorMessage.visitor.email,
       template: visitorMessage.templateName,
       subject: 'Your shiva visit is confirmed',
-      'h:X-Mailgun-Variables': `{"title": "Your shiva visit is confirmed", "day": "${visitDay}", "date": "${visitDate}", "visitorUrl": "http://app.removeshiva.org/v/${visitId}", "videoLink": "${videoLink}", "nameOfDeceased": "${nameOfDeceased}", "visitor": "${visitorMessage.visitor}"}`
+      'h:X-Mailgun-Variables': `{"title": "Your shiva visit is confirmed", "day": "${visitDay}", "date": "${visitDate}", "visitorUrl": "http://app.removeshiva.org/v/${visitorMessage.visitId}", "videoLink": "${videoLink}", "nameOfDeceased": "${nameOfDeceased}", "visitor": "${visitorMessage.visitor}"}`
   };
   mailgun.messages().send(data, (error, body) => {
           console.log(body);
