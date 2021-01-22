@@ -9,11 +9,11 @@ Make sure you have local copies of .env and .env.development.local
 .env.development.local has the actual values
 
 ```bash
-$ git clone https://github.com/remoteshiva/browser-app.git
-$ cd ..
-$ git checkout develop
-$ yarn install
-$ yarn start
+git clone https://github.com/remoteshiva/browser-app.git
+cd ..
+git checkout develop
+yarn install
+yarn start
 ```
 
 
@@ -24,6 +24,11 @@ npm install
 cd ../..
 yarn build
 firebase deploy
+```
+
+To deploy just functions run this command
+```bash
+firebase deploy --only functions
 ```
 
 ### Stack and build scripts
