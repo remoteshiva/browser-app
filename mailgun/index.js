@@ -25,9 +25,7 @@ app.get('/add_visitor', (req, res) => {
     visitorUrl: 'http://app.removeshiva.org/v/445erhgdhj',
     videoLink: 'zoom.us/123456',
     nameOfDeceased: 'Brian Fantana',
-    visitor: {
-      name: 'Ron Burgundy'
-    }
+    visitorName: 'Ron Burgundy'
   });
 });
 
