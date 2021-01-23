@@ -193,11 +193,24 @@ export const updateSelectedShiva = (): AppThunk<Promise<Partial<Shiva>>> => asyn
 export const addVisitorMessage = (visitor: Visitor, visitId: VisitId, shivaId: ShivaId): AppThunk<Promise<void>> => async (dispatch): Promise<void> => {
   return new Promise<void>(async (resolve, reject) => {
     try {
-      await firestore.collection('visitor_messages').add({
+      const { nameOfDeceased, videoLink } = await dispatch(fetchShivaById(shivaId))
+      const videoLinkString = videoLink?.toString()
+      const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+      const visitDay = days[visitor.time.getDay()];
+      const visitDate = visitor.time.toLocaleString();
+      const visitorUrl = `http://app.remoteshiva.org/v/${visitId}`;
+      const visitorName = visitor.name;
+      const visitorEmail = visitor.email;
+      await firestore.collection('add_visitor_messages').add({
         created: firebase.firestore.FieldValue.serverTimestamp(),
-        visitor,
-        visitId,
+        visitDay,
+        visitDate,
+        visitorUrl,
+        visitorName,
+        visitorEmail,
         shivaId,
+        nameOfDeceased,
+        videoLink: videoLinkString,
         templateName: 'add_visitor',
       })
       resolve()
