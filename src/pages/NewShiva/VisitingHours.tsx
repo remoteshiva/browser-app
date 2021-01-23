@@ -18,7 +18,7 @@ const VisitingHours = ({ newShiva, submit, selectStep }: StepProps<VisitingProps
         <FixedColumn width={500}>
           <p>Specify the times when visitors should be able to join the video chatroom by clicking and dragging on the calendar.</p>
           <br />
-          <p>By default, all mourners will be listed as attending all visiting hours. Once your shiva is created, you can edit this.</p>
+          <p>By default, all mourners will be listed as attending all visiting hours. <strong>Once your shiva is created, you can edit this.</strong></p>
           <br />
         </FixedColumn>
       </Row>
