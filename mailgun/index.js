@@ -16,8 +16,8 @@ app.set('view engine', 'handlebars');
 
 app.use(express.static('public'))
 
-app.get('/visitor_add', (req, res) => {
-  res.render('visitor_add',  {
+app.get('/add_visitor', (req, res) => {
+  res.render('add_visitor',  {
     layout: false,
     title : 'oy mh god',
     day: 'Tuesday',
