@@ -11,7 +11,7 @@ import { Wrapper, NavWrapper, UserBarWrapper } from './styles'
 import LoginBar from './LoginBar'
 
 const MY_SHIVAS = 'My Shivas'
-const RESET_PASSWORD = 'Reset Password'
+// const RESET_PASSWORD = 'Reset Password' TODO: implement
 // const ACCOUNT_DETAILS = 'Account Details' TODO: implement
 const FAQ = 'Help'
 const LOG_OUT = 'Log Out'
@@ -21,7 +21,7 @@ interface UserBarProps {
 }
 const UserBar = ({ user }: UserBarProps) => {
   const [isActive, setActive] = useState(false)
-  const menu = [MY_SHIVAS, RESET_PASSWORD, FAQ, /*ACCOUNT_DETAILS,*/ LOG_OUT]
+  const menu = [MY_SHIVAS, /* RESET_PASSWORD, */ FAQ, /*ACCOUNT_DETAILS,*/ LOG_OUT]
   const dispatch = useDispatch()
   const handleMenuClick = (item: string) => {
     if (item === MY_SHIVAS) {
