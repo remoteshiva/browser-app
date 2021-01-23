@@ -16,8 +16,8 @@ app.set('view engine', 'handlebars');
 
 app.use(express.static('public'))
 
-app.get('/visitor_add', (req, res) => {
-  res.render('visitor_add',  {
+app.get('/add_visitor', (req, res) => {
+  res.render('add_visitor',  {
     layout: false,
     title : 'oy mh god',
     day: 'Tuesday',
@@ -25,9 +25,7 @@ app.get('/visitor_add', (req, res) => {
     visitorUrl: 'http://app.removeshiva.org/v/445erhgdhj',
     videoLink: 'zoom.us/123456',
     nameOfDeceased: 'Brian Fantana',
-    visitor: {
-      name: 'Ron Burgundy'
-    }
+    visitorName: 'Ron Burgundy'
   });
 });
 
