@@ -1,11 +1,12 @@
 import firebase, { auth } from 'firebase'
 import { firestore } from '../firebase.config'
 import { AppThunk, omit } from './common'
-import { Shiva, ShivaId, Visit, VisitId, Visitor } from '../store/shiva/types'
+import { Shiva, ShivaId, Visit, Visitor } from '../store/shiva/types'
 import { initializeShiva } from '../store/shiva/helpers'
 import { arrayToMap } from '../store/helpers'
 import { fetchShivaList, fetchShiva, createShiva, deleteShiva, updateShiva } from '../store/shiva/actions'
 import { BackendError } from '../store/types'
+import { format } from 'date-fns'
 
 /**
  * @description serializes a partial Shiva object for firebase persistence
@@ -190,15 +191,14 @@ export const updateSelectedShiva = (): AppThunk<Promise<Partial<Shiva>>> => asyn
   }
 }
 
-export const addVisitorMessage = (visitor: Visitor, visitId: VisitId, shivaId: ShivaId): AppThunk<Promise<void>> => async (dispatch): Promise<void> => {
+export const addVisitorMessage = (visitor: Visitor, shivaId: ShivaId): AppThunk<Promise<void>> => async (dispatch): Promise<void> => {
   return new Promise<void>(async (resolve, reject) => {
     try {
-      const { nameOfDeceased, videoLink } = await dispatch(fetchShivaById(shivaId))
+      const { nameOfDeceased, videoLink, visitorKey } = await dispatch(fetchShivaById(shivaId))
       const videoLinkString = videoLink?.toString()
-      const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-      const visitDay = days[visitor.time.getDay()];
-      const visitDate = visitor.time.toLocaleString();
-      const visitorUrl = `http://app.remoteshiva.org/v/${visitId}`;
+      const visitDay = format(visitor.time, 'EEEE');   // Tuesday
+      const visitDate = format(visitor.time, 'PPPp');  // January 28th, 2021 at 9:30 AM
+      const visitorUrl = `http://app.remoteshiva.org/v/${visitorKey}`;
       const visitorName = visitor.name;
       const visitorEmail = visitor.email;
       await firestore.collection('add_visitor_messages').add({
