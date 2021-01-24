@@ -199,7 +199,7 @@ export const Visit = ({
     );
     dispatch(updateSelectedShiva());
     // log the visitor in order to receive email from shiva
-    dispatch(addVisitorMessage(visitor, visit.id, selectedShiva || ''));
+    dispatch(addVisitorMessage(visitor, selectedShiva || ''));
   };
   const handleToggleMournerParticipation = (
     mourner: MournerId,
