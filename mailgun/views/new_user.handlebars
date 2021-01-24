@@ -47,26 +47,6 @@
       color: #7b776c;
     }
 
-    .visit-time {
-      font-family: 'Lato';
-      font-weight: 600;
-      font-size: 19px;
-      line-height: 30px;
-      text-align: center;
-      margin: 23px 122px;
-    }
-
-    a.video-link {
-      display: block;
-      font-family: 'Lato';
-      font-size: 19px;
-      font-weight: 600;
-      line-height: 23px;
-      color: #398e8f;
-      text-align: center;
-      margin-bottom: 32px;
-    }
-
     a.go {
       margin: 35px 25px 0 25px;
       padding: 23px 50px 23px 50px;
@@ -105,23 +85,30 @@
       </a>
     </div>
     <section>
-      <div class='title'>Your {{visitDay}} shiva visit is confirmed</div>
+      <div class='title'>Welcome to RemoteShiva</div>
       <div class='content'>
-        Dear {{visitorName}},
+        Dear {{organizerName}},
         <br /><br />
-        Thanks for signing up to pay a shiva visit to honor the memory of {{nameOfDeceased}}. You’ve signed up to visit
-        on:
-        <div class='visit-time'>{{visitDate}}</div>
-        <a href='{{videoLink}}' class='video-link'>{{videoLink}}</a>
+        Thanks for making an account with RemoteShiva. We know that organizing a shiva is a sensitive and
+        complex process, and we hope we can make it a bit easier for you and the mourners you’re supporting.
         <p style='margin-bottom: 35px;'>
-          When it’s your time to visit, click the link above to join a video call with the mourners. If you have
-          any
-          issues accessing the video, please check out the support page for the video hosting platform being used.
-          <br />
-          If you need to sign up for a new time slot or want to share the shiva information with another friend of the
-          mourners, click below:
+          Now that you’ve created an account, finish setting up the shiva page if you haven’t done so already. If you get stuck during the process, take a look at our help site to find answers to common questions.
         </p>
-        <a href='{{visitorUrl}}' class='go'>Go to Shiva Page</a>
+        <p style='margin-bottom: 35px;'>
+          Once you’ve set up the shiva page, we recommend having one of the mourners take a quick look at it to make sure
+          they’re comfortable with the information being shared.</p>
+        <p style='margin-bottom: 35px;'>
+          Then share the link to the shiva page with all the friends and relatives of the mourners who are seeking information about the shiva.
+        </p>
+        <p style='margin-bottom: 35px;'>
+          We hope our platform helps make a difficult time a bit easier for you to coordinate during this difficult time.
+        </p>
+        <p style='margin-bottom: 35px;'>
+          Warmly,<br />
+          The RemoteShiva Volunteer Team
+        </p>
+        Go to RemoteShiva (link to dashboard)
+        <a href='{{dashboardUrl}}' class='go'>Go to RemoteShiva</a>
       </div>
     </section>
     <!--<section>

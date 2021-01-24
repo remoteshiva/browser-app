@@ -10,20 +10,65 @@ const mailgun = require('mailgun-js')({
 
 admin.initializeApp(functions.config().firebase);
 
-/// This email is sent when a new document is added to the visit_messages Firestore collection. See addVisitorMessage()
+/// === Emails ===
+/// These emails are sent when a new document is added to a particular Firestore collection
+/// Example: ex. the collection visit_messages, and see addVisitorMessage()
 /// The actual body of the email is specified by the template, which is stored on mailgun.
 //  For reference, you can edit and debug templates using the standalone NodeJS application Amit built in the /mailgun directory
-exports.sendVisitorEmail = functions.firestore.document(`add_visitor_messages/{mailId}`).onCreate(async (snapshot, context) => {
-  const visitorMessage = snapshot.data();
+
+exports.sendVisitorAddedEmail = functions.firestore.document(`messages_add_visitor/{mailId}`).onCreate(async (snapshot, context) => {
+  const message = snapshot.data();
   const data = {
       from: 'RemoteShiva <info@remoteshiva.org>',
-      to: visitorMessage.visitorEmail,
-      template: visitorMessage.templateName,
-      subject: 'Your shiva visit is confirmed',
-      'h:X-Mailgun-Variables': `{"title": "Your shiva visit is confirmed", "day": "${visitorMessage.visitDay}", "date": "${visitorMessage.visitDate}", "visitorUrl": "${visitorMessage.visitorUrl}", "videoLink": "${visitorMessage.videoLink}", "nameOfDeceased": "${visitorMessage.nameOfDeceased}", "visitorName": "${visitorMessage.visitorName}"}`
+      to: message.visitorEmail,
+      template: message.templateName,
+      subject: message.subject,
+      'h:X-Mailgun-Variables': `{"title": "${message.subject}", "visitDay": "${message.visitDay}", "visitDate": "${message.visitDate}", "visitorUrl": "${message.visitorUrl}", "videoLink": "${message.videoLink}", "nameOfDeceased": "${message.nameOfDeceased}", "visitorName": "${message.visitorName}"}`
   };
   mailgun.messages().send(data, (error, body) => {
           console.log(body);
+  });
+});
+
+exports.sendNewUserEmail = functions.firestore.document(`messages_new_user/{mailId}`).onCreate(async (snapshot, context) => {
+  const message = snapshot.data();
+  const data = {
+    from: 'RemoteShiva <info@remoteshiva.org>',
+    to: message.organizerEmail,
+    template: message.templateName,
+    subject: message.subject,
+    'h:X-Mailgun-Variables': `{"title": "${message.subject}", "dashboardUrl": "${message.dashboardUrl}", "organizerName": "${message.organizerName}"}`
+  };
+  mailgun.messages().send(data, (error, body) => {
+    console.log(body);
+  });
+});
+
+exports.sendTimeslotDeletedVisitorEmail = functions.firestore.document(`messages_timeslot_deleted_visitor/{mailId}`).onCreate(async (snapshot, context) => {
+  const message = snapshot.data();
+  const data = {
+    from: 'RemoteShiva <info@remoteshiva.org>',
+    to: message.visitorEmail,
+    template: message.templateName,
+    subject: message.subject,
+    'h:X-Mailgun-Variables': `{"title": "${message.subject}", "visitorUrl": "${message.visitorUrl}", "nameOfDeceased": "${message.nameOfDeceased}", "visitorName": "${message.visitorName}"}`
+  };
+  mailgun.messages().send(data, (error, body) => {
+    console.log(body);
+  });
+});
+
+exports.sendVisitUpcomingEmail = functions.firestore.document(`messages_visit_upcoming/{mailId}`).onCreate(async (snapshot, context) => {
+  const message = snapshot.data();
+  const data = {
+    from: 'RemoteShiva <info@remoteshiva.org>',
+    to: message.visitorEmail,
+    template: message.templateName,
+    subject: message.subject,
+    'h:X-Mailgun-Variables': `{"title": "${message.subject}", "visitDate": "${message.visitDate}", "visitorUrl": "${message.visitorUrl}", "videoLink": "${message.videoLink}", "nameOfDeceased": "${message.nameOfDeceased}", "visitorName": "${message.visitorName}"}`
+  };
+  mailgun.messages().send(data, (error, body) => {
+    console.log(body);
   });
 });
 
