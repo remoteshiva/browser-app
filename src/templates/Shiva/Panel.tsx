@@ -1,44 +1,64 @@
-import React, { useState } from 'react'
-import { Shiva, Role } from '../../store/shiva/types'
-import Card from './Card'
+import React, { useState } from 'react';
+import { Shiva, Role } from '../../store/shiva/types';
+import Card from './Card';
 
 export enum Direction {
   row = 'row',
   column = 'column',
 }
 export interface ShivaPanel {
-  shiva: Shiva
-  role: Role
-  editing?: boolean
-  save?: number
+  shiva: Shiva;
+  role: Role;
+  editing?: boolean;
+  save?: number;
 }
 
 interface withPanelProps {
-  role: Role
-  direction?: Direction
-  darkMode: boolean
+  role: Role;
+  direction?: Direction;
+  darkMode: boolean;
 }
 
 interface InternalPanelProps {
-  save: number
+  save: number;
 }
 
-export const withPanel = <P extends object>(Component: React.ComponentType<P>): React.FC<P & withPanelProps> => ({ role, direction, darkMode, ...props }) => {
-  const [editing, setEditing] = useState<boolean>(false)
-  const [save, doSave] = useState(0)
-  const [reset, doReset] = useState(0)
+export const withPanel = <P extends object>(
+  Component: React.ComponentType<P>
+): React.FC<P & withPanelProps> => ({
+  role,
+  direction,
+  darkMode,
+  ...props
+}) => {
+  const [editing, setEditing] = useState<boolean>(false);
+  const [save, doSave] = useState(0);
+  const [reset, doReset] = useState(0);
   const onModeChange = () => {
-    setEditing(!editing)
-    if (editing) doSave(prev => prev + 1)
-  }
+    setEditing(!editing);
+    if (editing) doSave(prev => prev + 1);
+  };
   const onCancel = () => {
-    setEditing(false)
-    doReset(prev=>prev+1)
-  }
+    setEditing(false);
+    doReset(prev => prev - 1);
+  };
 
   return role === 'Visitor' && darkMode ? null : (
-    <Card darkMode={darkMode} direction={direction} role={role} onModeChange={onModeChange} onCancel={onCancel} editing={editing}>
-      <Component key={reset} editing={editing} role={role} save={save} {...(props as P)} />
+    <Card
+      darkMode={darkMode}
+      direction={direction}
+      role={role}
+      onModeChange={onModeChange}
+      onCancel={onCancel}
+      editing={editing}
+    >
+      <Component
+        key={reset}
+        editing={editing}
+        role={role}
+        save={save}
+        {...(props as P)}
+      />
     </Card>
-  )
-}
+  );
+};
