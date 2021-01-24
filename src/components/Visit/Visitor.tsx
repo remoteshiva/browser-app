@@ -42,7 +42,7 @@ interface Props extends Visit {
 }
 const Visitor = ({ startTime, endTime, day, onSubmitVisitor }: Props) => {
   const [values, setValues] = useState({ name: '', email: '' });
-  const [time, setTime] = useState(startTime);
+  const [beginTime, setStartTime] = useState(startTime);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -50,7 +50,7 @@ const Visitor = ({ startTime, endTime, day, onSubmitVisitor }: Props) => {
   };
 
   const handleTimeChange = (time: Date) => {
-    setTime(time);
+    setStartTime(time);
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -58,7 +58,7 @@ const Visitor = ({ startTime, endTime, day, onSubmitVisitor }: Props) => {
     onSubmitVisitor({
       name: values.name,
       email: values.email,
-      time,
+      time: beginTime,
     });
   };
 
@@ -66,7 +66,7 @@ const Visitor = ({ startTime, endTime, day, onSubmitVisitor }: Props) => {
     <Wrapper>
       <div className="title">Visit {format(day, 'EEEE, MMMM do')}</div>
       <div className="timeslot">
-        {format(startTime, 'p')} - {format(endTime, 'p')}
+        {format(beginTime, 'p')} - {format(endTime, 'p')}
       </div>
       <form onSubmit={handleSubmit}>
         <label>
