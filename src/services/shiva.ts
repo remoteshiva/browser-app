@@ -201,8 +201,9 @@ export const addVisitorMessage = (visitor: Visitor, shivaId: ShivaId): AppThunk<
       const visitorUrl = `${process.env.REACT_APP_BASE_URL}/v/${visitorKey}`
       const visitorName = visitor.name
       const visitorEmail = visitor.email
-      await firestore.collection('add_visitor_messages').add({
+      await firestore.collection('messages_add_visitor').add({
         created: firebase.firestore.FieldValue.serverTimestamp(),
+        subject: `Your ${visitDay} shiva visit is confirmed`,
         visitDay,
         visitDate,
         visitorUrl,
