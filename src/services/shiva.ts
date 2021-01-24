@@ -196,11 +196,11 @@ export const addVisitorMessage = (visitor: Visitor, shivaId: ShivaId): AppThunk<
     try {
       const { nameOfDeceased, videoLink, visitorKey } = await dispatch(fetchShivaById(shivaId))
       const videoLinkString = videoLink?.toString()
-      const visitDay = format(visitor.time, 'EEEE');   // Tuesday
-      const visitDate = format(visitor.time, 'PPPp');  // January 28th, 2021 at 9:30 AM
-      const visitorUrl = `http://app.remoteshiva.org/v/${visitorKey}`;
-      const visitorName = visitor.name;
-      const visitorEmail = visitor.email;
+      const visitDay = format(visitor.time, 'EEEE')   // Tuesday
+      const visitDate = format(visitor.time, 'PPPp')  // January 28th, 2021 at 9:30 AM
+      const visitorUrl = `${process.env.REACT_APP_BASE_URL}/v/${visitorKey}`
+      const visitorName = visitor.name
+      const visitorEmail = visitor.email
       await firestore.collection('add_visitor_messages').add({
         created: firebase.firestore.FieldValue.serverTimestamp(),
         visitDay,
