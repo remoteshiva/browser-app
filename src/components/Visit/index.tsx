@@ -45,7 +45,7 @@ const NoInteraction: Interaction = {
   deltaY: 0,
 };
 
-interface Props {
+interface VisitProps {
   role: Role;
   mode: CalendarMode;
   day: Date;
@@ -65,7 +65,7 @@ export const Visit = ({
   mourners,
   hourOffset,
   onVisitChange,
-}: Props) => {
+}: VisitProps) => {
   const dispatch = useDispatch();
   const theme = useContext(ThemeContext);
   const meRef = useRef<HTMLDivElement>(null);
@@ -79,7 +79,7 @@ export const Visit = ({
   const interactionRef = useRef(interaction);
   const setInteraction = (data: any) => {
     interactionRef.current = data;
-    _setInteraction(data);
+    _setInteraction(interactionRef.current);
   };
 
   const timeToPixels = (date: Date) => {
@@ -132,10 +132,7 @@ export const Visit = ({
                 node.style.top = '0px';
                 break;
               } else if (topCoord + node.offsetHeight >= 599) {
-                node.style.top = `${
-                  599 -
-                  node.offsetHeight
-                }px`;
+                node.style.top = `${599 - node.offsetHeight}px`;
                 break;
               }
               node.style.top = `${

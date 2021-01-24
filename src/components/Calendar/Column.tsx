@@ -78,9 +78,6 @@ const Column = memo(
           if (node) {
             const rect = node.getBoundingClientRect();
             const y = event.clientY - rect.top;
-            console.log('handleMouseMove:event.clientY', event.clientY);
-            console.log('handleMouseMove:rect', rect);
-            // const y = event.nativeEvent.offsetY - rect.top;
             setCurrentY(y);
             node.style.height = `${y}px`;
           }
@@ -91,6 +88,7 @@ const Column = memo(
     };
     const handleMouseUp = (event: React.MouseEvent) => {
       if (dragging) {
+        event.persist();
         const node = newEventRef.current;
         if (node) {
           const startTime = pixelToDate(startY);
