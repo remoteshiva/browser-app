@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>{{title}}</title>
+  <style type="text/css">
+    @import url('https://fonts.googleapis.com/css?family=Lato');
+    @import url('https://fonts.googleapis.com/css?family=Lora');
+
+    main {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      /* align horizontal */
+      align-items: center;
+      /* align vertical */
+      background-color: #f5efe9;
+    }
+
+    .logo {
+      margin: 30px auto;
+    }
+
+    section {
+      background-color: white;
+      width: 540px;
+      padding-top: 35px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .title {
+      font-family: 'Lora';
+      font-size: 36px;
+      line-height: normal;
+      color: #41413a;
+      margin: auto 77px;
+    }
+
+    .content {
+      margin: 41px 50px;
+      font-family: 'Lato';
+      font-size: 16px;
+      line-height: 30px;
+      text-align: left;
+      color: #7b776c;
+    }
+
+    a.go {
+      margin: 35px 25px 0 25px;
+      padding: 23px 50px 23px 50px;
+      border-radius: 15px;
+      background-color: #924623;
+      color: white;
+      text-decoration: none;
+      font-size: 18px;
+    }
+
+    footer {
+      display: flex;
+      flex-direction: row;
+      margin: 35px auto;
+      font-family: 'Lato';
+      font-size: 16px;
+      color: #7b776c;
+    }
+
+    a.facebook {
+      text-decoration: none;
+      color: #7b776c;
+      line-height: 22px;
+    }
+  </style>
+</head>
+
+<body itemscope itemtype="http://schema.org/EmailMessage"
+  style="-webkit-font-smoothing: antialiased; -webkit-text-size-adjust: none; width: 100% !important; height: 100%; line-height: 1.6em; background-color: white; margin: 0;"
+  bgcolor="white">
+  <main>
+    <div class='logo'>
+      <a href="http://www.remoteshiva.org">
+        <img src="https://remoteshiva-assets.s3.us-east-2.amazonaws.com/logo%402x.png" width="229px" height='37px'
+          alt="logo" border="0" />
+      </a>
+    </div>
+    <section>
+      <div class='title'>Welcome to RemoteShiva</div>
+      <div class='content'>
+        Dear {{organizerName}},
+        <br /><br />
+        Thanks for making an account with RemoteShiva. We know that organizing a shiva is a sensitive and
+        complex process, and we hope we can make it a bit easier for you and the mourners you’re supporting.
+        <p style='margin-bottom: 35px;'>
+          Now that you’ve created an account, finish setting up the shiva page if you haven’t done so already. If you get stuck during the process, take a look at our help site to find answers to common questions.
+        </p>
+        <p style='margin-bottom: 35px;'>
+          Once you’ve set up the shiva page, we recommend having one of the mourners take a quick look at it to make sure
+          they’re comfortable with the information being shared.</p>
+        <p style='margin-bottom: 35px;'>
+          Then share the link to the shiva page with all the friends and relatives of the mourners who are seeking information about the shiva.
+        </p>
+        <p style='margin-bottom: 35px;'>
+          We hope our platform helps make a difficult time a bit easier for you to coordinate during this difficult time.
+        </p>
+        <p style='margin-bottom: 35px;'>
+          Warmly,<br />
+          The RemoteShiva Volunteer Team
+        </p>
+        Go to RemoteShiva (link to dashboard)
+        <a href='{{dashboardUrl}}' class='go'>Go to RemoteShiva</a>
+      </div>
+    </section>
+    <!--<section>
+      <div class='content'>
+        <div class='title'>
+          Send a meal
+        </div>
+        <p>The mourners are also accepting meal deliveries. To sign up for a slot to deliver food, click here.</p>
+      </div>
+    </section>
+    <section>
+      <div class='content'>
+        <div class='title'>
+          Memorial donations
+        </div>
+        <p>
+          If you’d like to make a donation in [name of deceased]’s honor, the mourners suggest donationlink.com.
+        </p>
+      </div>
+    </section>-->
+    <footer>
+      <a href="https://www.facebook.com/pg/remoteshiva" class='facebook'>
+        <img src="https://remoteshiva-assets.s3.us-east-2.amazonaws.com/facebook-gray-transparent.png" width="20px"
+          height="20px" alt="fb" />
+        <span>Follow us on Facebook</span>
+      </a>
+
+    </footer>
+  </main>
+</body>
+
+</html>
