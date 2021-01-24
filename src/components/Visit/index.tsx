@@ -16,7 +16,7 @@ import {
   deleteVisit,
   updateVisit,
 } from '../../store/shiva/actions';
-import { updateSelectedShiva, addVisitorMessage } from '../../services/shiva';
+import { updateSelectedShiva, queueAddVisitorMessage } from '../../services/shiva';
 import { CalendarMode } from '../types';
 import { useEventListener } from '../common';
 import ToolTip from './ToolTip';
@@ -199,7 +199,7 @@ export const Visit = ({
     );
     dispatch(updateSelectedShiva());
     // log the visitor in order to receive email from shiva
-    dispatch(addVisitorMessage(visitor, selectedShiva || ''));
+    dispatch(queueAddVisitorMessage(visitor, selectedShiva || ''));
   };
   const handleToggleMournerParticipation = (
     mourner: MournerId,

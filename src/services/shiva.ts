@@ -2,6 +2,7 @@ import firebase, { auth } from 'firebase'
 import { firestore } from '../firebase.config'
 import { AppThunk, omit } from './common'
 import { Shiva, ShivaId, Visit, Visitor } from '../store/shiva/types'
+import { User } from '../store/auth/types'
 import { initializeShiva } from '../store/shiva/helpers'
 import { arrayToMap } from '../store/helpers'
 import { fetchShivaList, fetchShiva, createShiva, deleteShiva, updateShiva } from '../store/shiva/actions'
@@ -191,7 +192,7 @@ export const updateSelectedShiva = (): AppThunk<Promise<Partial<Shiva>>> => asyn
   }
 }
 
-export const addVisitorMessage = (visitor: Visitor, shivaId: ShivaId): AppThunk<Promise<void>> => async (dispatch): Promise<void> => {
+export const queueAddVisitorMessage = (visitor: Visitor, shivaId: ShivaId): AppThunk<Promise<void>> => async (dispatch): Promise<void> => {
   return new Promise<void>(async (resolve, reject) => {
     try {
       const { nameOfDeceased, videoLink, visitorKey } = await dispatch(fetchShivaById(shivaId))
@@ -209,10 +210,81 @@ export const addVisitorMessage = (visitor: Visitor, shivaId: ShivaId): AppThunk<
         visitorUrl,
         visitorName,
         visitorEmail,
-        shivaId,
         nameOfDeceased,
         videoLink: videoLinkString,
         templateName: 'add_visitor',
+      })
+      resolve()
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
+export const queueVisitUpcomingMessage = (visitor: Visitor, shivaId: ShivaId): AppThunk<Promise<void>> => async (dispatch): Promise<void> => {
+  return new Promise<void>(async (resolve, reject) => {
+    try {
+      const { nameOfDeceased, videoLink, visitorKey } = await dispatch(fetchShivaById(shivaId))
+      const videoLinkString = videoLink?.toString()
+      const visitDate = format(visitor.time, 'PPPPp')  // Tuesday, January 28th, 2021 at 9:30 AM
+      const visitorUrl = `${process.env.REACT_APP_BASE_URL}/v/${visitorKey}`
+      const visitorName = visitor.name
+      const visitorEmail = visitor.email
+      await firestore.collection('messages_visit_upcoming').add({
+        created: firebase.firestore.FieldValue.serverTimestamp(),
+        templateName: 'visit_upcoming',
+        subject: `You have a shiva visit coming up`,
+        visitorEmail,
+        visitorName,
+        visitDate,
+        visitorUrl,
+        videoLink: videoLinkString,
+        nameOfDeceased
+      })
+      resolve()
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
+export const queueTimeslotDeletedVisitorMessage = (visitor: Visitor, shivaId: ShivaId): AppThunk<Promise<void>> => async (dispatch): Promise<void> => {
+  return new Promise<void>(async (resolve, reject) => {
+    try {
+      const { nameOfDeceased, visitorKey } = await dispatch(fetchShivaById(shivaId))
+      const visitorUrl = `${process.env.REACT_APP_BASE_URL}/v/${visitorKey}`
+      const visitorName = visitor.name
+      const visitorEmail = visitor.email
+      await firestore.collection('messages_timeslot_deleted_visitor').add({
+        created: firebase.firestore.FieldValue.serverTimestamp(),
+        templateName: 'timeslot_deleted_visitor',
+        subject: `Shiva time change - can you reschedule?`,
+        visitorEmail,
+        visitorName,
+        nameOfDeceased,
+        visitorUrl
+      })
+      resolve()
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
+export const queueNewUserMessage = (user: User): AppThunk<Promise<void>> => async (dispatch): Promise<void> => {
+  return new Promise<void>(async (resolve, reject) => {
+    try {
+      const organizerEmail = user.email
+      const organizerName = user.displayName
+      const dashboardUrl = `${process.env.REACT_APP_BASE_URL}/`
+
+      await firestore.collection('messages_new_user').add({
+        created: firebase.firestore.FieldValue.serverTimestamp(),
+        templateName: 'new_user',
+        subject: `Welcome to RemoteShiva`,
+        organizerEmail,
+        organizerName,
+        dashboardUrl
       })
       resolve()
     } catch (error) {
