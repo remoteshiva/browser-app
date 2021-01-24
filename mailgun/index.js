@@ -20,9 +20,10 @@ app.get('/add_visitor', (req, res) => {
   res.render('add_visitor',  {
     layout: false,
     title : 'oy mh god',
+    visitorEmail: 'john.doe@gmail.com',
     visitorName: 'Ron Burgundy',
-    day: 'Tuesday',
-    date: 'December 28th, 2021 at 1:00 PM',
+    visitDay: 'Tuesday',
+    visitDate: 'December 28th, 2021 at 1:00 PM',
     visitorUrl: 'https://app.removeshiva.org/v/445erhgdhj',
     videoLink: 'zoom.us/123456',
     nameOfDeceased: 'Brian Fantana'
@@ -32,15 +33,17 @@ app.get('/add_visitor', (req, res) => {
 app.get('/new_user', (req, res) => {
   res.render('new_user',  {
     layout: false,
+    organizerEmail: 'john.doe@gmail.com',
     title : 'Welcome to RemoteShiva',
     organizerName: 'Jake Tapper',
     dashboardUrl: 'https://app.removeshiva.org/'
   });
 });
 
-app.get('/timeslot_deleted', (req, res) => {
-  res.render('timeslot_deleted',  {
+app.get('/timeslot_deleted_visitor', (req, res) => {
+  res.render('timeslot_deleted_visitor',  {
     layout: false,
+    visitorEmail: 'john.doe@gmail.com',
     title : 'Shiva time change - can you reschedule?',
     visitorName: 'Ron Burgundy',
     nameOfDeceased: 'Brian Fantana',
@@ -52,9 +55,9 @@ app.get('/visit_upcoming', (req, res) => {
   res.render('visit_upcoming',  {
     layout: false,
     title : 'You have a shiva visit tomorrow',
+    visitorEmail: 'john.doe@gmail.com',
     visitorName: 'Ron Burgundy',
-    day: 'Tuesday',
-    date: 'December 28th, 2021 at 1:00 PM',
+    visitDate: 'December 28th, 2021 at 1:00 PM',
     visitorUrl: 'https://app.removeshiva.org/v/445erhgdhj',
     videoLink: 'zoom.us/123456',
     nameOfDeceased: 'Brian Fantana'
