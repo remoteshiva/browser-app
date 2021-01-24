@@ -248,21 +248,25 @@ export const queueVisitUpcomingMessage = (visitor: Visitor, shivaId: ShivaId): A
   })
 }
 
-export const queueTimeslotDeletedVisitorMessage = (visitor: Visitor, shivaId: ShivaId): AppThunk<Promise<void>> => async (dispatch): Promise<void> => {
+/// Visit === a timeslot
+export const queueTimeslotDeletedVisitorMessages = (visitInput: Visit, shivaId: ShivaId): AppThunk<Promise<void>> => async (dispatch): Promise<void> => {
+  const visit = Object.assign({}, visitInput)
   return new Promise<void>(async (resolve, reject) => {
     try {
       const { nameOfDeceased, visitorKey } = await dispatch(fetchShivaById(shivaId))
-      const visitorUrl = `${process.env.REACT_APP_BASE_URL}/v/${visitorKey}`
-      const visitorName = visitor.name
-      const visitorEmail = visitor.email
-      await firestore.collection('messages_timeslot_deleted_visitor').add({
-        created: firebase.firestore.FieldValue.serverTimestamp(),
-        templateName: 'timeslot_deleted_visitor',
-        subject: `Shiva time change - can you reschedule?`,
-        visitorEmail,
-        visitorName,
-        nameOfDeceased,
-        visitorUrl
+      visit.visitors.map(async (visitor) => {
+        const visitorUrl = `${process.env.REACT_APP_BASE_URL}/v/${visitorKey}`
+        const visitorName = visitor.name
+        const visitorEmail = visitor.email
+        await firestore.collection('messages_timeslot_deleted_visitor').add({
+          created: firebase.firestore.FieldValue.serverTimestamp(),
+          templateName: 'timeslot_deleted_visitor',
+          subject: `Shiva time change - can you reschedule?`,
+          visitorEmail,
+          visitorName,
+          nameOfDeceased,
+          visitorUrl
+        })
       })
       resolve()
     } catch (error) {
