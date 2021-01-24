@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>{{title}}</title>
+  <style type="text/css">
+    @import url('https://fonts.googleapis.com/css?family=Lato');
+    @import url('https://fonts.googleapis.com/css?family=Lora');
+
+    main {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      /* align horizontal */
+      align-items: center;
+      /* align vertical */
+      background-color: #f5efe9;
+    }
+
+    .logo {
+      margin: 30px auto;
+    }
+
+    section {
+      background-color: white;
+      width: 540px;
+      padding-top: 35px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .title {
+      font-family: 'Lora';
+      font-size: 36px;
+      line-height: normal;
+      color: #41413a;
+      margin: auto 77px;
+    }
+
+    .content {
+      margin: 41px 50px;
+      font-family: 'Lato';
+      font-size: 16px;
+      line-height: 30px;
+      text-align: left;
+      color: #7b776c;
+    }
+
+    .visit-time {
+      font-family: 'Lato';
+      font-weight: 600;
+      font-size: 19px;
+      line-height: 30px;
+      text-align: center;
+      margin: 23px 122px;
+    }
+
+    a.video-link {
+      display: block;
+      font-family: 'Lato';
+      font-size: 19px;
+      font-weight: 600;
+      line-height: 23px;
+      color: #398e8f;
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    a.go {
+      margin: 35px 25px 0 25px;
+      padding: 23px 50px 23px 50px;
+      border-radius: 15px;
+      background-color: #924623;
+      color: white;
+      text-decoration: none;
+      font-size: 18px;
+    }
+
+    footer {
+      display: flex;
+      flex-direction: row;
+      margin: 35px auto;
+      font-family: 'Lato';
+      font-size: 16px;
+      color: #7b776c;
+    }
+
+    a.facebook {
+      text-decoration: none;
+      color: #7b776c;
+      line-height: 22px;
+    }
+  </style>
+</head>
+
+<body itemscope itemtype="http://schema.org/EmailMessage"
+  style="-webkit-font-smoothing: antialiased; -webkit-text-size-adjust: none; width: 100% !important; height: 100%; line-height: 1.6em; background-color: white; margin: 0;"
+  bgcolor="white">
+  <main>
+    <div class='logo'>
+      <a href="http://www.remoteshiva.org">
+        <img src="https://remoteshiva-assets.s3.us-east-2.amazonaws.com/logo%402x.png" width="229px" height='37px'
+          alt="logo" border="0" />
+      </a>
+    </div>
+    <section>
+      <div class='title'>You have a shiva visit tomorrow</div>
+      <div class='content'>
+        Dear {{visitorName}},
+        <br /><br />
+        This is a reminder that you signed up to pay a shiva call to {{nameOfDeceased}}’s mourners at the following time:
+        <div class='visit-time'>{{date}}</div>
+        <a href='{{videoLink}}' class='video-link'>{{videoLink}}</a>
+        <p style='margin-bottom: 35px;'>
+          When it’s your time to visit, click the link above to join a video call with the mourners.
+          If you have any issues accessing the video, please check out the support page for the video hosting platform being used.
+        </p>
+        <p style='margin-bottom: 35px;'>
+          To sign up for a new time slot or see the shiva information click below:
+        </p>
+        <a href='{{visitorUrl}}' class='go'>Go to Shiva Page</a>
+      </div>
+    </section>
+    <!--<section>
+      <div class='content'>
+        <div class='title'>
+          Send a meal
+        </div>
+        <p>The mourners are also accepting meal deliveries. To sign up for a slot to deliver food, click here.</p>
+      </div>
+    </section>
+    <section>
+      <div class='content'>
+        <div class='title'>
+          Memorial donations
+        </div>
+        <p>
+          If you’d like to make a donation in [name of deceased]’s honor, the mourners suggest donationlink.com.
+        </p>
+      </div>
+    </section>-->
+    <footer>
+      <a href="https://www.facebook.com/pg/remoteshiva" class='facebook'>
+        <img src="https://remoteshiva-assets.s3.us-east-2.amazonaws.com/facebook-gray-transparent.png" width="20px"
+          height="20px" alt="fb" />
+        <span>Follow us on Facebook</span>
+      </a>
+
+    </footer>
+  </main>
+</body>
+
+</html>
