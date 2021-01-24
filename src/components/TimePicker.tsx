@@ -15,9 +15,12 @@ interface Props {
   onChange: (time: Date) => void;
 }
 const TimePicker = ({ startTime, endTime, onChange }: Props) => {
+  const startHour = getHours(startTime);
+  const endHour = getHours(endTime);
+
   const hours = Array.from(
-    { length: getHours(endTime) - getHours(startTime) + 1 },
-    (_, i) => i + getHours(startTime)
+    { length: Math.abs(endHour - startHour) + 1},
+    (_, i) => i + startHour
   );
   const minutes = ['00', '15', '30', '45'];
 
@@ -32,11 +35,14 @@ const TimePicker = ({ startTime, endTime, onChange }: Props) => {
     <Wrapper>
       <select
         name="hours"
+        defaultValue={getHours(startTime)}
         className="bg-transparent appearance-none outline-none"
         onChange={handleChange}
       >
         {hours.map(h => (
-          <option key={h} value={h}>{h}</option>
+          <option key={h} value={h}>
+            {h}
+          </option>
         ))}
       </select>
       <span className="mr-3">:</span>
@@ -47,7 +53,9 @@ const TimePicker = ({ startTime, endTime, onChange }: Props) => {
         onChange={handleChange}
       >
         {minutes.map(m => (
-          <option value={m}>{m}</option>
+          <option key={m} value={m}>
+            {m}
+          </option>
         ))}
       </select>
       {/* <select name='ampm' className='bg-transparent appearance-none outline-none'>
