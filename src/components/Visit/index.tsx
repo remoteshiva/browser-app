@@ -131,8 +131,8 @@ export const Visit = ({
               if (topCoord <= 0) {
                 node.style.top = '0px';
                 break;
-              } else if (topCoord + node.offsetHeight >= 599) {
-                node.style.top = `${599 - node.offsetHeight}px`;
+              } else if (topCoord + node.offsetHeight >= 600) {
+                node.style.top = `${600 - node.offsetHeight}px`;
                 break;
               }
               node.style.top = `${
@@ -270,6 +270,8 @@ export const Visit = ({
 
   const startPosition = timeToPixels(visit.startTime);
   const endPosition = timeToPixels(visit.endTime);
+
+  console.log('endPosition', endPosition)
   return (
     <>
       <VisitWrapper
