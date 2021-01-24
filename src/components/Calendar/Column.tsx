@@ -24,15 +24,14 @@ const noop = () => {};
 
 const pixelToMinutes = (offset: number) => (pixel: number) =>
   offset + pixel / PIXELS_PER_MINUTE;
-
-interface Props extends CalendarContextProps {
+interface ColumnProps extends CalendarContextProps {
   day: Date;
   visits: VisitMap;
   mourners: Mourner[];
 }
 
 const Column = memo(
-  ({ mode, role, day, visits, mourners, endHour, startHour }: Props) => {
+  ({ mode, role, day, visits, mourners, endHour, startHour }: ColumnProps) => {
     const dispatch = useDispatch();
     const [dragging, setDragging] = useState(false);
     const [startY, setStartY] = useState(0);
@@ -79,6 +78,9 @@ const Column = memo(
           if (node) {
             const rect = node.getBoundingClientRect();
             const y = event.clientY - rect.top;
+            console.log('handleMouseMove:event.clientY', event.clientY);
+            console.log('handleMouseMove:rect', rect);
+            // const y = event.nativeEvent.offsetY - rect.top;
             setCurrentY(y);
             node.style.height = `${y}px`;
           }
@@ -106,7 +108,7 @@ const Column = memo(
       top: Pixels,
       height: Pixels
     ) => {
-      const calendarTopTime = pixelToDate(1);
+      const calendarTopTime = pixelToDate(0);
       const calendarBottomTime = pixelToDate(599);
       const topAsDate = pixelToDate(top);
       const bottomAsDate = pixelToDate(height);
