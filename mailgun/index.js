@@ -54,7 +54,7 @@ app.get('/timeslot_deleted_visitor', (req, res) => {
 app.get('/visit_upcoming', (req, res) => {
   res.render('visit_upcoming',  {
     layout: false,
-    title : 'You have a shiva visit tomorrow',
+    title : 'You have a shiva visit coming up',
     visitorEmail: 'john.doe@gmail.com',
     visitorName: 'Ron Burgundy',
     visitDate: 'December 28th, 2021 at 1:00 PM',
