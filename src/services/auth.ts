@@ -21,7 +21,8 @@ export const signupUser = (name: string, email: string, password: string): AppTh
     const { user: fbuser } = await auth().createUserWithEmailAndPassword(email, password)
     if (fbuser) {
       try {
-        await createUser(fbuser, name)
+        const { email, displayName } = await createUser(fbuser, name)
+        await dispatch(queueNewUserMessage(email, displayName))
         dispatch(signupSuccess())
         await dispatch(fetchMyShivas())
         dispatch(push(Routes.MY_SHIVAS))
@@ -46,6 +47,7 @@ export const signUpWithProvider = (): AppThunk<Promise<Session>> => async (dispa
       const { user: fbuser } = await auth().signInWithPopup(provider)
       if (fbuser) {
         const { uid, email, displayName, photoURL } = await createUser(fbuser, fbuser.displayName || '')
+        await dispatch(queueNewUserMessage(email, displayName))
         dispatch(signupSuccess())
         //we we finished signing up, we can login
         const session = { token: uid, user: { email, displayName, photoURL } }
@@ -91,7 +93,8 @@ export const loginWithGoogle = (): AppThunk<Promise<Session>> => async (dispatch
       await auth().setPersistence(auth.Auth.Persistence.LOCAL)
       const { user: fbuser } = await auth().signInWithPopup(provider)
       if (fbuser) {
-        await createUser(fbuser, fbuser.displayName || '')
+        const { email, displayName } = await createUser(fbuser, fbuser.displayName || '')
+        await dispatch(queueNewUserMessage(email, displayName))
         dispatch(signupSuccess())
         await dispatch(fetchMyShivas())
         dispatch(push(Routes.MY_SHIVAS))
@@ -136,8 +139,27 @@ export const logoutUser = (): AppThunk => async dispatch => {
     })
 }
 
+export const queueNewUserMessage = (organizerEmail: string, organizerName: string): AppThunk<Promise<void>> => async (dispatch): Promise<void> => {
+  console.log(`DEBUG: queueNewUserMessage with user email ${organizerEmail} and name ${organizerName}`)
+  return new Promise<void>(async (resolve, reject) => {
+    try {
+      const dashboardUrl = `${process.env.REACT_APP_BASE_URL}/`
+      await firestore.collection('messages_new_user').add({
+        created: firebase.firestore.FieldValue.serverTimestamp(),
+        templateName: 'new_user',
+        subject: `Welcome to RemoteShiva`,
+        organizerEmail,
+        organizerName,
+        dashboardUrl
+      })
+      resolve()
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
 const createUser = async (user: FBUser, name: string) => {
-  queueNewUserMessage(user)
   const userRef = firestore.doc(`users/${user.uid}`)
   const snapshot = await userRef.get()
   if (!snapshot.exists) {
@@ -180,24 +202,3 @@ const getUser = async (uid: string): Promise<any> => {
   }
 }
 
-const queueNewUserMessage = (user: FBUser): AppThunk<Promise<void>> => async (dispatch): Promise<void> => {
-  return new Promise<void>(async (resolve, reject) => {
-    try {
-      const organizerEmail = user.email
-      const organizerName = user.displayName
-      const dashboardUrl = `${process.env.REACT_APP_BASE_URL}/`
-
-      await firestore.collection('messages_new_user').add({
-        created: firebase.firestore.FieldValue.serverTimestamp(),
-        templateName: 'new_user',
-        subject: `Welcome to RemoteShiva`,
-        organizerEmail,
-        organizerName,
-        dashboardUrl
-      })
-      resolve()
-    } catch (error) {
-      reject(error)
-    }
-  })
-}
