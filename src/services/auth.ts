@@ -10,7 +10,7 @@ import { resetShiva } from '../store/shiva/actions'
 
 /**
  * @description - Creates a new user with email and password as authentication method.
- * This method dispatches the steps neccesary to created the new user and upon success navigates the app to the login screen
+ * This method dispatches the steps necessary to created the new user and upon success navigates the app to the login screen
  * @param name - user's display name (e.g: John Doe)
  * @param email - user's email address
  * @param password - user's password - must adhere to firebase password rules
