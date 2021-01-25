@@ -76,7 +76,7 @@ const RoundEditClicker = styled.button<RoundClickerProps>`
   }
 `
 
-const Subject = ({ shiva, editing, save }: ShivaPanel) => {
+const Subject = ({ shiva, role, editing, save }: ShivaPanel) => {
   const dispatch = useDispatch()
   const [message, setMessage] = useState(shiva.message)
   const [titleImage, setTitleImage] = useState(shiva.titleImage)
@@ -130,12 +130,12 @@ const Subject = ({ shiva, editing, save }: ShivaPanel) => {
           {titleImage ? (
             <div style={{ position: 'relative', display: 'inline-block' }}>
               <SubjectImage style={{ backgroundImage: `url(${titleImage?.toString()})` }} />
-              {renderSelectImage(true)}
+              {renderSelectImage(role !== 'Visitor')}
             </div>
           ) : (
             <div style={{ position: 'relative', display: 'inline-block' }}>
               <EmptySubjectImage />
-              {renderSelectImage(true)}
+              {renderSelectImage(role !== 'Visitor')}
             </div>
           )}
         </Container>
