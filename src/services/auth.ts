@@ -140,7 +140,6 @@ export const logoutUser = (): AppThunk => async dispatch => {
 }
 
 export const queueNewUserMessage = (organizerEmail: string, organizerName: string): AppThunk<Promise<void>> => async (dispatch): Promise<void> => {
-  console.log(`DEBUG: queueNewUserMessage with user email ${organizerEmail} and name ${organizerName}`)
   return new Promise<void>(async (resolve, reject) => {
     try {
       const dashboardUrl = `${process.env.REACT_APP_BASE_URL}/`
