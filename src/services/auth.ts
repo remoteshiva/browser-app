@@ -1,5 +1,5 @@
 import { push } from 'connected-react-router'
-import { auth, User as FBUser } from 'firebase'
+import firebase, { auth, User as FBUser } from 'firebase'
 import * as Routes from '../routes'
 import { firestore } from '../firebase.config'
 import { AppThunk } from './common'
