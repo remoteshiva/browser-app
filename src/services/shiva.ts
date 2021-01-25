@@ -4,7 +4,7 @@ import { AppThunk, omit } from './common'
 import { Shiva, ShivaId, Visit, Visitor } from '../store/shiva/types'
 import { initializeShiva } from '../store/shiva/helpers'
 import { arrayToMap } from '../store/helpers'
-import { fetchShivaList, fetchShiva, createShiva, deleteShiva, updateShiva } from '../store/shiva/actions'
+import { fetchShivaList, fetchShiva, createShiva, deleteShiva, updateShiva, deleteVisit } from '../store/shiva/actions'
 import { BackendError } from '../store/types'
 import { format } from 'date-fns'
 
@@ -244,6 +244,15 @@ export const queueVisitUpcomingMessage = (visitor: Visitor, shivaId: ShivaId): A
     } catch (error) {
       reject(error)
     }
+  })
+}
+
+export const deleteVisitWithMessage = (visit: Visit, shivaId: ShivaId): AppThunk<Promise<void>> => async (dispatch): Promise<void> => {
+  return new Promise<void>(async (resolve, reject) => {
+    if (visit.visitors.length) await dispatch(queueTimeslotDeletedVisitorMessages(visit, shivaId))
+    dispatch(deleteVisit(visit.id));
+    await dispatch(updateSelectedShiva());
+    resolve()
   })
 }
 
