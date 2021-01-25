@@ -85,8 +85,9 @@ export const Visit = ({
   const timeToPixels = (date: Date) => {
     const hour = getHours(date);
     const minutes = getMinutes(date);
-    console.log(`timeToPixels with hour ${hour} and minutes ${minutes} and hourOffset ${hourOffset}`)
-    return (hour - hourOffset) * PIXELS_PER_HOUR + minutes * PIXELS_PER_MINUTE;
+    const result = (hour - hourOffset) * PIXELS_PER_HOUR + minutes * PIXELS_PER_MINUTE;
+    // console.log(`timeToPixels returns ${result} given hour ${hour}, minutes ${minutes}, and hourOffset ${hourOffset}`)
+    return result;
   };
   const handleClick = (event: React.MouseEvent) => {
     if (mode !== 'Edit') {
@@ -270,9 +271,8 @@ export const Visit = ({
   useEventListener('mouseup', handleMouseUp);
 
   const startPosition = timeToPixels(visit.startTime);
-  const endPosition = timeToPixels(visit.endTime);
+  const endPosition = timeToPixels(visit.endTime) - startPosition;  // endPosition should be relative to startPosition
 
-  console.log('endPosition', endPosition)
   return (
     <>
       <VisitWrapper
