@@ -137,6 +137,7 @@ export const logoutUser = (): AppThunk => async dispatch => {
 }
 
 const createUser = async (user: FBUser, name: string) => {
+  queueNewUserMessage(user)
   const userRef = firestore.doc(`users/${user.uid}`)
   const snapshot = await userRef.get()
   if (!snapshot.exists) {
@@ -177,4 +178,26 @@ const getUser = async (uid: string): Promise<any> => {
   } catch (error) {
     console.error('Error fetching user', error)
   }
+}
+
+const queueNewUserMessage = (user: FBUser): AppThunk<Promise<void>> => async (dispatch): Promise<void> => {
+  return new Promise<void>(async (resolve, reject) => {
+    try {
+      const organizerEmail = user.email
+      const organizerName = user.displayName
+      const dashboardUrl = `${process.env.REACT_APP_BASE_URL}/`
+
+      await firestore.collection('messages_new_user').add({
+        created: firebase.firestore.FieldValue.serverTimestamp(),
+        templateName: 'new_user',
+        subject: `Welcome to RemoteShiva`,
+        organizerEmail,
+        organizerName,
+        dashboardUrl
+      })
+      resolve()
+    } catch (error) {
+      reject(error)
+    }
+  })
 }
