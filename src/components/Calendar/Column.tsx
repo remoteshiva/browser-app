@@ -68,7 +68,6 @@ const Column = memo(
           refBusy.current = false;
         });
         refBusy.current = true;
-        event.stopPropagation();
       }
     };
     const handleMouseMove = (event: React.MouseEvent) => {
@@ -85,7 +84,6 @@ const Column = memo(
           refBusy.current = false;
         });
         refBusy.current = true;
-        event.stopPropagation()
       }
     };
     const handleMouseUp = (event: React.MouseEvent) => {
@@ -93,17 +91,14 @@ const Column = memo(
         event.persist();
         const node = newEventRef.current;
         if (node) {
-          setCurrentY(event.nativeEvent.offsetY)
           const startTime = pixelToDate(startY);
-          const endTime = pixelToDate(startY + currentY);
+          const endTime = pixelToDate(currentY);
           const visit = initializeVisit({ startTime, endTime });
           dispatch(addVisit(visit));
-          refBusy.current = false;
         }
         setDragging(false);
         setStartY(0);
         setCurrentY(0);
-        refBusy.current = true;
       }
     };
     const handleVisitChange = (
@@ -112,7 +107,7 @@ const Column = memo(
       height: Pixels
     ) => {
       const calendarTopTime = pixelToDate(0);
-      const calendarBottomTime = pixelToDate(600);
+      const calendarBottomTime = pixelToDate(599);
       const topAsDate = pixelToDate(top);
       const bottomAsDate = pixelToDate(height);
 
@@ -132,9 +127,9 @@ const Column = memo(
       else if (isBefore(topAsDate, calendarTopTime)) {
         startTime = calendarTopTime; // Beginning of day
         endTime = pixelToDate(height);
-      } else if (top + height > 600) {
-        startTime = pixelToDate(600 - (top + height));
-        endTime = pixelToDate(600);
+      } else if (top + height > 599) {
+        startTime = pixelToDate(599 - (top + height));
+        endTime = pixelToDate(599);
       }
       // const endTime = pixelToDate(bottom);
       const partialVisit = { startTime, endTime };
