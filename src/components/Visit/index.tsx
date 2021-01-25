@@ -13,10 +13,13 @@ import {
 } from '../../store/shiva/types';
 import {
   selectVisit,
-  deleteVisit,
   updateVisit,
 } from '../../store/shiva/actions';
-import { updateSelectedShiva, queueAddVisitorMessage, queueTimeslotDeletedVisitorMessages } from '../../services/shiva';
+import {
+  updateSelectedShiva,
+  queueAddVisitorMessage,
+  deleteVisitWithMessage,
+} from '../../services/shiva'
 import { CalendarMode } from '../types';
 import { useEventListener } from '../common';
 import ToolTip from './ToolTip';
@@ -102,8 +105,7 @@ export const Visit = ({
     else handleConfirmDelete();
   };
   const handleConfirmDelete = () => {
-    dispatch(queueTimeslotDeletedVisitorMessages(visit, selectedShiva !== null ? selectedShiva: ''));
-    dispatch(deleteVisit(visit.id));
+    dispatch(deleteVisitWithMessage(visit, selectedShiva !== null ? selectedShiva: ''));
   };
   const handleDrag = (ev: React.MouseEvent) => handleMouseDown(ev, 'drag');
   const handleResizeFromTop = (ev: React.MouseEvent) =>
