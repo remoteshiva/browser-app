@@ -34,8 +34,8 @@ export const initializeShiva = (newShiva?: Partial<Shiva>): Shiva => ({
 export const initializeVisit = (visit?: Partial<Visit>): Visit => {
   return {
     id: generateRandomKey(),
-    startTime: new Date(),
-    endTime: new Date(),
+    startTime: visit && visit.startTime ? visit.startTime : new Date(),   // TODO: Could be source of the bug
+    endTime: visit && visit.endTime ? visit.endTime : new Date(),
     missingMourners: [],
     visitors: [],
     ...visit,
