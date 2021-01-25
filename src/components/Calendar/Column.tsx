@@ -93,8 +93,10 @@ const Column = memo(
         if (node) {
           const startTime = pixelToDate(startY);
           const endTime = pixelToDate(startY + currentY);
-          const visit = initializeVisit({ startTime, endTime });
-          dispatch(addVisit(visit));
+          if (startTime < endTime) {
+            const visit = initializeVisit({ startTime, endTime });
+            dispatch(addVisit(visit));
+          }
         }
         setDragging(false);
         setStartY(0);
