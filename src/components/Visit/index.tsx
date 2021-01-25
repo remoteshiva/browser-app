@@ -86,7 +86,7 @@ export const Visit = ({
     const hour = getHours(date);
     const minutes = getMinutes(date);
     const result = (hour - hourOffset) * PIXELS_PER_HOUR + minutes * PIXELS_PER_MINUTE;
-    // console.log(`timeToPixels returns ${result} given hour ${hour}, minutes ${minutes}, and hourOffset ${hourOffset}`)
+    //console.log(`timeToPixels returns ${result} given hour ${hour}, minutes ${minutes}, and hourOffset ${hourOffset}`)
     return result;
   };
   const handleClick = (event: React.MouseEvent) => {
@@ -178,7 +178,8 @@ export const Visit = ({
           setInteraction(NoInteraction);
           return false;
         }
-        onVisitChange(visit.id, node.offsetTop, node.offsetHeight);
+        const offsetBottom = node.offsetTop + node.offsetHeight;
+        onVisitChange(visit.id, node.offsetTop, offsetBottom);
       }
       setInteraction(NoInteraction);
       return false;

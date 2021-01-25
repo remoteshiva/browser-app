@@ -106,12 +106,13 @@ const Column = memo(
     const handleVisitChange = (
       visitId: VisitId,
       top: Pixels,
-      height: Pixels
+      bottom: Pixels
     ) => {
       const calendarTopTime = pixelToDate(0);
       const calendarBottomTime = pixelToDate(600);
       const topAsDate = pixelToDate(top);
-      const bottomAsDate = pixelToDate(height);
+      const bottomAsDate = pixelToDate(bottom);
+      //console.log(`handleVisitChange with top ${top} and bottom ${bottom}, topAsDate ${topAsDate}, bottomAsDate ${bottomAsDate}`)
 
       let startTime;
       let endTime;
@@ -122,15 +123,15 @@ const Column = memo(
         isBefore(bottomAsDate, calendarBottomTime)
       ) {
         startTime = pixelToDate(top);
-        endTime = pixelToDate(height);
+        endTime = pixelToDate(bottom);
       }
       // if start time is before start of day,
       // adjust start time to start of day
       else if (isBefore(topAsDate, calendarTopTime)) {
         startTime = calendarTopTime; // Beginning of day
-        endTime = pixelToDate(height);
-      } else if (top + height > 600) {
-        startTime = pixelToDate(600 - (top + height));
+        endTime = pixelToDate(bottom);
+      } else if (bottom > 600) {
+        startTime = pixelToDate(600 - (bottom - top));
         endTime = pixelToDate(600);
       }
       // const endTime = pixelToDate(bottom);
