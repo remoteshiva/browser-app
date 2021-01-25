@@ -85,6 +85,7 @@ export const Visit = ({
   const timeToPixels = (date: Date) => {
     const hour = getHours(date);
     const minutes = getMinutes(date);
+    console.log(`timeToPixels with hour ${hour} and minutes ${minutes} and hourOffset ${hourOffset}`)
     return (hour - hourOffset) * PIXELS_PER_HOUR + minutes * PIXELS_PER_MINUTE;
   };
   const handleClick = (event: React.MouseEvent) => {
@@ -131,8 +132,8 @@ export const Visit = ({
               if (topCoord <= 0) {
                 node.style.top = '0px';
                 break;
-              } else if (topCoord + node.offsetHeight >= 599) {
-                node.style.top = `${599 - node.offsetHeight}px`;
+              } else if (topCoord + node.offsetHeight >= 600) {
+                node.style.top = `${600 - node.offsetHeight}px`;
                 break;
               }
               node.style.top = `${
@@ -270,6 +271,8 @@ export const Visit = ({
 
   const startPosition = timeToPixels(visit.startTime);
   const endPosition = timeToPixels(visit.endTime);
+
+  console.log('endPosition', endPosition)
   return (
     <>
       <VisitWrapper
