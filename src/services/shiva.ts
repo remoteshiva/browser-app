@@ -273,25 +273,3 @@ export const queueTimeslotDeletedVisitorMessages = (visitInput: Visit, shivaId: 
     }
   })
 }
-
-export const queueNewUserMessage = (user: User): AppThunk<Promise<void>> => async (dispatch): Promise<void> => {
-  return new Promise<void>(async (resolve, reject) => {
-    try {
-      const organizerEmail = user.email
-      const organizerName = user.displayName
-      const dashboardUrl = `${process.env.REACT_APP_BASE_URL}/`
-
-      await firestore.collection('messages_new_user').add({
-        created: firebase.firestore.FieldValue.serverTimestamp(),
-        templateName: 'new_user',
-        subject: `Welcome to RemoteShiva`,
-        organizerEmail,
-        organizerName,
-        dashboardUrl
-      })
-      resolve()
-    } catch (error) {
-      reject(error)
-    }
-  })
-}
