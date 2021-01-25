@@ -4,6 +4,7 @@ import {
   addMinutes,
   isAfter,
   isBefore,
+  isEqual,
   getDate,
   format,
   roundToNearestMinutes,
@@ -112,16 +113,14 @@ const Column = memo(
       const calendarBottomTime = pixelToDate(600);
       const topAsDate = pixelToDate(top);
       const bottomAsDate = pixelToDate(bottom);
-      //console.log(`handleVisitChange with top ${top} and bottom ${bottom}, topAsDate ${topAsDate}, bottomAsDate ${bottomAsDate}`)
 
       let startTime;
       let endTime;
 
       // base case: times are within calendar bounds
-      if (
-        isAfter(topAsDate, calendarTopTime) &&
-        isBefore(bottomAsDate, calendarBottomTime)
-      ) {
+      const topIsEqualToOrAfter = isAfter(topAsDate, calendarTopTime) || isEqual(topAsDate, calendarTopTime)
+      const bottomIsEqualToOrBefore = isBefore(bottomAsDate, calendarBottomTime) || isEqual(bottomAsDate, calendarBottomTime)
+      if (topIsEqualToOrAfter && bottomIsEqualToOrBefore) {
         startTime = pixelToDate(top);
         endTime = pixelToDate(bottom);
       }
@@ -133,6 +132,9 @@ const Column = memo(
       } else if (bottom > 600) {
         startTime = pixelToDate(600 - (bottom - top));
         endTime = pixelToDate(600);
+      } else {
+        console.warn(`Could not determine startTime and endTime. Cancelling this update.`)
+        return;
       }
       // const endTime = pixelToDate(bottom);
       const partialVisit = { startTime, endTime };
