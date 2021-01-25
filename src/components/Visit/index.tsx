@@ -16,7 +16,7 @@ import {
   deleteVisit,
   updateVisit,
 } from '../../store/shiva/actions';
-import { updateSelectedShiva, queueAddVisitorMessage } from '../../services/shiva';
+import { updateSelectedShiva, queueAddVisitorMessage, queueTimeslotDeletedVisitorMessages } from '../../services/shiva';
 import { CalendarMode } from '../types';
 import { useEventListener } from '../common';
 import ToolTip from './ToolTip';
@@ -102,6 +102,7 @@ export const Visit = ({
     else handleConfirmDelete();
   };
   const handleConfirmDelete = () => {
+    dispatch(queueTimeslotDeletedVisitorMessages(visit, selectedShiva !== null ? selectedShiva: ''));
     dispatch(deleteVisit(visit.id));
   };
   const handleDrag = (ev: React.MouseEvent) => handleMouseDown(ev, 'drag');
