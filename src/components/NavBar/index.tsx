@@ -27,7 +27,8 @@ const UserBar = ({ user }: UserBarProps) => {
     if (item === MY_SHIVAS) {
       dispatch(push(Routes.MY_SHIVAS))
     } else if (item === FAQ) {
-      dispatch(push(Routes.FAQ))
+      // our Router, connected-react-router does not appear to support open links in a new tab, so I use window.open
+      window.open(Routes.FAQ, '_blank');
     } else if (item === LOG_OUT) {
       dispatch(logoutUser())
     }
