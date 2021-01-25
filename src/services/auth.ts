@@ -23,7 +23,8 @@ export const signupUser = (name: string, email: string, password: string): AppTh
       try {
         await createUser(fbuser, name)
         dispatch(signupSuccess())
-        dispatch(push(Routes.LOGIN_PAGE))
+        await dispatch(fetchMyShivas())
+        dispatch(push(Routes.MY_SHIVAS))
       } catch (error) {
         dispatch(signupError(error))
       }
