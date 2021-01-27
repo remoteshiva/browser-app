@@ -13828,6 +13828,11 @@ slice-ansi@^2.1.0:
     astral-regex "^1.0.0"
     is-fullwidth-code-point "^2.0.0"
 
+smartlook-client@^4.6.1:
+  version "4.6.1"
+  resolved "https://registry.yarnpkg.com/smartlook-client/-/smartlook-client-4.6.1.tgz#0c99c297ef52ef42cc3732cf17ea7ebfd81cfefe"
+  integrity sha512-UDRSooOrZA2d70wesTqw+aHv7j64ker+G3+fk6aD7QCm51sAuTG+H+DfXWad2RBv37KjzNAFKuYGVCBO6IfPMg==
+
 snapdragon-node@^2.0.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/snapdragon-node/-/snapdragon-node-2.1.1.tgz#6c175f86ff14bdb0724563e8f3c1b021a286853b"
