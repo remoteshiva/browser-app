@@ -1,8 +1,11 @@
 import * as firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/firestore'
+import smartlookClient from 'smartlook-client'
 
 const config = {
+  appId: process.env.REACT_APP_APP_ID,
+  measurementId: process.env.REACT_APP_MEASUREMENT_ID,
   apiKey: process.env.REACT_APP_API_KEY,
   authDomain: process.env.REACT_APP_AUTH_DOMAIN,
   databaseURL: process.env.REACT_APP_DATABASE_URL,
@@ -13,6 +16,8 @@ const config = {
 
 if (!firebase.apps.length) {
   firebase.initializeApp(config)
+  const analytics = firebase.analytics()
+  smartlookClient.init(process.env.REACT_APP_SMARTLOOK_KEY || '')
 }
 
 export const auth = firebase.auth()
