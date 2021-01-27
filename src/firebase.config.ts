@@ -16,7 +16,7 @@ const config = {
 
 if (!firebase.apps.length) {
   firebase.initializeApp(config)
-  const analytics = firebase.analytics()
+  firebase.analytics()
   smartlookClient.init(process.env.REACT_APP_SMARTLOOK_KEY || '')
 }
 
