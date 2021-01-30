@@ -8,6 +8,7 @@ import {
   getDate,
   format,
   roundToNearestMinutes,
+  addHours
 } from 'date-fns';
 import { VisitMap, Mourner, VisitId } from '../../store/shiva/types';
 import { addVisit, updateVisit } from '../../store/shiva/actions';
@@ -58,7 +59,7 @@ const Column = memo(
         window.requestAnimationFrame(() => {
           const y = event.nativeEvent.offsetY;
           setStartY(y);
-          setCurrentY(y + 1);
+          setCurrentY(1);
           setDragging(true);
           const node = newEventRef.current;
           if (node) {
@@ -93,10 +94,16 @@ const Column = memo(
         const node = newEventRef.current;
         if (node) {
           const startTime = pixelToDate(startY);
-          const endTime = pixelToDate(startY + currentY);
-          if (startTime < endTime) {
+          let endTime = pixelToDate(startY + currentY);
+          if (isEqual(startTime, endTime)) {
+            // case: user clicked on the calendar without dragging
+            endTime = addHours(endTime, 1);
+          }
+          if (isBefore(startTime, endTime)) {
             const visit = initializeVisit({ startTime, endTime });
             dispatch(addVisit(visit));
+          } else {
+            console.log(`Ignoring create visit with times in reverse`);
           }
         }
         setDragging(false);
