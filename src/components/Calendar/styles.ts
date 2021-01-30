@@ -21,6 +21,7 @@ export const Timezone = styled.div`
   font-size: 12px;
   color: ${props => props.theme.colors.heavyMetal};
   text-align: center;
+  padding: 10px;
 `
 export const VRulerWrapper = styled.div`
   width: 70px;

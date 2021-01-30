@@ -1,25 +1,40 @@
-import React from 'react'
-import { Shiva, Role } from '../../store/shiva/types'
-import { Row, ColumnContainer, FixedColumn, FlexColumn } from '../flexLayout'
-import { CalendarMode } from '../types'
-import { CalendarProvider } from './context'
-import { Grid } from './grid'
-import { VerticalRuler, HorizontalRuler } from './rulers'
-import { CalendarWrapper, Timezone } from './styles'
+import React from 'react';
+import { utcToZonedTime, format } from 'date-fns-tz';
+import { Shiva, Role } from '../../store/shiva/types';
+import { Row, ColumnContainer, FixedColumn, FlexColumn } from '../flexLayout';
+import { CalendarMode } from '../types';
+import { CalendarProvider } from './context';
+import { Grid } from './grid';
+import { VerticalRuler, HorizontalRuler } from './rulers';
+import { CalendarWrapper, Timezone } from './styles';
 
 export interface Props extends Shiva {
-  mode: CalendarMode
-  role: Role
+  mode: CalendarMode;
+  role: Role;
 }
-const Calendar = ({ startDate, endDate, visits, mourners, mode, role }: Props) => {
-  const sideBarWidth = 60
+const Calendar = ({
+  startDate,
+  endDate,
+  visits,
+  mourners,
+  mode,
+  role,
+}: Props) => {
+  const sideBarWidth = 60;
+  const date = Date.now();
+  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const zonedDate = utcToZonedTime(date, timeZone);
+
   return (
-    <CalendarProvider mode={mode} role={role} startHour={7} endHour={22}>
+    <CalendarProvider mode={mode} role={role} startHour={0} endHour={24}>
       <CalendarWrapper>
         <ColumnContainer width={'100%'}>
           <Row>
             <FixedColumn width={sideBarWidth}>
-              <Timezone>EST</Timezone>
+              <Timezone>
+                {/* https://date-fns.org/v2.0.0-alpha.27/docs/Time-Zones#supported-languages */}
+                {format(zonedDate, 'z', { timeZone }) || 'EST'}
+              </Timezone>
             </FixedColumn>
             <FlexColumn>
               <HorizontalRuler startDate={startDate} endDate={endDate} />
@@ -30,13 +45,18 @@ const Calendar = ({ startDate, endDate, visits, mourners, mode, role }: Props) =
               <VerticalRuler />
             </FixedColumn>
             <FlexColumn>
-              <Grid startDate={startDate} endDate={endDate} visits={visits} mourners={mourners} />
+              <Grid
+                startDate={startDate}
+                endDate={endDate}
+                visits={visits}
+                mourners={mourners}
+              />
             </FlexColumn>
           </Row>
         </ColumnContainer>
       </CalendarWrapper>
     </CalendarProvider>
-  )
-}
+  );
+};
 
-export default Calendar
+export default Calendar;

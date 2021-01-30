@@ -47,7 +47,7 @@ export const VerticalRuler = withCalendarContext(
           : `${i + adjustedStartHour}am`
     ) //`${i + startHour > 12 ? ${i + startHour}'pm' : 'am'}`)
       .map(h => (h === '0pm' ? 'Noon' : h))
-      .map(h => (h === '12pm' ? 'Midnight' : h));
+      .map(h => (h === '12pm' || h === '0am' ? 'Midnight' : h));
     return (
       <VRulerWrapper>
         {hours.map((hour, i) => (
