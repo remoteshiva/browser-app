@@ -21,8 +21,10 @@ export const signupUser = (name: string, email: string, password: string): AppTh
     const { user: fbuser } = await auth().createUserWithEmailAndPassword(email, password)
     if (fbuser) {
       try {
-        const { email, displayName } = await createUser(fbuser, name)
-        await dispatch(queueNewUserMessage(email, displayName))
+        const { email, displayName, isNew } = await createUser(fbuser, name)
+        if (isNew) {
+          await dispatch(queueNewUserMessage(email, displayName))
+        }
         dispatch(signupSuccess())
         await dispatch(fetchMyShivas())
         dispatch(push(Routes.MY_SHIVAS))
@@ -46,8 +48,10 @@ export const signUpWithProvider = (): AppThunk<Promise<Session>> => async (dispa
       await auth().setPersistence(auth.Auth.Persistence.LOCAL)
       const { user: fbuser } = await auth().signInWithPopup(provider)
       if (fbuser) {
-        const { uid, email, displayName, photoURL } = await createUser(fbuser, fbuser.displayName || '')
-        await dispatch(queueNewUserMessage(email, displayName))
+        const { uid, email, displayName, photoURL, isNew } = await createUser(fbuser, fbuser.displayName || '')
+        if (isNew) {
+          await dispatch(queueNewUserMessage(email, displayName))
+        }
         dispatch(signupSuccess())
         //we we finished signing up, we can login
         const session = { token: uid, user: { email, displayName, photoURL } }
@@ -71,7 +75,7 @@ export const loginWithCredentials = (email: string, password: string): AppThunk<
           .signInWithEmailAndPassword(email, password)
           .then(async ({ user }: auth.UserCredential) => {
             if (user) {
-              const data = await getUser(user.uid)
+              const data = await getUser(user.uid, false)
               const session = { token: user.uid, user: { email: data.email, displayName: data.displayName, photoURL: data.photoURL } }
               dispatch(loginSuccess(session))
               resolve(session)
@@ -93,8 +97,10 @@ export const loginWithGoogle = (): AppThunk<Promise<Session>> => async (dispatch
       await auth().setPersistence(auth.Auth.Persistence.LOCAL)
       const { user: fbuser } = await auth().signInWithPopup(provider)
       if (fbuser) {
-        const { email, displayName } = await createUser(fbuser, fbuser.displayName || '')
-        await dispatch(queueNewUserMessage(email, displayName))
+        const { email, displayName, isNew } = await createUser(fbuser, fbuser.displayName || '')
+        if (isNew) {
+          await dispatch(queueNewUserMessage(email, displayName))
+        }
         dispatch(signupSuccess())
         await dispatch(fetchMyShivas())
         dispatch(push(Routes.MY_SHIVAS))
@@ -114,7 +120,7 @@ export const getAuthState = (): AppThunk<Promise<Session>> => async (dispatch): 
     // check if a firebase auth session was persisted to localstorage
     auth().onAuthStateChanged(async user => {
       if (user) {
-        const data = await getUser(user.uid)
+        const data = await getUser(user.uid, false)
         const session = { token: user.uid, user: { email: data.email, displayName: data.displayName, photoURL: data.photoURL } }
         dispatch(loginSuccess(session))
         resolve(session)
@@ -161,7 +167,9 @@ export const queueNewUserMessage = (organizerEmail: string, organizerName: strin
 const createUser = async (user: FBUser, name: string) => {
   const userRef = firestore.doc(`users/${user.uid}`)
   const snapshot = await userRef.get()
+  let isNew = false
   if (!snapshot.exists) {
+    isNew = true
     const { email, photoURL } = user
     try {
       await userRef.set({ displayName: name, email, photoURL })
@@ -169,7 +177,7 @@ const createUser = async (user: FBUser, name: string) => {
       throw error
     }
   }
-  return getUser(user.uid)
+  return getUser(user.uid, isNew)
 }
 
 // TODO:implement
@@ -188,13 +196,14 @@ const createUser = async (user: FBUser, name: string) => {
 //     })
 // }
 
-const getUser = async (uid: string): Promise<any> => {
+const getUser = async (uid: string, isNew: boolean): Promise<any> => {
   if (!uid) return null
   try {
     const user = await firestore.doc(`users/${uid}`).get()
     return {
+      isNew,
       uid,
-      ...user.data(),
+      ...user.data()
     }
   } catch (error) {
     console.error('Error fetching user', error)
