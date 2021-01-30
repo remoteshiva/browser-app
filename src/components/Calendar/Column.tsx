@@ -110,7 +110,7 @@ const Column = memo(
       bottom: Pixels
     ) => {
       const calendarTopTime = pixelToDate(0);
-      const calendarBottomTime = pixelToDate(600);
+      const calendarBottomTime = pixelToDate(961);
       const topAsDate = pixelToDate(top);
       const bottomAsDate = pixelToDate(bottom);
 
@@ -129,9 +129,9 @@ const Column = memo(
       else if (isBefore(topAsDate, calendarTopTime)) {
         startTime = calendarTopTime; // Beginning of day
         endTime = pixelToDate(bottom);
-      } else if (bottom > 600) {
-        startTime = pixelToDate(600 - (bottom - top));
-        endTime = pixelToDate(600);
+      } else if (bottom > 961) {
+        startTime = pixelToDate(961 - (bottom - top));
+        endTime = pixelToDate(961);
       } else {
         console.warn(`Could not determine startTime and endTime. Cancelling this update.`)
         return;
