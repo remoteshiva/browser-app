@@ -112,7 +112,7 @@ const ConfirmDeleteModal = ({ onConfirm, onCancel }: Props) => {
         </section>
         <div className='buttons'>
           <button className='no' onClick={onCancel}>No</button>
-          <button className='yes' onClick={onConfirm}>yes</button>
+          <button className='yes' onClick={onConfirm}>Yes</button>
         </div>
       </Modal>
     </Fade>
