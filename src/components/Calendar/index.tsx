@@ -32,7 +32,7 @@ const Calendar = ({
           <Row>
             <FixedColumn width={sideBarWidth}>
               <Timezone>
-                {/* https://date-fns.org/v2.0.0-alpha.27/docs/Time-Zones#supported-languages */}
+                {/* https://date-fns.org/v2.16.1/docs/Time-Zones */}
                 {format(zonedDate, 'z', { timeZone }) || 'EST'}
               </Timezone>
             </FixedColumn>
