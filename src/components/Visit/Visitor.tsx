@@ -102,7 +102,7 @@ const Visitor = ({ startTime, endTime, day, onSubmitVisitor }: Props) => {
           />
         </label>
         <VerticalSpace height={20} />
-        <ApproveButton style={{ width: '100%' }} type="submit">
+        <ApproveButton style={{ width: '100%' }} type="submit" onSubmit={e => e.preventDefault()}>
           Save my visit
         </ApproveButton>
       </form>

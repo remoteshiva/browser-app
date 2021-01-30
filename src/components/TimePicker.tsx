@@ -19,7 +19,7 @@ const TimePicker = ({ startTime, endTime, onChange }: Props) => {
   const endHour = getHours(endTime);
 
   const hours = Array.from(
-    { length: Math.abs(endHour - startHour) + 1},
+    { length: Math.abs(endHour - startHour) + 1 },
     (_, i) => i + startHour
   );
   const minutes = ['00', '15', '30', '45'];
