@@ -1,44 +1,54 @@
-import React from 'react'
-import { useDispatch } from 'react-redux'
-import { push } from 'connected-react-router'
-import Graphics from '../../assets/img/illustration-for-tips.svg'
-import { Row, FixedColumn, FlexColumn } from '../../components/flexLayout'
-import { UXWrapper, GraphicsWrapper, TabsWrapper, Tab } from './styles'
-import Signup from './Signup'
-import Login from './Login'
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { push } from 'connected-react-router';
+import Graphics from '../../assets/img/illustration-for-tips.svg';
+import { Row, FixedColumn, FlexColumn } from '../../components/flexLayout';
+import { UXWrapper, GraphicsWrapper, TabsWrapper, Tab } from './styles';
+import Signup from './Signup';
+import Login from './Login';
 
 export enum Pages {
   login = 'login',
   signUp = 'signup',
 }
 interface Props {
-  page: Pages
+  page: Pages;
 }
 
 const LoginSignup = ({ page }: Props) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const isPage = (p: Pages) => {
-    return page === p
-  }
+    return page === p;
+  };
   const handleSelectTab = (p: Pages) => {
-    dispatch(push(`/${p.toString()}`))
-  }
+    dispatch(push(`/${p.toString()}`));
+  };
   return (
-    <div style={{ height: 'calc(100vh-100px)'}}>
-      <Row style={{ height: 'calc(100vh - 78px)'}}>
+    <div style={{ height: 'calc(100vh-100px)' }}>
+      <Row style={{ height: 'calc(100vh - 78px)' }}>
         <FlexColumn>
           <GraphicsWrapper>
-            <img  style={{ maxWidth: '70%'}} src={Graphics} alt="video conference" />
+            <img
+              style={{ maxWidth: '70%' }}
+              src={Graphics}
+              alt="video conference"
+            />
           </GraphicsWrapper>
         </FlexColumn>
         <FixedColumn width={533}>
           <UXWrapper>
             <Row>
               <TabsWrapper>
-                <Tab active={isPage(Pages.signUp)} onClick={() => handleSelectTab(Pages.signUp)}>
+                <Tab
+                  active={isPage(Pages.signUp)}
+                  onClick={() => handleSelectTab(Pages.signUp)}
+                >
                   Sign up
                 </Tab>
-                <Tab active={isPage(Pages.login)} onClick={() => handleSelectTab(Pages.login)}>
+                <Tab
+                  active={isPage(Pages.login)}
+                  onClick={() => handleSelectTab(Pages.login)}
+                >
                   Login
                 </Tab>
               </TabsWrapper>
@@ -48,7 +58,7 @@ const LoginSignup = ({ page }: Props) => {
         </FixedColumn>
       </Row>
     </div>
-  )
-}
+  );
+};
 
-export default LoginSignup
+export default LoginSignup;
