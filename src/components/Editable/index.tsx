@@ -1,12 +1,12 @@
-import React, { useRef, useEffect, ReactNode } from 'react'
-import styled from 'styled-components'
-import sanitizeHtml from 'sanitize-html'
+import React, { useRef, useEffect, ReactNode } from 'react';
+import styled from 'styled-components';
+import sanitizeHtml from 'sanitize-html';
 import anchorme from 'anchorme';
 
-export const noop = () => {}
+export const noop = () => {};
 
 interface WrapperProps {
-  placeholder: string
+  placeholder: string;
 }
 const Wrapper = styled.div<WrapperProps>`
   *:read-write:focus {
@@ -15,54 +15,66 @@ const Wrapper = styled.div<WrapperProps>`
   .editable:empty:before {
     content: '${props => props.placeholder}';
   }
-`
+`;
 interface Props {
-  html: string
-  active: boolean
-  name?: string
-  tagName?: string
-  className?: string
-  href?: string
-  placeholder?: string
-  style?: object
-  children?: ReactNode
-  onInput: (html: string) => void
+  html: string;
+  active: boolean;
+  name?: string;
+  tagName?: string;
+  className?: string;
+  href?: string;
+  placeholder?: string;
+  style?: object;
+  children?: ReactNode;
+  onInput: (html: string) => void;
 }
-const Editable = ({ html, name, tagName, href, active, style, className, onInput, children, placeholder }: Props) => {
-  const el = useRef<HTMLElement>()
+const Editable = ({
+  html,
+  name,
+  tagName,
+  href,
+  active,
+  style,
+  className,
+  onInput,
+  children,
+  placeholder,
+}: Props) => {
+  const el = useRef<HTMLElement>();
   useEffect(() => {
-    if (!el.current) return
+    if (!el.current) return;
     if (html !== el.current.innerHTML) {
       // TODO: test to see if target blank actually works
       el.current.innerHTML = anchorme({
         input: html,
         options: {
           attributes: {
-            target: "_blank",
+            target: '_blank',
           },
         },
-      })
+      });
       // // replaceCaret(el.current)
     }
-  }, [html])
+  }, [html]);
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.stopPropagation()
-    e.preventDefault()
-    if (!el.current) return
+    e.stopPropagation();
+    e.preventDefault();
+    if (!el.current) return;
     // don't try to anchorme here, it will break
-    onInput(el.current.innerHTML)
-  }
+    onInput(el.current.innerHTML);
+  };
   const onPaste = (event: React.ClipboardEvent) => {
-    if (!el.current) return
-    let dataType: string
-    if ('text/html' in event.clipboardData.types) dataType = 'text/html'
-    else dataType = 'text/plain'
-    el.current.innerHTML = el.current.innerHTML + sanitize(event.clipboardData.getData(dataType))
-    onInput(el.current.innerHTML)
-  }
+    if (!el.current) return;
+    let dataType: string;
+    if ('text/html' in event.clipboardData.types) dataType = 'text/html';
+    else dataType = 'text/plain';
+    el.current.innerHTML =
+      el.current.innerHTML + sanitize(event.clipboardData.getData(dataType));
+    onInput(el.current.innerHTML);
+  };
   const sanitize = (dirtyHtml: string): string => {
-    return sanitizeHtml(dirtyHtml, { allowedTags: [], allowedAttributes: {} })
-  }
+    return sanitizeHtml(dirtyHtml, { allowedTags: [], allowedAttributes: {} });
+  };
   // const replaceCaret = (el: HTMLElement) => {
   //   // Place the caret at the end of the element
   //   const target = document.createTextNode('')
@@ -88,7 +100,6 @@ const Editable = ({ html, name, tagName, href, active, style, className, onInput
         {
           ref: el,
           className: `editable ${className}`,
-          ...(href && { href }),
           ...(href && { target: '_blank' }),
           style,
           name,
@@ -102,8 +113,8 @@ const Editable = ({ html, name, tagName, href, active, style, className, onInput
           onPaste,
         },
         children
-        )}
+      )}
     </Wrapper>
-  )
-}
-export default React.memo(Editable)
+  );
+};
+export default React.memo(Editable);
