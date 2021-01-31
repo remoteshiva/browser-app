@@ -13,7 +13,7 @@ import NavBar from '../NavBar'
 import Main from '../Main'
 import Footer from '../Footer'
 import ToastContainer from '../Toast'
-import firebase from 'firebase'
+import { analytics } from 'firebase'
 
 interface Props {
   history: History
@@ -38,7 +38,7 @@ const App = ({ history }: Props) => {
     // upon startup , check authentication and navigate to provided url after
     const initApp = async () => {
       if (initialized) return
-      firebase.analytics();
+      analytics();
       const session = await dispatch(getAuthState())
       if (session !== undefined) {
         await dispatch(fetchMyShivas())
