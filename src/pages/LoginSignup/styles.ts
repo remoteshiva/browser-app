@@ -10,7 +10,7 @@ export const UXWrapper = styled.div`
 `
 
 export const GraphicsWrapper = styled.div`
-  height: 100%;
+  height: 110%;
   background-color: #fff;
   img {
     display: block;
