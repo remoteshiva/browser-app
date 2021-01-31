@@ -1,5 +1,5 @@
 import { push } from 'connected-react-router'
-import firebase, { auth, User as FBUser } from 'firebase'
+import { auth, User as FBUser, firestore as fstore } from 'firebase'
 import * as Routes from '../routes'
 import { firestore } from '../firebase.config'
 import { AppThunk } from './common'
@@ -150,7 +150,7 @@ export const queueNewUserMessage = (organizerEmail: string, organizerName: strin
     try {
       const dashboardUrl = `${process.env.REACT_APP_BASE_URL}/`
       await firestore.collection('messages_new_user').add({
-        created: firebase.firestore.FieldValue.serverTimestamp(),
+        created: fstore.FieldValue.serverTimestamp(),
         templateName: 'new_user',
         subject: `Welcome to RemoteShiva`,
         organizerEmail,
