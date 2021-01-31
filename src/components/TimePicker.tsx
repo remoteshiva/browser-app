@@ -65,7 +65,7 @@ const TimePicker = ({ startTime, endTime, onChange }: Props) => {
       >
         {visitHours.map(h => (
           <option key={h} value={h}>
-            {h}
+            {h > 12 ? h - 12 : h}
           </option>
         ))}
       </select>
