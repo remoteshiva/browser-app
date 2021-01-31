@@ -1,4 +1,5 @@
-import { auth, firestore as fstore } from 'firebase';
+import firebase, { firestore as fstore } from 'firebase/app';
+import 'firebase/auth';
 import { firestore } from '../firebase.config';
 import { AppThunk, omit } from './common';
 import { Shiva, ShivaId, Visit, Visitor } from '../store/shiva/types';
@@ -66,7 +67,7 @@ export const fetchMyShivas = (): AppThunk<Promise<Shiva[]>> => async (
       // as visitors or mourners.
       const snapshot = await firestore
         .collection('shivas')
-        .where('uid', '==', auth().currentUser?.uid)
+        .where('uid', '==', firebase.auth().currentUser?.uid)
         .get();
       // retrieve data from query snapshot and match to shiva interface
       const shivas = snapshot.docs.map(item => {
@@ -146,7 +147,7 @@ export const postShiva = (shiva: Shiva): AppThunk<Promise<Shiva>> => async (
         .collection('shivas')
         .add({
           ...omit(dehydrateShiva(shiva), 'id'),
-          uid: auth().currentUser?.uid,
+          uid: firebase.auth().currentUser?.uid,
         });
       const newShiva = { ...shiva, id };
       dispatch(createShiva.success(newShiva));
