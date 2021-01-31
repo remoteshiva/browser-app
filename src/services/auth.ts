@@ -1,5 +1,6 @@
 import { push } from 'connected-react-router'
-import { auth, User as FBUser, firestore as fstore } from 'firebase'
+import firebase, { User as FBUser, firestore as fstore } from 'firebase/app'
+import 'firebase/auth';
 import * as Routes from '../routes'
 import { firestore } from '../firebase.config'
 import { AppThunk } from './common'
@@ -18,7 +19,7 @@ import { resetShiva } from '../store/shiva/actions'
 export const signupUser = (name: string, email: string, password: string): AppThunk => async dispatch => {
   dispatch(signupRequest())
   try {
-    const { user: fbuser } = await auth().createUserWithEmailAndPassword(email, password)
+    const { user: fbuser } = await firebase.auth().createUserWithEmailAndPassword(email, password)
     if (fbuser) {
       try {
         const { email, displayName, isNew } = await createUser(fbuser, name)

@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react'
-import { storage } from 'firebase'
+import firebase from 'firebase/app';
+import 'firebase/storage';
 import { useDropzone } from 'react-dropzone'
 
 interface Props {
@@ -14,13 +15,13 @@ const PhotoDropzone = ({ active, onImageUploading, onImageUploaded }: Props) => 
     files.map(file => {
       const reader = new FileReader()
       reader.onload = () => {
-        const task = storage().ref().child(`user_images/${1}/${file.name}`).put(file)
+        const task = firebase.storage().ref().child(`user_images/${1}/${file.name}`).put(file)
         task.on(
-          storage.TaskEvent.STATE_CHANGED,
+          firebase.storage.TaskEvent.STATE_CHANGED,
           snapshot => {
-            if (snapshot.state === storage.TaskState.SUCCESS || snapshot.state === storage.TaskState.ERROR) {
+            if (snapshot.state === firebase.storage.TaskState.SUCCESS || snapshot.state === firebase.storage.TaskState.ERROR) {
               setUploading(0)
-            } else if (snapshot.state === storage.TaskState.RUNNING) {
+            } else if (snapshot.state === firebase.storage.TaskState.RUNNING) {
               setUploading(Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100))
             }
           },
