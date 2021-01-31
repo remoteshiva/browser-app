@@ -13,6 +13,7 @@ import {
   deleteNewShiva,
 } from '../../store/shiva/actions';
 import { postShiva } from '../../services/shiva';
+import Loading from '../../components/Loading';
 import BackButton from './back';
 import BasicDetails from './BasicDetails';
 import VideoChatLink from './VideoChatLink';
@@ -33,7 +34,7 @@ interface MatchParams {
 const NewShiva = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { step } = useParams<MatchParams>();
-  const { newShiva } = useSelector((state: RootState) => state.shiva);
+  const { loading, newShiva } = useSelector((state: RootState) => state.shiva);
   const [currentStep, setCurrentStep] = useState<T.Steps>(Number(step));
 
   useEffect(() => {
@@ -143,6 +144,7 @@ const NewShiva = () => {
         }}
       />
       <BackButton />
+      {loading ? <Loading /> : null}
       {renderStep()}
     </Wrapper>
   );
