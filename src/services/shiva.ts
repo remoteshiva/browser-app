@@ -279,7 +279,6 @@ export const updateVisitToSelectedShiva = (): AppThunk<
 export const queueNewShivaMessage = async (newShiva: any) => {
   try {
     const { nameOfDeceased, visitorKey, mournerKey } = newShiva;
-    const organizerName = firebase.auth().currentUser?.displayName || '';
     const organizerEmail = firebase.auth().currentUser?.email || '';
     const mournerUrl = `${process.env.REACT_APP_BASE_URL}/m/${mournerKey}`;
     const visitorUrl = `${process.env.REACT_APP_BASE_URL}/v/${visitorKey}`;
@@ -288,7 +287,6 @@ export const queueNewShivaMessage = async (newShiva: any) => {
       subject: `A new shiva has been created`,
       visitorUrl,
       mournerUrl,
-      organizerName,
       organizerEmail,
       nameOfDeceased,
       templateName: 'new_shiva',

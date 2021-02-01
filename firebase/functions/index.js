@@ -51,7 +51,7 @@ exports.sendNewUserEmail = functions.firestore.document(`messages_new_user/{mail
 /// This does not actually send an email, just notifies via Slack
 exports.sendNewShivaEmail = functions.firestore.document(`messages_new_shiva/{mailId}`).onCreate(async (snapshot, context) => {
   const message = snapshot.data();
-  notifySlack(`${message.organizerName} (${message.organizerEmail}) created a shiva in memory of ${message.nameOfDeceased} with this visitor link ${message.visitorUrl} and mourner link ${message.mournerUrl}`);
+  notifySlack(`${message.organizerEmail} created a shiva in memory of ${message.nameOfDeceased} with this visitor link ${message.visitorUrl} and mourner link ${message.mournerUrl}`);
 });
 
 exports.sendTimeslotDeletedVisitorEmail = functions.firestore.document(`messages_timeslot_deleted_visitor/{mailId}`).onCreate(async (snapshot, context) => {
