@@ -8,7 +8,6 @@ const mailgun = require('mailgun-js')({
   domain
 });
 
-
 admin.initializeApp(functions.config().firebase);
 
 /// === Emails ===
@@ -77,10 +76,10 @@ exports.sendVisitUpcomingEmail = functions.firestore.document(`messages_visit_up
   });
 });
 
-const notifySlack = (message) => {
+const notifySlack = (text) => {
   axios
     .post(functions.config().slack.key, {
-      message,
+      text,
     })
     .then(function (response) {
     })
