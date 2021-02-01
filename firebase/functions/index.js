@@ -1,5 +1,6 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
+const axios = require('axios');
 
 const domain = 'mg.remoteshiva.org';
 const mailgun = require('mailgun-js')({
@@ -26,7 +27,9 @@ exports.sendVisitorAddedEmail = functions.firestore.document(`messages_add_visit
       'h:X-Mailgun-Variables': `{"title": "${message.subject}", "visitDay": "${message.visitDay}", "visitDate": "${message.visitDate}", "visitorUrl": "${message.visitorUrl}", "videoLink": "${message.videoLink}", "nameOfDeceased": "${message.nameOfDeceased}", "visitorName": "${message.visitorName}"}`
   };
   mailgun.messages().send(data, (error, body) => {
-          console.log(body);
+    if (!error) {
+      notifySlack(`Visitor Added: ${message.visitorName} (${message.visitorEmail}) for shiva ${message.visitorUrl}`);
+    }
   });
 });
 
@@ -40,7 +43,9 @@ exports.sendNewUserEmail = functions.firestore.document(`messages_new_user/{mail
     'h:X-Mailgun-Variables': `{"title": "${message.subject}", "dashboardUrl": "${message.dashboardUrl}", "organizerName": "${message.organizerName}"}`
   };
   mailgun.messages().send(data, (error, body) => {
-    console.log(body);
+    if (!error) {
+      notifySlack(`New User: ${message.organizerName} (${message.organizerEmail})`);
+    }
   });
 });
 
@@ -54,7 +59,7 @@ exports.sendTimeslotDeletedVisitorEmail = functions.firestore.document(`messages
     'h:X-Mailgun-Variables': `{"title": "${message.subject}", "visitorUrl": "${message.visitorUrl}", "nameOfDeceased": "${message.nameOfDeceased}", "visitorName": "${message.visitorName}"}`
   };
   mailgun.messages().send(data, (error, body) => {
-    console.log(body);
+    // console.log(body);
   });
 });
 
@@ -72,5 +77,16 @@ exports.sendVisitUpcomingEmail = functions.firestore.document(`messages_visit_up
   });
 });
 
+const notifySlack = (message) => {
+  axios
+    .post(functions.config().slack.key, {
+      message,
+    })
+    .then(function (response) {
+    })
+    .catch(function (error) {
+      console.log(`notifySlack error ${error}`);
+    });
+};
 
 // ❯ firebase functions:config:set mailgun.key="THE API KEY"
