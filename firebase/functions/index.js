@@ -27,7 +27,7 @@ exports.sendVisitorAddedEmail = functions.firestore.document(`messages_add_visit
   };
   mailgun.messages().send(data, (error, body) => {
     if (!error) {
-      notifySlack(`${message.visitorName} (${message.visitorEmail}) will visit shiva for ${message.nameOfDeceased}\nLink: ${message.visitorUrl}`);
+      notifySlack(`${message.visitorName} (${message.visitorEmail}) will visit shiva of ${message.nameOfDeceased} with this visitor link ${message.visitorUrl}`);
     }
   });
 });
