@@ -1,5 +1,6 @@
 import { push } from 'connected-react-router'
-import firebase, { auth, User as FBUser } from 'firebase'
+import firebase, { User as FBUser, firestore as fstore } from 'firebase/app'
+import 'firebase/auth';
 import * as Routes from '../routes'
 import { firestore } from '../firebase.config'
 import { AppThunk } from './common'
@@ -18,7 +19,7 @@ import { resetShiva } from '../store/shiva/actions'
 export const signupUser = (name: string, email: string, password: string): AppThunk => async dispatch => {
   dispatch(signupRequest())
   try {
-    const { user: fbuser } = await auth().createUserWithEmailAndPassword(email, password)
+    const { user: fbuser } = await firebase.auth().createUserWithEmailAndPassword(email, password)
     if (fbuser) {
       try {
         const { email, displayName, isNew } = await createUser(fbuser, name)
@@ -43,10 +44,10 @@ export const signupUser = (name: string, email: string, password: string): AppTh
 export const signUpWithProvider = (): AppThunk<Promise<Session>> => async (dispatch): Promise<Session> => {
   return new Promise<Session>(async resolve => {
     dispatch(signupRequest())
-    const provider = new auth.GoogleAuthProvider()
+    const provider = new firebase.auth.GoogleAuthProvider()
     try {
-      await auth().setPersistence(auth.Auth.Persistence.LOCAL)
-      const { user: fbuser } = await auth().signInWithPopup(provider)
+      await firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+      const { user: fbuser } = await firebase.auth().signInWithPopup(provider)
       if (fbuser) {
         const { uid, email, displayName, photoURL, isNew } = await createUser(fbuser, fbuser.displayName || '')
         if (isNew) {
@@ -68,12 +69,12 @@ export const signUpWithProvider = (): AppThunk<Promise<Session>> => async (dispa
 export const loginWithCredentials = (email: string, password: string): AppThunk<Promise<Session>> => async (dispatch): Promise<Session> => {
   return new Promise<Session>(resolve => {
     dispatch(loginRequest())
-    auth()
-      .setPersistence(auth.Auth.Persistence.LOCAL)
+    firebase.auth()
+      .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
       .then(() => {
-        auth()
+        firebase.auth()
           .signInWithEmailAndPassword(email, password)
-          .then(async ({ user }: auth.UserCredential) => {
+          .then(async ({ user }: firebase.auth.UserCredential) => {
             if (user) {
               const data = await getUser(user.uid, false)
               const session = { token: user.uid, user: { email: data.email, displayName: data.displayName, photoURL: data.photoURL } }
@@ -92,10 +93,10 @@ export const loginWithCredentials = (email: string, password: string): AppThunk<
 export const loginWithGoogle = (): AppThunk<Promise<Session>> => async (dispatch): Promise<Session> => {
   return new Promise<Session>(async resolve => {
     dispatch(loginRequest())
-    const provider = new auth.GoogleAuthProvider()
+    const provider = new firebase.auth.GoogleAuthProvider()
     try {
-      await auth().setPersistence(auth.Auth.Persistence.LOCAL)
-      const { user: fbuser } = await auth().signInWithPopup(provider)
+      await firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+      const { user: fbuser } = await firebase.auth().signInWithPopup(provider)
       if (fbuser) {
         const { email, displayName, isNew } = await createUser(fbuser, fbuser.displayName || '')
         if (isNew) {
@@ -118,7 +119,7 @@ export const getAuthState = (): AppThunk<Promise<Session>> => async (dispatch): 
   return new Promise<Session>(resolve => {
     dispatch(loginRequest())
     // check if a firebase auth session was persisted to localstorage
-    auth().onAuthStateChanged(async user => {
+    firebase.auth().onAuthStateChanged(async user => {
       if (user) {
         const data = await getUser(user.uid, false)
         const session = { token: user.uid, user: { email: data.email, displayName: data.displayName, photoURL: data.photoURL } }
@@ -134,7 +135,7 @@ export const getAuthState = (): AppThunk<Promise<Session>> => async (dispatch): 
 
 export const logoutUser = (): AppThunk => async dispatch => {
   dispatch(logoutRequest())
-  auth()
+  firebase.auth()
     .signOut()
     .then(() => {
       dispatch(logout())
@@ -150,7 +151,7 @@ export const queueNewUserMessage = (organizerEmail: string, organizerName: strin
     try {
       const dashboardUrl = `${process.env.REACT_APP_BASE_URL}/`
       await firestore.collection('messages_new_user').add({
-        created: firebase.firestore.FieldValue.serverTimestamp(),
+        created: fstore.FieldValue.serverTimestamp(),
         templateName: 'new_user',
         subject: `Welcome to RemoteShiva`,
         organizerEmail,

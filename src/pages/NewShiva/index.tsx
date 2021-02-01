@@ -61,7 +61,6 @@ const NewShiva = () => {
       dispatch(push(Routes.NEW_SHIVA('1')));
       setCurrentStep(T.Steps.BASIC_DETAILS);
     }
-    // dispatch(deleteNewShiva()); // TODO: INVESTIGATE
     return;
   }, [dispatch, newShiva]);
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { push } from 'connected-react-router'
 import * as Routes from '../../routes'
@@ -9,6 +9,7 @@ import { logoutUser } from '../../services/auth'
 import { User } from '../../store/auth/types'
 import { Wrapper, NavWrapper, UserBarWrapper } from './styles'
 import LoginBar from './LoginBar'
+import { ThemeContext } from 'styled-components';
 
 const MY_SHIVAS = 'My Shivas'
 // const RESET_PASSWORD = 'Reset Password' TODO: implement
@@ -19,6 +20,7 @@ const LOG_OUT = 'Log Out'
 interface UserBarProps {
   user: User
 }
+
 const UserBar = ({ user }: UserBarProps) => {
   const [isActive, setActive] = useState(false)
   const menu = [MY_SHIVAS, /* RESET_PASSWORD, */ FAQ, /*ACCOUNT_DETAILS,*/ LOG_OUT]
@@ -52,14 +54,16 @@ const UserBar = ({ user }: UserBarProps) => {
 }
 
 const NavBar = () => {
+const theme = useContext(ThemeContext);
   const { session } = useSelector((state: RootState) => state.auth)
   return (
     <Wrapper>
       <NavWrapper>
-        <div>
+        <div style={{ display: 'flex', alignItems: 'flex-start' }}>
           <a href="http://remoteshiva.org">
             <img className="hidden lg:block h-8 w-auto" src={Logo} alt="RemoteShiva logo" />
           </a>
+          <div style={{ padding: '4px', borderRadius: '8px', fontSize: '10px', marginLeft: '4px', backgroundColor: theme.colors.blueChill, color: theme.colors.white }}>BETA</div>
         </div>
         {session ? <UserBar user={session.user} /> : <LoginBar />}
       </NavWrapper>
