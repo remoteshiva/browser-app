@@ -27,7 +27,7 @@ exports.sendVisitorAddedEmail = functions.firestore.document(`messages_add_visit
   };
   mailgun.messages().send(data, (error, body) => {
     if (!error) {
-      notifySlack(`Visitor Added: ${message.visitorName} (${message.visitorEmail}) for shiva ${message.visitorUrl}`);
+      notifySlack(`${message.visitorName} will visit shiva for ${message.nameOfDeceased}\nShiva: ${message.visitorUrl}\nVisitor: ${message.visitorEmail}`);
     }
   });
 });
@@ -43,7 +43,7 @@ exports.sendNewUserEmail = functions.firestore.document(`messages_new_user/{mail
   };
   mailgun.messages().send(data, (error, body) => {
     if (!error) {
-      notifySlack(`New User: ${message.organizerName} (${message.organizerEmail})`);
+      notifySlack(`${message.organizerName} signed up as an organizer (${message.organizerEmail})`);
     }
   });
 });
