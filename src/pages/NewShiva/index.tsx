@@ -144,7 +144,6 @@ const NewShiva = () => {
         }}
       />
       <BackButton />
-      {loading ? <Loading /> : null}
       {renderStep()}
     </Wrapper>
   );
