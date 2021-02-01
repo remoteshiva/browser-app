@@ -12,15 +12,24 @@ export const NavWrapper = styled.nav`
 `
 
 export const MenuItem = styled.li`
-  ${tw`pr-5 align-middle`}
+  /* ${tw`pr-5 align-middle`} */
+  display: flex;
+  align-items: center;
   font-family: Lato;
   font-size: 15px;
   font-weight: normal;
   color: ${props => props.theme.colors.heavyMetal};
+  padding-right: 12px;
+  padding-left: 12px;
   > a {
-    ${tw`align-middle`}
+    /* ${tw`align-middle`} */
     line-height: 37px;
   }
+  border-bottom: 2px solid transparent;
+    transition: all 150ms ease-in-out 0ms;
+    &:hover {
+      border-bottom: 2px solid ${props => props.theme.colors.richGold};
+    }
 `
 
 export const UserBarWrapper = styled(ClickOutside)`

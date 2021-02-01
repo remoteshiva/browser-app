@@ -16,16 +16,19 @@ const LoginBar = () => {
   return (
     <ul className="flex flex-row">
       <MenuItem>
-        <a href="remoteshiva.org/how-it-works">How it works</a>
+        <a href="https://www.remoteshiva.org/about">About Us</a>
       </MenuItem>
       <MenuItem>
-        <a href="remoteshiva.org/how-it-works">Example Shiva Page</a>
+        <a href="https://www.remoteshiva.org/tips">Tips</a>
       </MenuItem>
       <MenuItem>
-        <a href="remoteshiva.org/about">About Us</a>
+        <a href="https://www.remoteshiva.org/example-shiva">Sample RemoteShiva</a>
       </MenuItem>
       <MenuItem>
-        <a href="remoteshiva.org/how-it-works">Contact</a>
+        <a href="https://blog.remoteshiva.org/index.php/faq/">FAQ</a>
+      </MenuItem>
+      <MenuItem>
+        <a href="https://blog.remoteshiva.org/">Blog</a>
       </MenuItem>
       <MenuItem>
         <LoginButton onClick={() => dispatch(push(Routes.LOGIN_PAGE))}>Log in</LoginButton>
