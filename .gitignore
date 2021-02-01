@@ -34,3 +34,4 @@ firebase-debug.log
 
 # security rules
 /firebase/firestore.rules
+
