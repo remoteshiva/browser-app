@@ -7,32 +7,35 @@ service cloud.firestore {
 
     match /shivas/{document} {
       // TODO: Improve security so only allows read if visitor key or mourner key matches this shiva
-      allow read: if true
-      allow create: if request.auth.uid == request.resource.data.uid;
-      allow update: if request.auth.uid == resource.data.uid;
-      allow delete: if false
+      allow read: if true;
+      allow create: if request.auth != null && request.auth.uid == request.resource.data.uid;
+      allow update: if request.auth != null && request.auth.uid == resource.data.uid;
+      allow delete: if false;
     }
 
     match /users/{uid} {
-      allow read: if true
-      allow create: if request.auth.uid == userId;
-      allow update: if request.auth.uid == userId;
-      allow delete: if false
+      allow read: if true;
+      allow create: if if request.auth != null && request.auth.uid == userId;
+      allow update: if request.auth != null && request.auth.uid == userId;
+      allow delete: if false;
     }
 
     match /messages_add_visitor/{document} {
       allow create: if true;
       allow update: if true;
+      allow delete: if false;
     }
 
     match /messages_new_user/{document} {
       allow create: if true;
       allow update: if true;
+      allow delete: if false;
     }
 
     match /messages_timeslot_deleted_visitor/{document} {
       allow create: if true;
     	allow update: if true;
+    	allow delete: if false;
     }
   }
 }
