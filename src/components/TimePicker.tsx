@@ -15,7 +15,6 @@ interface Props {
   onChange: (time: Date) => void;
 }
 const TimePicker = ({ startTime, endTime, onChange }: Props) => {
-  console.log(`TimePicker startTime ${startTime} endTime ${endTime} `)
   const startHour = getHours(startTime);
   const endHour = getHours(endTime);
 
