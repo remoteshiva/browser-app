@@ -83,13 +83,12 @@ exports.sendVisitUpcomingEmail = functions.firestore.document(`messages_visit_up
 });
 
 const notifySlack = (text) => {
-  console.log(`notifySlack called with text ${text}`);
   axios
     .post(functions.config().slack.key, {
       text,
     })
     .then(function (response) {
-      console.log(`notifySlack response ${response}`);
+      //console.log(`notifySlack response ${response}`);
     })
     .catch(function (error) {
       console.log(`notifySlack error ${error}`);
