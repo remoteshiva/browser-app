@@ -13,7 +13,8 @@ import NavBar from '../NavBar'
 import Main from '../Main'
 import Footer from '../Footer'
 import ToastContainer from '../Toast'
-import firebase from 'firebase'
+import firebase from 'firebase/app';
+import 'firebase/analytics';
 
 interface Props {
   history: History
