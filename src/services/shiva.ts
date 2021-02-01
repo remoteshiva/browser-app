@@ -23,7 +23,7 @@ import { format } from 'date-fns';
 const dehydrateShiva = (shiva: Partial<Shiva>) => {
   return {
     ...shiva,
-    ...(shiva.videoLink && { videoLink: shiva.videoLink }),
+    ...(shiva.videoLink && { videoLink: shiva.videoLink.toString() }),
     ...(shiva.titleImage && { titleImage: shiva.titleImage.toString() }),
     ...(shiva.images && { images: shiva.images.map(url => url.toString()) }),
   };
@@ -53,7 +53,7 @@ const hydrateShiva = (item: any) => {
     startDate: item.data().startDate.toDate(),
     endDate: item.data().endDate.toDate(),
     visits: arrayToMap<Visit>(visitList),
-    ...(item.data().videoLink && { videoLink: item.data().videoLink }),
+    ...(item.data().videoLink && { videoLink: new URL(item.data().videoLink) }),
   });
 };
 
