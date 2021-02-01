@@ -39,10 +39,10 @@ export const Tab = styled.button<TabProps>`
   margin-right: 1rem;
   color: ${props => props.theme.colors.heavyMetal};
   opacity: ${props => (props.active ? 1 : 0.21)};
-  border-bottom: ${props => (props.active ? 'solid 2px #41413a' : 'solid 2px transparent')};
+  border-bottom: ${props => (props.active ? `solid 2px ${props.theme.colors.richGold}` : 'solid 2px transparent')};
   cursor: pointer;
   &:hover {
-    border-bottom: solid 2px #41413a;
+    border-bottom: ${props => `solid 2px ${props.theme.colors.richGold}`};
   }
 `
 interface SpaceProps {
