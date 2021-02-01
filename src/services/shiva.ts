@@ -151,6 +151,7 @@ export const postShiva = (shiva: Shiva): AppThunk<Promise<Shiva>> => async (
         });
       const newShiva = { ...shiva, id };
       dispatch(createShiva.success(newShiva));
+      await dispatch(queueNewShivaMessage(id));
       resolve(newShiva);
     } catch (error) {
       dispatch(createShiva.failure({ message: error }));
@@ -273,6 +274,35 @@ export const updateVisitToSelectedShiva = (): AppThunk<
       reject(err);
     });
   }
+};
+
+export const queueNewShivaMessage = (
+  shivaId: ShivaId
+): AppThunk<Promise<void>> => async (dispatch): Promise<void> => {
+  return new Promise<void>(async (resolve, reject) => {
+    try {
+      const { nameOfDeceased, visitorKey, mournerKey } = await dispatch(
+        fetchShivaById(shivaId)
+      );
+      const organizerName = firebase.auth().currentUser?.displayName || '';
+      const organizerEmail = firebase.auth().currentUser?.email || '';
+      const mournerUrl = `${process.env.REACT_APP_BASE_URL}/m/${mournerKey}`;
+      const visitorUrl = `${process.env.REACT_APP_BASE_URL}/v/${visitorKey}`;
+      await firestore.collection('messages_new_shiva').add({
+        created: fstore.FieldValue.serverTimestamp(),
+        subject: `A new shiva has been created`,
+        visitorUrl,
+        mournerUrl,
+        organizerName,
+        organizerEmail,
+        nameOfDeceased,
+        templateName: 'new_shiva',
+      });
+      resolve();
+    } catch (error) {
+      reject(error);
+    }
+  });
 };
 
 export const queueAddVisitorMessage = (

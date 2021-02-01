@@ -27,7 +27,7 @@ exports.sendVisitorAddedEmail = functions.firestore.document(`messages_add_visit
   };
   mailgun.messages().send(data, (error, body) => {
     if (!error) {
-      notifySlack(`${message.visitorName} will visit shiva for ${message.nameOfDeceased}\nShiva: ${message.visitorUrl}\nVisitor: ${message.visitorEmail}`);
+      notifySlack(`${message.visitorName} (${message.visitorEmail}) will visit shiva for ${message.nameOfDeceased}\nLink: ${message.visitorUrl}`);
     }
   });
 });
@@ -46,6 +46,12 @@ exports.sendNewUserEmail = functions.firestore.document(`messages_new_user/{mail
       notifySlack(`${message.organizerName} signed up as an organizer (${message.organizerEmail})`);
     }
   });
+});
+
+/// This does not actually send an email, just notifies via Slack
+exports.sendNewShivaEmail = functions.firestore.document(`messages_new_shiva/{mailId}`).onCreate(async (snapshot, context) => {
+  const message = snapshot.data();
+  notifySlack(`${message.organizerName} (${message.organizerEmail}) created a shiva in memory of ${message.nameOfDeceased} with this visitor link ${message.visitorUrl} and mourner link ${message.mournerUrl}`);
 });
 
 exports.sendTimeslotDeletedVisitorEmail = functions.firestore.document(`messages_timeslot_deleted_visitor/{mailId}`).onCreate(async (snapshot, context) => {
