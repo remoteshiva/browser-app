@@ -16,9 +16,8 @@ import {
   updateVisit,
 } from '../../store/shiva/actions';
 import {
-  updateSelectedShiva,
   queueAddVisitorMessage,
-  deleteVisitWithMessage,
+  deleteVisitWithMessage, updateVisitToSelectedShiva,
 } from '../../services/shiva'
 import { CalendarMode } from '../types';
 import { useEventListener } from '../common';
@@ -200,7 +199,7 @@ export const Visit = ({
         partialVisit: { visitors: [...visit.visitors, visitor] },
       })
     );
-    dispatch(updateSelectedShiva());
+    dispatch(updateVisitToSelectedShiva());
     // log the visitor in order to receive email from shiva
     dispatch(queueAddVisitorMessage(visitor, selectedShiva || ''));
   };
@@ -227,7 +226,7 @@ export const Visit = ({
         })
       );
     }
-    dispatch(updateSelectedShiva());
+    dispatch(updateVisitToSelectedShiva());
   };
   const renderToolTip = () => {
     if (selectedVisit !== visit.id) {

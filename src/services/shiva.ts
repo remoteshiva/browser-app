@@ -179,20 +179,30 @@ export const deleteExistingShiva = (
  *
  * @param shivaId Id of the existing `Shiva` to patch
  * @param shiva  A partial shiva object containing `Shiva` fields that need to be updated
+ * @param onlyVisits  Only modify the visits property of this shiva, so as not to violate security rules restricting updates
  */
 export const patchShiva = (
   shivaId: ShivaId,
-  shiva: Partial<Shiva>
+  shiva: Partial<Shiva>,
+  onlyVisits: boolean
 ): AppThunk<Promise<Partial<Shiva>>> => async (
   dispatch
 ): Promise<Partial<Shiva>> => {
   return new Promise<Partial<Shiva>>(async (resolve, reject) => {
     dispatch(updateShiva.request());
     try {
+      let updateTheseFields = {};
+      if (onlyVisits) {
+        updateTheseFields = {
+          visits: dehydrateShiva(shiva).visits
+        };
+      } else {
+        updateTheseFields = dehydrateShiva(shiva)
+      }
       await firestore
         .collection('shivas')
         .doc(shivaId)
-        .update(dehydrateShiva(shiva));
+        .update(updateTheseFields);
     } catch (error) {
       dispatch(updateShiva.failure({ message: error }));
       reject(error);
@@ -216,7 +226,7 @@ export const patchSelectedShiva = (
   const state = getState();
   const { selectedShiva } = state.shiva;
   if (selectedShiva) {
-    return dispatch(patchShiva(selectedShiva, shiva));
+    return dispatch(patchShiva(selectedShiva, shiva, false));
   } else {
     return new Promise<Partial<Shiva>>(async (_resolve, reject) => {
       const err: BackendError = {
@@ -234,7 +244,26 @@ export const updateSelectedShiva = (): AppThunk<
   const state = getState();
   const { selectedShiva, entities } = state.shiva;
   if (selectedShiva) {
-    return dispatch(patchShiva(selectedShiva, entities[selectedShiva]));
+    return dispatch(patchShiva(selectedShiva, entities[selectedShiva], false));
+  } else {
+    return new Promise<Partial<Shiva>>(async (_resolve, reject) => {
+      const err: BackendError = {
+        message: 'Operation failed, Selected Shiva is null',
+      };
+      dispatch(updateShiva.failure(err));
+      reject(err);
+    });
+  }
+};
+
+// TODO: Make this DRY by adding a param to updateSelectedShiva
+export const updateVisitToSelectedShiva = (): AppThunk<
+  Promise<Partial<Shiva>>
+  > => async (dispatch, getState): Promise<Partial<Shiva>> => {
+  const state = getState();
+  const { selectedShiva, entities } = state.shiva;
+  if (selectedShiva) {
+    return dispatch(patchShiva(selectedShiva, entities[selectedShiva], true));
   } else {
     return new Promise<Partial<Shiva>>(async (_resolve, reject) => {
       const err: BackendError = {

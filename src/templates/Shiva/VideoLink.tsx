@@ -17,7 +17,7 @@ const VideoLink = ({ shiva, editing, save }: ShivaPanel) => {
       if (isValidURL(videoLink)) {
         setValidURL(true);
         const partialShiva = { videoLink: new URL(videoLink) };
-        dispatch(patchShiva(shiva.id, partialShiva));
+        dispatch(patchShiva(shiva.id, partialShiva, false));
       } else {
         setValidURL(false);
       }
