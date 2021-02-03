@@ -13,6 +13,7 @@ import { Row, FixedColumn, FlexColumn } from '../../components/flexLayout'
 import { StepProps, MournersProps, Steps } from './types'
 import { ImageWrapper } from './styles'
 import StepLayout from './Layout'
+import ClipboardJS from 'clipboard';
 
 const AddMournerButton = styled.button`
   font-family: 'Lato';
@@ -104,6 +105,7 @@ const Mourners = ({ newShiva, submit, selectStep }: StepProps<MournersProps>) =>
           }
         )
       } else {
+        new ClipboardJS(`${mournerPathPrefix}${mournerKey}`);
         // this is a polyfill
         document.execCommand('copy')
       }

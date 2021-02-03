@@ -6,6 +6,7 @@ import { useNotify } from '../../components/common/hooks'
 import { postShiva, deleteExistingShiva } from '../../services/shiva'
 import { ShivaItemWrapper } from './styles'
 import Dropdown, { MenuItem } from './dropdown'
+import ClipboardJS from 'clipboard';
 
 const mournerPathPrefix = `${process.env.REACT_APP_BASE_URL}/m/`
 const visitorPathPrefix = `${process.env.REACT_APP_BASE_URL}/v/`
@@ -33,6 +34,7 @@ const ShivaItem = (props: ShivaProps) => {
       }
     } else {
       // this is a polyfill
+      new ClipboardJS(text);
       document.execCommand('copy')
     }
   }

@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useNotify } from '../../components/common/hooks'
+import ClipboardJS from 'clipboard';
 
 const Wrapper = styled.div`
   display: flex;
@@ -45,6 +46,7 @@ const LinkWithCopy = ({text}: Props) => {
         console.log(error) // we should show a message
       }
     } else {
+      new ClipboardJS(text);
       // this is a polyfill
       document.execCommand('copy', true)
     }

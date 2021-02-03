@@ -10,6 +10,7 @@ import CopyIcon from '../../assets/img/copy.svg'
 import AddIcon from '../../assets/img/add.svg'
 import DeleteIcon from '../../assets/img/delete.svg'
 import { MournerName, Note, Relationship } from './styles'
+import ClipboardJS from 'clipboard';
 
 const mournerPathPrefix = `${process.env.REACT_APP_BASE_URL}/m/`
 // const visitorPathPrefix = `${process.env.REACT_APP_BASE_URL}/v/` TODO: implement
@@ -93,6 +94,7 @@ const Mourners = ({ role, shiva, editing, save }: ShivaPanel) => {
         console.log(error) // we should show a message
       }
     } else {
+      new ClipboardJS(text);
       // this is a polyfill TODO: fix for safari?
       document.execCommand('copy')
     }

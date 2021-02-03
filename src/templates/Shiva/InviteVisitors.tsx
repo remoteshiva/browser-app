@@ -8,6 +8,7 @@ import { useNotify } from '../../components/common/hooks'
 import { VerticalSpace, ApproveButton } from '../../components/common'
 import LinkWithCopy from './LinkWithCopy'
 import { patchSelectedShiva } from '../../services/shiva'
+import ClipboardJS from 'clipboard';
 
 const Fade = styled.div`
   position: fixed;
@@ -105,6 +106,7 @@ const InviteVisitorsModal = ({ shiva, onClose }: Props) => {
           console.log(error) // we should show a message
         }
       } else {
+        new ClipboardJS(message);
         // this is a polyfill
         document.execCommand('copy')
       }
