@@ -63,7 +63,7 @@ const theme = useContext(ThemeContext);
           <a href="http://remoteshiva.org">
             <img className="hidden lg:block h-8 w-auto" src={Logo} alt="RemoteShiva logo" />
           </a>
-          <div style={{ padding: '4px', borderRadius: '8px', fontSize: '10px', marginLeft: '4px', backgroundColor: theme.colors.blueChill, color: theme.colors.white }}>BETA</div>
+          <div style={{ padding: '2px', borderRadius: '3px', fontSize: '10px', marginLeft: '4px', backgroundColor: theme.colors.blueChill, color: theme.colors.white }}>BETA</div>
         </div>
         {session ? <UserBar user={session.user} /> : <LoginBar />}
       </NavWrapper>
