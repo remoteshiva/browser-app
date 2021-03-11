@@ -88,7 +88,7 @@ export const Visit = ({
     const hour = getHours(date);
     const minutes = getMinutes(date);
     const result = (hour - hourOffset) * PIXELS_PER_HOUR + minutes * PIXELS_PER_MINUTE;
-    //console.log(`timeToPixels returns ${result} given hour ${hour}, minutes ${minutes}, and hourOffset ${hourOffset}`)
+    console.log(`timeToPixels returns ${result} given hour ${hour}, minutes ${minutes}, and hourOffset ${hourOffset} from date ${date.toString()}`)
     return result;
   };
   const handleClick = (event: React.MouseEvent) => {

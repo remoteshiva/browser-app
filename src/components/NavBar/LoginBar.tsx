@@ -19,18 +19,15 @@ const LoginBar = () => {
         <a href="https://www.remoteshiva.org/about">About Us</a>
       </MenuItem>
       <MenuItem>
-        <a href="https://www.remoteshiva.org/tips">Tips</a>
-      </MenuItem>
-      <MenuItem>
         <a href="https://www.remoteshiva.org/example-shiva">
           Sample RemoteShiva
         </a>
       </MenuItem>
       <MenuItem>
-        <a href="https://blog.remoteshiva.org/index.php/faq/">FAQ</a>
+        <a href="https://www.remoteshiva.org/faq">FAQ</a>
       </MenuItem>
       <MenuItem>
-        <a href="https://blog.remoteshiva.org/">Blog</a>
+        <a href="https://www.remoteshiva.org/blog">Blog</a>
       </MenuItem>
       <LoginButton onClick={() => dispatch(push(Routes.LOGIN_PAGE))}>
         Log in
