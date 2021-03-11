@@ -15,6 +15,7 @@ import {
 } from '../store/shiva/actions';
 import { BackendError } from '../store/types';
 import { format } from 'date-fns';
+import { utcToZonedTime } from 'date-fns-tz';
 
 /**
  * @description serializes a partial Shiva object for firebase persistence
@@ -44,8 +45,8 @@ const hydrateShiva = (item: any) => {
         time: visitor.time.toDate(),
       })
     ),
-    startTime: visit.startTime.toDate(),
-    endTime: visit.endTime.toDate(),
+    startTime: utcToZonedTime(visit.startTime.toDate(), Intl.DateTimeFormat().resolvedOptions().timeZone),
+    endTime: utcToZonedTime(visit.endTime.toDate(), Intl.DateTimeFormat().resolvedOptions().timeZone),
   }));
   return initializeShiva({
     ...item.data(),
